@@ -1,8 +1,13 @@
 (() => {
-  const css = document.createElement('link');
-  css.rel = 'stylesheet';
-  css.href = './experience.css?v=2';
-  document.head.appendChild(css);
+  function loadStylesheet(href) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+  }
+
+  loadStylesheet('./experience.css?v=2');
+  loadStylesheet('./validation.css?v=1');
 
   function loadScript(src, onload) {
     const script = document.createElement('script');
