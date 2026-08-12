@@ -1,12 +1,9 @@
-Exit code: 0
-Wall time: 1.5 seconds
-Output:
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A guided audience review to uncover what customers value, feel, hesitate over, and need to hear.">
+  <meta name="description" content="A guided audience review that captures human decision, emotional, and behavioral signals around a product or service.">
   <title>Audience Review | oobCREATIVE</title>
 
   <style>
@@ -21,28 +18,18 @@ Output:
       --max-width: 920px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       background: var(--off-white);
       color: var(--black);
-      font-family:
-        Inter,
-        ui-sans-serif,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.5;
     }
 
     button,
-    input {
-      font: inherit;
-    }
+    input { font: inherit; }
 
     .page {
       width: min(calc(100% - 32px), var(--max-width));
@@ -59,7 +46,7 @@ Output:
     }
 
     h1 {
-      max-width: 760px;
+      max-width: 780px;
       margin: 0;
       font-size: clamp(2.4rem, 7vw, 5.5rem);
       line-height: 0.96;
@@ -67,7 +54,7 @@ Output:
     }
 
     .intro {
-      max-width: 650px;
+      max-width: 680px;
       margin: 28px 0 0;
       font-size: 1.15rem;
       color: var(--dark-gray);
@@ -93,21 +80,12 @@ Output:
       background: #dededa;
     }
 
-    .progress-bar.active {
-      background: var(--black);
-    }
+    .progress-bar.active { background: var(--black); }
 
-    .step {
-      display: none;
-    }
+    .step { display: none; }
+    .step.active { display: block; }
 
-    .step.active {
-      display: block;
-    }
-
-    .section-heading {
-      margin-bottom: 40px;
-    }
+    .section-heading { margin-bottom: 40px; }
 
     .section-heading h2 {
       margin: 0 0 8px;
@@ -116,14 +94,12 @@ Output:
     }
 
     .section-heading p {
-      max-width: 640px;
+      max-width: 660px;
       margin: 0;
       color: var(--dark-gray);
     }
 
-    .field {
-      margin-bottom: 48px;
-    }
+    .field { margin-bottom: 48px; }
 
     .field-label,
     .question-title {
@@ -159,9 +135,7 @@ Output:
       gap: 10px;
     }
 
-    .option {
-      position: relative;
-    }
+    .option { position: relative; }
 
     .option input {
       position: absolute;
@@ -178,15 +152,10 @@ Output:
       border-radius: var(--radius);
       background: var(--white);
       cursor: pointer;
-      transition:
-        border-color 120ms ease,
-        background 120ms ease,
-        transform 120ms ease;
+      transition: border-color 120ms ease, background 120ms ease, transform 120ms ease;
     }
 
-    .option label:hover {
-      border-color: var(--black);
-    }
+    .option label:hover { border-color: var(--black); }
 
     .option input:checked + label {
       background: var(--black);
@@ -219,9 +188,7 @@ Output:
       font-weight: 650;
     }
 
-    .error.visible {
-      display: block;
-    }
+    .error.visible { display: block; }
 
     .actions {
       display: flex;
@@ -246,9 +213,7 @@ Output:
       color: var(--black);
     }
 
-    .button:hover {
-      transform: translateY(-1px);
-    }
+    .button:hover { transform: translateY(-1px); }
 
     .results-card {
       margin-top: 30px;
@@ -259,17 +224,15 @@ Output:
     }
 
     .results-card h3 {
-      margin-top: 0;
+      margin: 0 0 12px;
       font-size: 1.6rem;
     }
+
+    .results-card p { max-width: 700px; }
 
     .result-group {
       padding: 20px 0;
       border-top: 1px solid var(--border);
-    }
-
-    .result-group:first-of-type {
-      border-top: 0;
     }
 
     .result-label {
@@ -288,45 +251,29 @@ Output:
 
     .privacy {
       margin-top: 36px;
-      max-width: 650px;
+      max-width: 680px;
       color: var(--dark-gray);
       font-size: 0.88rem;
     }
 
     @media (max-width: 680px) {
-      .page {
-        padding-top: 38px;
-      }
-
-      .options {
-        grid-template-columns: 1fr;
-      }
-
-      .actions {
-        flex-direction: column-reverse;
-      }
-
-      .button {
-        width: 100%;
-      }
+      .page { padding-top: 38px; }
+      .options { grid-template-columns: 1fr; }
+      .actions { flex-direction: column-reverse; }
+      .button { width: 100%; }
     }
   </style>
 </head>
 
 <body>
-
 <main class="page">
 
   <header>
     <p class="eyebrow">oobCREATIVE Audience Review</p>
-
-    <h1>Who are you really talking to?</h1>
-
+    <h1>What connects people to what you offer?</h1>
     <p class="intro">
-      Tell us what you already recognize about your customers.
-      We'll look for the patterns that can help you communicate with them more clearly.
+      Tell us what you already recognize about the people involved with your product or service. We’ll use those observations to look for emotional and behavioral patterns that can help communication connect more clearly.
     </p>
-
     <div class="rule"></div>
   </header>
 
@@ -338,195 +285,151 @@ Output:
 
   <form id="audience-form">
 
-    <!-- STEP ONE -->
     <section class="step active" data-step="1">
-
       <div class="section-heading">
         <p class="eyebrow">Part 1</p>
-        <h2>Tell us about your audience.</h2>
+        <h2>Tell us about the audience.</h2>
         <p>
-          Choose the answers that feel familiar.
-          You don't need to know everything about your customers.
+          Think broadly about the people involved in creating the connection between your offering and its purchase, use, approval, recommendation, funding, participation, or benefit.
         </p>
       </div>
 
       <div class="field">
-        <label class="field-label" for="offer">
-          What product or service should we review?
-        </label>
-
-        <input
-          class="text-input"
-          type="text"
-          id="offer"
-          name="offer"
-          placeholder="Example: Auto repair, counseling, bookkeeping..."
-          required
-        >
+        <label class="field-label" for="offer">What product or service should we review?</label>
+        <input class="text-input" type="text" id="offer" name="offer" placeholder="Example: Auto repair, counseling, bookkeeping..." required>
       </div>
 
+      <div id="offer-type-question"></div>
       <div id="audience-questions"></div>
 
-      <div class="error" id="step1-error">
-        Please answer each question before continuing.
-      </div>
+      <div class="error" id="step1-error">Please complete each question before continuing.</div>
 
       <div class="actions">
         <span></span>
-        <button class="button" type="button" data-next="2">
-          Next: About You
-        </button>
+        <button class="button" type="button" data-next="2">Next: About Your Work</button>
       </div>
-
     </section>
 
-
-    <!-- STEP TWO -->
     <section class="step" data-step="2">
-
       <div class="section-heading">
         <p class="eyebrow">Part 2</p>
-        <h2>Now tell us about you.</h2>
+        <h2>Now tell us about what matters to you.</h2>
         <p>
-          What matters to you affects how you communicate,
-          what you protect, and what kind of support is useful.
+          This helps us look for genuine alignment between what your audience values and what your product, service, or organization actually delivers.
         </p>
       </div>
 
-      <div id="client-questions"></div>
+      <div id="business-questions"></div>
 
       <div class="field">
-        <label class="field-label" for="website">
-          Website or public page
-          <span style="font-weight:400;color:#929292;">(optional)</span>
-        </label>
-
-        <input
-          class="text-input"
-          type="url"
-          id="website"
-          name="website"
-          placeholder="https://"
-        >
+        <label class="field-label" for="website">Website or public page <span style="font-weight:400;color:#929292;">(optional)</span></label>
+        <input class="text-input" type="url" id="website" name="website" placeholder="https://">
       </div>
 
-      <div class="error" id="step2-error">
-        Please answer each question before continuing.
-      </div>
+      <div class="error" id="step2-error">Please complete the required question before continuing.</div>
 
       <div class="actions">
-        <button class="button secondary" type="button" data-back="1">
-          Back
-        </button>
-
-        <button class="button" type="submit">
-          Review My Audience
-        </button>
+        <button class="button secondary" type="button" data-back="1">Back</button>
+        <button class="button" type="submit">Prepare Audience Review</button>
       </div>
-
     </section>
 
-
-    <!-- STEP THREE -->
     <section class="step" data-step="3">
-
       <div class="section-heading">
-        <p class="eyebrow">Your responses</p>
-        <h2>Here's what we're hearing.</h2>
+        <p class="eyebrow">Audience Review</p>
+        <h2>Your behavioral review is ready for analysis.</h2>
         <p>
-          This is the starting point for your Audience Review.
+          Your answers are now structured as audience evidence. The next layer can evaluate emotional patterns, likely decision behavior, trust and resistance signals, and authentic communication opportunities.
         </p>
       </div>
 
       <div class="results-card" id="results"></div>
 
       <div class="actions">
-        <button class="button secondary" type="button" data-back="2">
-          Edit Answers
-        </button>
+        <button class="button secondary" type="button" data-back="2">Edit Answers</button>
       </div>
-
     </section>
 
   </form>
-
 </main>
 
-
 <script>
-/*
-|--------------------------------------------------------------------------
-| QUESTION CONFIGURATION
-|--------------------------------------------------------------------------
-|
-| Personas remain INTERNAL.
-|
-| Frederick = bottlenecked founder
-| Jonathan  = mission-carrying leader
-| Brendan   = overextended communications lead
-| Devon     = expert with unpackaged value
-| Eli       = responsible AI adopter
-| Dave      = rebuilding leader
-| Doug      = quietly ambitious professional
-|
-*/
+const OFFER_TYPE_QUESTION = {
+  id: "offer_type",
+  title: "Which best describes it?",
+  help: "Choose one.",
+  max: 1,
+  options: [
+    "A service",
+    "A physical product",
+    "A digital product",
+    "An experience or event",
+    "A membership or subscription",
+    "A cause, program or organization",
+    "A professional relationship",
+    "Something else"
+  ]
+};
 
 const AUDIENCE_QUESTIONS = [
   {
     id: "audience_values",
-    title: "What's most important to the people who choose what you offer?",
+    title: "What's most important to the people involved in choosing or using what you offer?",
     help: "Select up to 5.",
     max: 5,
     options: [
       "Trust",
       "Quality",
-      "Experience",
       "Price",
       "Reliability",
+      "Safety",
       "Convenience",
       "Speed",
-      "Safety",
-      "Clear answers",
-      "Understanding their choices",
-      "Knowing what something will cost",
-      "Avoiding unnecessary expense",
-      "Personal attention",
-      "Reputation",
-      "Recommendations from others",
-      "Feeling understood",
-      "Confidence they're making the right decision",
+      "Expertise",
+      "Independence",
+      "Control",
+      "Clear information",
+      "Being treated fairly",
+      "Being understood",
+      "Belonging or connection",
+      "Recognition or status",
+      "Personal values",
+      "Avoiding unnecessary cost",
+      "Protecting people they care about",
       "Flexibility",
       "Peace of mind",
+      "Opportunity or improvement",
+      "Enjoyment",
       "I'm not sure"
     ]
   },
-
   {
     id: "audience_trigger",
-    title: "What's usually happening when someone starts looking for what you offer?",
-    help: "Select the situations that sound familiar.",
-    max: 5,
+    title: "What's usually happening when they become interested in what you offer?",
+    help: "Select up to 4.",
+    max: 4,
     options: [
       "Something has gone wrong",
-      "They need something fixed",
-      "They want to prevent a problem",
-      "They have an important decision to make",
-      "They need help understanding their options",
-      "They're dissatisfied with what they currently have",
-      "They want a better result",
-      "They have a deadline",
-      "They're planning something new",
-      "Someone recommended they look for help",
-      "They're comparing several options",
-      "They've been putting the decision off",
-      "They're ready to move forward",
+      "They want to prevent something from going wrong",
+      "They're dissatisfied with their current situation",
+      "They want something better",
+      "They have an immediate need",
+      "They have an upcoming deadline or event",
+      "They're making an important decision",
+      "They're comparing alternatives",
+      "Someone recommended it",
+      "They're planning for the future",
+      "Something in their life or business has changed",
+      "They want to try something new",
+      "They want to improve themselves or their situation",
+      "They're supporting someone else",
+      "They're simply curious",
       "I'm not sure"
     ]
   },
-
   {
     id: "audience_emotions",
-    title: "What are they likely feeling at that point?",
+    title: "What are they most likely feeling at that point?",
     help: "Select up to 4.",
     max: 4,
     options: [
@@ -538,210 +441,160 @@ const AUDIENCE_QUESTIONS = [
       "Cautious",
       "Distrustful",
       "Pressured",
-      "In a hurry",
-      "Annoyed",
-      "Unsure",
+      "Vulnerable",
+      "Uncertain",
       "Hopeful",
       "Curious",
       "Excited",
       "Motivated",
-      "Ready",
-      "Relieved to finally be addressing it",
-      "Tired of dealing with the problem",
+      "Ambitious",
+      "Responsible for someone else",
+      "Ready for change",
+      "Relieved to finally be doing something",
+      "Tired of the current situation",
+      "Confident",
       "I'm not sure"
     ]
   },
-
+  {
+    id: "audience_needs",
+    title: "When making the decision, what do they seem to need most?",
+    help: "Select up to 4.",
+    max: 4,
+    options: [
+      "More information",
+      "Reassurance",
+      "Proof that it works",
+      "Expert guidance",
+      "Recommendations from other people",
+      "Time to think",
+      "Clear choices",
+      "Someone to make it easier",
+      "Confidence they're not making a mistake",
+      "Control over the decision",
+      "A clear price",
+      "Lower financial risk",
+      "Convenience",
+      "Permission or approval from someone else",
+      "Agreement from other people involved",
+      "A reason to act now",
+      "Inspiration or possibility",
+      "A personal connection",
+      "I'm not sure"
+    ]
+  },
   {
     id: "audience_hesitation",
-    title: "What most often makes them hesitate?",
+    title: "What tends to make them hesitate or pull away?",
     help: "Select up to 4.",
     max: 4,
     options: [
       "Price",
-      "Trust",
+      "Uncertainty",
       "Fear of making the wrong choice",
+      "Lack of trust",
+      "Not enough information",
+      "Too much information",
       "They don't understand the value",
-      "They don't understand their options",
-      "They don't know enough about us",
-      "They're comparing competitors",
-      "They aren't sure they need it yet",
-      "They don't know what it will cost",
-      "They're worried about committing",
-      "Convenience or scheduling",
+      "They don't understand the differences between options",
+      "They don't believe the claims",
+      "They don't feel ready",
+      "They don't feel enough urgency",
+      "They want someone else's opinion",
+      "They don't want to feel pressured",
+      "Changing feels difficult",
+      "They're satisfied enough with what they already have",
+      "Time or convenience",
+      "The decision involves too many people",
       "They keep putting it off",
-      "They want to handle it themselves",
       "I'm not sure"
     ]
   },
-
   {
-    id: "audience_desired_feeling",
-    title: "What do they most want to feel after choosing?",
-    help: "Select up to 3.",
-    max: 3,
+    id: "audience_outcome",
+    title: "What are they hoping will be different afterward?",
+    help: "Select up to 4.",
+    max: 4,
     options: [
-      "Confident",
-      "Safe",
-      "Relieved",
-      "In control",
-      "Understood",
-      "Prepared",
-      "Secure",
-      "Taken care of",
-      "Certain they made the right choice",
-      "Free to move on",
-      "Excited about what's next",
-      "Proud of the decision",
+      "I want the problem gone",
+      "I want to feel confident",
+      "I want to feel safe",
+      "I want greater control",
+      "I want less stress",
+      "I want to feel understood",
+      "I want something I can depend on",
+      "I want to save time",
+      "I want to save money",
+      "I want to make progress",
+      "I want something better than I have now",
+      "I want new possibilities",
+      "I want to feel prepared",
+      "I want to belong or participate",
+      "I want to feel proud of my choice",
+      "I want to help someone else",
+      "I want to enjoy the experience",
+      "I want to stop thinking about this",
       "I'm not sure"
     ]
   }
 ];
 
-
-const CLIENT_QUESTIONS = [
+const BUSINESS_QUESTIONS = [
   {
-    id: "client_values",
-    title: "What's most important to you in the work you do?",
-    help: "Select up to 2.",
-    max: 2,
-    scoreWeight: 3,
-
+    id: "business_values",
+    title: "What's most important to you about how you provide this product or service?",
+    help: "Select up to 4.",
+    max: 4,
+    required: true,
     options: [
-      {
-        label: "Maintaining high quality",
-        persona: "frederick"
-      },
-      {
-        label: "Protecting the people or purpose behind the work",
-        persona: "jonathan"
-      },
-      {
-        label: "Having the freedom and authority to do the work well",
-        persona: "brendan"
-      },
-      {
-        label: "Preserving the expertise and depth behind what I offer",
-        persona: "devon"
-      },
-      {
-        label: "Being accurate and responsible",
-        persona: "eli"
-      },
-      {
-        label: "Maintaining trust",
-        persona: "dave"
-      },
-      {
-        label: "Keeping my options and future possibilities open",
-        persona: "doug"
-      },
-      {
-        label: "I'm not sure",
-        persona: null
-      }
+      "Quality",
+      "Expertise",
+      "Honesty",
+      "Fairness",
+      "Reliability",
+      "Personal attention",
+      "Responsibility",
+      "Safety",
+      "Innovation",
+      "Creativity",
+      "Affordability",
+      "Convenience",
+      "Independence",
+      "Community",
+      "Human connection",
+      "Helping people understand their choices",
+      "Giving people control",
+      "Creating meaningful results",
+      "Long-term relationships",
+      "Something else"
     ]
   },
-
   {
-    id: "client_situation",
-    title: "Which situation feels most familiar right now?",
-    help: "Select one or two.",
+    id: "business_message",
+    title: "What do you most want people to understand about what you offer?",
+    help: "Optional. Select up to 2.",
     max: 2,
-    scoreWeight: 5,
-
+    required: false,
     options: [
-      {
-        label: "Too much still depends on me.",
-        persona: "frederick"
-      },
-      {
-        label: "Our work is harder to explain than it should be.",
-        persona: "jonathan"
-      },
-      {
-        label: "Communication feels disorganized or reactive.",
-        persona: "brendan"
-      },
-      {
-        label: "People don't fully understand the value of what I do.",
-        persona: "devon"
-      },
-      {
-        label: "I want to use AI, but I want to use it responsibly.",
-        persona: "eli"
-      },
-      {
-        label: "Something I've invested in has stalled or gone wrong.",
-        persona: "dave"
-      },
-      {
-        label: "I have an idea or opportunity I'm ready to move forward with.",
-        persona: "doug"
-      }
-    ]
-  },
-
-  {
-    id: "client_success",
-    title: "What would make this feel successful for you?",
-    help: "Select up to 2.",
-    max: 2,
-    scoreWeight: 3,
-
-    options: [
-      {
-        label: "Other people could move forward without everything coming back to me.",
-        persona: "frederick"
-      },
-      {
-        label: "People would understand our work more clearly.",
-        persona: "jonathan"
-      },
-      {
-        label: "Communication would feel more organized and manageable.",
-        persona: "brendan"
-      },
-      {
-        label: "The right people would understand why my work is valuable.",
-        persona: "devon"
-      },
-      {
-        label: "I'd know where technology or AI genuinely helps.",
-        persona: "eli"
-      },
-      {
-        label: "I'd feel confident making the next decision.",
-        persona: "dave"
-      },
-      {
-        label: "I'd have something real enough to put in front of people and test.",
-        persona: "doug"
-      }
+      "We're experienced",
+      "We're trustworthy",
+      "We care about quality",
+      "We understand their situation",
+      "We make things easier",
+      "We offer good value",
+      "We give people clear choices",
+      "We're different from the alternatives",
+      "We help prevent problems",
+      "We help people move forward",
+      "We care about the outcome",
+      "We stand behind our work",
+      "Something else",
+      "I'm not sure"
     ]
   }
 ];
 
-
-const PERSONA_PUBLIC_PATHS = {
-  frederick: "Help my team move without everything coming through me.",
-  jonathan: "Help us explain the work clearly without losing its meaning.",
-  brendan: "Help communication stop feeling chaotic.",
-  devon: "Help people understand the value of what I do.",
-  eli: "Help us use AI where it genuinely improves the work.",
-  dave: "Help me recover this project without repeating the same mistake.",
-  doug: "Help me turn this idea into something real enough to test."
-};
-
-
-/*
-|--------------------------------------------------------------------------
-| RENDER QUESTIONS
-|--------------------------------------------------------------------------
-*/
-
-function renderQuestion(question, isClientQuestion = false) {
-
+function renderQuestion(question) {
   const wrapper = document.createElement("div");
   wrapper.className = "field question";
   wrapper.dataset.question = question.id;
@@ -757,13 +610,7 @@ function renderQuestion(question, isClientQuestion = false) {
   const options = document.createElement("div");
   options.className = "options";
 
-  question.options.forEach((option, index) => {
-
-    const optionData =
-      typeof option === "string"
-        ? { label: option, persona: null }
-        : option;
-
+  question.options.forEach((labelText, index) => {
     const item = document.createElement("div");
     item.className = "option";
 
@@ -771,23 +618,13 @@ function renderQuestion(question, isClientQuestion = false) {
     input.type = "checkbox";
     input.id = `${question.id}-${index}`;
     input.name = question.id;
-    input.value = optionData.label;
-
-    if (optionData.persona) {
-      input.dataset.persona = optionData.persona;
-    }
-
-    if (isClientQuestion && question.scoreWeight) {
-      input.dataset.scoreWeight = question.scoreWeight;
-    }
+    input.value = labelText;
 
     const label = document.createElement("label");
     label.htmlFor = input.id;
-    label.textContent = optionData.label;
+    label.textContent = labelText;
 
-    input.addEventListener("change", () => {
-      enforceMaximum(question.id, question.max);
-    });
+    input.addEventListener("change", () => enforceMaximum(question.id, question.max));
 
     item.appendChild(input);
     item.appendChild(label);
@@ -806,39 +643,20 @@ function renderQuestion(question, isClientQuestion = false) {
   return wrapper;
 }
 
-
+const offerTypeContainer = document.getElementById("offer-type-question");
 const audienceContainer = document.getElementById("audience-questions");
-const clientContainer = document.getElementById("client-questions");
+const businessContainer = document.getElementById("business-questions");
 
-AUDIENCE_QUESTIONS.forEach(question => {
-  audienceContainer.appendChild(renderQuestion(question));
-});
-
-CLIENT_QUESTIONS.forEach(question => {
-  clientContainer.appendChild(renderQuestion(question, true));
-});
-
-
-/*
-|--------------------------------------------------------------------------
-| SELECTION LIMITS
-|--------------------------------------------------------------------------
-*/
+offerTypeContainer.appendChild(renderQuestion(OFFER_TYPE_QUESTION));
+AUDIENCE_QUESTIONS.forEach(question => audienceContainer.appendChild(renderQuestion(question)));
+BUSINESS_QUESTIONS.forEach(question => businessContainer.appendChild(renderQuestion(question)));
 
 function enforceMaximum(questionId, max) {
-
-  const inputs = [
-    ...document.querySelectorAll(
-      `input[name="${questionId}"]`
-    )
-  ];
-
+  const inputs = [...document.querySelectorAll(`input[name="${questionId}"]`)];
   const selected = inputs.filter(input => input.checked);
 
   inputs.forEach(input => {
-
     const wrapper = input.closest(".option");
-
     if (selected.length >= max && !input.checked) {
       input.disabled = true;
       wrapper.classList.add("disabled");
@@ -846,139 +664,61 @@ function enforceMaximum(questionId, max) {
       input.disabled = false;
       wrapper.classList.remove("disabled");
     }
-
   });
 
   const counter = document.getElementById(`${questionId}-count`);
-
-  if (counter) {
-    counter.textContent =
-      `${selected.length} selected${max ? ` · up to ${max}` : ""}`;
-  }
+  if (counter) counter.textContent = `${selected.length} selected · up to ${max}`;
 }
 
-
-/*
-|--------------------------------------------------------------------------
-| STEP NAVIGATION
-|--------------------------------------------------------------------------
-*/
-
 function showStep(stepNumber) {
-
   document.querySelectorAll(".step").forEach(step => {
-    step.classList.toggle(
-      "active",
-      Number(step.dataset.step) === stepNumber
-    );
+    step.classList.toggle("active", Number(step.dataset.step) === stepNumber);
   });
 
   [1, 2, 3].forEach(number => {
-    document
-      .getElementById(`progress-${number}`)
-      .classList.toggle("active", number <= stepNumber);
+    document.getElementById(`progress-${number}`).classList.toggle("active", number <= stepNumber);
   });
 
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
-
 
 document.querySelectorAll("[data-next]").forEach(button => {
-
   button.addEventListener("click", () => {
-
     const next = Number(button.dataset.next);
-
-    if (next === 2 && !validateStepOne()) {
-      return;
-    }
-
+    if (next === 2 && !validateStepOne()) return;
     showStep(next);
   });
-
 });
-
 
 document.querySelectorAll("[data-back]").forEach(button => {
-
-  button.addEventListener("click", () => {
-    showStep(Number(button.dataset.back));
-  });
-
+  button.addEventListener("click", () => showStep(Number(button.dataset.back)));
 });
 
-
-/*
-|--------------------------------------------------------------------------
-| VALIDATION
-|--------------------------------------------------------------------------
-*/
-
 function questionHasSelection(questionId) {
-
-  return Boolean(
-    document.querySelector(
-      `input[name="${questionId}"]:checked`
-    )
-  );
+  return Boolean(document.querySelector(`input[name="${questionId}"]:checked`));
 }
-
 
 function validateStepOne() {
-
   const offer = document.getElementById("offer").value.trim();
-
-  const questionsComplete =
-    AUDIENCE_QUESTIONS.every(question =>
-      questionHasSelection(question.id)
-    );
-
-  const valid = Boolean(offer) && questionsComplete;
-
-  document
-    .getElementById("step1-error")
-    .classList.toggle("visible", !valid);
-
+  const requiredIds = [OFFER_TYPE_QUESTION.id, ...AUDIENCE_QUESTIONS.map(question => question.id)];
+  const complete = requiredIds.every(questionHasSelection);
+  const valid = Boolean(offer) && complete;
+  document.getElementById("step1-error").classList.toggle("visible", !valid);
   return valid;
 }
-
 
 function validateStepTwo() {
-
-  const valid =
-    CLIENT_QUESTIONS.every(question =>
-      questionHasSelection(question.id)
-    );
-
-  document
-    .getElementById("step2-error")
-    .classList.toggle("visible", !valid);
-
+  const requiredQuestions = BUSINESS_QUESTIONS.filter(question => question.required);
+  const valid = requiredQuestions.every(question => questionHasSelection(question.id));
+  document.getElementById("step2-error").classList.toggle("visible", !valid);
   return valid;
 }
 
-
-/*
-|--------------------------------------------------------------------------
-| DATA HELPERS
-|--------------------------------------------------------------------------
-*/
-
 function selectedValues(name) {
-
-  return [
-    ...document.querySelectorAll(
-      `input[name="${name}"]:checked`
-    )
-  ].map(input => input.value);
+  return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(input => input.value);
 }
 
-
 function escapeHTML(value) {
-
   return String(value)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
@@ -987,292 +727,93 @@ function escapeHTML(value) {
     .replaceAll("'", "&#039;");
 }
 
+document.getElementById("audience-form").addEventListener("submit", event => {
+  event.preventDefault();
+  if (!validateStepTwo()) return;
 
-/*
-|--------------------------------------------------------------------------
-| PERSONA SCORING
-|--------------------------------------------------------------------------
-|
-| This is deliberately hidden from the public experience.
-| The score can later be passed to your LLM or CRM.
-|
-*/
-
-function calculatePersona() {
-
-  const scores = {
-    frederick: 0,
-    jonathan: 0,
-    brendan: 0,
-    devon: 0,
-    eli: 0,
-    dave: 0,
-    doug: 0
+  const payload = {
+    schemaVersion: "2.0",
+    reviewType: "audience_behavioral_signal_intake",
+    offer: {
+      name: document.getElementById("offer").value.trim(),
+      type: selectedValues("offer_type")[0] || null,
+      website: document.getElementById("website").value.trim() || null
+    },
+    audienceEvidence: {
+      values: selectedValues("audience_values"),
+      triggerContext: selectedValues("audience_trigger"),
+      emotionalState: selectedValues("audience_emotions"),
+      decisionNeeds: selectedValues("audience_needs"),
+      resistanceSignals: selectedValues("audience_hesitation"),
+      desiredMovement: selectedValues("audience_outcome")
+    },
+    businessEvidence: {
+      providerValues: selectedValues("business_values"),
+      intendedMessage: selectedValues("business_message")
+    },
+    analysisRequest: {
+      status: "pending",
+      intendedSkill: "audience-behavior-analysis",
+      requestedOutputs: [
+        "evidence_vs_inference",
+        "emotional_patterns",
+        "protected_values",
+        "motivational_orientation",
+        "risk_and_uncertainty",
+        "trust_and_autonomy_needs",
+        "likely_behavioral_tendencies",
+        "resistance_patterns",
+        "audience_persona_clusters",
+        "business_audience_alignment",
+        "communication_implications",
+        "confidence_grading"
+      ]
+    },
+    createdAt: new Date().toISOString()
   };
 
-  CLIENT_QUESTIONS.forEach(question => {
+  window.audienceReviewPayload = payload;
+  console.log("Audience Review Payload:", payload);
 
-    const checked = document.querySelectorAll(
-      `input[name="${question.id}"]:checked`
-    );
-
-    checked.forEach(input => {
-
-      const persona = input.dataset.persona;
-      const weight = Number(input.dataset.scoreWeight || 0);
-
-      if (persona && scores.hasOwnProperty(persona)) {
-        scores[persona] += weight;
-      }
-
-    });
-
-  });
-
-  const ranked = Object.entries(scores)
-    .sort((a, b) => b[1] - a[1]);
-
-  const primary = ranked[0];
-
-  let secondary = null;
-
-  if (
-    ranked[1] &&
-    ranked[1][1] > 0 &&
-    ranked[1][1] >= primary[1] * 0.6
-  ) {
-    secondary = ranked[1];
-  }
-
-  return {
-    scores,
-    primary: primary[0],
-    primaryScore: primary[1],
-    secondary: secondary ? secondary[0] : null,
-    secondaryScore: secondary ? secondary[1] : null
-  };
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| RESULTS + STRUCTURED PAYLOAD
-|--------------------------------------------------------------------------
-*/
-
-document
-  .getElementById("audience-form")
-  .addEventListener("submit", event => {
-
-    event.preventDefault();
-
-    if (!validateStepTwo()) {
-      return;
-    }
-
-    const persona = calculatePersona();
-
-    const payload = {
-
-      offer:
-        document.getElementById("offer").value.trim(),
-
-      website:
-        document.getElementById("website").value.trim(),
-
-      audience: {
-        values:
-          selectedValues("audience_values"),
-
-        trigger:
-          selectedValues("audience_trigger"),
-
-        emotions:
-          selectedValues("audience_emotions"),
-
-        hesitation:
-          selectedValues("audience_hesitation"),
-
-        desiredFeeling:
-          selectedValues("audience_desired_feeling")
-      },
-
-      client: {
-        values:
-          selectedValues("client_values"),
-
-        currentSituation:
-          selectedValues("client_situation"),
-
-        desiredSuccess:
-          selectedValues("client_success")
-      },
-
-      persona: {
-        primary: persona.primary,
-        secondary: persona.secondary,
-        scores: persona.scores
-      },
-
-      createdAt:
-        new Date().toISOString()
-    };
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | THIS IS THE OBJECT TO SEND TO YOUR LLM / SERVER
-    |--------------------------------------------------------------------------
-    */
-
-    window.audienceReviewPayload = payload;
-
-    console.log(
-      "Audience Review Payload:",
-      payload
-    );
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | OPTIONAL FUTURE API CONNECTION
-    |--------------------------------------------------------------------------
-    |
-    | Example:
-    |
-    | fetch("/api/audience-review", {
-    |   method: "POST",
-    |   headers: {
-    |     "Content-Type": "application/json"
-    |   },
-    |   body: JSON.stringify(payload)
-    | })
-    |
-    */
-
-
-    renderResults(payload);
-
-    showStep(3);
-  });
-
+  renderResults(payload);
+  showStep(3);
+});
 
 function renderResults(payload) {
-
   const results = document.getElementById("results");
 
-  const primaryPath =
-    PERSONA_PUBLIC_PATHS[
-      payload.persona.primary
-    ];
-
-  const secondaryPath =
-    payload.persona.secondary
-      ? PERSONA_PUBLIC_PATHS[
-          payload.persona.secondary
-        ]
-      : null;
-
-
   results.innerHTML = `
-
-    <h3>
-      ${escapeHTML(payload.offer)}
-    </h3>
-
+    <h3>${escapeHTML(payload.offer.name)}</h3>
+    <p>
+      We've captured the signals needed for a deeper audience review. Rather than simply repeating your answers back to you, the next analysis layer is designed to look for patterns in how this audience approaches the decision and where your offering can connect authentically with those patterns.
+    </p>
 
     <div class="result-group">
-
-      <div class="result-label">
-        What's important to your audience
-      </div>
-
+      <div class="result-label">What will be analyzed</div>
       <p class="result-text">
-        ${escapeHTML(
-          payload.audience.values.join(", ")
-        )}
+        Emotional state, protected values, likely motivation, perceived risk, trust requirements, decision resistance, desired movement, and recurring audience patterns.
       </p>
-
     </div>
 
-
     <div class="result-group">
-
-      <div class="result-label">
-        What they may be feeling
-      </div>
-
+      <div class="result-label">What the review should reveal</div>
       <p class="result-text">
-        ${escapeHTML(
-          payload.audience.emotions.join(", ")
-        )}
+        Distinct audience personas, likely behavioral tendencies, where your values align with theirs, what may create resistance, and communication approaches that support a more meaningful connection.
       </p>
-
     </div>
 
-
     <div class="result-group">
-
-      <div class="result-label">
-        What may make them hesitate
-      </div>
-
+      <div class="result-label">Evidence standard</div>
       <p class="result-text">
-        ${escapeHTML(
-          payload.audience.hesitation.join(", ")
-        )}
+        The finished review should distinguish what you directly observed from stronger behavioral inferences and lower-confidence hypotheses rather than presenting every interpretation as fact.
       </p>
-
-    </div>
-
-
-    <div class="result-group">
-
-      <div class="result-label">
-        What they want afterward
-      </div>
-
-      <p class="result-text">
-        ${escapeHTML(
-          payload.audience.desiredFeeling.join(", ")
-        )}
-      </p>
-
-    </div>
-
-
-    <div class="result-group">
-
-      <div class="result-label">
-        What seems most important in your own situation
-      </div>
-
-      <p class="result-text">
-        ${escapeHTML(primaryPath)}
-      </p>
-
-      ${
-        secondaryPath
-          ? `
-            <p class="result-text" style="margin-top:8px;color:#444;">
-              There's also some overlap with:
-              ${escapeHTML(secondaryPath)}
-            </p>
-          `
-          : ""
-      }
-
     </div>
 
     <p class="privacy">
-      These answers help us recognize likely audience patterns.
-      They aren't intended to diagnose individual people or assume
-      that every customer thinks or feels the same way.
+      This review is designed to identify recurring human decision patterns, not diagnose individuals or assume everyone in an audience thinks or behaves the same way.
     </p>
   `;
 }
-
 </script>
-
 </body>
 </html>
