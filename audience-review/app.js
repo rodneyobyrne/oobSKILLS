@@ -1,17 +1,20 @@
 (() => {
   const css = document.createElement('link');
   css.rel = 'stylesheet';
-  css.href = './experience.css?v=1';
+  css.href = './experience.css?v=2';
   document.head.appendChild(css);
 
-  const core = document.createElement('script');
-  core.src = './app-core.js?v=1';
-  core.async = false;
-  core.onload = () => {
-    const experience = document.createElement('script');
-    experience.src = './experience.js?v=1';
-    experience.async = false;
-    document.body.appendChild(experience);
-  };
-  document.body.appendChild(core);
+  function loadScript(src, onload) {
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = false;
+    script.onload = onload;
+    document.body.appendChild(script);
+  }
+
+  loadScript('./app-core.js?v=1', () => {
+    loadScript('./validation.js?v=1', () => {
+      loadScript('./experience.js?v=1');
+    });
+  });
 })();
