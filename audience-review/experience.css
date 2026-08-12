@@ -110,7 +110,9 @@ body[data-review-step="3"] .rough-rule { background: #ffffff; }
 .step.is-animating {
   display: block !important;
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   width: 100%;
   will-change: transform, opacity;
   transition: transform var(--motion) cubic-bezier(.2,.75,.2,1), opacity var(--motion) ease;
