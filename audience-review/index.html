@@ -1,0 +1,1278 @@
+Exit code: 0
+Wall time: 1.5 seconds
+Output:
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A guided audience review to uncover what customers value, feel, hesitate over, and need to hear.">
+  <title>Audience Review | oobCREATIVE</title>
+
+  <style>
+    :root {
+      --black: #111111;
+      --white: #ffffff;
+      --off-white: #f7f7f5;
+      --gray: #929292;
+      --dark-gray: #444444;
+      --border: #d7d7d2;
+      --radius: 10px;
+      --max-width: 920px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--off-white);
+      color: var(--black);
+      font-family:
+        Inter,
+        ui-sans-serif,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      line-height: 1.5;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page {
+      width: min(calc(100% - 32px), var(--max-width));
+      margin: 0 auto;
+      padding: 64px 0 96px;
+    }
+
+    .eyebrow {
+      margin: 0 0 16px;
+      font-size: 0.8rem;
+      font-weight: 750;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      line-height: 0.96;
+      letter-spacing: -0.055em;
+    }
+
+    .intro {
+      max-width: 650px;
+      margin: 28px 0 0;
+      font-size: 1.15rem;
+      color: var(--dark-gray);
+    }
+
+    .rule {
+      width: 100%;
+      height: 5px;
+      margin: 42px 0;
+      background: var(--black);
+      transform: rotate(-0.08deg);
+    }
+
+    .progress {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 48px;
+    }
+
+    .progress-bar {
+      height: 6px;
+      flex: 1;
+      background: #dededa;
+    }
+
+    .progress-bar.active {
+      background: var(--black);
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    .section-heading {
+      margin-bottom: 40px;
+    }
+
+    .section-heading h2 {
+      margin: 0 0 8px;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: -0.035em;
+    }
+
+    .section-heading p {
+      max-width: 640px;
+      margin: 0;
+      color: var(--dark-gray);
+    }
+
+    .field {
+      margin-bottom: 48px;
+    }
+
+    .field-label,
+    .question-title {
+      display: block;
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+      font-weight: 750;
+    }
+
+    .question-help {
+      margin: 0 0 18px;
+      color: var(--dark-gray);
+      font-size: 0.95rem;
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 16px 18px;
+      border: 2px solid var(--black);
+      border-radius: var(--radius);
+      background: var(--white);
+      color: var(--black);
+      outline: none;
+    }
+
+    .text-input:focus {
+      box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.1);
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .option {
+      position: relative;
+    }
+
+    .option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .option label {
+      display: flex;
+      min-height: 64px;
+      align-items: center;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--white);
+      cursor: pointer;
+      transition:
+        border-color 120ms ease,
+        background 120ms ease,
+        transform 120ms ease;
+    }
+
+    .option label:hover {
+      border-color: var(--black);
+    }
+
+    .option input:checked + label {
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--white);
+    }
+
+    .option input:focus-visible + label {
+      outline: 3px solid var(--gray);
+      outline-offset: 3px;
+    }
+
+    .option.disabled label {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .selection-count {
+      margin-top: 10px;
+      color: var(--gray);
+      font-size: 0.85rem;
+    }
+
+    .error {
+      display: none;
+      margin: 16px 0;
+      padding: 12px 14px;
+      border-left: 5px solid var(--black);
+      background: #ecece7;
+      font-weight: 650;
+    }
+
+    .error.visible {
+      display: block;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 56px;
+    }
+
+    .button {
+      appearance: none;
+      border: 2px solid var(--black);
+      border-radius: 999px;
+      padding: 13px 22px;
+      background: var(--black);
+      color: var(--white);
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--black);
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .results-card {
+      margin-top: 30px;
+      padding: clamp(24px, 5vw, 48px);
+      border: 2px solid var(--black);
+      border-radius: 18px;
+      background: var(--white);
+    }
+
+    .results-card h3 {
+      margin-top: 0;
+      font-size: 1.6rem;
+    }
+
+    .result-group {
+      padding: 20px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .result-group:first-of-type {
+      border-top: 0;
+    }
+
+    .result-label {
+      margin-bottom: 6px;
+      font-size: 0.77rem;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .result-text {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .privacy {
+      margin-top: 36px;
+      max-width: 650px;
+      color: var(--dark-gray);
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 680px) {
+      .page {
+        padding-top: 38px;
+      }
+
+      .options {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column-reverse;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<main class="page">
+
+  <header>
+    <p class="eyebrow">oobCREATIVE Audience Review</p>
+
+    <h1>Who are you really talking to?</h1>
+
+    <p class="intro">
+      Tell us what you already recognize about your customers.
+      We'll look for the patterns that can help you communicate with them more clearly.
+    </p>
+
+    <div class="rule"></div>
+  </header>
+
+  <div class="progress" aria-label="Form progress">
+    <div class="progress-bar active" id="progress-1"></div>
+    <div class="progress-bar" id="progress-2"></div>
+    <div class="progress-bar" id="progress-3"></div>
+  </div>
+
+  <form id="audience-form">
+
+    <!-- STEP ONE -->
+    <section class="step active" data-step="1">
+
+      <div class="section-heading">
+        <p class="eyebrow">Part 1</p>
+        <h2>Tell us about your audience.</h2>
+        <p>
+          Choose the answers that feel familiar.
+          You don't need to know everything about your customers.
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="offer">
+          What product or service should we review?
+        </label>
+
+        <input
+          class="text-input"
+          type="text"
+          id="offer"
+          name="offer"
+          placeholder="Example: Auto repair, counseling, bookkeeping..."
+          required
+        >
+      </div>
+
+      <div id="audience-questions"></div>
+
+      <div class="error" id="step1-error">
+        Please answer each question before continuing.
+      </div>
+
+      <div class="actions">
+        <span></span>
+        <button class="button" type="button" data-next="2">
+          Next: About You
+        </button>
+      </div>
+
+    </section>
+
+
+    <!-- STEP TWO -->
+    <section class="step" data-step="2">
+
+      <div class="section-heading">
+        <p class="eyebrow">Part 2</p>
+        <h2>Now tell us about you.</h2>
+        <p>
+          What matters to you affects how you communicate,
+          what you protect, and what kind of support is useful.
+        </p>
+      </div>
+
+      <div id="client-questions"></div>
+
+      <div class="field">
+        <label class="field-label" for="website">
+          Website or public page
+          <span style="font-weight:400;color:#929292;">(optional)</span>
+        </label>
+
+        <input
+          class="text-input"
+          type="url"
+          id="website"
+          name="website"
+          placeholder="https://"
+        >
+      </div>
+
+      <div class="error" id="step2-error">
+        Please answer each question before continuing.
+      </div>
+
+      <div class="actions">
+        <button class="button secondary" type="button" data-back="1">
+          Back
+        </button>
+
+        <button class="button" type="submit">
+          Review My Audience
+        </button>
+      </div>
+
+    </section>
+
+
+    <!-- STEP THREE -->
+    <section class="step" data-step="3">
+
+      <div class="section-heading">
+        <p class="eyebrow">Your responses</p>
+        <h2>Here's what we're hearing.</h2>
+        <p>
+          This is the starting point for your Audience Review.
+        </p>
+      </div>
+
+      <div class="results-card" id="results"></div>
+
+      <div class="actions">
+        <button class="button secondary" type="button" data-back="2">
+          Edit Answers
+        </button>
+      </div>
+
+    </section>
+
+  </form>
+
+</main>
+
+
+<script>
+/*
+|--------------------------------------------------------------------------
+| QUESTION CONFIGURATION
+|--------------------------------------------------------------------------
+|
+| Personas remain INTERNAL.
+|
+| Frederick = bottlenecked founder
+| Jonathan  = mission-carrying leader
+| Brendan   = overextended communications lead
+| Devon     = expert with unpackaged value
+| Eli       = responsible AI adopter
+| Dave      = rebuilding leader
+| Doug      = quietly ambitious professional
+|
+*/
+
+const AUDIENCE_QUESTIONS = [
+  {
+    id: "audience_values",
+    title: "What's most important to the people who choose what you offer?",
+    help: "Select up to 5.",
+    max: 5,
+    options: [
+      "Trust",
+      "Quality",
+      "Experience",
+      "Price",
+      "Reliability",
+      "Convenience",
+      "Speed",
+      "Safety",
+      "Clear answers",
+      "Understanding their choices",
+      "Knowing what something will cost",
+      "Avoiding unnecessary expense",
+      "Personal attention",
+      "Reputation",
+      "Recommendations from others",
+      "Feeling understood",
+      "Confidence they're making the right decision",
+      "Flexibility",
+      "Peace of mind",
+      "I'm not sure"
+    ]
+  },
+
+  {
+    id: "audience_trigger",
+    title: "What's usually happening when someone starts looking for what you offer?",
+    help: "Select the situations that sound familiar.",
+    max: 5,
+    options: [
+      "Something has gone wrong",
+      "They need something fixed",
+      "They want to prevent a problem",
+      "They have an important decision to make",
+      "They need help understanding their options",
+      "They're dissatisfied with what they currently have",
+      "They want a better result",
+      "They have a deadline",
+      "They're planning something new",
+      "Someone recommended they look for help",
+      "They're comparing several options",
+      "They've been putting the decision off",
+      "They're ready to move forward",
+      "I'm not sure"
+    ]
+  },
+
+  {
+    id: "audience_emotions",
+    title: "What are they likely feeling at that point?",
+    help: "Select up to 4.",
+    max: 4,
+    options: [
+      "Worried",
+      "Frustrated",
+      "Confused",
+      "Overwhelmed",
+      "Skeptical",
+      "Cautious",
+      "Distrustful",
+      "Pressured",
+      "In a hurry",
+      "Annoyed",
+      "Unsure",
+      "Hopeful",
+      "Curious",
+      "Excited",
+      "Motivated",
+      "Ready",
+      "Relieved to finally be addressing it",
+      "Tired of dealing with the problem",
+      "I'm not sure"
+    ]
+  },
+
+  {
+    id: "audience_hesitation",
+    title: "What most often makes them hesitate?",
+    help: "Select up to 4.",
+    max: 4,
+    options: [
+      "Price",
+      "Trust",
+      "Fear of making the wrong choice",
+      "They don't understand the value",
+      "They don't understand their options",
+      "They don't know enough about us",
+      "They're comparing competitors",
+      "They aren't sure they need it yet",
+      "They don't know what it will cost",
+      "They're worried about committing",
+      "Convenience or scheduling",
+      "They keep putting it off",
+      "They want to handle it themselves",
+      "I'm not sure"
+    ]
+  },
+
+  {
+    id: "audience_desired_feeling",
+    title: "What do they most want to feel after choosing?",
+    help: "Select up to 3.",
+    max: 3,
+    options: [
+      "Confident",
+      "Safe",
+      "Relieved",
+      "In control",
+      "Understood",
+      "Prepared",
+      "Secure",
+      "Taken care of",
+      "Certain they made the right choice",
+      "Free to move on",
+      "Excited about what's next",
+      "Proud of the decision",
+      "I'm not sure"
+    ]
+  }
+];
+
+
+const CLIENT_QUESTIONS = [
+  {
+    id: "client_values",
+    title: "What's most important to you in the work you do?",
+    help: "Select up to 2.",
+    max: 2,
+    scoreWeight: 3,
+
+    options: [
+      {
+        label: "Maintaining high quality",
+        persona: "frederick"
+      },
+      {
+        label: "Protecting the people or purpose behind the work",
+        persona: "jonathan"
+      },
+      {
+        label: "Having the freedom and authority to do the work well",
+        persona: "brendan"
+      },
+      {
+        label: "Preserving the expertise and depth behind what I offer",
+        persona: "devon"
+      },
+      {
+        label: "Being accurate and responsible",
+        persona: "eli"
+      },
+      {
+        label: "Maintaining trust",
+        persona: "dave"
+      },
+      {
+        label: "Keeping my options and future possibilities open",
+        persona: "doug"
+      },
+      {
+        label: "I'm not sure",
+        persona: null
+      }
+    ]
+  },
+
+  {
+    id: "client_situation",
+    title: "Which situation feels most familiar right now?",
+    help: "Select one or two.",
+    max: 2,
+    scoreWeight: 5,
+
+    options: [
+      {
+        label: "Too much still depends on me.",
+        persona: "frederick"
+      },
+      {
+        label: "Our work is harder to explain than it should be.",
+        persona: "jonathan"
+      },
+      {
+        label: "Communication feels disorganized or reactive.",
+        persona: "brendan"
+      },
+      {
+        label: "People don't fully understand the value of what I do.",
+        persona: "devon"
+      },
+      {
+        label: "I want to use AI, but I want to use it responsibly.",
+        persona: "eli"
+      },
+      {
+        label: "Something I've invested in has stalled or gone wrong.",
+        persona: "dave"
+      },
+      {
+        label: "I have an idea or opportunity I'm ready to move forward with.",
+        persona: "doug"
+      }
+    ]
+  },
+
+  {
+    id: "client_success",
+    title: "What would make this feel successful for you?",
+    help: "Select up to 2.",
+    max: 2,
+    scoreWeight: 3,
+
+    options: [
+      {
+        label: "Other people could move forward without everything coming back to me.",
+        persona: "frederick"
+      },
+      {
+        label: "People would understand our work more clearly.",
+        persona: "jonathan"
+      },
+      {
+        label: "Communication would feel more organized and manageable.",
+        persona: "brendan"
+      },
+      {
+        label: "The right people would understand why my work is valuable.",
+        persona: "devon"
+      },
+      {
+        label: "I'd know where technology or AI genuinely helps.",
+        persona: "eli"
+      },
+      {
+        label: "I'd feel confident making the next decision.",
+        persona: "dave"
+      },
+      {
+        label: "I'd have something real enough to put in front of people and test.",
+        persona: "doug"
+      }
+    ]
+  }
+];
+
+
+const PERSONA_PUBLIC_PATHS = {
+  frederick: "Help my team move without everything coming through me.",
+  jonathan: "Help us explain the work clearly without losing its meaning.",
+  brendan: "Help communication stop feeling chaotic.",
+  devon: "Help people understand the value of what I do.",
+  eli: "Help us use AI where it genuinely improves the work.",
+  dave: "Help me recover this project without repeating the same mistake.",
+  doug: "Help me turn this idea into something real enough to test."
+};
+
+
+/*
+|--------------------------------------------------------------------------
+| RENDER QUESTIONS
+|--------------------------------------------------------------------------
+*/
+
+function renderQuestion(question, isClientQuestion = false) {
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "field question";
+  wrapper.dataset.question = question.id;
+
+  const title = document.createElement("p");
+  title.className = "question-title";
+  title.textContent = question.title;
+
+  const help = document.createElement("p");
+  help.className = "question-help";
+  help.textContent = question.help;
+
+  const options = document.createElement("div");
+  options.className = "options";
+
+  question.options.forEach((option, index) => {
+
+    const optionData =
+      typeof option === "string"
+        ? { label: option, persona: null }
+        : option;
+
+    const item = document.createElement("div");
+    item.className = "option";
+
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.id = `${question.id}-${index}`;
+    input.name = question.id;
+    input.value = optionData.label;
+
+    if (optionData.persona) {
+      input.dataset.persona = optionData.persona;
+    }
+
+    if (isClientQuestion && question.scoreWeight) {
+      input.dataset.scoreWeight = question.scoreWeight;
+    }
+
+    const label = document.createElement("label");
+    label.htmlFor = input.id;
+    label.textContent = optionData.label;
+
+    input.addEventListener("change", () => {
+      enforceMaximum(question.id, question.max);
+    });
+
+    item.appendChild(input);
+    item.appendChild(label);
+    options.appendChild(item);
+  });
+
+  const count = document.createElement("div");
+  count.className = "selection-count";
+  count.id = `${question.id}-count`;
+
+  wrapper.appendChild(title);
+  wrapper.appendChild(help);
+  wrapper.appendChild(options);
+  wrapper.appendChild(count);
+
+  return wrapper;
+}
+
+
+const audienceContainer = document.getElementById("audience-questions");
+const clientContainer = document.getElementById("client-questions");
+
+AUDIENCE_QUESTIONS.forEach(question => {
+  audienceContainer.appendChild(renderQuestion(question));
+});
+
+CLIENT_QUESTIONS.forEach(question => {
+  clientContainer.appendChild(renderQuestion(question, true));
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| SELECTION LIMITS
+|--------------------------------------------------------------------------
+*/
+
+function enforceMaximum(questionId, max) {
+
+  const inputs = [
+    ...document.querySelectorAll(
+      `input[name="${questionId}"]`
+    )
+  ];
+
+  const selected = inputs.filter(input => input.checked);
+
+  inputs.forEach(input => {
+
+    const wrapper = input.closest(".option");
+
+    if (selected.length >= max && !input.checked) {
+      input.disabled = true;
+      wrapper.classList.add("disabled");
+    } else {
+      input.disabled = false;
+      wrapper.classList.remove("disabled");
+    }
+
+  });
+
+  const counter = document.getElementById(`${questionId}-count`);
+
+  if (counter) {
+    counter.textContent =
+      `${selected.length} selected${max ? ` · up to ${max}` : ""}`;
+  }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| STEP NAVIGATION
+|--------------------------------------------------------------------------
+*/
+
+function showStep(stepNumber) {
+
+  document.querySelectorAll(".step").forEach(step => {
+    step.classList.toggle(
+      "active",
+      Number(step.dataset.step) === stepNumber
+    );
+  });
+
+  [1, 2, 3].forEach(number => {
+    document
+      .getElementById(`progress-${number}`)
+      .classList.toggle("active", number <= stepNumber);
+  });
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+document.querySelectorAll("[data-next]").forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    const next = Number(button.dataset.next);
+
+    if (next === 2 && !validateStepOne()) {
+      return;
+    }
+
+    showStep(next);
+  });
+
+});
+
+
+document.querySelectorAll("[data-back]").forEach(button => {
+
+  button.addEventListener("click", () => {
+    showStep(Number(button.dataset.back));
+  });
+
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| VALIDATION
+|--------------------------------------------------------------------------
+*/
+
+function questionHasSelection(questionId) {
+
+  return Boolean(
+    document.querySelector(
+      `input[name="${questionId}"]:checked`
+    )
+  );
+}
+
+
+function validateStepOne() {
+
+  const offer = document.getElementById("offer").value.trim();
+
+  const questionsComplete =
+    AUDIENCE_QUESTIONS.every(question =>
+      questionHasSelection(question.id)
+    );
+
+  const valid = Boolean(offer) && questionsComplete;
+
+  document
+    .getElementById("step1-error")
+    .classList.toggle("visible", !valid);
+
+  return valid;
+}
+
+
+function validateStepTwo() {
+
+  const valid =
+    CLIENT_QUESTIONS.every(question =>
+      questionHasSelection(question.id)
+    );
+
+  document
+    .getElementById("step2-error")
+    .classList.toggle("visible", !valid);
+
+  return valid;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| DATA HELPERS
+|--------------------------------------------------------------------------
+*/
+
+function selectedValues(name) {
+
+  return [
+    ...document.querySelectorAll(
+      `input[name="${name}"]:checked`
+    )
+  ].map(input => input.value);
+}
+
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| PERSONA SCORING
+|--------------------------------------------------------------------------
+|
+| This is deliberately hidden from the public experience.
+| The score can later be passed to your LLM or CRM.
+|
+*/
+
+function calculatePersona() {
+
+  const scores = {
+    frederick: 0,
+    jonathan: 0,
+    brendan: 0,
+    devon: 0,
+    eli: 0,
+    dave: 0,
+    doug: 0
+  };
+
+  CLIENT_QUESTIONS.forEach(question => {
+
+    const checked = document.querySelectorAll(
+      `input[name="${question.id}"]:checked`
+    );
+
+    checked.forEach(input => {
+
+      const persona = input.dataset.persona;
+      const weight = Number(input.dataset.scoreWeight || 0);
+
+      if (persona && scores.hasOwnProperty(persona)) {
+        scores[persona] += weight;
+      }
+
+    });
+
+  });
+
+  const ranked = Object.entries(scores)
+    .sort((a, b) => b[1] - a[1]);
+
+  const primary = ranked[0];
+
+  let secondary = null;
+
+  if (
+    ranked[1] &&
+    ranked[1][1] > 0 &&
+    ranked[1][1] >= primary[1] * 0.6
+  ) {
+    secondary = ranked[1];
+  }
+
+  return {
+    scores,
+    primary: primary[0],
+    primaryScore: primary[1],
+    secondary: secondary ? secondary[0] : null,
+    secondaryScore: secondary ? secondary[1] : null
+  };
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| RESULTS + STRUCTURED PAYLOAD
+|--------------------------------------------------------------------------
+*/
+
+document
+  .getElementById("audience-form")
+  .addEventListener("submit", event => {
+
+    event.preventDefault();
+
+    if (!validateStepTwo()) {
+      return;
+    }
+
+    const persona = calculatePersona();
+
+    const payload = {
+
+      offer:
+        document.getElementById("offer").value.trim(),
+
+      website:
+        document.getElementById("website").value.trim(),
+
+      audience: {
+        values:
+          selectedValues("audience_values"),
+
+        trigger:
+          selectedValues("audience_trigger"),
+
+        emotions:
+          selectedValues("audience_emotions"),
+
+        hesitation:
+          selectedValues("audience_hesitation"),
+
+        desiredFeeling:
+          selectedValues("audience_desired_feeling")
+      },
+
+      client: {
+        values:
+          selectedValues("client_values"),
+
+        currentSituation:
+          selectedValues("client_situation"),
+
+        desiredSuccess:
+          selectedValues("client_success")
+      },
+
+      persona: {
+        primary: persona.primary,
+        secondary: persona.secondary,
+        scores: persona.scores
+      },
+
+      createdAt:
+        new Date().toISOString()
+    };
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | THIS IS THE OBJECT TO SEND TO YOUR LLM / SERVER
+    |--------------------------------------------------------------------------
+    */
+
+    window.audienceReviewPayload = payload;
+
+    console.log(
+      "Audience Review Payload:",
+      payload
+    );
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | OPTIONAL FUTURE API CONNECTION
+    |--------------------------------------------------------------------------
+    |
+    | Example:
+    |
+    | fetch("/api/audience-review", {
+    |   method: "POST",
+    |   headers: {
+    |     "Content-Type": "application/json"
+    |   },
+    |   body: JSON.stringify(payload)
+    | })
+    |
+    */
+
+
+    renderResults(payload);
+
+    showStep(3);
+  });
+
+
+function renderResults(payload) {
+
+  const results = document.getElementById("results");
+
+  const primaryPath =
+    PERSONA_PUBLIC_PATHS[
+      payload.persona.primary
+    ];
+
+  const secondaryPath =
+    payload.persona.secondary
+      ? PERSONA_PUBLIC_PATHS[
+          payload.persona.secondary
+        ]
+      : null;
+
+
+  results.innerHTML = `
+
+    <h3>
+      ${escapeHTML(payload.offer)}
+    </h3>
+
+
+    <div class="result-group">
+
+      <div class="result-label">
+        What's important to your audience
+      </div>
+
+      <p class="result-text">
+        ${escapeHTML(
+          payload.audience.values.join(", ")
+        )}
+      </p>
+
+    </div>
+
+
+    <div class="result-group">
+
+      <div class="result-label">
+        What they may be feeling
+      </div>
+
+      <p class="result-text">
+        ${escapeHTML(
+          payload.audience.emotions.join(", ")
+        )}
+      </p>
+
+    </div>
+
+
+    <div class="result-group">
+
+      <div class="result-label">
+        What may make them hesitate
+      </div>
+
+      <p class="result-text">
+        ${escapeHTML(
+          payload.audience.hesitation.join(", ")
+        )}
+      </p>
+
+    </div>
+
+
+    <div class="result-group">
+
+      <div class="result-label">
+        What they want afterward
+      </div>
+
+      <p class="result-text">
+        ${escapeHTML(
+          payload.audience.desiredFeeling.join(", ")
+        )}
+      </p>
+
+    </div>
+
+
+    <div class="result-group">
+
+      <div class="result-label">
+        What seems most important in your own situation
+      </div>
+
+      <p class="result-text">
+        ${escapeHTML(primaryPath)}
+      </p>
+
+      ${
+        secondaryPath
+          ? `
+            <p class="result-text" style="margin-top:8px;color:#444;">
+              There's also some overlap with:
+              ${escapeHTML(secondaryPath)}
+            </p>
+          `
+          : ""
+      }
+
+    </div>
+
+    <p class="privacy">
+      These answers help us recognize likely audience patterns.
+      They aren't intended to diagnose individual people or assume
+      that every customer thinks or feels the same way.
+    </p>
+  `;
+}
+
+</script>
+
+</body>
+</html>
