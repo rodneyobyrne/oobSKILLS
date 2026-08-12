@@ -228,12 +228,19 @@
       font-size: 1.6rem;
     }
 
+    .results-card h4 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+    }
+
     .results-card p { max-width: 700px; }
 
     .result-group {
-      padding: 20px 0;
+      padding: 22px 0;
       border-top: 1px solid var(--border);
     }
+
+    .result-group:first-of-type { border-top: 0; }
 
     .result-label {
       margin-bottom: 6px;
@@ -247,6 +254,26 @@
     .result-text {
       margin: 0;
       font-size: 1.05rem;
+    }
+
+    .persona-list {
+      display: grid;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .persona-card {
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      background: var(--off-white);
+    }
+
+    .persona-card p { margin: 8px 0 0; }
+
+    .signal-list {
+      margin: 8px 0 0;
+      padding-left: 20px;
     }
 
     .privacy {
@@ -272,7 +299,7 @@
     <p class="eyebrow">oobCREATIVE Audience Review</p>
     <h1>What connects people to what you offer?</h1>
     <p class="intro">
-      Tell us what you already recognize about the people involved with your product or service. We’ll use those observations to look for emotional and behavioral patterns that can help communication connect more clearly.
+      Tell us what you already recognize about the people involved with your product or service. We’ll use those observations to identify emotional and behavioral patterns and show where your offering can connect most clearly.
     </p>
     <div class="rule"></div>
   </header>
@@ -330,16 +357,16 @@
 
       <div class="actions">
         <button class="button secondary" type="button" data-back="1">Back</button>
-        <button class="button" type="submit">Prepare Audience Review</button>
+        <button class="button" type="submit">Show My Audience Insights</button>
       </div>
     </section>
 
     <section class="step" data-step="3">
       <div class="section-heading">
         <p class="eyebrow">Audience Review</p>
-        <h2>Your behavioral review is ready for analysis.</h2>
+        <h2>Your strongest audience connections.</h2>
         <p>
-          Your answers are now structured as audience evidence. The next layer can evaluate emotional patterns, likely decision behavior, trust and resistance signals, and authentic communication opportunities.
+          These insights are generated automatically from the patterns in your answers. They are designed to show where your values and offering align with what your audience is likely trying to protect, solve, or achieve.
         </p>
       </div>
 
@@ -378,29 +405,11 @@ const AUDIENCE_QUESTIONS = [
     help: "Select up to 5.",
     max: 5,
     options: [
-      "Trust",
-      "Quality",
-      "Price",
-      "Reliability",
-      "Safety",
-      "Convenience",
-      "Speed",
-      "Expertise",
-      "Independence",
-      "Control",
-      "Clear information",
-      "Being treated fairly",
-      "Being understood",
-      "Belonging or connection",
-      "Recognition or status",
-      "Personal values",
-      "Avoiding unnecessary cost",
-      "Protecting people they care about",
-      "Flexibility",
-      "Peace of mind",
-      "Opportunity or improvement",
-      "Enjoyment",
-      "I'm not sure"
+      "Trust", "Quality", "Price", "Reliability", "Safety", "Convenience", "Speed", "Expertise",
+      "Independence", "Control", "Clear information", "Being treated fairly", "Being understood",
+      "Belonging or connection", "Recognition or status", "Personal values", "Avoiding unnecessary cost",
+      "Protecting people they care about", "Flexibility", "Peace of mind", "Opportunity or improvement",
+      "Enjoyment", "I'm not sure"
     ]
   },
   {
@@ -409,22 +418,13 @@ const AUDIENCE_QUESTIONS = [
     help: "Select up to 4.",
     max: 4,
     options: [
-      "Something has gone wrong",
-      "They want to prevent something from going wrong",
-      "They're dissatisfied with their current situation",
-      "They want something better",
-      "They have an immediate need",
-      "They have an upcoming deadline or event",
-      "They're making an important decision",
-      "They're comparing alternatives",
-      "Someone recommended it",
-      "They're planning for the future",
-      "Something in their life or business has changed",
-      "They want to try something new",
-      "They want to improve themselves or their situation",
-      "They're supporting someone else",
-      "They're simply curious",
-      "I'm not sure"
+      "Something has gone wrong", "They want to prevent something from going wrong",
+      "They're dissatisfied with their current situation", "They want something better",
+      "They have an immediate need", "They have an upcoming deadline or event",
+      "They're making an important decision", "They're comparing alternatives", "Someone recommended it",
+      "They're planning for the future", "Something in their life or business has changed",
+      "They want to try something new", "They want to improve themselves or their situation",
+      "They're supporting someone else", "They're simply curious", "I'm not sure"
     ]
   },
   {
@@ -433,27 +433,10 @@ const AUDIENCE_QUESTIONS = [
     help: "Select up to 4.",
     max: 4,
     options: [
-      "Worried",
-      "Frustrated",
-      "Confused",
-      "Overwhelmed",
-      "Skeptical",
-      "Cautious",
-      "Distrustful",
-      "Pressured",
-      "Vulnerable",
-      "Uncertain",
-      "Hopeful",
-      "Curious",
-      "Excited",
-      "Motivated",
-      "Ambitious",
-      "Responsible for someone else",
-      "Ready for change",
-      "Relieved to finally be doing something",
-      "Tired of the current situation",
-      "Confident",
-      "I'm not sure"
+      "Worried", "Frustrated", "Confused", "Overwhelmed", "Skeptical", "Cautious", "Distrustful",
+      "Pressured", "Vulnerable", "Uncertain", "Hopeful", "Curious", "Excited", "Motivated", "Ambitious",
+      "Responsible for someone else", "Ready for change", "Relieved to finally be doing something",
+      "Tired of the current situation", "Confident", "I'm not sure"
     ]
   },
   {
@@ -462,25 +445,12 @@ const AUDIENCE_QUESTIONS = [
     help: "Select up to 4.",
     max: 4,
     options: [
-      "More information",
-      "Reassurance",
-      "Proof that it works",
-      "Expert guidance",
-      "Recommendations from other people",
-      "Time to think",
-      "Clear choices",
-      "Someone to make it easier",
-      "Confidence they're not making a mistake",
-      "Control over the decision",
-      "A clear price",
-      "Lower financial risk",
-      "Convenience",
-      "Permission or approval from someone else",
-      "Agreement from other people involved",
-      "A reason to act now",
-      "Inspiration or possibility",
-      "A personal connection",
-      "I'm not sure"
+      "More information", "Reassurance", "Proof that it works", "Expert guidance",
+      "Recommendations from other people", "Time to think", "Clear choices", "Someone to make it easier",
+      "Confidence they're not making a mistake", "Control over the decision", "A clear price",
+      "Lower financial risk", "Convenience", "Permission or approval from someone else",
+      "Agreement from other people involved", "A reason to act now", "Inspiration or possibility",
+      "A personal connection", "I'm not sure"
     ]
   },
   {
@@ -489,25 +459,12 @@ const AUDIENCE_QUESTIONS = [
     help: "Select up to 4.",
     max: 4,
     options: [
-      "Price",
-      "Uncertainty",
-      "Fear of making the wrong choice",
-      "Lack of trust",
-      "Not enough information",
-      "Too much information",
-      "They don't understand the value",
-      "They don't understand the differences between options",
-      "They don't believe the claims",
-      "They don't feel ready",
-      "They don't feel enough urgency",
-      "They want someone else's opinion",
-      "They don't want to feel pressured",
-      "Changing feels difficult",
-      "They're satisfied enough with what they already have",
-      "Time or convenience",
-      "The decision involves too many people",
-      "They keep putting it off",
-      "I'm not sure"
+      "Price", "Uncertainty", "Fear of making the wrong choice", "Lack of trust", "Not enough information",
+      "Too much information", "They don't understand the value", "They don't understand the differences between options",
+      "They don't believe the claims", "They don't feel ready", "They don't feel enough urgency",
+      "They want someone else's opinion", "They don't want to feel pressured", "Changing feels difficult",
+      "They're satisfied enough with what they already have", "Time or convenience",
+      "The decision involves too many people", "They keep putting it off", "I'm not sure"
     ]
   },
   {
@@ -516,25 +473,12 @@ const AUDIENCE_QUESTIONS = [
     help: "Select up to 4.",
     max: 4,
     options: [
-      "I want the problem gone",
-      "I want to feel confident",
-      "I want to feel safe",
-      "I want greater control",
-      "I want less stress",
-      "I want to feel understood",
-      "I want something I can depend on",
-      "I want to save time",
-      "I want to save money",
-      "I want to make progress",
-      "I want something better than I have now",
-      "I want new possibilities",
-      "I want to feel prepared",
-      "I want to belong or participate",
-      "I want to feel proud of my choice",
-      "I want to help someone else",
-      "I want to enjoy the experience",
-      "I want to stop thinking about this",
-      "I'm not sure"
+      "I want the problem gone", "I want to feel confident", "I want to feel safe", "I want greater control",
+      "I want less stress", "I want to feel understood", "I want something I can depend on", "I want to save time",
+      "I want to save money", "I want to make progress", "I want something better than I have now",
+      "I want new possibilities", "I want to feel prepared", "I want to belong or participate",
+      "I want to feel proud of my choice", "I want to help someone else", "I want to enjoy the experience",
+      "I want to stop thinking about this", "I'm not sure"
     ]
   }
 ];
@@ -547,26 +491,10 @@ const BUSINESS_QUESTIONS = [
     max: 4,
     required: true,
     options: [
-      "Quality",
-      "Expertise",
-      "Honesty",
-      "Fairness",
-      "Reliability",
-      "Personal attention",
-      "Responsibility",
-      "Safety",
-      "Innovation",
-      "Creativity",
-      "Affordability",
-      "Convenience",
-      "Independence",
-      "Community",
-      "Human connection",
-      "Helping people understand their choices",
-      "Giving people control",
-      "Creating meaningful results",
-      "Long-term relationships",
-      "Something else"
+      "Quality", "Expertise", "Honesty", "Fairness", "Reliability", "Personal attention", "Responsibility",
+      "Safety", "Innovation", "Creativity", "Affordability", "Convenience", "Independence", "Community",
+      "Human connection", "Helping people understand their choices", "Giving people control",
+      "Creating meaningful results", "Long-term relationships", "Something else"
     ]
   },
   {
@@ -576,21 +504,78 @@ const BUSINESS_QUESTIONS = [
     max: 2,
     required: false,
     options: [
-      "We're experienced",
-      "We're trustworthy",
-      "We care about quality",
-      "We understand their situation",
-      "We make things easier",
-      "We offer good value",
-      "We give people clear choices",
-      "We're different from the alternatives",
-      "We help prevent problems",
-      "We help people move forward",
-      "We care about the outcome",
-      "We stand behind our work",
-      "Something else",
-      "I'm not sure"
+      "We're experienced", "We're trustworthy", "We care about quality", "We understand their situation",
+      "We make things easier", "We offer good value", "We give people clear choices",
+      "We're different from the alternatives", "We help prevent problems", "We help people move forward",
+      "We care about the outcome", "We stand behind our work", "Something else", "I'm not sure"
     ]
+  }
+];
+
+const PERSONA_PATTERNS = [
+  {
+    id: "confidence_seeker",
+    name: "Confidence-Seeking Decision Maker",
+    signals: ["Trust", "Clear information", "Expertise", "Uncertain", "Cautious", "More information", "Expert guidance", "Proof that it works", "Confidence they're not making a mistake", "Fear of making the wrong choice", "I want to feel confident"],
+    goal: "make a good decision without feeling exposed to unnecessary uncertainty",
+    connect: "clarity, visible expertise, understandable proof, and clear expectations",
+    resistance: "vague claims, unexplained jargon, pressure, or expecting them to understand the service before you explain it"
+  },
+  {
+    id: "risk_reducer",
+    name: "Risk-Aware Evaluator",
+    signals: ["Safety", "Reliability", "Peace of mind", "Avoiding unnecessary cost", "Worried", "Vulnerable", "Lower financial risk", "Proof that it works", "Lack of trust", "Uncertainty", "I want to feel safe", "I want something I can depend on"],
+    goal: "reduce the chance of an expensive, disruptive, or consequential mistake",
+    connect: "reliability, transparent limits, evidence, and realistic expectations",
+    resistance: "fear amplification, artificial urgency, hidden costs, or unsupported certainty"
+  },
+  {
+    id: "problem_solver",
+    name: "Problem-Focused Customer",
+    signals: ["Something has gone wrong", "They have an immediate need", "Frustrated", "Tired of the current situation", "Someone to make it easier", "Convenience", "Time or convenience", "I want the problem gone", "I want less stress", "I want to stop thinking about this"],
+    goal: "remove a specific problem with as little additional friction as possible",
+    connect: "a simple path, practical outcomes, responsiveness, and reduced effort",
+    resistance: "complexity, long explanations before relevance is clear, or adding work to an already frustrating situation"
+  },
+  {
+    id: "progress_seeker",
+    name: "Progress-Seeking Customer",
+    signals: ["Opportunity or improvement", "They want something better", "They want to improve themselves or their situation", "Hopeful", "Motivated", "Ambitious", "Ready for change", "Inspiration or possibility", "I want to make progress", "I want something better than I have now", "I want new possibilities"],
+    goal: "move toward a better result, opportunity, or version of their current situation",
+    connect: "visible outcomes, possibility, momentum, and a credible path forward",
+    resistance: "generic promises, unclear differentiation, or communication that focuses only on avoiding problems"
+  },
+  {
+    id: "autonomy_seeker",
+    name: "Control-Seeking Evaluator",
+    signals: ["Independence", "Control", "Being treated fairly", "Clear information", "Clear choices", "Control over the decision", "Time to think", "They don't want to feel pressured", "I want greater control", "I want to feel prepared"],
+    goal: "retain ownership of the decision while getting enough guidance to make it well",
+    connect: "choices, explanation, transparent tradeoffs, and room to decide",
+    resistance: "controlling language, forced urgency, opaque recommendations, or being told what they have to do"
+  },
+  {
+    id: "relationship_seeker",
+    name: "Relationship-Driven Customer",
+    signals: ["Being understood", "Belonging or connection", "Protecting people they care about", "Recommendations from other people", "A personal connection", "Responsible for someone else", "I want to feel understood", "I want to belong or participate", "I want to help someone else"],
+    goal: "feel understood and confident that the people involved care about the outcome, not just the transaction",
+    connect: "human attention, empathy, continuity, recommendations, and visible care",
+    resistance: "impersonal processes, generic messaging, or communication that treats the decision as purely transactional"
+  },
+  {
+    id: "value_evaluator",
+    name: "Value-Conscious Comparator",
+    signals: ["Price", "Avoiding unnecessary cost", "Being treated fairly", "They're comparing alternatives", "A clear price", "Lower financial risk", "Price", "They don't understand the differences between options", "I want to save money", "I want to feel confident"],
+    goal: "understand what they are paying for and why one option is worth choosing over another",
+    connect: "transparent pricing, understandable differences, evidence of value, and fair tradeoffs",
+    resistance: "opaque packages, unexplained premiums, discount pressure, or claims that do not help them compare"
+  },
+  {
+    id: "convenience_seeker",
+    name: "Convenience-Driven Customer",
+    signals: ["Convenience", "Speed", "Flexibility", "They have an immediate need", "Someone to make it easier", "Convenience", "Time or convenience", "I want to save time", "I want to stop thinking about this"],
+    goal: "get a useful result with minimal time, effort, and coordination",
+    connect: "simplicity, responsiveness, predictable process, and low-friction next steps",
+    resistance: "unnecessary steps, scheduling friction, slow responses, or asking for information that does not feel necessary"
   }
 ];
 
@@ -727,13 +712,168 @@ function escapeHTML(value) {
     .replaceAll("'", "&#039;");
 }
 
+function cleanSignals(values) {
+  return values.filter(value => value !== "I'm not sure" && value !== "Something else");
+}
+
+function scorePersona(pattern, signals) {
+  const matches = pattern.signals.filter(signal => signals.includes(signal));
+  return { ...pattern, score: matches.length, matches };
+}
+
+function inferBehavioralDimensions(payload) {
+  const evidence = [
+    ...payload.audienceEvidence.values,
+    ...payload.audienceEvidence.triggerContext,
+    ...payload.audienceEvidence.emotionalState,
+    ...payload.audienceEvidence.decisionNeeds,
+    ...payload.audienceEvidence.resistanceSignals,
+    ...payload.audienceEvidence.desiredMovement
+  ];
+
+  const hasAny = terms => terms.some(term => evidence.includes(term));
+
+  return {
+    preventionOrientation: hasAny(["Something has gone wrong", "They want to prevent something from going wrong", "Worried", "Cautious", "Safety", "Reliability", "Lower financial risk"]) ? "elevated" : "moderate",
+    uncertainty: hasAny(["Uncertain", "Confused", "More information", "Fear of making the wrong choice", "Uncertainty", "Not enough information"]) ? "elevated" : "moderate",
+    trustRequirement: hasAny(["Trust", "Lack of trust", "Distrustful", "Proof that it works", "Recommendations from other people"]) ? "elevated" : "moderate",
+    autonomyNeed: hasAny(["Control", "Independence", "Clear choices", "Control over the decision", "They don't want to feel pressured"]) ? "elevated" : "moderate",
+    socialInfluence: hasAny(["Recommendations from other people", "Someone recommended it", "Agreement from other people involved", "Permission or approval from someone else"]) ? "meaningful" : "limited",
+    decisionFriction: hasAny(["They keep putting it off", "Time or convenience", "The decision involves too many people", "Changing feels difficult", "They don't feel ready"]) ? "elevated" : "moderate"
+  };
+}
+
+function buildAlignment(providerValues, audienceValues) {
+  const direct = providerValues.filter(value => audienceValues.includes(value));
+
+  const bridges = [];
+  const bridgeMap = {
+    "Expertise": ["Trust", "Quality", "Clear information"],
+    "Honesty": ["Trust", "Being treated fairly", "Clear information"],
+    "Fairness": ["Being treated fairly", "Price", "Trust"],
+    "Reliability": ["Reliability", "Peace of mind", "Trust"],
+    "Personal attention": ["Being understood", "Human connection", "Trust"],
+    "Responsibility": ["Safety", "Trust", "Protecting people they care about"],
+    "Safety": ["Safety", "Peace of mind", "Reliability"],
+    "Innovation": ["Opportunity or improvement", "Quality", "Speed"],
+    "Creativity": ["Opportunity or improvement", "Enjoyment", "Quality"],
+    "Affordability": ["Price", "Avoiding unnecessary cost", "Being treated fairly"],
+    "Convenience": ["Convenience", "Speed", "Flexibility"],
+    "Community": ["Belonging or connection", "Personal values", "Protecting people they care about"],
+    "Human connection": ["Being understood", "Belonging or connection", "Trust"],
+    "Helping people understand their choices": ["Clear information", "Control", "Trust"],
+    "Giving people control": ["Control", "Independence", "Being treated fairly"],
+    "Creating meaningful results": ["Quality", "Opportunity or improvement", "Reliability"],
+    "Long-term relationships": ["Trust", "Reliability", "Belonging or connection"]
+  };
+
+  providerValues.forEach(providerValue => {
+    (bridgeMap[providerValue] || []).forEach(audienceValue => {
+      if (audienceValues.includes(audienceValue)) bridges.push({ providerValue, audienceValue });
+    });
+  });
+
+  return { direct, bridges };
+}
+
+function generateAudienceAnalysis(payload) {
+  const audienceSignals = cleanSignals([
+    ...payload.audienceEvidence.values,
+    ...payload.audienceEvidence.triggerContext,
+    ...payload.audienceEvidence.emotionalState,
+    ...payload.audienceEvidence.decisionNeeds,
+    ...payload.audienceEvidence.resistanceSignals,
+    ...payload.audienceEvidence.desiredMovement
+  ]);
+
+  let rankedPersonas = PERSONA_PATTERNS
+    .map(pattern => scorePersona(pattern, audienceSignals))
+    .filter(persona => persona.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 4);
+
+  if (!rankedPersonas.length) {
+    rankedPersonas = [{
+      id: "general",
+      name: "Practical Decision Maker",
+      score: 1,
+      matches: [],
+      goal: "understand whether the offer fits their situation and is worth acting on",
+      connect: "clear outcomes, relevant examples, realistic expectations, and a simple next step",
+      resistance: "generic claims or communication that does not connect the offer to a recognizable need"
+    }];
+  }
+
+  const providerValues = cleanSignals(payload.businessEvidence.providerValues);
+  const audienceValues = cleanSignals(payload.audienceEvidence.values);
+  const alignment = buildAlignment(providerValues, audienceValues);
+  const dimensions = inferBehavioralDimensions(payload);
+  const primary = rankedPersonas[0];
+
+  const providerPhrase = providerValues.length
+    ? providerValues.slice(0, 3).join(", ")
+    : "the way you deliver your work";
+
+  const strongestConnection = `Your work in ${payload.offer.name}, combined with your emphasis on ${providerPhrase}, is especially well positioned to connect with the ${primary.name}. This audience is trying to ${primary.goal}.`;
+
+  const alignmentText = alignment.direct.length
+    ? `You and this audience directly share values around ${alignment.direct.slice(0, 3).join(", ")}.`
+    : alignment.bridges.length
+      ? `Your value of ${alignment.bridges[0].providerValue} supports their need for ${alignment.bridges[0].audienceValue}.`
+      : `Your strongest opportunity is to translate the values behind your work into outcomes this audience can recognize and judge for themselves.`;
+
+  const likelyBehavior = [];
+  if (dimensions.uncertainty === "elevated") likelyBehavior.push("seek more information or comparison before committing");
+  if (dimensions.trustRequirement === "elevated") likelyBehavior.push("look for proof, recommendations, or visible credibility");
+  if (dimensions.autonomyNeed === "elevated") likelyBehavior.push("respond better when choices and tradeoffs are made visible");
+  if (dimensions.preventionOrientation === "elevated") likelyBehavior.push("pay close attention to risk, reliability, and what could go wrong");
+  if (dimensions.socialInfluence === "meaningful") likelyBehavior.push("use other people's opinions as part of the decision");
+  if (dimensions.decisionFriction === "elevated") likelyBehavior.push("delay when the process feels complicated or demanding");
+  if (!likelyBehavior.length) likelyBehavior.push("compare the relevance and usefulness of the offer before deciding whether to act");
+
+  return {
+    status: "complete",
+    generatedAt: new Date().toISOString(),
+    humanReport: {
+      strongestConnection,
+      alignment: alignmentText,
+      primaryPersona: primary,
+      audiencePersonas: rankedPersonas,
+      likelyBehavior,
+      communicationPriorities: rankedPersonas.slice(0, 3).map(persona => persona.connect),
+      resistanceRisks: rankedPersonas.slice(0, 3).map(persona => persona.resistance)
+    },
+    audienceIntelligence: {
+      observedEvidence: payload.audienceEvidence,
+      providerEvidence: payload.businessEvidence,
+      behavioralDimensions: dimensions,
+      personaClusters: rankedPersonas.map(persona => ({
+        id: persona.id,
+        name: persona.name,
+        score: persona.score,
+        supportingSignals: persona.matches
+      })),
+      providerAudienceAlignment: alignment,
+      confidence: {
+        personaRanking: rankedPersonas[0].score >= 5 ? "strong inference" : rankedPersonas[0].score >= 3 ? "moderate inference" : "working hypothesis",
+        behavioralDimensions: "inference from selected survey signals"
+      },
+      downstreamGuidance: {
+        useFor: ["website copy", "advertising", "social content", "email", "sales language", "campaign planning", "content review"],
+        preserveAgency: true,
+        avoid: ["fear amplification", "manufactured urgency", "unsupported claims", "treating probabilistic patterns as individual certainty"]
+      }
+    }
+  };
+}
+
 document.getElementById("audience-form").addEventListener("submit", event => {
   event.preventDefault();
   if (!validateStepTwo()) return;
 
   const payload = {
-    schemaVersion: "2.0",
-    reviewType: "audience_behavioral_signal_intake",
+    schemaVersion: "3.0",
+    reviewType: "audience_behavioral_analysis",
     offer: {
       name: document.getElementById("offer").value.trim(),
       type: selectedValues("offer_type")[0] || null,
@@ -751,29 +891,16 @@ document.getElementById("audience-form").addEventListener("submit", event => {
       providerValues: selectedValues("business_values"),
       intendedMessage: selectedValues("business_message")
     },
-    analysisRequest: {
-      status: "pending",
-      intendedSkill: "audience-behavior-analysis",
-      requestedOutputs: [
-        "evidence_vs_inference",
-        "emotional_patterns",
-        "protected_values",
-        "motivational_orientation",
-        "risk_and_uncertainty",
-        "trust_and_autonomy_needs",
-        "likely_behavioral_tendencies",
-        "resistance_patterns",
-        "audience_persona_clusters",
-        "business_audience_alignment",
-        "communication_implications",
-        "confidence_grading"
-      ]
-    },
     createdAt: new Date().toISOString()
   };
 
+  const analysis = generateAudienceAnalysis(payload);
+  payload.analysis = analysis;
+
   window.audienceReviewPayload = payload;
+  window.audienceIntelligence = analysis.audienceIntelligence;
   console.log("Audience Review Payload:", payload);
+  console.log("Audience Intelligence:", analysis.audienceIntelligence);
 
   renderResults(payload);
   showStep(3);
@@ -781,36 +908,56 @@ document.getElementById("audience-form").addEventListener("submit", event => {
 
 function renderResults(payload) {
   const results = document.getElementById("results");
+  const report = payload.analysis.humanReport;
+
+  const personaHTML = report.audiencePersonas.map((persona, index) => `
+    <article class="persona-card">
+      <div class="result-label">${index === 0 ? "Strongest fit" : `Audience pattern ${index + 1}`}</div>
+      <h4>${escapeHTML(persona.name)}</h4>
+      <p><strong>What they are trying to do:</strong> ${escapeHTML(persona.goal)}.</p>
+      <p><strong>Connect through:</strong> ${escapeHTML(persona.connect)}.</p>
+      <p><strong>What may push them away:</strong> ${escapeHTML(persona.resistance)}.</p>
+    </article>
+  `).join("");
 
   results.innerHTML = `
+    <div class="result-label">Your strongest audience connection</div>
     <h3>${escapeHTML(payload.offer.name)}</h3>
-    <p>
-      We've captured the signals needed for a deeper audience review. Rather than simply repeating your answers back to you, the next analysis layer is designed to look for patterns in how this audience approaches the decision and where your offering can connect authentically with those patterns.
-    </p>
+    <p class="result-text">${escapeHTML(report.strongestConnection)}</p>
 
     <div class="result-group">
-      <div class="result-label">What will be analyzed</div>
-      <p class="result-text">
-        Emotional state, protected values, likely motivation, perceived risk, trust requirements, decision resistance, desired movement, and recurring audience patterns.
-      </p>
+      <div class="result-label">Why this connection is credible</div>
+      <p class="result-text">${escapeHTML(report.alignment)}</p>
     </div>
 
     <div class="result-group">
-      <div class="result-label">What the review should reveal</div>
-      <p class="result-text">
-        Distinct audience personas, likely behavioral tendencies, where your values align with theirs, what may create resistance, and communication approaches that support a more meaningful connection.
-      </p>
+      <div class="result-label">Likely decision behavior</div>
+      <ul class="signal-list">
+        ${report.likelyBehavior.map(item => `<li>${escapeHTML(item)}</li>`).join("")}
+      </ul>
     </div>
 
     <div class="result-group">
-      <div class="result-label">Evidence standard</div>
-      <p class="result-text">
-        The finished review should distinguish what you directly observed from stronger behavioral inferences and lower-confidence hypotheses rather than presenting every interpretation as fact.
-      </p>
+      <div class="result-label">Your best-fit audience patterns</div>
+      <div class="persona-list">${personaHTML}</div>
+    </div>
+
+    <div class="result-group">
+      <div class="result-label">Communication priorities</div>
+      <ul class="signal-list">
+        ${report.communicationPriorities.map(item => `<li>${escapeHTML(item)}</li>`).join("")}
+      </ul>
+    </div>
+
+    <div class="result-group">
+      <div class="result-label">Avoid creating resistance</div>
+      <ul class="signal-list">
+        ${report.resistanceRisks.map(item => `<li>${escapeHTML(item)}</li>`).join("")}
+      </ul>
     </div>
 
     <p class="privacy">
-      This review is designed to identify recurring human decision patterns, not diagnose individuals or assume everyone in an audience thinks or behaves the same way.
+      These results identify recurring decision patterns supported by your answers. They are intended to guide communication, not diagnose individuals or assume that every person in an audience will behave the same way.
     </p>
   `;
 }
