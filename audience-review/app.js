@@ -27,7 +27,7 @@
       flow.async = false;
       flow.onload = () => {
         const language = document.createElement('script');
-        language.src = './form-language-v5.js?v=3';
+        language.src = './form-language-v5.js?v=4';
         language.async = false;
         language.onload = () => {
           const guidance = document.createElement('script');
