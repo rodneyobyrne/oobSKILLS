@@ -56,11 +56,16 @@
   }
 
   function rolePhrase(domain, title) {
+    const raw = title.trim().toLowerCase();
     if (domain?.family === 'drone_aerial') return 'a drone operator';
-    const role = title.trim().toLowerCase();
-    if (!role) return 'someone doing this work';
-    const article = /^[aeiou]/i.test(role) ? 'an' : 'a';
-    return `${article} ${role}`;
+
+    const professionPattern = /\b(attorney|lawyer|accountant|bookkeeper|consultant|advisor|adviser|coach|strategist|architect|engineer|recruiter|designer|photographer|videographer|copywriter|writer|producer|developer|programmer|mechanic|plumber|electrician|roofer|technician|inspector|surveyor|appraiser|therapist|counselor|psychologist|psychiatrist|dentist|chiropractor|trainer|instructor|teacher|tutor|chef|barber|stylist|realtor|contractor|builder|caregiver|nanny)\b/i;
+    if (professionPattern.test(raw)) {
+      const article = /^[aeiou]/i.test(raw) ? 'an' : 'a';
+      return `${article} ${raw}`;
+    }
+
+    return raw ? `someone working in ${raw}` : 'someone doing this work';
   }
 
   function bestAudiencePattern() {
@@ -139,7 +144,7 @@
 
     if (domain && domain.family !== 'general') {
       const role = rolePhrase(domain, title);
-      step2Bridge.textContent = `As ${role}, you probably already know that customers do not always arrive knowing the right technical solution. They are usually trying to get ${domain.customerNeed}. ${domain.capabilityContrast} Help us understand what you already know about your customers so we can separate common patterns in the field from what you actually see in your work.`;
+      step2Bridge.textContent = `As ${role}, you probably already know that customers do not always arrive knowing the right technical or professional solution. They are usually trying to get ${domain.customerNeed}. ${domain.capabilityContrast} Help us understand what you already know about your customers so we can separate common patterns in the field from what you actually see in your work.`;
       return;
     }
 
