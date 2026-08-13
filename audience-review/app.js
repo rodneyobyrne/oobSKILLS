@@ -53,10 +53,16 @@
         language.src = './form-language-v5.js?v=1';
         language.async = false;
         language.onload = () => {
-          const focus = document.createElement('script');
-          focus.src = './focus-v3.js?v=1';
-          focus.async = false;
-          document.body.appendChild(focus);
+          const guidance = document.createElement('script');
+          guidance.src = './form-guidance-v5.js?v=1';
+          guidance.async = false;
+          guidance.onload = () => {
+            const focus = document.createElement('script');
+            focus.src = './focus-v3.js?v=1';
+            focus.async = false;
+            document.body.appendChild(focus);
+          };
+          document.body.appendChild(guidance);
         };
         document.body.appendChild(language);
       };
