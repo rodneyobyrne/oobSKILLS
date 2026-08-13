@@ -1,23 +1,42 @@
 (() => {
-  const loadCSS = href => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = href;
-    document.head.appendChild(link);
+  const form = document.getElementById('audience-form');
+  const primaryQuestions = document.getElementById('audience-primary-questions');
+  const decisionQuestions = document.getElementById('audience-decision-questions');
+
+  if (!form || !primaryQuestions || !decisionQuestions) return;
+
+  /*
+    app-core.js remains the owner of question definitions and generation.
+    This temporary render target sends each generated audience question directly
+    into its authoritative static step, preserving the analysis contract while
+    avoiding any post-render DOM reparenting.
+  */
+  const audienceRenderTarget = document.createElement('div');
+  audienceRenderTarget.id = 'audience-questions';
+  audienceRenderTarget.hidden = true;
+
+  const primaryQuestionIds = new Set(['audience_values', 'audience_trigger']);
+  audienceRenderTarget.appendChild = node => {
+    const target = primaryQuestionIds.has(node?.dataset?.question)
+      ? primaryQuestions
+      : decisionQuestions;
+    return target.appendChild(node);
   };
 
-  loadCSS('./experience.css?v=3');
-  loadCSS('./flow-v2.css?v=1');
+  form.appendChild(audienceRenderTarget);
 
   const core = document.createElement('script');
-  core.src = './app-core.js?v=3';
+  core.src = './app-core.js?v=4';
   core.async = false;
   core.onload = () => {
+    audienceRenderTarget.remove();
+
     const flow = document.createElement('script');
-    flow.src = './flow-v2.js?v=1';
+    flow.src = './flow-v2.js?v=2';
     flow.async = false;
     document.body.appendChild(flow);
   };
+  core.onerror = () => audienceRenderTarget.remove();
 
   document.body.appendChild(core);
 })();
