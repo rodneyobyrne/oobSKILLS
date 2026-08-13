@@ -36,16 +36,22 @@
   core.onload = () => {
     audienceRenderTarget.remove();
 
-    const flow = document.createElement('script');
-    flow.src = './flow-v2.js?v=2';
-    flow.async = false;
-    flow.onload = () => {
-      const focus = document.createElement('script');
-      focus.src = './focus-v3.js?v=1';
-      focus.async = false;
-      document.body.appendChild(focus);
+    const analysis = document.createElement('script');
+    analysis.src = './analysis-v5.js?v=1';
+    analysis.async = false;
+    analysis.onload = () => {
+      const flow = document.createElement('script');
+      flow.src = './flow-v2.js?v=2';
+      flow.async = false;
+      flow.onload = () => {
+        const focus = document.createElement('script');
+        focus.src = './focus-v3.js?v=1';
+        focus.async = false;
+        document.body.appendChild(focus);
+      };
+      document.body.appendChild(flow);
     };
-    document.body.appendChild(flow);
+    document.body.appendChild(analysis);
   };
   core.onerror = () => audienceRenderTarget.remove();
 
