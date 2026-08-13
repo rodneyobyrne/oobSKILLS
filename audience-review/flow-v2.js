@@ -1,105 +1,17 @@
 (() => {
   const MOTION_MS = 620;
-  const step1 = document.querySelector('.step[data-step="1"]');
-  const originalStep2 = document.querySelector('.step[data-step="2"]');
-  const originalResultStep = document.querySelector('.step[data-step="3"]');
   const form = document.getElementById('audience-form');
   const page = document.querySelector('.page');
-  const oldProgress = document.querySelector('.progress');
+  const stage = document.getElementById('form-stage');
+  const progress = form?.querySelector('.review-progress');
+  const step1 = stage?.querySelector('.step[data-step="1"]');
+  const step2 = stage?.querySelector('.step[data-step="2"]');
+  const step3 = stage?.querySelector('.step[data-step="3"]');
+  const submitButton = document.getElementById('submit-review');
 
-  if (!step1 || !originalStep2 || !originalResultStep || !form || !page) return;
+  if (!form || !page || !stage || !progress || !step1 || !step2 || !step3 || !submitButton) return;
 
-  document.querySelector('.rule')?.classList.replace('rule', 'rough-rule');
-
-  const resultsCard = originalResultStep.querySelector('#results');
-  originalResultStep.remove();
-
-  // Build the three-step sequence around the real questionnaire:
-  // 1) audience evidence, 2) offer + decision context, 3) provider/work evidence.
-  originalStep2.dataset.step = '3';
-  originalStep2.classList.remove('active');
-  originalStep2.querySelector('.eyebrow').textContent = 'Part 3';
-  originalStep2.querySelector('.section-heading h2').textContent = 'Tell us about your work.';
-  originalStep2.querySelector('.section-heading p').innerHTML = '<span id="step3-bridge">Now tell us what matters in how you do the work. We’ll use that alongside what you’ve already shared about your audience and their decision.</span>';
-
-  const step3Back = originalStep2.querySelector('[data-back]');
-  if (step3Back) step3Back.dataset.back = '2';
-
-  const oldStep2Error = originalStep2.querySelector('#step2-error');
-  if (oldStep2Error) oldStep2Error.id = 'step3-error';
-
-  const submitButton = originalStep2.querySelector('#submit-review') || originalStep2.querySelector('button[type="submit"]');
-  if (submitButton) submitButton.textContent = 'Review My Audience';
-
-  const step2 = document.createElement('section');
-  step2.className = 'step';
-  step2.dataset.step = '2';
-  step2.innerHTML = `
-    <div class="section-heading">
-      <p class="eyebrow">Part 2</p>
-      <h2>Tell us about your offer.</h2>
-      <p id="step2-bridge">
-        You’ve already shared useful signals about the people you serve. Now tell us what you offer and what shapes their decision.
-      </p>
-    </div>
-    <div id="offer-step-slot"></div>
-    <div id="audience-decision-questions"></div>
-    <div class="error" id="step2-error">Please complete each question before continuing.</div>
-    <div class="actions">
-      <button class="button secondary" type="button" data-back="1">Back</button>
-      <button class="button" type="button" data-next="3">Next: Your Work</button>
-    </div>
-  `;
-
-  form.insertBefore(step2, originalStep2);
-
-  // Move offer fields out of Step 1 so the experience begins with the audience.
-  const offerInput = document.getElementById('offer');
-  const offerField = offerInput?.closest('.field');
-  const offerType = document.getElementById('offer-type-question');
-  const offerSlot = step2.querySelector('#offer-step-slot');
-  if (offerField) offerSlot.appendChild(offerField);
-  if (offerType) offerSlot.appendChild(offerType);
-
-  // Keep the first two audience questions on Step 1 and move the deeper
-  // decision questions into Step 2.
-  const audienceQuestions = [...document.querySelectorAll('#audience-questions .question')];
-  const decisionContainer = step2.querySelector('#audience-decision-questions');
-  audienceQuestions.slice(2).forEach(question => decisionContainer.appendChild(question));
-
-  const step1Next = step1.querySelector('[data-next]');
-  if (step1Next) step1Next.textContent = 'Next: Your Offer';
-
-  // Replace the simple bars with a sticky visual progress navigator.
-  const progress = oldProgress || document.createElement('div');
-  progress.className = 'review-progress';
-  progress.setAttribute('aria-label', 'Audience Review progress');
-  progress.innerHTML = `
-    <div class="progress-step" data-progress-step="1">
-      <img class="progress-icon progress-icon-step1" src="../branding/oob-NO_LIDcrop.png" alt="">
-      <div class="progress-copy"><span>Step 1</span><strong>Audience</strong></div>
-    </div>
-    <div class="progress-connector" aria-hidden="true"></div>
-    <div class="progress-step" data-progress-step="2">
-      <img class="progress-icon progress-icon-step2" src="../branding/Mark-black.svg" alt="">
-      <div class="progress-copy"><span>Step 2</span><strong>Your offer</strong></div>
-    </div>
-    <div class="progress-connector" aria-hidden="true"></div>
-    <div class="progress-step" data-progress-step="3">
-      <img class="progress-icon progress-icon-step3" src="../branding/oob-BOX.png" alt="">
-      <div class="progress-copy"><span>Step 3</span><strong>Your work</strong></div>
-    </div>
-  `;
-  form.prepend(progress);
-
-  const steps = [...form.querySelectorAll('.step')];
-  const stage = document.createElement('div');
-  stage.id = 'form-stage';
-  const firstStep = steps[0];
-  form.insertBefore(stage, firstStep);
-  steps.forEach(step => stage.appendChild(step));
-
-  steps.forEach(step => step.classList.remove('active', 'is-active'));
+  [step1, step2, step3].forEach(step => step.classList.remove('active', 'is-active'));
   step1.classList.add('is-active');
 
   const processing = document.createElement('div');
@@ -123,6 +35,10 @@
 
   const resultsPanel = document.createElement('div');
   resultsPanel.className = 'results-panel';
+
+  const resultsCard = document.createElement('div');
+  resultsCard.className = 'results-card';
+  resultsCard.id = 'results';
   resultsPanel.appendChild(resultsCard);
 
   const resultsActions = document.createElement('div');
@@ -301,7 +217,6 @@
     next.classList.add('is-animating', direction === 'forward' ? 'enter-right' : 'enter-left');
     const nextHeight = next.offsetHeight;
 
-    // Force the entering position to paint before both panels move.
     next.getBoundingClientRect();
 
     requestAnimationFrame(() => {
@@ -382,7 +297,7 @@
   async function runReview() {
     if (!validateExperienceStep(3)) return;
 
-    if (submitButton) submitButton.disabled = true;
+    submitButton.disabled = true;
 
     document.body.classList.add('is-processing');
     processing.classList.remove('is-complete');
@@ -413,7 +328,7 @@
     resultsStage.classList.add('is-visible');
     processing.classList.remove('is-visible');
 
-    if (submitButton) submitButton.disabled = false;
+    submitButton.disabled = false;
   }
 
   document.addEventListener('submit', event => {
