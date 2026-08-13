@@ -21,42 +21,46 @@
   function updateGuidance() {
     const title = offerInput.value.trim();
     const domain = domainModel();
-    const values = selected('audience_values');
-
-    setHelp(
-      'audience_trigger',
-      values.length
-        ? 'Now tell us when those priorities become important. This helps us distinguish a general preference from something that becomes more important in a specific decision situation.'
-        : 'Select up to 4.'
-    );
+    const audienceValues = selected('audience_values');
+    const decisionNeeds = selected('audience_needs');
+    const hesitation = selected('audience_hesitation');
 
     setHelp(
       'offer_type',
       title
-        ? `Choose the closest fit for ${title}. This helps us interpret how the customer evaluates the decision; it does not limit the analysis.`
-        : 'Choose one.'
+        ? `Choose the closest fit for ${title}. This helps us understand how customers are likely to evaluate the decision; it does not limit the analysis.`
+        : 'Choose the closest fit. This gives us a starting point for understanding how people buy this kind of work.'
     );
 
     if (domain && domain.family !== 'general') {
-      setHelp('audience_emotions', `For ${title}, think about the moment they first realize they may need this kind of help—not how they feel after the work is complete.`);
-      setHelp('audience_needs', 'Think about what would help them move from interest to a confident decision. In this field, the customer may not be able to independently judge every technical choice before hiring.');
-      setHelp('audience_hesitation', `Think about what could make someone delay, compare, or question whether ${title} is necessary, useful, or the right level of solution.`);
-      setHelp('audience_outcome', 'Think about what they need to be able to know, do, feel, or decide once the work is finished.');
+      setHelp('audience_values', `Thinking specifically about people who hire, approve, recommend, use, or benefit from ${title}, what seems to matter most to them? Select up to 4.`);
+      setHelp('audience_trigger', `When does the need for ${title} become real enough that they start looking, comparing, or asking for help? Select up to 4.`);
+      setHelp('audience_emotions', `Think about the moment they first realize they may need ${title}—before they understand every option or technical detail. Select up to 4.`);
+      setHelp('audience_needs', `What seems to help them move from “I may need this” to a confident decision? In this field, customers may not be able to independently judge every professional or technical choice before hiring.`);
+      setHelp('audience_hesitation', `What tends to make them delay, compare, or question whether ${title} is necessary, useful, worth the cost, or the right level of solution? Select up to 4.`);
+      setHelp('audience_outcome', `Once the ${title} work is complete, what do they most need to be able to know, do, feel, decide, protect, or improve? Select up to 4.`);
     } else {
+      setHelp('audience_values', 'Thinking about the people who actually make or influence the decision, what seems to matter most to them? Select up to 4.');
+      setHelp('audience_trigger', 'When does the need become real enough that they start looking, comparing, or asking for help? Select up to 4.');
       setHelp('audience_emotions', 'Think about the moment they first realize they may need this kind of help. Select up to 4.');
-      setHelp('audience_needs', 'Think about what would help them move from interest to a confident decision. Select up to 4.');
-      setHelp('audience_hesitation', 'Think about what could make them delay, compare, or question the choice. Select up to 4.');
-      setHelp('audience_outcome', 'Think about what they need to be different once the work is finished. Select up to 4.');
+      setHelp('audience_needs', 'What helps them move from interest to a confident decision? Select up to 4.');
+      setHelp('audience_hesitation', 'What tends to make them delay, compare, or question the choice? Select up to 4.');
+      setHelp('audience_outcome', 'What do they need to be different once the work is finished? Select up to 4.');
     }
 
+    const customerSignal = [...decisionNeeds, ...hesitation].filter(Boolean).slice(0, 2);
     setHelp(
       'business_values',
-      'Choose up to 4. We’ll test these against the customer concerns already identified and show where they create a credible reason to work with you.'
+      customerSignal.length
+        ? `Choose up to 4. We’ll test these against the customer concerns already emerging—not assume every value is equally relevant to this decision.`
+        : 'Choose up to 4. We’ll connect these standards back to what your customers appear to need from the decision.'
     );
 
     setHelp(
       'business_message',
-      'Optional. Choose up to 2. We’ll compare this with the decision patterns already emerging rather than assume it is what customers most need to hear.'
+      audienceValues.length
+        ? 'Optional. Choose up to 2. We’ll compare this with what your customer answers suggest they most need to hear, understand, or see proved.'
+        : 'Optional. Choose up to 2. We’ll compare this with the customer decision patterns that emerge from the review.'
     );
   }
 
@@ -71,7 +75,7 @@
   const observer = new MutationObserver(mutations => {
     if (mutations.some(mutation => mutation.attributeName === 'data-review-step')) updateGuidance();
   });
-  observer.observe(document.body, { attributes: true });
+  observer.observe(document.body, { attributes: true, attributeFilter: ['data-review-step'] });
 
   updateGuidance();
 })();
