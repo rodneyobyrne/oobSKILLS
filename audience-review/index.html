@@ -290,8 +290,8 @@
     <p class="eyebrow">oobCREATIVE Audience Review</p>
     <h1>What connects people to what you offer?</h1>
     <p class="intro">
-      Tell us what you already recognize about the people involved with your product or service.
-      We’ll look for the human patterns behind their decisions and show where your values can create a stronger, more useful connection.
+      Start with your work. We’ll use that professional context to make the customer questions more relevant,
+      then connect what you know about your customers with the standards you bring to the work.
     </p>
     <div class="rough-rule" aria-hidden="true"></div>
   </header>
@@ -300,17 +300,17 @@
     <div class="review-progress" aria-label="Audience Review progress">
       <div class="progress-step is-current" data-progress-step="1" aria-current="step">
         <img class="progress-icon progress-icon-step1" src="../branding/oob-NO_LIDcrop.png" alt="">
-        <div class="progress-copy"><span>Step 1</span><strong>Audience</strong></div>
+        <div class="progress-copy"><span>Step 1</span><strong>Your work</strong></div>
       </div>
       <div class="progress-connector" aria-hidden="true"></div>
       <div class="progress-step is-future" data-progress-step="2">
         <img class="progress-icon progress-icon-step2" src="../branding/Mark-black.svg" alt="">
-        <div class="progress-copy"><span>Step 2</span><strong>Your offer</strong></div>
+        <div class="progress-copy"><span>Step 2</span><strong>Your customers</strong></div>
       </div>
       <div class="progress-connector" aria-hidden="true"></div>
       <div class="progress-step is-future" data-progress-step="3">
         <img class="progress-icon progress-icon-step3" src="../branding/oob-BOX.png" alt="">
-        <div class="progress-copy"><span>Step 3</span><strong>Your work</strong></div>
+        <div class="progress-copy"><span>Step 3</span><strong>How you work</strong></div>
       </div>
     </div>
 
@@ -318,58 +318,19 @@
       <section class="step active is-active" data-step="1">
         <div class="section-heading">
           <p class="eyebrow">Part 1</p>
-          <h2>Tell us about the audience.</h2>
+          <h2>Tell us about your work.</h2>
           <p>
-            Think broadly about the people involved in the purchase, use, approval, recommendation,
-            funding, participation, or benefit of what you offer.
-          </p>
-        </div>
-
-        <div id="audience-primary-questions"></div>
-
-        <div class="error" id="step1-error">Please complete each question before continuing.</div>
-
-        <div class="actions">
-          <span></span>
-          <button class="button" type="button" data-next="2">Next: Your Offer</button>
-        </div>
-      </section>
-
-      <section class="step" data-step="2">
-        <div class="section-heading">
-          <p class="eyebrow">Part 2</p>
-          <h2>Tell us about your offer.</h2>
-          <p id="step2-bridge">
-            You’ve already shared useful signals about the people you serve. Now tell us what you offer and what shapes their decision.
+            Start with the work itself. You do not need to describe your marketing or define an ideal customer yet.
+            Give us enough professional context to understand what people hire you to do.
           </p>
         </div>
 
         <div class="field">
-          <label class="field-label" for="offer">What product or service should we review?</label>
-          <input class="text-input" type="text" id="offer" name="offer" placeholder="Example: Dog daycare, auto repair, counseling..." required>
+          <label class="field-label" for="offer">What product, service, or professional role should we review?</label>
+          <input class="text-input" type="text" id="offer" name="offer" placeholder="Example: Drone pilot, dog daycare, auto repair, counseling..." required>
         </div>
 
         <div id="offer-type-question"></div>
-        <div id="audience-decision-questions"></div>
-
-        <div class="error" id="step2-error">Please complete each question before continuing.</div>
-
-        <div class="actions">
-          <button class="button secondary" type="button" data-back="1">Back</button>
-          <button class="button" type="button" data-next="3">Next: Your Work</button>
-        </div>
-      </section>
-
-      <section class="step" data-step="3">
-        <div class="section-heading">
-          <p class="eyebrow">Part 3</p>
-          <h2>Tell us about your work.</h2>
-          <p id="step3-bridge">
-            Now tell us what matters in how you do the work. We’ll use that alongside what you’ve already shared about your audience and their decision.
-          </p>
-        </div>
-
-        <div id="business-questions"></div>
 
         <div class="field">
           <label class="field-label" for="website">
@@ -377,6 +338,44 @@
           </label>
           <input class="text-input" type="url" id="website" name="website" placeholder="https://">
         </div>
+
+        <div class="error" id="step1-error">Please complete each required question before continuing.</div>
+
+        <div class="actions">
+          <span></span>
+          <button class="button" type="button" data-next="2">Next: Your Customers</button>
+        </div>
+      </section>
+
+      <section class="step" data-step="2">
+        <div class="section-heading">
+          <p class="eyebrow">Part 2</p>
+          <h2>Help us understand what you already know about your customers.</h2>
+          <p id="step2-bridge">
+            We’ll use what you told us about your work as context, then ask you to confirm what you actually see in the people who hire, approve, recommend, use, or benefit from it.
+          </p>
+        </div>
+
+        <div id="audience-questions"></div>
+
+        <div class="error" id="step2-error">Please complete each question before continuing.</div>
+
+        <div class="actions">
+          <button class="button secondary" type="button" data-back="1">Back</button>
+          <button class="button" type="button" data-next="3">Next: How You Work</button>
+        </div>
+      </section>
+
+      <section class="step" data-step="3">
+        <div class="section-heading">
+          <p class="eyebrow">Part 3</p>
+          <h2>Tell us how you work.</h2>
+          <p id="step3-bridge">
+            We now have the professional context and your observations about the customer decision. Tell us which standards matter most in how you do the work.
+          </p>
+        </div>
+
+        <div id="business-questions"></div>
 
         <div class="error" id="step3-error">Please complete the required question before continuing.</div>
 
@@ -389,6 +388,6 @@
   </form>
 </main>
 
-<script src="./app.js?v=6"></script>
+<script src="./app.js?v=7"></script>
 </body>
 </html>
