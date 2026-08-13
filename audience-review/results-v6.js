@@ -37,10 +37,14 @@
     const moves = risk.moves || [];
     const visibility = report.valueVisibility || {};
     const posts = report.publicAdvice?.posts || [];
-    const primaryPost = posts[0] || '';
-    const additionalPosts = posts.slice(1);
-    const advicePieces = (risk.examples || []).slice(0, 4);
-    const simplifyPieces = [visibility.use, report.opening.opportunity].filter(Boolean).slice(0, 4);
+    const primaryPost = report.publishNow?.copy || posts[0] || '';
+    const additionalPosts = posts.filter(post => post && post !== primaryPost).slice(0, 3);
+    const messageParts = report.messageParts || {};
+    const situationPieces = messageParts.recognizableSituations?.length ? messageParts.recognizableSituations : situations.slice(0, 4);
+    const advicePieces = messageParts.usefulAdvice?.length ? messageParts.usefulAdvice : (risk.examples || []).slice(0, 4);
+    const simplifyPieces = messageParts.simplerDecision?.length
+      ? messageParts.simplerDecision
+      : [visibility.use, report.opening.opportunity].filter(Boolean).slice(0, 4);
 
     results.innerHTML = `
       <header class="results-v6-header">
@@ -86,17 +90,17 @@
           <article class="builder-part">
             <p class="builder-step">01 · Recognizable situation</p>
             <h5>Start where they already are.</h5>
-            <div class="builder-options">${listItems(situations.slice(0, 4))}</div>
+            <div class="builder-options">${listItems(situationPieces.slice(0, 4))}</div>
           </article>
           <article class="builder-part">
             <p class="builder-step">02 · Useful advice</p>
             <h5>Give them something before asking for anything.</h5>
-            <div class="builder-options">${listItems(advicePieces)}</div>
+            <div class="builder-options">${listItems(advicePieces.slice(0, 4))}</div>
           </article>
           <article class="builder-part">
             <p class="builder-step">03 · Simpler decision</p>
             <h5>Show how you reduce uncertainty.</h5>
-            <div class="builder-options">${listItems(simplifyPieces)}</div>
+            <div class="builder-options">${listItems(simplifyPieces.slice(0, 4))}</div>
           </article>
         </div>
       </section>
@@ -161,7 +165,7 @@
         <p><strong>${esc(report.communicationRule.valuesClosing)}</strong></p>
       </section>
 
-      <p class="results-v6-privacy">This review uses high-probability patterns about the field and the survey evidence you provided. It is intended to improve communication—not diagnose individuals, stereotype an audience, or assume every person will respond in the same way.</p>
+      <p class="results-v6-privacy">This review uses high-probability patterns about the field, relationship dynamics, behavioral decision patterns, and the survey evidence you provided. It is intended to improve communication—not diagnose individuals, stereotype an audience, or assume every person will respond in the same way.</p>
     `;
   }
 
