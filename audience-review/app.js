@@ -31,7 +31,7 @@
         language.async = false;
         language.onload = () => {
           const guidance = document.createElement('script');
-          guidance.src = './form-guidance-v5.js?v=3';
+          guidance.src = './form-guidance-v5.js?v=4';
           guidance.async = false;
           guidance.onload = () => {
             const focus = document.createElement('script');
