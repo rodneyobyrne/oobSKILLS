@@ -12,7 +12,7 @@
 
   const languageStyles = document.createElement('link');
   languageStyles.rel = 'stylesheet';
-  languageStyles.href = './form-language-v5.css?v=1';
+  languageStyles.href = './form-language-v5.css?v=2';
   document.head.appendChild(languageStyles);
 
   /*
@@ -50,11 +50,11 @@
       flow.async = false;
       flow.onload = () => {
         const language = document.createElement('script');
-        language.src = './form-language-v5.js?v=1';
+        language.src = './form-language-v5.js?v=2';
         language.async = false;
         language.onload = () => {
           const guidance = document.createElement('script');
-          guidance.src = './form-guidance-v5.js?v=1';
+          guidance.src = './form-guidance-v5.js?v=2';
           guidance.async = false;
           guidance.onload = () => {
             const focus = document.createElement('script');
