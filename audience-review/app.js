@@ -10,6 +10,11 @@
   layout.href = './layout-v3.css?v=1';
   document.head.appendChild(layout);
 
+  const languageStyles = document.createElement('link');
+  languageStyles.rel = 'stylesheet';
+  languageStyles.href = './form-language-v5.css?v=1';
+  document.head.appendChild(languageStyles);
+
   /*
     app-core.js remains the owner of question definitions and generation.
     This temporary render target sends each generated audience question directly
@@ -44,10 +49,16 @@
       flow.src = './flow-v2.js?v=2';
       flow.async = false;
       flow.onload = () => {
-        const focus = document.createElement('script');
-        focus.src = './focus-v3.js?v=1';
-        focus.async = false;
-        document.body.appendChild(focus);
+        const language = document.createElement('script');
+        language.src = './form-language-v5.js?v=1';
+        language.async = false;
+        language.onload = () => {
+          const focus = document.createElement('script');
+          focus.src = './focus-v3.js?v=1';
+          focus.async = false;
+          document.body.appendChild(focus);
+        };
+        document.body.appendChild(language);
       };
       document.body.appendChild(flow);
     };
