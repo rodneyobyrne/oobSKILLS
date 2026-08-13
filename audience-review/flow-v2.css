@@ -85,7 +85,13 @@ body {
   opacity: .22;
 }
 
-/* Keep the form as the viewport while each complete step pushes the next one in. */
+/* The form must expose overflow so sticky progress can use the viewport.
+   The form stage below owns all transition clipping. */
+#audience-form {
+  overflow: visible;
+}
+
+/* Keep the form stage as the viewport while each complete step pushes the next one in. */
 #form-stage {
   position: relative;
   width: 100%;
@@ -115,12 +121,6 @@ body {
 .step.at-rest { transform: translateX(0); }
 .step.exit-left { transform: translateX(-100%); }
 .step.exit-right { transform: translateX(100%); }
-
-/* Remove old bar behavior if the legacy stylesheet is still cached. */
-.progress,
-.progress-bar {
-  display: none !important;
-}
 
 /* Field-level validation: correction appears where the correction is needed. */
 .has-validation-error {
