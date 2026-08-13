@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="A guided audience review that connects business values with the emotional and behavioral realities behind customer decisions.">
   <title>Audience Review | oobCREATIVE</title>
+  <link rel="stylesheet" href="./experience.css?v=4">
+  <link rel="stylesheet" href="./flow-v2.css?v=2">
   <style>
     :root {
       --black: #111111;
@@ -57,29 +59,6 @@
       font-size: 1.15rem;
       color: var(--dark-gray);
     }
-
-    .rule {
-      width: 100%;
-      height: 5px;
-      margin: 42px 0;
-      background: var(--black);
-    }
-
-    .progress {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 48px;
-    }
-
-    .progress-bar {
-      height: 6px;
-      flex: 1;
-      background: #dededa;
-    }
-
-    .progress-bar.active { background: var(--black); }
-    .step { display: none; }
-    .step.active { display: block; }
 
     .section-heading { margin-bottom: 40px; }
 
@@ -314,86 +293,99 @@
       Tell us what you already recognize about the people involved with your product or service.
       We’ll look for the human patterns behind their decisions and show where your values can create a stronger, more useful connection.
     </p>
-    <div class="rule"></div>
+    <div class="rough-rule" aria-hidden="true"></div>
   </header>
 
-  <div class="progress" aria-label="Form progress">
-    <div class="progress-bar active" id="progress-1"></div>
-    <div class="progress-bar" id="progress-2"></div>
-    <div class="progress-bar" id="progress-3"></div>
-  </div>
-
   <form id="audience-form">
-    <section class="step active" data-step="1">
-      <div class="section-heading">
-        <p class="eyebrow">Part 1</p>
-        <h2>Tell us about the audience.</h2>
-        <p>
-          Think broadly about the people involved in the purchase, use, approval, recommendation,
-          funding, participation, or benefit of what you offer.
-        </p>
+    <div class="review-progress" aria-label="Audience Review progress">
+      <div class="progress-step is-current" data-progress-step="1" aria-current="step">
+        <img class="progress-icon progress-icon-step1" src="../branding/oob-NO_LIDcrop.png" alt="">
+        <div class="progress-copy"><span>Step 1</span><strong>Audience</strong></div>
       </div>
-
-      <div class="field">
-        <label class="field-label" for="offer">What product or service should we review?</label>
-        <input class="text-input" type="text" id="offer" name="offer" placeholder="Example: Dog daycare, auto repair, counseling..." required>
+      <div class="progress-connector" aria-hidden="true"></div>
+      <div class="progress-step is-future" data-progress-step="2">
+        <img class="progress-icon progress-icon-step2" src="../branding/Mark-black.svg" alt="">
+        <div class="progress-copy"><span>Step 2</span><strong>Your offer</strong></div>
       </div>
-
-      <div id="offer-type-question"></div>
-      <div id="audience-questions"></div>
-
-      <div class="error" id="step1-error">Please complete each question before continuing.</div>
-
-      <div class="actions">
-        <span></span>
-        <button class="button" type="button" data-next="2">Next: About Your Work</button>
+      <div class="progress-connector" aria-hidden="true"></div>
+      <div class="progress-step is-future" data-progress-step="3">
+        <img class="progress-icon progress-icon-step3" src="../branding/oob-BOX.png" alt="">
+        <div class="progress-copy"><span>Step 3</span><strong>Your work</strong></div>
       </div>
-    </section>
+    </div>
 
-    <section class="step" data-step="2">
-      <div class="section-heading">
-        <p class="eyebrow">Part 2</p>
-        <h2>Now tell us what matters to you.</h2>
-        <p>
-          This helps us find the genuine overlap between how you want to do the work
-          and what your audience needs in order to make a confident decision.
-        </p>
-      </div>
+    <div id="form-stage">
+      <section class="step active is-active" data-step="1">
+        <div class="section-heading">
+          <p class="eyebrow">Part 1</p>
+          <h2>Tell us about the audience.</h2>
+          <p>
+            Think broadly about the people involved in the purchase, use, approval, recommendation,
+            funding, participation, or benefit of what you offer.
+          </p>
+        </div>
 
-      <div id="business-questions"></div>
+        <div id="audience-primary-questions"></div>
 
-      <div class="field">
-        <label class="field-label" for="website">
-          Website or public page <span style="font-weight:400;color:#929292;">(optional)</span>
-        </label>
-        <input class="text-input" type="url" id="website" name="website" placeholder="https://">
-      </div>
+        <div class="error" id="step1-error">Please complete each question before continuing.</div>
 
-      <div class="error" id="step2-error">Please complete the required question before continuing.</div>
+        <div class="actions">
+          <span></span>
+          <button class="button" type="button" data-next="2">Next: Your Offer</button>
+        </div>
+      </section>
 
-      <div class="actions">
-        <button class="button secondary" type="button" data-back="1">Back</button>
-        <button class="button" id="submit-review" type="submit">Show My Audience Insights</button>
-      </div>
-    </section>
+      <section class="step" data-step="2">
+        <div class="section-heading">
+          <p class="eyebrow">Part 2</p>
+          <h2>Tell us about your offer.</h2>
+          <p id="step2-bridge">
+            You’ve already shared useful signals about the people you serve. Now tell us what you offer and what shapes their decision.
+          </p>
+        </div>
 
-    <section class="step" data-step="3">
-      <div class="section-heading">
-        <p class="eyebrow">Audience Review</p>
-        <h2>Where your strongest connection lives.</h2>
-        <p>
-          The report below translates your answers into practical customer insight:
-          what your audience may really be deciding, what helps them trust the choice,
-          and how your communication can remove unnecessary barriers.
-        </p>
-      </div>
+        <div class="field">
+          <label class="field-label" for="offer">What product or service should we review?</label>
+          <input class="text-input" type="text" id="offer" name="offer" placeholder="Example: Dog daycare, auto repair, counseling..." required>
+        </div>
 
-      <div class="results-card" id="results"></div>
+        <div id="offer-type-question"></div>
+        <div id="audience-decision-questions"></div>
 
-      <div class="actions">
-        <button class="button secondary" type="button" data-back="2">Edit Answers</button>
-      </div>
-    </section>
+        <div class="error" id="step2-error">Please complete each question before continuing.</div>
+
+        <div class="actions">
+          <button class="button secondary" type="button" data-back="1">Back</button>
+          <button class="button" type="button" data-next="3">Next: Your Work</button>
+        </div>
+      </section>
+
+      <section class="step" data-step="3">
+        <div class="section-heading">
+          <p class="eyebrow">Part 3</p>
+          <h2>Tell us about your work.</h2>
+          <p id="step3-bridge">
+            Now tell us what matters in how you do the work. We’ll use that alongside what you’ve already shared about your audience and their decision.
+          </p>
+        </div>
+
+        <div id="business-questions"></div>
+
+        <div class="field">
+          <label class="field-label" for="website">
+            Website or public page <span style="font-weight:400;color:#929292;">(optional)</span>
+          </label>
+          <input class="text-input" type="url" id="website" name="website" placeholder="https://">
+        </div>
+
+        <div class="error" id="step3-error">Please complete the required question before continuing.</div>
+
+        <div class="actions">
+          <button class="button secondary" type="button" data-back="2">Back</button>
+          <button class="button" id="submit-review" type="submit">Review My Audience</button>
+        </div>
+      </section>
+    </div>
   </form>
 </main>
 
