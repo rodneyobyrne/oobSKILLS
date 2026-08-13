@@ -4,90 +4,120 @@ Version: 5.0
 
 ## Purpose
 
-The Audience Review turns survey observations into a practical communication playbook without requiring additional human interaction after form submission.
+The Audience Review should turn a short guided interview into a finished customer-facing communication playbook without requiring any additional human interaction after submission.
 
-The form collects evidence. The analysis layer interprets both the **entered profession / job title / service** and the survey evidence. The customer-facing result should help the provider communicate more usefully with the people who are likely to buy, use, approve, recommend, fund, or benefit from the offer.
+The form does not ask the user to perform psychology analysis. It collects professional context, the provider's observations about customers, and the provider's own standards. The analysis layer combines that evidence with high-probability domain knowledge about the entered profession, role, product, or service.
 
-Internal behavioral classifications, domain inference, confidence, evidence provenance, scoring, and reusable audience intelligence remain available to downstream LLM systems but should not be exposed as the primary customer result.
+Internal behavioral classifications, confidence scoring, evidence mechanics, and reusable audience intelligence remain available to downstream LLM systems but should not be exposed as the primary customer result.
 
 ## Core principle
 
-The entered job title or service is not merely a label. It is a high-value contextual signal.
+The system is trying to identify the relationship between:
 
-When the title is clear, the analyzer should use high-probability knowledge about that field to understand:
-
-- what the professional normally does;
-- what customers normally hire that professional to accomplish;
-- what parts of the work are easy or difficult for a customer to independently evaluate;
-- common trigger situations;
-- common risks of buying the wrong level or type of service;
-- common trust questions;
-- useful forms of proof;
-- common terminology barriers;
-- likely jobs-to-be-done, deliverables, and outcomes.
-
-The survey then refines that working model.
-
-The analysis should connect:
-
-1. high-probability domain knowledge about the profession / service;
-2. what the provider genuinely values and delivers;
-3. what the audience appears to be trying to protect, solve, understand, achieve, or feel;
+1. the real-world decision context surrounding the entered profession, role, product, or service;
+2. what the provider already observes about the people making that decision;
+3. what the provider genuinely values and delivers; and
 4. what communication can make that relationship easier to recognize without manipulating the decision.
 
 Human behavior should be treated as patterned and probabilistic, not deterministic.
 
+## Progressive interview sequence
+
+The form should behave like an informed interview, not three disconnected questionnaire pages.
+
+### Step 1 — You and your work
+
+Interview the prospective oobCREATIVE customer first.
+
+Collect:
+
+- the profession, job title, product, service, or professional role being reviewed;
+- the broad offer type;
+- an optional website or public page.
+
+This step establishes the professional context before asking the user to analyze customers.
+
+As soon as the entered title is sufficiently clear, the system may form a high-probability working model of the field. That model should be presented as context, not fact about the specific provider.
+
+Example:
+
+> That gives us useful professional context. In drone work, customers often need better information, clearer documentation, or a perspective they cannot easily get themselves. We’ll use common patterns from this field as a starting point, then let what you tell us about your own customers confirm, refine, or contradict them.
+
+### Step 2 — Your customers
+
+Use the Step 1 domain model to make the customer interview warmer, more specific, and more authoritative.
+
+The form should recognize the professional reality before asking the user to describe customers.
+
+Example:
+
+> As a drone operator, you probably already know that customers do not always arrive knowing the right technical solution. They are usually trying to get better information, clearer documentation, or a perspective they cannot easily get themselves. Help us understand what you already know about your customers.
+
+Then collect the audience evidence:
+
+- what matters to them;
+- what usually triggers the search;
+- likely emotional state;
+- what they need before deciding;
+- what creates hesitation;
+- what they hope will be different afterward.
+
+Each question may use the entered profession and earlier answers to make its guidance more specific. The system should periodically reflect a working interpretation back to the user so the experience feels cumulative rather than repetitive.
+
+### Step 3 — How you work
+
+Combine the domain model with the user's customer observations before asking about provider values.
+
+The form should briefly summarize the emerging customer decision and then ask which standards matter most in how the provider works.
+
+After provider values are selected, explain how those standards could credibly reduce customer friction, uncertainty, or risk in this professional context before the user submits.
+
+Do not force alignment. If the selected provider values do not clearly answer the strongest customer concern, preserve that as a communication gap for the final analysis.
+
 ## Required analysis sequence
 
-### Phase 1 — Domain orientation
+### 1. Build a domain model from the entered profession or service
 
-Before interpreting the survey answers, normalize the entered job title, profession, service, or offer and build a working domain model.
+Treat the supplied job title, profession, product, service, or offer name as a high-value domain signal.
 
-The model should identify, when reasonably inferable:
+Before interpreting the survey answers, build a high-probability working model of the field itself.
+
+Infer, when reasonably supported:
 
 - normalized occupation or service category;
-- likely buyers, users, approvers, or stakeholders;
-- common jobs-to-be-done;
+- common buyers, users, approvers, or other stakeholders;
+- typical jobs-to-be-done;
 - common deliverables or outcomes;
 - common trigger situations;
-- expertise asymmetry between provider and buyer;
-- what customers can easily evaluate;
-- what customers cannot easily evaluate before purchase;
+- expertise asymmetry between provider and customer;
+- what customers can and cannot easily evaluate before purchase;
 - common overbuy, underbuy, or wrong-choice risks;
 - common trust questions;
 - useful forms of proof;
-- common terminology barriers;
-- confidence in the domain inference;
-- whether the inference came from general domain knowledge, provider website evidence, survey evidence, or a combination.
+- terminology or complexity barriers.
 
-Use high-probability domain knowledge confidently when the title is clear.
+Use high-probability field knowledge confidently when the title is clear. Do not flatten a clear occupation into generic service advice merely because provider-specific details are not yet known.
 
-Do not flatten a clear occupation into generic advice merely because every detail is not known.
+Do not turn general domain knowledge into a factual claim about the specific provider.
 
-Do not invent facts about the specific provider, its equipment, credentials, methods, pricing, staffing, safety record, service area, or capabilities.
+When a supplied title is ambiguous, preserve that uncertainty internally and rely more heavily on the survey evidence or external research.
 
-If the title is ambiguous, keep the uncertainty internally and use a broader but still useful domain model.
+### 2. Use outside or provider-specific evidence when available
 
-### Phase 2 — Provider-specific evidence
+Use the optional website or public page when the analysis environment can reliably retrieve it.
 
-Use the supplied product/service name, offer type, optional website, and reliable outside knowledge when available.
+Separate:
 
-If a website is supplied and the analyzer can reliably retrieve it, treat it as provider-specific evidence. Keep general field knowledge separate from provider-specific claims.
+- general domain knowledge;
+- provider-specific website evidence;
+- survey observations;
+- inference.
 
-Never convert an inferred industry norm into a factual claim about the provider.
+Do not invent operational practices or capabilities that are not supplied or verified.
 
-### Phase 3 — Survey refinement
+### 3. Interpret audience evidence inside the domain model
 
-Use the submitted:
-
-- audience values;
-- trigger context;
-- emotional state;
-- decision needs;
-- resistance signals;
-- desired movement;
-- provider values;
-- intended message.
+Use submitted audience values, trigger context, emotions, decision needs, resistance signals, and desired movement to refine the general field model.
 
 Infer recurring behavioral patterns such as:
 
@@ -97,174 +127,189 @@ Infer recurring behavioral patterns such as:
 - evidence requirement;
 - autonomy need;
 - social influence;
-- prevention/protection orientation;
-- progress/advancement orientation;
+- prevention or protection orientation;
+- progress or advancement orientation;
 - practical decision friction;
 - likely reactance to pressure.
 
-The survey should refine and personalize the domain model. It should not erase useful high-probability knowledge about how this kind of service is normally bought.
+The survey evidence personalizes the domain model. It should not erase relevant high-probability knowledge about how this kind of work is normally evaluated.
 
 Do not diagnose individuals or infer clinical conditions.
 
-### Phase 4 — Identify the real customer decision
+### 4. Identify the human decision underneath the transaction
 
-Translate the transaction into the practical human question underneath it.
+Translate the transaction into the practical decision the customer is trying to make.
 
-For a Drone Pilot, the buyer may not primarily be deciding whether drones work. They may be deciding:
+For a drone pilot, the customer may not be deciding whether drones work. They may be deciding whether they need aerial information at all, what information will actually be useful, what level of service is appropriate, and whether the provider can simplify a technical choice they cannot easily evaluate themselves.
 
-- Do I actually need this level of service?
-- Will the result give me useful information?
-- Will this become more complicated than the problem I am trying to solve?
-- Can I trust this person to recommend what I actually need rather than the most technical option?
+For an auto repair customer, the deeper decision may include:
 
-For an auto repair customer, the deeper questions may include:
+> Can I trust this recommendation, understand why it matters, and know I am not paying for more than I need?
 
-- What actually needs to be done?
-- What can wait?
-- Why is this being recommended?
-- How do I know I am not paying for more than I need?
+The report should make this translation explicit.
 
-The report should express three or four high-value resistance questions in natural customer language.
+### 5. Interpret provider values as decision help
 
-### Phase 5 — Translate provider values into decision help
+Selected values such as Quality, Safety, Expertise, Honesty, Reliability, Fairness, Personal Attention, or Convenience must be interpreted in the context of the actual field and the customer decision already identified.
 
-Provider values such as Quality, Safety, Expertise, Honesty, Reliability, Fairness, Personal Attention, Convenience, Human Connection, or Giving People Control should not be explained as abstract virtues.
+Do not define values as abstract virtues.
 
 Ask instead:
 
-- What customer concern can this value reduce?
-- What could the provider say, show, explain, or make visible that demonstrates the value?
-- What decision becomes easier because the provider works this way?
+- What customer concern could this value reduce?
+- How could the value become visible in advice, choices, limits, proof, expectations, or process?
+- Does the selected value actually answer the strongest audience concern?
 
 Example:
 
-Honesty is not useful merely because the provider says they are honest.
+Honesty for a drone operator may become valuable when the provider openly helps customers determine when a simple capture is enough and when more complex mapping, measurement, or inspection work is justified.
 
-It becomes useful when the provider is willing to explain limits, tradeoffs, what the customer may not need, and when a simpler solution may be enough.
+Personal Attention may become visible when the provider starts with what the customer is trying to see, measure, document, or understand rather than prescribing a technical package first.
 
-Personal Attention becomes useful when the customer can see that their specific situation changes the recommendation.
+### 6. Identify authentic provider-audience alignment
 
-### Phase 6 — Lead with recognizable problems
+Find the strongest credible relationship between:
 
-The customer-facing guidance should lead with situations the buyer already recognizes.
+- the domain model;
+- provider values;
+- audience protected values;
+- audience desired movement;
+- the actual capabilities reasonably associated with the offer.
 
-Do not make the customer learn the profession before they can understand why the service may help.
+Do not manufacture alignment.
 
-For a Drone Pilot, useful situations may include:
+If the provider's stated values do not clearly answer the audience's strongest concern, identify the communication gap rather than forcing a fit.
 
-- documenting what changed;
-- getting a clearer view of a site;
-- collecting measurements or visual evidence;
-- creating a record multiple stakeholders can review;
-- comparing conditions over time.
+### 7. Convert likely behavior into useful action
 
-The system should generate equivalent domain-specific situations for other professions and service types.
+Do not simply report that customers will compare, seek reviews, care about risk, or want more information.
 
-### Phase 7 — Reduce avoidable decision risk
+Translate likely behavior into what the provider should do.
 
-Identify where the customer may fear buying:
+Example:
 
-- too much;
-- too little;
-- the wrong option;
-- an opaque recommendation;
-- an unnecessarily complex solution;
-- an outcome they cannot independently judge.
+> Do not treat comparison as resistance. Help them compare. Put your standards, process, expectations, pricing logic, and customer proof where they can see them before asking for commitment.
 
-Translate those risks into communication actions.
+The provider should leave with practical communication decisions.
 
-Help the provider explain what the customer may not need, what changes between options, what is included, and what should determine the recommendation.
+### 8. Lead with recognizable customer situations
 
-Do not create artificial urgency or use fear to force action.
+Prefer situations customers already recognize over equipment, capabilities, credentials, jargon, or a list of professional features.
 
-### Phase 8 — Give useful advice publicly
+For drone work, examples include:
 
-The output should include three or four copy/paste content examples that help customers become better buyers of this exact type of service.
+- Need to document what changed?
+- Need a clearer view of a site before making a decision?
+- Need measurements without sending someone into a difficult area?
+- Need a record everyone involved can look at and understand?
 
-The examples should:
+This lets the customer recognize the problem before they are required to understand the profession.
 
-- teach one useful thing;
-- demonstrate professional judgment;
-- help customers recognize when the service may be useful;
-- help them compare or ask better questions;
-- reduce jargon and uncertainty;
-- preserve the customer’s agency;
-- avoid unsupported provider-specific claims.
+### 9. Reduce the fear of buying the wrong thing
 
-They should not read like generic advertisements.
+Identify where the customer could overbuy, underbuy, misunderstand the scope, or struggle to judge the recommendation.
 
-### Phase 9 — End with a repeatable communication rule
+Help the provider publicly explain what customers may not need as well as what they may need.
 
-The report should end with one reusable pattern the provider can apply across website copy, social content, email, sales conversations, and examples.
+That turns expertise into decision help rather than sales pressure.
 
-Preferred structure:
+### 10. Make proof understandable
 
-**Recognizable situation → useful advice → simplified decision.**
+Favor visible decisions, standards, examples, limits, process, and outcomes over unsupported adjectives.
 
-The exact wording should adapt to the field.
+Instead of:
+
+> We are safe and professional.
+
+Prefer:
+
+> Show how decisions are made, what changes the recommendation, what happens when conditions change, and what the customer can expect.
+
+Never invent a specific operational practice. If it is not supplied or verified, phrase it as an opportunity or example the provider should use only if true.
+
+### 11. Generate useful public advice
+
+The final customer-facing report should include three or four copy/paste social posts or equivalent reusable content examples.
+
+These should help customers become better buyers of the exact type of service.
+
+They should demonstrate useful professional judgment rather than merely advertise.
+
+For example, a drone pilot may teach customers to begin with:
+
+> What do I need to know when this project is finished?
+
+The post can then explain how that question determines whether the customer needs simple imagery, repeatable documentation, measurement, mapping, scanning, inspection data, or another approach.
+
+### 12. End with one communication rule
+
+The final report should reduce the analysis to one repeatable communication pattern.
+
+Default pattern:
+
+> Name a situation they recognize → give them one useful piece of advice → show how you help simplify the decision.
+
+The precise wording may change by field, but the principle should remain usable across website content, social posts, sales conversations, and examples.
 
 ## Customer-facing report structure
 
-The report should generally follow this structure.
+The customer-facing result should read as a communication playbook rather than a diagnostic audience report.
 
-### [Profession / Service]
+### Opening: the decision already happening
 
-Open with a direct interpretation of what customers are often hiring this professional to accomplish.
+Name the profession, service, or offer.
 
-Then explain the capability / expertise gap in plain language.
+Explain what customers in this field are often trying to accomplish.
 
-### Likely resistance
+Contrast that with what the provider may be tempted to lead with technically.
 
-Present three or four likely customer questions in natural internal voice.
-
-Then state the main communication opportunity: answer those questions before the customer has to ask them.
+Then surface several likely resistance questions in natural customer language.
 
 ### Lead with their problem
 
-Give recognizable situations the customer may already be experiencing.
+Give recognizable customer situations.
 
-Explain why this is more useful than leading with equipment, credentials, features, or professional terminology.
+Help the provider lead with those situations rather than professional capabilities in isolation.
 
 ### Reduce the fear of buying the wrong thing
 
-When supported by the survey and domain model, show how values such as Honesty and Fairness can help the customer understand what they need, what they may not need, and why one option makes more sense than another.
+Connect relevant provider values to common overbuy, underbuy, trust, price, uncertainty, or complexity concerns.
 
-Use another fitting heading when a different decision barrier dominates.
+Give concrete language the provider can use.
 
-### Make [relevant provider value] visible
+### Make a provider value visible
 
-Choose one useful provider value and show the difference between generic value-language and language that demonstrates the value through decision help.
+Choose one particularly useful provider value and contrast generic claim language with a better customer-facing expression.
 
 ### Give useful advice publicly
 
-Include three or four **Copy/paste social post** examples that teach customers how to make a better decision about this type of service.
+Provide three or four copy/paste social posts or equivalent reusable communication examples.
+
+The content should teach, clarify, or improve customer judgment.
 
 ### Your communication rule
 
-End with:
+End with one reusable pattern and one sentence describing what the customer should ideally think after encountering the provider's communication.
 
-- one repeatable communication pattern;
-- one sentence explaining how to use it;
-- the customer thought the provider should aim to create;
-- a closing explanation of how the selected provider values become reasons to work with the provider rather than words listed on a website.
+Connect the provider's selected values back to the rule.
 
 ## Tone
 
-The report should sound like an experienced strategist speaking directly to the business owner.
+The report and form should sound like an experienced strategist speaking directly to the business owner.
 
 Use:
 
 - second person;
 - clear language;
 - contextual specificity;
-- confident high-probability domain reasoning;
 - thoughtful interpretation;
 - practical examples;
-- usable copy;
-- calm confidence.
+- warm professional recognition;
+- calm expert authority.
 
 The reader should feel:
 
+- heard;
 - understood;
 - professionally respected;
 - better able to see the customer decision;
@@ -276,20 +321,23 @@ Avoid:
 - abstract marketing jargon;
 - persona-taxonomy language;
 - generic motivational copy;
-- excessive disclaimers;
-- unsupported certainty;
-- invented business facts;
-- explaining the analysis machinery to the customer.
+- overclaiming certainty;
+- excessive explanation of the analysis system;
+- empty praise such as “Great answer!” or “You’re doing great.”
+
+Recognition should come from demonstrating that the system understood what the user said, not from congratulating them for answering.
 
 ## Behind-the-curtain audience intelligence
 
-The larger system should retain more detail than the customer sees.
+The larger system should retain more detail than the form user sees.
 
 Recommended structure:
 
 ```json
 {
   "audienceIntelligence": {
+    "observedEvidence": {},
+    "providerEvidence": {},
     "domainModel": {
       "normalizedTitle": "",
       "category": "",
@@ -306,12 +354,9 @@ Recommended structure:
       "confidence": "",
       "evidenceBasis": ""
     },
-    "observedEvidence": {},
-    "providerEvidence": {},
     "behavioralDimensions": {},
     "personaClusters": [],
     "providerAudienceAlignment": {},
-    "communicationPlaybook": {},
     "confidence": {},
     "downstreamGuidance": {
       "useFor": [
@@ -336,7 +381,7 @@ Recommended structure:
 }
 ```
 
-Internal persona or behavioral pattern labels may remain useful for clustering, scoring, comparison, or downstream generation. They should not automatically be shown to the business owner.
+Internal persona or behavioral pattern labels may be useful for clustering, scoring, comparison, or downstream content generation. They should not automatically be shown to the business owner.
 
 ## External LLM integration
 
@@ -345,9 +390,14 @@ The browser exposes an analysis request containing:
 - `contractVersion`;
 - `task`;
 - domain-orientation instructions;
-- a required domain model;
-- a required customer-facing report shape;
+- the required domain model;
+- the required customer-facing communication-playbook shape;
 - the normalized survey payload.
+
+The page supports either:
+
+1. `window.oobAudienceAnalyzer(analysisRequest)`; or
+2. `window.OOB_AUDIENCE_ANALYSIS_ENDPOINT`.
 
 The external analyzer should return:
 
@@ -358,6 +408,8 @@ The external analyzer should return:
 }
 ```
 
-If no external analyzer is available, the page uses a local deterministic fallback with broad domain-family patterns and a deeper profile for selected common fields such as drone/aerial work.
+The external LLM is responsible for deep reasoning about arbitrary clear job titles, professions, and service categories. Do not attempt to replace this with an exhaustive finite keyword table.
 
-The local fallback exists to preserve a complete user flow. **Deep inference for arbitrary job titles is ultimately an LLM responsibility, not a finite keyword lookup problem.** The production analyzer should reason systematically from the entered title and reliable domain knowledge rather than depend on a fixed list of occupations.
+The browser may retain broad local domain families and deeper profiles for common test cases so the form can complete without an external endpoint.
+
+The local fallback is not a substitute for research-backed profession-specific analysis. It exists to preserve a complete user flow while the larger LLM analysis service is being integrated.
