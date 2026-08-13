@@ -33,14 +33,14 @@
     );
 
     if (domain && domain.family !== 'general') {
-      setHelp('audience_values', `Thinking specifically about people who hire, approve, recommend, use, or benefit from ${title}, what seems to matter most to them? Select up to 4.`);
+      setHelp('audience_values', `Thinking specifically about people who hire, approve, recommend, use, or benefit from ${title}, what seems to matter most to them? Select up to 5.`);
       setHelp('audience_trigger', `When does the need for ${title} become real enough that they start looking, comparing, or asking for help? Select up to 4.`);
       setHelp('audience_emotions', `Think about the moment they first realize they may need ${title}—before they understand every option or technical detail. Select up to 4.`);
-      setHelp('audience_needs', `What seems to help them move from “I may need this” to a confident decision? In this field, customers may not be able to independently judge every professional or technical choice before hiring.`);
+      setHelp('audience_needs', 'What seems to help them move from “I may need this” to a confident decision? Customers may not be able to independently judge every professional or technical choice before hiring. Select up to 4.');
       setHelp('audience_hesitation', `What tends to make them delay, compare, or question whether ${title} is necessary, useful, worth the cost, or the right level of solution? Select up to 4.`);
       setHelp('audience_outcome', `Once the ${title} work is complete, what do they most need to be able to know, do, feel, decide, protect, or improve? Select up to 4.`);
     } else {
-      setHelp('audience_values', 'Thinking about the people who actually make or influence the decision, what seems to matter most to them? Select up to 4.');
+      setHelp('audience_values', 'Thinking about the people who actually make or influence the decision, what seems to matter most to them? Select up to 5.');
       setHelp('audience_trigger', 'When does the need become real enough that they start looking, comparing, or asking for help? Select up to 4.');
       setHelp('audience_emotions', 'Think about the moment they first realize they may need this kind of help. Select up to 4.');
       setHelp('audience_needs', 'What helps them move from interest to a confident decision? Select up to 4.');
@@ -52,7 +52,7 @@
     setHelp(
       'business_values',
       customerSignal.length
-        ? `Choose up to 4. We’ll test these against the customer concerns already emerging—not assume every value is equally relevant to this decision.`
+        ? 'Choose up to 4. We’ll test these against the customer concerns already emerging—not assume every value is equally relevant to this decision.'
         : 'Choose up to 4. We’ll connect these standards back to what your customers appear to need from the decision.'
     );
 
