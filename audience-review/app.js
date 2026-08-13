@@ -1,9 +1,8 @@
 (() => {
   const form = document.getElementById('audience-form');
-  const primaryQuestions = document.getElementById('audience-primary-questions');
-  const decisionQuestions = document.getElementById('audience-decision-questions');
+  const audienceQuestions = document.getElementById('audience-questions');
 
-  if (!form || !primaryQuestions || !decisionQuestions) return;
+  if (!form || !audienceQuestions) return;
 
   const layout = document.createElement('link');
   layout.rel = 'stylesheet';
@@ -12,49 +11,27 @@
 
   const languageStyles = document.createElement('link');
   languageStyles.rel = 'stylesheet';
-  languageStyles.href = './form-language-v5.css?v=2';
+  languageStyles.href = './form-language-v5.css?v=3';
   document.head.appendChild(languageStyles);
-
-  /*
-    app-core.js remains the owner of question definitions and generation.
-    This temporary render target sends each generated audience question directly
-    into its authoritative static step, preserving the analysis contract while
-    avoiding any post-render DOM reparenting.
-  */
-  const audienceRenderTarget = document.createElement('div');
-  audienceRenderTarget.id = 'audience-questions';
-  audienceRenderTarget.hidden = true;
-
-  const primaryQuestionIds = new Set(['audience_values', 'audience_trigger']);
-  audienceRenderTarget.appendChild = node => {
-    const target = primaryQuestionIds.has(node?.dataset?.question)
-      ? primaryQuestions
-      : decisionQuestions;
-    return target.appendChild(node);
-  };
-
-  form.appendChild(audienceRenderTarget);
 
   const core = document.createElement('script');
   core.src = './app-core.js?v=4';
   core.async = false;
   core.onload = () => {
-    audienceRenderTarget.remove();
-
     const analysis = document.createElement('script');
-    analysis.src = './analysis-v5.js?v=1';
+    analysis.src = './analysis-v5.js?v=2';
     analysis.async = false;
     analysis.onload = () => {
       const flow = document.createElement('script');
-      flow.src = './flow-v2.js?v=2';
+      flow.src = './flow-v3.js?v=1';
       flow.async = false;
       flow.onload = () => {
         const language = document.createElement('script');
-        language.src = './form-language-v5.js?v=2';
+        language.src = './form-language-v5.js?v=3';
         language.async = false;
         language.onload = () => {
           const guidance = document.createElement('script');
-          guidance.src = './form-guidance-v5.js?v=2';
+          guidance.src = './form-guidance-v5.js?v=3';
           guidance.async = false;
           guidance.onload = () => {
             const focus = document.createElement('script');
@@ -70,7 +47,6 @@
     };
     document.body.appendChild(analysis);
   };
-  core.onerror = () => audienceRenderTarget.remove();
 
   document.body.appendChild(core);
 })();
