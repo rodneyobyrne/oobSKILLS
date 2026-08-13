@@ -5,6 +5,11 @@
 
   if (!form || !primaryQuestions || !decisionQuestions) return;
 
+  const layout = document.createElement('link');
+  layout.rel = 'stylesheet';
+  layout.href = './layout-v3.css?v=1';
+  document.head.appendChild(layout);
+
   /*
     app-core.js remains the owner of question definitions and generation.
     This temporary render target sends each generated audience question directly
@@ -34,6 +39,12 @@
     const flow = document.createElement('script');
     flow.src = './flow-v2.js?v=2';
     flow.async = false;
+    flow.onload = () => {
+      const focus = document.createElement('script');
+      focus.src = './focus-v3.js?v=1';
+      focus.async = false;
+      document.body.appendChild(focus);
+    };
     document.body.appendChild(flow);
   };
   core.onerror = () => audienceRenderTarget.remove();
