@@ -14,6 +14,11 @@
   languageStyles.href = './form-language-v5.css?v=3';
   document.head.appendChild(languageStyles);
 
+  const resultsStyles = document.createElement('link');
+  resultsStyles.rel = 'stylesheet';
+  resultsStyles.href = './results-v6.css?v=1';
+  document.head.appendChild(resultsStyles);
+
   const core = document.createElement('script');
   core.src = './app-core.js?v=4';
   core.async = false;
@@ -22,28 +27,34 @@
     analysis.src = './analysis-v5.js?v=2';
     analysis.async = false;
     analysis.onload = () => {
-      const flow = document.createElement('script');
-      flow.src = './flow-v3.js?v=1';
-      flow.async = false;
-      flow.onload = () => {
-        const language = document.createElement('script');
-        language.src = './form-language-v5.js?v=4';
-        language.async = false;
-        language.onload = () => {
-          const guidance = document.createElement('script');
-          guidance.src = './form-guidance-v5.js?v=4';
-          guidance.async = false;
-          guidance.onload = () => {
-            const focus = document.createElement('script');
-            focus.src = './focus-v3.js?v=1';
-            focus.async = false;
-            document.body.appendChild(focus);
+      const results = document.createElement('script');
+      results.src = './results-v6.js?v=1';
+      results.async = false;
+      results.onload = () => {
+        const flow = document.createElement('script');
+        flow.src = './flow-v3.js?v=1';
+        flow.async = false;
+        flow.onload = () => {
+          const language = document.createElement('script');
+          language.src = './form-language-v5.js?v=4';
+          language.async = false;
+          language.onload = () => {
+            const guidance = document.createElement('script');
+            guidance.src = './form-guidance-v5.js?v=4';
+            guidance.async = false;
+            guidance.onload = () => {
+              const focus = document.createElement('script');
+              focus.src = './focus-v3.js?v=1';
+              focus.async = false;
+              document.body.appendChild(focus);
+            };
+            document.body.appendChild(guidance);
           };
-          document.body.appendChild(guidance);
+          document.body.appendChild(language);
         };
-        document.body.appendChild(language);
+        document.body.appendChild(flow);
       };
-      document.body.appendChild(flow);
+      document.body.appendChild(results);
     };
     document.body.appendChild(analysis);
   };
