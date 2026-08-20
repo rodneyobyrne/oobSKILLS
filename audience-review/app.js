@@ -19,6 +19,11 @@
   resultsStyles.href = './results-v6.css?v=1';
   document.head.appendChild(resultsStyles);
 
+  const resultsAlignmentStyles = document.createElement('link');
+  resultsAlignmentStyles.rel = 'stylesheet';
+  resultsAlignmentStyles.href = './results-v7.css?v=1';
+  document.head.appendChild(resultsAlignmentStyles);
+
   const core = document.createElement('script');
   core.src = './app-core.js?v=4';
   core.async = false;
