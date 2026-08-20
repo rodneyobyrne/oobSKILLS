@@ -51,6 +51,7 @@
 
   let currentStep = 1;
   let transitioning = false;
+  let preparingStep2 = false;
 
   const selectedValuesFor = name => [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(input => input.value);
   const questionSelected = name => Boolean(document.querySelector(`input[name="${name}"]:checked`));
@@ -177,6 +178,28 @@
     }, MOTION_MS + 80);
   }
 
+  async function prepareStepTwo(button) {
+    if (preparingStep2 || typeof window.prepareAudienceStep2Context !== 'function') return;
+    preparingStep2 = true;
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.classList.add('is-preparing-context');
+    button.setAttribute('aria-busy', 'true');
+    button.textContent = 'Reviewing your work...';
+
+    try {
+      await window.prepareAudienceStep2Context();
+    } catch (error) {
+      console.error('Unable to prepare Step 2 audience context.', error);
+    } finally {
+      button.disabled = false;
+      button.classList.remove('is-preparing-context');
+      button.removeAttribute('aria-busy');
+      button.textContent = originalText;
+      preparingStep2 = false;
+    }
+  }
+
   document.addEventListener('change', event => {
     const container = event.target.closest?.('.question, .field');
     if (container?.classList.contains('has-validation-error')) clearInlineErrors();
@@ -187,15 +210,17 @@
     if (container?.classList.contains('has-validation-error') && event.target.value.trim()) clearInlineErrors();
   }, true);
 
-  document.addEventListener('click', event => {
+  document.addEventListener('click', async event => {
     const nextButton = event.target.closest('[data-next]');
     const backButton = event.target.closest('[data-back]');
 
     if (nextButton && form.contains(nextButton)) {
       event.preventDefault();
       event.stopImmediatePropagation();
+      if (preparingStep2) return;
       const next = Number(nextButton.dataset.next);
       if (!validateStep(currentStep)) return;
+      if (currentStep === 1 && next === 2) await prepareStepTwo(nextButton);
       transitionToStep(next, 'forward');
       return;
     }
@@ -209,6 +234,7 @@
   }, true);
 
   function buildPayload() {
+    const preInterview = window.audienceStep1Context;
     return {
       schemaVersion: '4.0',
       reviewType: 'audience_behavioral_analysis',
@@ -217,6 +243,14 @@
         type: selectedValuesFor('offer_type')[0] || null,
         website: document.getElementById('website').value.trim() || null
       },
+      preInterviewContext: preInterview ? {
+        generatedAt: preInterview.generatedAt,
+        source: preInterview.source,
+        websiteEvidenceUsed: Boolean(preInterview.websiteEvidenceUsed),
+        domainModel: preInterview.domainModel || null,
+        relationshipModel: preInterview.relationshipModel || null,
+        workingRead: preInterview.workingRead || null
+      } : null,
       audienceEvidence: {
         values: selectedValuesFor('audience_values'),
         triggerContext: selectedValuesFor('audience_trigger'),
