@@ -21,6 +21,10 @@
     return items.filter(Boolean).map(item => `<p class="${className}">${esc(item)}</p>`).join('');
   }
 
+  function firstUseful(...values) {
+    return values.find(value => typeof value === 'string' && value.trim())?.trim() || '';
+  }
+
   function renderResultsV6(payload) {
     const results = document.getElementById('results');
     const report = payload?.analysis?.humanReport;
@@ -46,6 +50,15 @@
       ? messageParts.simplerDecision
       : [visibility.use, report.opening.opportunity].filter(Boolean).slice(0, 4);
 
+    const intelligence = payload?.analysis?.audienceIntelligence || {};
+    const domain = report.domainModel || intelligence.domainModel || {};
+    const relationship = report.relationshipModel || intelligence.relationshipModel || domain.relationshipModel || {};
+    const audienceLabel = firstUseful(relationship.audiencePlural, domain.likelyBuyers?.[0], 'the people you serve');
+    const customerNeed = firstUseful(domain.customerNeed, domain.commonJobsToBeDone?.[0], report.opening.lead);
+    const trigger = firstUseful(domain.triggerSituations?.[0], domain.situations?.[0], situations[0]);
+    const privateQuestion = firstUseful(domain.commonTrustQuestions?.[0], domain.resistance?.[0], resistance[0]);
+    const hasSnapshot = Boolean(customerNeed || trigger || privateQuestion);
+
     results.innerHTML = `
       <header class="results-v6-header">
         <div>
@@ -54,6 +67,26 @@
         </div>
         <p class="results-v6-thesis">${esc(report.opening.lead)}</p>
       </header>
+
+      ${hasSnapshot ? `
+        <section class="audience-snapshot" aria-label="Refined audience picture">
+          <article class="audience-snapshot-card">
+            <span class="audience-snapshot-label">Who this appears to be about</span>
+            <h4>${esc(audienceLabel)}</h4>
+            ${customerNeed ? `<p>${esc(customerNeed)}</p>` : ''}
+          </article>
+          <article class="audience-snapshot-card">
+            <span class="audience-snapshot-label">When the conversation often starts</span>
+            <h4>The recognizable situation</h4>
+            ${trigger ? `<p>${esc(trigger)}</p>` : ''}
+          </article>
+          <article class="audience-snapshot-card">
+            <span class="audience-snapshot-label">What may already be in their head</span>
+            <h4>The decision underneath the transaction</h4>
+            ${privateQuestion ? `<p class="audience-snapshot-question">${esc(privateQuestion)}</p>` : ''}
+          </article>
+        </section>
+      ` : ''}
 
       ${primaryPost ? `
         <section class="publish-now" aria-label="Publish-ready communication example">
@@ -165,7 +198,7 @@
         <p><strong>${esc(report.communicationRule.valuesClosing)}</strong></p>
       </section>
 
-      <p class="results-v6-privacy">This review uses high-probability patterns about the field, relationship dynamics, behavioral decision patterns, and the survey evidence you provided. It is intended to improve communication—not diagnose individuals, stereotype an audience, or assume every person will respond in the same way.</p>
+      <p class="results-v6-privacy">This review uses high-probability patterns about the field, relationship dynamics, behavioral decision patterns, and the survey evidence you provided. It is intended to improve communication, not diagnose individuals, stereotype an audience, or assume every person will respond in the same way.</p>
     `;
   }
 
