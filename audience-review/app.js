@@ -39,6 +39,11 @@
   nicheStyles.href = './niche-context-v8.css?v=1';
   document.head.appendChild(nicheStyles);
 
+  const selectionStyles = document.createElement('link');
+  selectionStyles.rel = 'stylesheet';
+  selectionStyles.href = './form-selection-v9.css?v=1';
+  document.head.appendChild(selectionStyles);
+
   const core = document.createElement('script');
   core.src = './app-core.js?v=4';
   core.async = false;
