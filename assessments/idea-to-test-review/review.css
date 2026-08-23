@@ -10,12 +10,13 @@
 .progress-track { height: 6px; overflow: hidden; background: var(--line); }
 .progress-track span { display: block; width: 25%; height: 100%; background: var(--ballpoint); transition: width .2s ease; }
 .review-privacy { color: var(--soft); font-size: .82rem; }
-.review-clear { padding: 0; border: 0; background: transparent; color: var(--soft); cursor: pointer; font-size: .78rem; font-weight: 700; text-decoration: underline; text-underline-offset: .2rem; }
+.review-clear { min-width: 44px; min-height: 44px; padding: .45rem 0; border: 0; background: transparent; color: var(--soft); cursor: pointer; font-size: .78rem; font-weight: 700; text-decoration: underline; text-underline-offset: .2rem; }
 .review-clear:hover, .review-clear:focus-visible { color: var(--ballpoint); }
 .review-workspace { min-width: 0; }
 .review-step { margin: 0; padding: 0; border: 0; }
 .review-step[hidden] { display: none; }
 .review-step > legend { width: 100%; max-width: 24ch; margin-bottom: 1rem; padding: 0; font-size: clamp(2rem, 4.5vw, 4rem); font-weight: 700; letter-spacing: -.04em; line-height: 1.04; }
+.review-step > legend:focus-visible { outline: 3px solid var(--ballpoint); outline-offset: 5px; }
 .review-step > legend span { display: block; margin-bottom: .8rem; color: var(--ballpoint); font-size: .75rem; letter-spacing: .1em; }
 .step-intro { max-width: 680px; margin-bottom: 2.5rem; color: var(--soft); font-size: 1.1rem; }
 .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
@@ -24,15 +25,17 @@
 .field label span, .choice-group > legend span { color: var(--muted); font-weight: 400; }
 .field input, .field select, .field textarea { width: 100%; min-height: 50px; padding: .85rem 1rem; border: 1px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); }
 .field textarea { resize: vertical; }
-.field input:focus, .field select:focus, .field textarea:focus { outline: 3px solid color-mix(in srgb, var(--ballpoint) 35%, transparent); outline-offset: 2px; border-color: var(--ballpoint); }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--ballpoint); outline-offset: 2px; border-color: var(--ballpoint); }
 .field input[aria-invalid="true"], .field select[aria-invalid="true"], .field textarea[aria-invalid="true"] { border-color: var(--signal); box-shadow: inset 4px 0 0 var(--signal); }
 .field-help, .field-error { margin: .45rem 0 0; color: var(--soft); font-size: .82rem; }
 .field-error { color: #9d2f13; font-weight: 700; }
 .choice-group { margin: 0 0 2rem; padding: 0; border: 0; }
+.choice-group[aria-invalid="true"] { padding: 1rem; background: #fff7f7; box-shadow: inset 5px 0 0 #9d2f13; }
 .choice-list { display: grid; gap: .75rem; }
 .choice-list--compact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .choice-list label, .review-consent label { display: flex; gap: .8rem; align-items: flex-start; min-height: 54px; padding: .9rem 1rem; border: 1px solid var(--line); background: var(--paper); cursor: pointer; }
 .choice-list label:has(input:checked), .review-consent label:has(input:checked) { border-color: var(--ballpoint); background: var(--paper-blue); box-shadow: inset 0 -3px 0 var(--ballpoint); }
+.choice-list label:focus-within, .review-consent label:focus-within { outline: 3px solid var(--ballpoint); outline-offset: 2px; border-color: var(--ballpoint); }
 .choice-list input, .review-consent input { flex: 0 0 auto; width: 1.1rem; height: 1.1rem; margin-top: .25rem; accent-color: var(--ballpoint); }
 .choice-list strong { display: block; }
 .review-consent { margin-block: 1.5rem; }

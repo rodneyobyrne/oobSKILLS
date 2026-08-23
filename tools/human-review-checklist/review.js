@@ -93,7 +93,24 @@
     const nextCopy = document.querySelector('[data-next-copy]');
     const nextPrimary = document.querySelector('[data-next-primary]');
     const nextSecondary = document.querySelector('[data-next-secondary]');
+    const reduceMotion = window.matchMedia
+      ? window.matchMedia('(prefers-reduced-motion: reduce)')
+      : { matches: false };
     let currentSummary = '';
+
+    errorSummary.id = errorSummary.id || 'review-error-summary';
+
+    function addDescription(element, id) {
+      const ids = new Set((element.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
+      ids.add(id);
+      element.setAttribute('aria-describedby', Array.from(ids).join(' '));
+    }
+
+    function removeDescription(element, id) {
+      const ids = (element.getAttribute('aria-describedby') || '').split(/\s+/).filter((item) => item && item !== id);
+      if (ids.length) element.setAttribute('aria-describedby', ids.join(' '));
+      else element.removeAttribute('aria-describedby');
+    }
 
     function answersFromForm() {
       const data = new FormData(form);
@@ -140,7 +157,14 @@
     }
 
     function clearMissingStates() {
-      questionElements.forEach((element) => element.classList.remove('is-missing'));
+      questionElements.forEach((element) => {
+        element.classList.remove('is-missing');
+        element.removeAttribute('aria-invalid');
+        element.querySelectorAll('input').forEach((input) => {
+          input.removeAttribute('aria-invalid');
+          removeDescription(input, errorSummary.id);
+        });
+      });
       errorSummary.hidden = true;
     }
 
@@ -218,12 +242,19 @@
       }
       resultWrap.hidden = false;
       result.focus({ preventScroll: true });
-      result.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      result.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
     }
 
     form.addEventListener('input', (event) => {
       const question = event.target.closest('[data-question]');
-      if (question) question.classList.remove('is-missing');
+      if (question) {
+        question.classList.remove('is-missing');
+        question.removeAttribute('aria-invalid');
+        question.querySelectorAll('input').forEach((input) => {
+          input.removeAttribute('aria-invalid');
+          removeDescription(input, errorSummary.id);
+        });
+      }
       if (!errorSummary.hidden) errorSummary.hidden = true;
       if (!resultWrap.hidden) {
         resultWrap.hidden = true;
@@ -240,18 +271,25 @@
       const answers = answersFromForm();
       const missing = questionElements.filter((element) => !answers[element.querySelector('input').name]);
       if (missing.length) {
-        missing.forEach((element) => element.classList.add('is-missing'));
+        missing.forEach((element) => {
+          element.classList.add('is-missing');
+          element.setAttribute('aria-invalid', 'true');
+          const firstInput = element.querySelector('input');
+          firstInput.setAttribute('aria-invalid', 'true');
+          addDescription(firstInput, errorSummary.id);
+        });
         errorCopy.textContent = `Answer the ${missing.length} highlighted ${missing.length === 1 ? 'question' : 'questions'} before asking for a review decision.`;
         errorSummary.hidden = false;
-        errorSummary.focus();
-        missing[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const firstMissingInput = missing[0].querySelector('input');
+        firstMissingInput.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'center' });
+        firstMissingInput.focus({ preventScroll: true });
         return;
       }
       renderDecision(evaluate(answers), answers);
     });
 
     document.querySelector('[data-edit-review]').addEventListener('click', () => {
-      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      form.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
       form.querySelector('input, select').focus({ preventScroll: true });
     });
 

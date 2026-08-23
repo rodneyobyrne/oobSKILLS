@@ -19,6 +19,9 @@
   const resultDate = document.getElementById('result-date');
   const copyStatus = document.getElementById('copy-status');
   const decisionDate = document.getElementById('decision-date');
+  const reduceMotion = window.matchMedia
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : { matches: false };
   let currentStep = 1;
   let currentMarkdown = '';
 
@@ -105,6 +108,34 @@
     });
   }
 
+  function addDescription(element, id) {
+    const ids = new Set((element.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
+    ids.add(id);
+    element.setAttribute('aria-describedby', Array.from(ids).join(' '));
+  }
+
+  function removeDescription(element, id) {
+    const ids = (element.getAttribute('aria-describedby') || '').split(/\s+/).filter((item) => item && item !== id);
+    if (ids.length) element.setAttribute('aria-describedby', ids.join(' '));
+    else element.removeAttribute('aria-describedby');
+  }
+
+  function fieldName(field) {
+    const explicitLabel = field.id ? form.querySelector(`label[for="${field.id}"]`) : null;
+    const wrappedLabel = field.closest('label');
+    const groupLegend = field.closest('fieldset')?.querySelector(':scope > legend');
+    return (explicitLabel || groupLegend || wrappedLabel)?.textContent.trim().replace(/\s+/g, ' ') || 'this question';
+  }
+
+  function markInvalid(field, message) {
+    field.setAttribute('aria-invalid', 'true');
+    addDescription(field, 'form-status');
+    status.textContent = message;
+    field.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'center' });
+    field.focus({ preventScroll: true });
+    return false;
+  }
+
   function showStep(stepNumber, shouldScroll = true) {
     currentStep = stepNumber;
     steps.forEach((step) => { step.hidden = Number(step.dataset.step) !== currentStep; });
@@ -120,7 +151,11 @@
     nextButton.hidden = currentStep === steps.length;
     submitButton.hidden = currentStep !== steps.length;
     status.textContent = '';
-    if (shouldScroll) steps[currentStep - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (shouldScroll) {
+      const activeStep = steps[currentStep - 1];
+      activeStep.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
+      activeStep.querySelector(':scope > legend')?.focus({ preventScroll: true });
+    }
   }
 
   function validateStep() {
@@ -129,34 +164,22 @@
 
     for (const field of required) {
       if (!field.checkValidity()) {
-        field.setAttribute('aria-invalid', 'true');
-        field.reportValidity();
-        field.focus({ preventScroll: true });
-        status.textContent = 'Complete the marked question before continuing.';
-        return false;
+        return markInvalid(field, `Complete “${fieldName(field)}” before continuing.`);
       }
       field.removeAttribute('aria-invalid');
+      removeDescription(field, 'form-status');
     }
 
     if (currentStep === 4 && decisionDate.value < decisionDate.min) {
-      decisionDate.setAttribute('aria-invalid', 'true');
-      decisionDate.focus({ preventScroll: true });
-      status.textContent = 'Choose today or a future date for the decision.';
-      return false;
+      return markInvalid(decisionDate, 'Choose today or a future date for the decision.');
     }
     if (currentStep === 4) {
       const days = Math.ceil((new Date(`${decisionDate.value}T12:00:00`) - new Date(`${decisionDate.min}T12:00:00`)) / 86400000);
       if (value('timeframe') === 'twoWeeks' && days > 14) {
-        decisionDate.setAttribute('aria-invalid', 'true');
-        decisionDate.focus({ preventScroll: true });
-        status.textContent = 'A 14-day test needs a decision date within the next 14 days.';
-        return false;
+        return markInvalid(decisionDate, 'A 14-day test needs a decision date within the next 14 days.');
       }
       if (value('timeframe') === 'month' && days > 30) {
-        decisionDate.setAttribute('aria-invalid', 'true');
-        decisionDate.focus({ preventScroll: true });
-        status.textContent = 'A 30-day test needs a decision date within the next 30 days.';
-        return false;
+        return markInvalid(decisionDate, 'A 30-day test needs a decision date within the next 30 days.');
       }
     }
     return true;
@@ -260,7 +283,8 @@
 
     currentMarkdown = buildMarkdown(data, evaluation, briefs, createdDate);
     result.hidden = false;
-    result.focus();
+    result.focus({ preventScroll: true });
+    result.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
   }
 
   nextButton.addEventListener('click', () => {
@@ -273,6 +297,7 @@
 
   form.addEventListener('input', (event) => {
     event.target.removeAttribute('aria-invalid');
+    removeDescription(event.target, 'form-status');
     status.textContent = '';
     saveDraft();
   });

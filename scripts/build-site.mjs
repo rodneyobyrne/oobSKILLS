@@ -18,6 +18,7 @@ const publicFiles = [
   'hero-animation.css',
   'hero-animation.js',
   'home-ai-cards-v3.css',
+  '404.html',
   'index.html',
   'robots.txt',
   'sitemap.xml',

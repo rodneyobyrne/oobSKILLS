@@ -11,12 +11,12 @@
 </head>
 <body class="content-page">
   <a class="skip-link" href="#main-content">Skip to content</a>
-  <header class="site-header"><div class="site-shell header-inner"><a class="mark" href="/" aria-label="oobCREATIVE home"><img src="/branding/oob_horiz-flat-lite.png" alt="oobCREATIVE" width="225" height="52"></a><nav class="desktop-nav" aria-label="Primary navigation"><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a class="nav-cta" href="/tools/human-review-checklist/">Human Review</a></nav><details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a class="nav-cta" href="/tools/human-review-checklist/">Human Review</a></nav></details></div></header>
+  <header class="site-header"><div class="site-shell header-inner"><a class="mark" href="/" aria-label="oobCREATIVE home"><img src="/branding/Mark.svg" alt="" width="64" height="44"></a><nav class="desktop-nav" aria-label="Primary navigation"><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a><a class="nav-cta" href="/tools/human-review-checklist/">Human Review</a></nav><details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a><a class="nav-cta" href="/tools/human-review-checklist/">Human Review</a></nav></details></div></header>
   <main id="main-content">
     <div class="site-shell breadcrumbs"><nav aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/free-tools/">Free Tools</a></li><li aria-current="page">AI Fit Check</li></ol></nav></div>
     <section class="content-hero content-hero--blue"><div class="site-shell content-hero__inner"><div><p class="eyebrow">Free decision tool</p><h1>Should AI help with <span class="ink-blue">this task?</span></h1><p class="lead">Choose one real task—not your whole job or business. This check helps you decide whether to test AI assistance, narrow the task or stop until important conditions are clearer.</p></div><aside class="content-hero__aside"><p class="meta">Private by design</p><p>Your answers remain in this browser. This page does not send or save them. Do not enter private, client, patient or employee information.</p></aside></div></section>
     <div class="rough-rule" aria-hidden="true"></div>
-    <section><div class="site-shell product-layout"><div><form class="fit-form" data-fit-form>
+    <section><div class="site-shell product-layout"><div><form class="fit-form" data-fit-form novalidate>
       <fieldset><legend>1. Does this task happen repeatedly?</legend><div class="fit-options"><label><input required type="radio" name="repeated" value="yes"> Yes</label><label><input type="radio" name="repeated" value="sometimes"> Sometimes</label><label><input type="radio" name="repeated" value="no"> No</label></div></fieldset>
       <fieldset><legend>2. Can you describe where the task begins and what a complete result looks like?</legend><div class="fit-options"><label><input required type="radio" name="defined" value="yes"> Yes</label><label><input type="radio" name="defined" value="partly"> Partly</label><label><input type="radio" name="defined" value="no"> No</label></div></fieldset>
       <fieldset><legend>3. Do you have reliable source information the AI is permitted to use?</legend><div class="fit-options"><label><input required type="radio" name="sources" value="yes"> Yes</label><label><input type="radio" name="sources" value="unsure"> Unsure</label><label><input type="radio" name="sources" value="no"> No</label></div></fieldset>
@@ -25,38 +25,122 @@
       <fieldset><legend>6. Is a capable person available to review the result before anyone relies on it?</legend><div class="fit-options"><label><input required type="radio" name="reviewer" value="yes"> Yes</label><label><input type="radio" name="reviewer" value="sometimes"> Sometimes</label><label><input type="radio" name="reviewer" value="no"> No</label></div></fieldset>
       <fieldset><legend>7. Is one person clearly accountable for the final decision or published result?</legend><div class="fit-options"><label><input required type="radio" name="owner" value="yes"> Yes</label><label><input type="radio" name="owner" value="unclear"> Unclear</label><label><input type="radio" name="owner" value="no"> No</label></div></fieldset>
       <fieldset><legend>8. Can you test this on a small scale and stop without causing harm or disrupting essential work?</legend><div class="fit-options"><label><input required type="radio" name="reversible" value="yes"> Yes</label><label><input type="radio" name="reversible" value="partly"> Partly</label><label><input type="radio" name="reversible" value="no"> No</label></div></fieldset>
+      <div class="fit-validation" id="fit-validation" data-fit-validation role="alert" tabindex="-1" hidden><strong data-fit-missing-title>The check is not complete yet.</strong><p data-fit-missing-copy>Answer every question before asking for a recommendation.</p></div>
       <div class="content-actions"><button class="button button--blue" type="submit">Review this possible use</button><button class="text-link" type="reset">Clear answers</button></div>
-    </form><section class="fit-result" data-fit-result hidden tabindex="-1" aria-live="polite"><p class="meta" data-fit-kicker></p><h2 data-fit-title></h2><p data-fit-copy></p><div class="content-actions"><a class="text-link" href="/tools/human-review-checklist/">Use the Human Review Checklist <span aria-hidden="true">→</span></a></div></section></div><aside class="decision-note"><p class="meta">What this tool cannot decide</p><h2>A promising task is not permission to use every tool.</h2><p>Vendor terms, security controls, legal obligations, organizational policy and the actual data involved still matter. This is a practical starting check, not legal, security or compliance advice.</p></aside></div></section>
+    </form><section class="fit-result" data-fit-result hidden tabindex="-1" aria-live="polite"><p class="meta" data-fit-kicker></p><h2 data-fit-title></h2><p data-fit-copy></p><div class="content-note"><h3 data-fit-next-title>Your next useful step</h3><p data-fit-next-copy></p><a class="button button--paper" data-fit-next-link href="/tools/human-review-checklist/">Continue</a></div></section></div><aside class="decision-note"><p class="meta">What this tool cannot decide</p><h2>A promising task is not permission to use every tool.</h2><p>Vendor terms, security controls, legal obligations, organizational policy and the actual data involved still matter. This is a practical starting check, not legal, security or compliance advice.</p></aside></div></section>
   </main>
-  <footer><div class="site-shell footer-main"><div class="footer-brand"><strong>oob<span>CREATIVE</span></strong><p>Go deeper, not louder.</p><p class="footer-description">Human-centered strategy, communication, digital experiences and practical technology.</p></div><div class="footer-links"><div><p class="footer-label">Explore</p><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a></div><div><p class="footer-label">Connect</p><a href="/audience-review/">Audience Review</a><a href="mailto:hello@oobcreative.com">hello@oobcreative.com</a></div></div></div><div class="footer-bar"><div class="site-shell"><span>© 2018–2026 oobCREATIVE. All rights reserved.</span><span>Roaring Fork Valley, Colorado</span><a href="/privacy-policy/">Privacy Policy</a></div></div></footer>
+  <footer><div class="site-shell footer-main"><div class="footer-brand"><img class="footer-logo" src="/branding/logo_horiz-hex111111_background.png" alt="oobCREATIVE" width="270" height="68"><p>Go deeper, not louder.</p><p class="footer-description">Human-centered strategy, communication, digital experiences and practical technology.</p></div><div class="footer-links"><div><p class="footer-label">Explore</p><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a></div><div><p class="footer-label">Connect</p><a href="/audience-review/">Audience Review</a><a href="mailto:hello@oobcreative.com">hello@oobcreative.com</a></div></div></div><div class="footer-bar"><div class="site-shell"><span>© 2018–2026 oobCREATIVE. All rights reserved.</span><span>Roaring Fork Valley, Colorado</span><a href="/privacy-policy/">Privacy Policy</a></div></div></footer>
   <script>
     const form = document.querySelector('[data-fit-form]');
     const result = document.querySelector('[data-fit-result]');
     const kicker = document.querySelector('[data-fit-kicker]');
     const title = document.querySelector('[data-fit-title]');
     const copy = document.querySelector('[data-fit-copy]');
+    const validation = document.querySelector('[data-fit-validation]');
+    const missingTitle = document.querySelector('[data-fit-missing-title]');
+    const missingCopy = document.querySelector('[data-fit-missing-copy]');
+    const nextTitle = document.querySelector('[data-fit-next-title]');
+    const nextCopy = document.querySelector('[data-fit-next-copy]');
+    const nextLink = document.querySelector('[data-fit-next-link]');
+    const questionGroups = Array.from(form.querySelectorAll('fieldset'));
+    const reduceMotion = window.matchMedia
+      ? window.matchMedia('(prefers-reduced-motion: reduce)')
+      : { matches: false };
+
+    function addDescription(element, id) {
+      const ids = new Set((element.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
+      ids.add(id);
+      element.setAttribute('aria-describedby', Array.from(ids).join(' '));
+    }
+
+    function removeDescription(element, id) {
+      const ids = (element.getAttribute('aria-describedby') || '').split(/\s+/).filter((item) => item && item !== id);
+      if (ids.length) element.setAttribute('aria-describedby', ids.join(' '));
+      else element.removeAttribute('aria-describedby');
+    }
+
+    function clearValidation() {
+      questionGroups.forEach((group) => {
+        group.removeAttribute('aria-invalid');
+        group.querySelectorAll('input').forEach((input) => {
+          input.removeAttribute('aria-invalid');
+          removeDescription(input, validation.id);
+        });
+      });
+      validation.hidden = true;
+    }
+
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       const answers = Object.fromEntries(new FormData(form));
+      const missing = questionGroups.filter((group) => !group.querySelector('input:checked'));
+      clearValidation();
+      if (missing.length) {
+        result.hidden = true;
+        missing.forEach((group) => {
+          group.setAttribute('aria-invalid', 'true');
+          const firstInput = group.querySelector('input');
+          firstInput.setAttribute('aria-invalid', 'true');
+          addDescription(firstInput, validation.id);
+        });
+        missingTitle.textContent = `${missing.length} ${missing.length === 1 ? 'answer is' : 'answers are'} still needed.`;
+        missingCopy.textContent = 'Complete the highlighted questions, then review this possible use again.';
+        validation.hidden = false;
+        validation.focus({ preventScroll: true });
+        validation.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'center' });
+        return;
+      }
       const stop = answers.sensitive !== 'no' || answers.consequence === 'yes' || answers.reviewer === 'no' || answers.owner === 'no' || answers.reversible === 'no';
       const strong = answers.repeated === 'yes' && answers.defined === 'yes' && answers.sources === 'yes' && answers.sensitive === 'no' && answers.consequence === 'no' && answers.reviewer === 'yes' && answers.owner === 'yes' && answers.reversible === 'yes';
       if (stop) {
         kicker.textContent = 'Pause before testing';
         title.textContent = 'Important conditions need to be clearer first.';
         copy.textContent = 'Sensitive information, meaningful consequences, missing review, unclear ownership or an irreversible test can make a seemingly useful task a poor first AI use. Narrow the task or establish the missing safeguard before choosing a tool.';
+        nextTitle.textContent = 'Make the human safeguard explicit.';
+        nextCopy.textContent = 'Use the Human Review Checklist to name the missing source, owner, reviewer or stopping condition before anyone relies on AI-assisted work.';
+        nextLink.textContent = 'Use the Human Review Checklist';
+        nextLink.href = '/tools/human-review-checklist/';
       } else if (strong) {
         kicker.textContent = 'Promising bounded use';
         title.textContent = 'This may be a reasonable task to test with AI assistance.';
         copy.textContent = 'Keep the pilot small. Define permitted inputs, show an example of acceptable output, assign the reviewer and compare the result with the current process. AI should support the responsibility, not hide who owns it.';
+        nextTitle.textContent = 'Turn the decision into a bounded pilot.';
+        nextCopy.textContent = 'Use the First AI Pilot Brief to record the permitted inputs, human owner, review standard, measure and stopping condition.';
+        nextLink.textContent = 'Build the pilot brief';
+        nextLink.href = '/tools/ai-pilot-starter/';
       } else {
         kicker.textContent = 'Narrow the task';
         title.textContent = 'There may be a useful AI-supported step inside this work.';
         copy.textContent = 'The whole task is not ready yet. Clarify its beginning and end, improve the source information, name the reviewer and choose a smaller reversible portion such as organizing, comparing, preparing or drafting.';
+        nextTitle.textContent = 'Map the work before choosing the tool.';
+        nextCopy.textContent = 'The AI Workday Review can help separate one bounded support task from the judgment and responsibility that should remain human.';
+        nextLink.textContent = 'Start the AI Workday Review';
+        nextLink.href = '/assessments/ai-workday-review/';
       }
       result.hidden = false;
-      result.focus();
+      result.focus({ preventScroll: true });
+      result.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
     });
-    form.addEventListener('reset', () => { result.hidden = true; });
+    form.addEventListener('change', (event) => {
+      const group = event.target.closest('fieldset');
+      if (!group) return;
+      group.removeAttribute('aria-invalid');
+      group.querySelectorAll('input').forEach((input) => {
+        input.removeAttribute('aria-invalid');
+        removeDescription(input, validation.id);
+      });
+      if (!questionGroups.some((item) => item.getAttribute('aria-invalid') === 'true')) validation.hidden = true;
+      if (!result.hidden) result.hidden = true;
+    });
+    form.addEventListener('reset', () => {
+      window.setTimeout(() => {
+        clearValidation();
+        result.hidden = true;
+        const firstInput = form.querySelector('input');
+        firstInput.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'center' });
+        firstInput.focus({ preventScroll: true });
+      }, 0);
+    });
   </script>
 </body>
 </html>
