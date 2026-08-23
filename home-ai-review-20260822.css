@@ -1,47 +1,260 @@
-@import url('/home-ai-review.css?rev=20260822-mobile1');
+/* Homepage AI relationship section.
+   One card system only: image, label, selected state. */
 
-/* Responsive layout override for the homepage AI relationship choices.
-   Keep five across when space allows, wrap naturally through intermediate
-   widths, and switch to one full-width choice per row on phone/narrow views. */
+.operator-hero {
+  padding-top: clamp(3.75rem, 7vw, 6.5rem);
+}
+
+.hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, .78fr) minmax(420px, 1.22fr);
+  grid-template-areas:
+    "copy art"
+    "review review";
+  column-gap: clamp(2.5rem, 6vw, 6rem);
+  row-gap: clamp(3.5rem, 7vw, 6rem);
+  align-items: center;
+}
+
+.hero-copy {
+  grid-area: copy;
+  position: static;
+  align-self: center;
+}
+
+.review-panel {
+  grid-area: review;
+  border: 0;
+  background: transparent;
+}
+
+.review-panel__heading {
+  max-width: 760px;
+  margin-bottom: clamp(1.7rem, 3vw, 2.4rem);
+  padding: 0;
+  border: 0;
+}
+
+.review-panel__heading h2 {
+  max-width: 15ch;
+  margin-bottom: 0;
+  font-size: clamp(2rem, 3.5vw, 3.4rem);
+}
+
+/* Five cards when space allows. The grid wraps on its own between desktop and phone. */
 .review-options {
-  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: clamp(.8rem, 1.5vw, 1.15rem);
+  padding: 0;
+  background: transparent;
 }
 
-.review-option,
-.review-option:nth-child(4),
-.review-option:nth-child(5),
-.review-option:last-child {
-  grid-column: auto;
+.review-option {
+  --review-tilt: 0deg;
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto;
+  min-width: 0;
   width: 100%;
-  margin-left: 0;
-  justify-self: stretch;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 1px solid var(--line, #d8d8d4);
+  background: #fff;
+  color: var(--ink, #111);
+  box-shadow: none;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  isolation: isolate;
+  transform: translateY(0) rotate(0deg);
+  transition: transform .22s ease, opacity .18s ease, filter .18s ease, background-color .18s ease, border-color .18s ease, box-shadow .22s ease;
 }
 
-@media (max-width: 720px) {
-  .review-options {
+.review-option:nth-child(1) { --review-tilt: -.12deg; }
+.review-option:nth-child(2) { --review-tilt: .09deg; }
+.review-option:nth-child(3) { --review-tilt: -.08deg; }
+.review-option:nth-child(4) { --review-tilt: .12deg; }
+.review-option:nth-child(5) { --review-tilt: -.1deg; }
+
+.review-option__marker {
+  display: none;
+}
+
+/* The supplied square doodle fills the image area of each card. */
+.review-option::before {
+  content: "";
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border-bottom: 1px solid var(--line, #d8d8d4);
+  transition: opacity .18s ease, filter .18s ease, transform .22s ease;
+}
+
+.review-option[data-review="opportunity"]::before { background-image: url('/images/ai-relationship/opportunity.webp'); }
+.review-option[data-review="friction"]::before { background-image: url('/images/ai-relationship/friction.webp'); }
+.review-option[data-review="team"]::before { background-image: url('/images/ai-relationship/team.webp'); }
+.review-option[data-review="build"]::before { background-image: url('/images/ai-relationship/build.webp'); }
+.review-option[data-review="control"]::before { background-image: url('/images/ai-relationship/control.webp'); }
+
+/* Keep the original statements in the DOM while showing a concise label. */
+.review-option > span:last-child {
+  display: block;
+  min-height: 4.4rem;
+  padding: 1rem 1rem 1.1rem;
+  font-size: 0;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+}
+
+.review-option > span:last-child::after {
+  display: block;
+  font-size: clamp(1.05rem, 1.35vw, 1.22rem);
+  line-height: 1.15;
+}
+
+.review-option[data-review="opportunity"] > span:last-child::after { content: "Find what’s useful."; }
+.review-option[data-review="friction"] > span:last-child::after { content: "Make work easier."; }
+.review-option[data-review="team"] > span:last-child::after { content: "Set better boundaries."; }
+.review-option[data-review="build"] > span:last-child::after { content: "Build what felt out of reach."; }
+.review-option[data-review="control"] > span:last-child::after { content: "Keep more control."; }
+
+/* Selection is the whole hand-drawn ballpoint perimeter. */
+.review-option::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  inset: -7px;
+  pointer-events: none;
+  opacity: 0;
+  background: center / 100% 100% no-repeat;
+}
+
+.review-option.is-selected::after {
+  opacity: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath pathLength='100' d='M3 5 C15 2 29 4 42 3 C58 5 74 2 96 5 C98 22 96 37 97 52 C96 68 98 82 95 96 C77 97 63 95 49 97 C34 95 18 98 4 95 C2 79 4 64 3 50 C4 35 2 19 3 5 Z' fill='none' stroke='%23244aa5' stroke-width='2.7' stroke-linecap='round' stroke-linejoin='round' stroke-dasharray='100' stroke-dashoffset='100' vector-effect='non-scaling-stroke'%3E%3Canimate attributeName='stroke-dashoffset' from='100' to='0' dur='.48s' calcMode='spline' keySplines='.2 .8 .2 1' fill='freeze'/%3E%3C/path%3E%3C/svg%3E");
+}
+
+.review-option:hover,
+.review-option:focus-visible {
+  outline: none;
+  border-color: #a3a39e;
+  box-shadow: 4px 5px 0 rgba(17, 17, 17, .06);
+  transform: translateY(-2px) rotate(var(--review-tilt));
+}
+
+.review-option:focus-visible {
+  outline: 3px solid var(--ballpoint, #244aa5);
+  outline-offset: 6px;
+}
+
+.review-option.is-selected {
+  z-index: 2;
+  border-color: transparent;
+  background: #fff;
+  box-shadow: 7px 8px 0 rgba(36, 74, 165, .11);
+  opacity: 1;
+  filter: none;
+  transform: translateY(-3px) rotate(var(--review-tilt));
+}
+
+.review-option.is-selected::before {
+  border-bottom-color: #d7deef;
+  transform: scale(.995);
+}
+
+/* After a choice, the other four visibly step back but remain selectable. */
+.review-options:has(.review-option.is-selected) .review-option:not(.is-selected) {
+  border-color: #e1e1de;
+  background: #f5f5f3;
+  color: #777772;
+  opacity: .52;
+  filter: grayscale(1);
+  box-shadow: none;
+  transform: none;
+}
+
+.review-options:has(.review-option.is-selected) .review-option:not(.is-selected)::before {
+  opacity: .68;
+  filter: grayscale(1) contrast(.9);
+}
+
+.review-options:has(.review-option.is-selected) .review-option:not(.is-selected):hover,
+.review-options:has(.review-option.is-selected) .review-option:not(.is-selected):focus-visible {
+  opacity: .82;
+  color: var(--ink, #111);
+  background: #fff;
+  filter: grayscale(.4);
+}
+
+.review-response {
+  max-width: 760px;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  border-left: 5px solid var(--ballpoint, #244aa5);
+}
+
+@media (max-width: 980px) {
+  .hero-layout {
     grid-template-columns: 1fr;
-    gap: .9rem;
+    grid-template-areas:
+      "copy"
+      "art"
+      "review";
+    row-gap: 2.4rem;
+  }
+}
+
+/* Phone and narrow view: exactly one full-width card per row. */
+@media (max-width: 720px) {
+  .operator-hero {
+    padding-top: 3.25rem;
   }
 
-  .review-option,
-  .review-option:nth-child(4),
-  .review-option:nth-child(5),
-  .review-option:last-child {
-    grid-column: auto;
+  .hero-layout {
+    row-gap: 1.9rem;
+  }
+
+  .review-options {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .review-option {
     width: 100%;
-    min-height: 10.25rem;
-    grid-template-rows: 6rem minmax(3.25rem, auto);
-    margin-left: 0;
+    grid-column: auto;
+    margin: 0;
     justify-self: stretch;
   }
 
-  .review-option::before {
-    width: 5.6rem;
-    height: 5.6rem;
+  .review-option > span:last-child {
+    min-height: 0;
+    padding: 1rem 1.1rem 1.15rem;
   }
 
   .review-option > span:last-child::after {
-    max-width: 18ch;
-    font-size: clamp(1rem, 4.6vw, 1.14rem);
+    font-size: clamp(1.15rem, 5vw, 1.35rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-option,
+  .review-option::before {
+    transition: none !important;
+  }
+
+  .review-option:hover,
+  .review-option:focus-visible,
+  .review-option.is-selected {
+    transform: none;
+  }
+
+  .review-option.is-selected::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M3 5 C15 2 29 4 42 3 C58 5 74 2 96 5 C98 22 96 37 97 52 C96 68 98 82 95 96 C77 97 63 95 49 97 C34 95 18 98 4 95 C2 79 4 64 3 50 C4 35 2 19 3 5 Z' fill='none' stroke='%23244aa5' stroke-width='2.7' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
   }
 }
