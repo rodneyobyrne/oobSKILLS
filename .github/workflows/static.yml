@@ -32,35 +32,9 @@ jobs:
           grep -F "/home-ai-cards-v3.css?v=${GITHUB_SHA}" index.html
           grep -F "grid-template-columns: 1fr !important" home-ai-cards-v3.css
           grep -F "flex-direction: column !important" home-ai-cards-v3.css
-      - name: Build static homepage hero PNG
+      - name: Verify static homepage hero PNG
         run: |
-          base64 --decode images/ai-relationship/oob-ai-hero.b64 > images/ai-relationship/oob-ai-hero.png
           file images/ai-relationship/oob-ai-hero.png | grep -F "PNG image data"
-          python - <<'PY'
-          from pathlib import Path
-          page = Path("index.html")
-          html = page.read_text()
-          old = '''            <object
-              class="hero-art__object"
-              data="/images/ai-relationship/oob-ai-hero-animated.svg"
-              type="image/svg+xml"
-              data-oob-hero-svg
-              aria-hidden="true"
-              tabindex="-1"></object>'''
-          new = '''            <img
-              class="hero-art__image"
-              src="/images/ai-relationship/oob-ai-hero.png"
-              alt="A confused business leader meets with a cheerful AI agent that presents a complicated process as easy."
-              width="1200"
-              height="800"
-              decoding="async"
-              fetchpriority="high">'''
-          if old not in html:
-              raise SystemExit("Homepage hero object markup not found")
-          html = html.replace(old, new, 1)
-          html = html.replace('    <script src="/hero-animation.js" defer></script>\n', '')
-          page.write_text(html)
-          PY
           grep -F 'src="/images/ai-relationship/oob-ai-hero.png"' index.html
           ! grep -F 'oob-ai-hero-animated.svg' index.html
       - name: Upload artifact
