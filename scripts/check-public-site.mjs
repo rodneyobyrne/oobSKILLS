@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
-import { dirname, extname, join, relative, resolve, sep } from 'node:path';
+import { basename, dirname, extname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url));
-const siteRoot = resolve(scriptDirectory, '..');
-const ignoredDirectories = new Set(['.git', 'node_modules', 'scripts', 'tmp']);
+const repositoryRoot = resolve(scriptDirectory, '..');
+const siteRoot = process.argv[2] ? resolve(process.cwd(), process.argv[2]) : repositoryRoot;
+const requireVersionedAssets = basename(siteRoot) === '_site' || process.env.REQUIRE_VERSIONED_ASSETS === '1';
+const ignoredDirectories = new Set(['.git', '_site', 'node_modules', 'scripts', 'tests', 'tmp']);
 
 const problems = [];
 
@@ -115,8 +117,11 @@ function checkDocumentStructure(file, html) {
   }
 
   const isRedirect = /<meta\b[^>]*http-equiv=["']refresh["']/i.test(html);
+  const isNoIndex = /<meta\b[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html);
   const h1Count = (html.match(/<h1\b/gi) || []).length;
   if (!isRedirect && h1Count !== 1) report(file, `expected exactly one h1; found ${h1Count}`);
+  if (!isRedirect && !isNoIndex && !/<main\b/i.test(html)) report(file, 'indexable page is missing a main landmark');
+  if (!isRedirect && !isNoIndex && !/<header\b/i.test(html)) report(file, 'indexable page is missing a header landmark');
 
   const ids = [...html.matchAll(/\bid=["']([^"']+)["']/gi)].map((match) => match[1]);
   for (const id of new Set(ids)) {
@@ -186,8 +191,82 @@ function checkLocalReferences(file, html, absolutePath) {
   for (const match of html.matchAll(/\b(?:href|src)=["']([^"']+)["']/gi)) {
     const referenceValue = match[1];
     if (referenceValue.startsWith('#')) continue;
+    const isLocalAsset = !/^(?:https?:|mailto:|tel:|data:|javascript:)/i.test(referenceValue);
+    if (requireVersionedAssets && isLocalAsset && /\.(?:css|js)(?:[?#]|$)/i.test(referenceValue) && !/[?&]v=[^&#]+/i.test(referenceValue)) {
+      report(file, `local CSS or JavaScript asset is not release-versioned: "${referenceValue}"`);
+    }
     const localPath = resolveLocalReference(referenceValue, absolutePath);
     if (localPath && !existsSync(localPath)) report(file, `broken local reference "${referenceValue}"`);
+  }
+}
+
+function checkPublicationBoundary() {
+  if (!requireVersionedAssets) return;
+  const forbiddenPaths = ['.github', 'AGENTS.md', 'scripts', 'static.yml', 'tests', 'tmp'];
+  for (const forbiddenPath of forbiddenPaths) {
+    if (existsSync(join(siteRoot, forbiddenPath))) report(forbiddenPath, 'operational or internal path is present in public artifact');
+  }
+
+  if (requireVersionedAssets) {
+    for (const requiredFile of ['CNAME', 'robots.txt', 'sitemap.xml', 'release.json']) {
+      if (!existsSync(join(siteRoot, requiredFile))) report(requiredFile, 'required release file is missing from public artifact');
+    }
+  }
+}
+
+function checkSitemap(htmlFiles) {
+  const sitemapPath = join(siteRoot, 'sitemap.xml');
+  if (!existsSync(sitemapPath)) {
+    report('sitemap.xml', 'sitemap is missing');
+    return;
+  }
+
+  const sitemap = readFileSync(sitemapPath, 'utf8');
+  const sitemapUrls = [...sitemap.matchAll(/<loc>\s*([^<]+?)\s*<\/loc>/gi)].map((match) => match[1]);
+  const sitemapSet = new Set(sitemapUrls);
+  if (sitemapUrls.length !== sitemapSet.size) report('sitemap.xml', 'sitemap contains a duplicate URL');
+  for (const match of sitemap.matchAll(/<lastmod>\s*([^<]+?)\s*<\/lastmod>/gi)) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(match[1])) report('sitemap.xml', `invalid lastmod value "${match[1]}"`);
+  }
+
+  const canonicalOwners = new Map();
+  for (const absolutePath of htmlFiles) {
+    const file = siteFileName(absolutePath);
+    const html = readFileSync(absolutePath, 'utf8');
+    const isRedirect = /<meta\b[^>]*http-equiv=["']refresh["']/i.test(html);
+    const isNoIndex = /<meta\b[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html);
+    if (isRedirect || isNoIndex) continue;
+    const canonicalTag = [...html.matchAll(/<link\b[^>]*>/gi)]
+      .map((match) => match[0])
+      .find((tag) => /\brel=["']canonical["']/i.test(tag));
+    const canonical = canonicalTag?.match(/\bhref=["']([^"']+)["']/i)?.[1];
+    if (!canonical) continue;
+    if (canonicalOwners.has(canonical)) {
+      report(file, `canonical URL duplicates ${canonicalOwners.get(canonical)}`);
+    } else {
+      canonicalOwners.set(canonical, file);
+    }
+    if (canonical.startsWith('https://skills.oobcreative.com/') && !sitemapSet.has(canonical)) {
+      report(file, `indexable canonical URL is missing from sitemap: "${canonical}"`);
+    }
+  }
+
+  for (const sitemapUrl of sitemapSet) {
+    let parsed;
+    try {
+      parsed = new URL(sitemapUrl);
+    } catch {
+      report('sitemap.xml', `invalid URL "${sitemapUrl}"`);
+      continue;
+    }
+    if (parsed.origin !== 'https://skills.oobcreative.com') {
+      report('sitemap.xml', `unexpected sitemap origin "${parsed.origin}"`);
+      continue;
+    }
+    const localPath = parsed.pathname.endsWith('/')
+      ? join(siteRoot, parsed.pathname, 'index.html')
+      : join(siteRoot, parsed.pathname);
+    if (!existsSync(localPath)) report('sitemap.xml', `URL does not resolve to a built page: "${sitemapUrl}"`);
   }
 }
 
@@ -213,6 +292,9 @@ for (const absolutePath of htmlFiles) {
   checkInteractiveExperience(file, html, absolutePath);
   checkLocalReferences(file, html, absolutePath);
 }
+
+checkPublicationBoundary();
+checkSitemap(htmlFiles);
 
 if (problems.length > 0) {
   console.error(`Public-site quality checks found ${problems.length} problem${problems.length === 1 ? '' : 's'}:\n`);

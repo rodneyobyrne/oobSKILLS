@@ -1,0 +1,18 @@
+{
+  "name": "oobskills-static-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Build and release checks for the oobCREATIVE Skills static site.",
+  "scripts": {
+    "build": "node scripts/build-site.mjs",
+    "check:site": "node scripts/check-public-site.mjs _site",
+    "check:secrets": "node scripts/scan-secrets.mjs",
+    "test:dom": "node tests/test-human-review.cjs && node tests/test-idea-to-test.cjs && node tests/test-idea-to-test-dom.cjs",
+    "test:browser": "node tests/test-idea-to-test-browser.cjs && node tests/test-workday-browser.cjs",
+    "validate": "npm run build && npm run check:site && npm run check:secrets && npm run test:dom"
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0",
+    "playwright": "1.62.1"
+  }
+}
