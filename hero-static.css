@@ -1,0 +1,37 @@
+/* Static homepage hero image.
+   Keep the illustration as a normal image element for predictable desktop
+   rendering, responsive sizing, caching, and accessibility. */
+.hero-layout::after {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+.hero-art {
+  grid-area: art;
+  width: 100%;
+  margin: 0;
+  min-width: 0;
+  align-self: center;
+}
+
+.hero-art__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .hero-art {
+    width: min(100%, 780px);
+    justify-self: center;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero-art {
+    width: calc(100% + 1rem);
+    margin-inline: -.5rem;
+  }
+}
