@@ -26,8 +26,9 @@ This repository deploys directly to a public customer-facing website. Treat ever
 
 ## Required pre-publish checks
 
-1. Run `node scripts/check-public-site.mjs` and resolve every reported problem.
-2. Test every changed interaction from a fresh browser session through its complete result, reset and error paths.
-3. Review changed pages at mobile and desktop widths, including keyboard focus and print/download output when offered.
-4. Confirm that no internal language, draft marker, unsupported claim, secret or private data appears in source or rendered output.
-5. Merge only when the customer-facing experience is complete, usable and consistent with these instructions.
+1. Run `npm ci` and `npm run validate`; resolve every build, publication-boundary, credential-scan and DOM-test problem.
+2. Provision Chromium with `npx playwright install chromium`, then run `npm run test:browser`.
+3. Test every changed interaction from a fresh browser session through its complete result, reset and error paths.
+4. Review changed pages at mobile and desktop widths, including keyboard focus and print/download output when offered.
+5. Confirm that no internal language, draft marker, unsupported claim, secret or private data appears in source or rendered output.
+6. Merge only when the customer-facing experience is complete, usable and consistent with these instructions.

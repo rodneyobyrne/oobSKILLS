@@ -1,26 +1,21 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+# Validate every proposed release and deploy the same tested artifact to GitHub Pages.
+name: Validate and deploy static content to Pages
 
 on:
+  pull_request:
+    branches: ["main"]
   push:
     branches: ["main"]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  validate:
     runs-on: ubuntu-latest
+    env:
+      SITE_RELEASE_VERSION: ${{ github.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,25 +23,43 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Check public-site quality
-        run: node scripts/check-public-site.mjs
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Use current homepage AI card stylesheet
+          cache: npm
+      - name: Install test dependencies
+        run: npm ci
+      - name: Build and validate public artifact
+        run: npm run validate
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run browser journeys
+        run: npm run test:browser
+      - name: Verify homepage release assets
         run: |
-          sed -i "s|/home-ai-review-20260822.css|/home-ai-cards-v3.css?v=${GITHUB_SHA}|" index.html
-          grep -F "/home-ai-cards-v3.css?v=${GITHUB_SHA}" index.html
-          grep -F "grid-template-columns: 1fr !important" home-ai-cards-v3.css
-          grep -F "flex-direction: column !important" home-ai-cards-v3.css
-      - name: Verify static homepage hero PNG
-        run: |
-          file images/ai-relationship/oob-ai-hero.png | grep -F "PNG image data"
-          grep -F 'src="/images/ai-relationship/oob-ai-hero.png"' index.html
-          ! grep -F 'oob-ai-hero-animated.svg' index.html
-      - name: Upload artifact
+          file _site/images/ai-relationship/oob-ai-hero.png | grep -F "PNG image data"
+          grep -F 'src="/images/ai-relationship/oob-ai-hero.png"' _site/index.html
+          grep -F "/home-ai-cards-v3.css?v=${GITHUB_SHA}" _site/index.html
+          ! grep -F 'oob-ai-hero-animated.svg' _site/index.html
+      - name: Upload tested Pages artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: './_site'
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+    steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
