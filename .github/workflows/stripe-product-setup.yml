@@ -1,0 +1,153 @@
+name: One-time Stripe product setup
+
+on:
+  push:
+    branches: ["ops/stripe-product-setup"]
+
+permissions:
+  contents: read
+
+jobs:
+  create-product-price-and-link:
+    runs-on: ubuntu-latest
+    env:
+      STRIPE_RESTRICTED_KEY: ${{ secrets.STRIPE_RESTRICTED_KEY }}
+      OFFER_KEY: local_ai_system_pilot_14_day
+    steps:
+      - name: Validate secret
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "${STRIPE_RESTRICTED_KEY:-}" ]]; then
+            echo "STRIPE_RESTRICTED_KEY is not configured." >&2
+            exit 1
+          fi
+          if [[ "${STRIPE_RESTRICTED_KEY}" != rk_live_* ]]; then
+            echo "Expected a live restricted Stripe key beginning with rk_live_." >&2
+            exit 1
+          fi
+
+      - name: Create or reuse Stripe records
+        id: stripe_setup
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          api_get() {
+            curl --fail-with-body --silent --show-error \
+              --user "${STRIPE_RESTRICTED_KEY}:" "$@"
+          }
+
+          api_post() {
+            curl --fail-with-body --silent --show-error \
+              --user "${STRIPE_RESTRICTED_KEY}:" \
+              --request POST "$@"
+          }
+
+          ACCOUNT_JSON="$(curl --silent --show-error \
+            --user "${STRIPE_RESTRICTED_KEY}:" \
+            https://api.stripe.com/v1/account)"
+
+          if jq -e '.error' >/dev/null 2>&1 <<<"${ACCOUNT_JSON}"; then
+            CHARGES_ENABLED="unknown"
+            PAYOUTS_ENABLED="unknown"
+            DETAILS_SUBMITTED="unknown"
+          else
+            CHARGES_ENABLED="$(jq -r '.charges_enabled // "unknown"' <<<"${ACCOUNT_JSON}")"
+            PAYOUTS_ENABLED="$(jq -r '.payouts_enabled // "unknown"' <<<"${ACCOUNT_JSON}")"
+            DETAILS_SUBMITTED="$(jq -r '.details_submitted // "unknown"' <<<"${ACCOUNT_JSON}")"
+          fi
+
+          PRICE_LIST="$(api_get --get https://api.stripe.com/v1/prices \
+            --data-urlencode "lookup_keys[]=${OFFER_KEY}" \
+            --data-urlencode "active=true" \
+            --data-urlencode "limit=1")"
+
+          PRICE_ID="$(jq -r '.data[0].id // empty' <<<"${PRICE_LIST}")"
+          PRODUCT_ID="$(jq -r '.data[0].product // empty' <<<"${PRICE_LIST}")"
+
+          DESCRIPTION='Setup and testing of one customer-contact workflow, such as missed-call coverage, scheduling, intake or permission-based follow-up. Includes workflow mapping, approved information, human escalation rules, configuration, testing and a keep/revise/stop review. Limited to one workflow and one human owner. Third-party software and usage costs are separate.'
+
+          if [[ -z "${PRICE_ID}" ]]; then
+            PRODUCT_JSON="$(api_post https://api.stripe.com/v1/products \
+              --data-urlencode 'name=Local AI Systems — 14-Day Pilot' \
+              --data-urlencode "description=${DESCRIPTION}" \
+              --data-urlencode 'tax_code=txcd_20060017' \
+              --data-urlencode "metadata[offer_key]=${OFFER_KEY}" \
+              --data-urlencode 'metadata[source]=skills.oobcreative.com')"
+            PRODUCT_ID="$(jq -er '.id' <<<"${PRODUCT_JSON}")"
+
+            PRICE_JSON="$(api_post https://api.stripe.com/v1/prices \
+              --data-urlencode "product=${PRODUCT_ID}" \
+              --data-urlencode 'currency=usd' \
+              --data-urlencode 'unit_amount=95000' \
+              --data-urlencode "lookup_key=${OFFER_KEY}" \
+              --data-urlencode 'nickname=14-day single-workflow local AI pilot' \
+              --data-urlencode "metadata[offer_key]=${OFFER_KEY}")"
+            PRICE_ID="$(jq -er '.id' <<<"${PRICE_JSON}")"
+            PRICE_ACTION="created"
+          else
+            api_post "https://api.stripe.com/v1/products/${PRODUCT_ID}" \
+              --data-urlencode 'name=Local AI Systems — 14-Day Pilot' \
+              --data-urlencode "description=${DESCRIPTION}" \
+              --data-urlencode 'tax_code=txcd_20060017' \
+              --data-urlencode "metadata[offer_key]=${OFFER_KEY}" \
+              --data-urlencode 'metadata[source]=skills.oobcreative.com' >/dev/null
+            PRICE_ACTION="reused"
+          fi
+
+          LINK_LIST="$(api_get --get https://api.stripe.com/v1/payment_links \
+            --data-urlencode 'active=true' \
+            --data-urlencode 'limit=100')"
+          LINK_ID="$(jq -r --arg key "${OFFER_KEY}" \
+            '[.data[] | select(.metadata.offer_key == $key)][0].id // empty' \
+            <<<"${LINK_LIST}")"
+
+          if [[ -z "${LINK_ID}" ]]; then
+            LINK_JSON="$(api_post https://api.stripe.com/v1/payment_links \
+              --data-urlencode "line_items[0][price]=${PRICE_ID}" \
+              --data-urlencode 'line_items[0][quantity]=1' \
+              --data-urlencode 'allow_promotion_codes=false' \
+              --data-urlencode 'automatic_tax[enabled]=false' \
+              --data-urlencode 'billing_address_collection=auto' \
+              --data-urlencode 'customer_creation=always' \
+              --data-urlencode 'name_collection[business][enabled]=true' \
+              --data-urlencode 'name_collection[business][optional]=false' \
+              --data-urlencode 'phone_number_collection[enabled]=false' \
+              --data-urlencode 'submit_type=pay' \
+              --data-urlencode 'after_completion[type]=hosted_confirmation' \
+              --data-urlencode 'after_completion[hosted_confirmation][custom_message]=Payment received. oobCREATIVE will send the pilot intake and next-step instructions by email.' \
+              --data-urlencode "metadata[offer_key]=${OFFER_KEY}")"
+            LINK_ID="$(jq -er '.id' <<<"${LINK_JSON}")"
+            LINK_LIVEMODE="$(jq -er '.livemode' <<<"${LINK_JSON}")"
+            LINK_ACTION="created"
+          else
+            LINK_JSON="$(api_get "https://api.stripe.com/v1/payment_links/${LINK_ID}")"
+            LINK_LIVEMODE="$(jq -er '.livemode' <<<"${LINK_JSON}")"
+            LINK_ACTION="reused"
+          fi
+
+          if [[ "${LINK_LIVEMODE}" != "true" ]]; then
+            echo "Stripe returned a non-live Payment Link; stopping." >&2
+            exit 1
+          fi
+
+          {
+            echo "## Stripe setup completed"
+            echo
+            echo "- Product: \`${PRODUCT_ID}\`"
+            echo "- Price: \`${PRICE_ID}\` (${PRICE_ACTION})"
+            echo "- Payment Link record: \`${LINK_ID}\` (${LINK_ACTION})"
+            echo "- Live charges enabled: \`${CHARGES_ENABLED}\`"
+            echo "- Live payouts enabled: \`${PAYOUTS_ENABLED}\`"
+            echo "- Account details submitted: \`${DETAILS_SUBMITTED}\`"
+            echo
+            echo "The checkout URL is intentionally omitted from this public workflow log."
+            echo "Open the Payment Link securely in Stripe:"
+            echo "https://dashboard.stripe.com/payment-links/${LINK_ID}"
+          } >>"${GITHUB_STEP_SUMMARY}"
+
+          echo "product_id=${PRODUCT_ID}" >>"${GITHUB_OUTPUT}"
+          echo "price_id=${PRICE_ID}" >>"${GITHUB_OUTPUT}"
+          echo "payment_link_id=${LINK_ID}" >>"${GITHUB_OUTPUT}"
+
