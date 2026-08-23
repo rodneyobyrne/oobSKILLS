@@ -16,7 +16,7 @@
 
   const resultsStyles = document.createElement('link');
   resultsStyles.rel = 'stylesheet';
-  resultsStyles.href = './results-v6.css?v=1';
+  resultsStyles.href = './results-v6.css?v=2';
   document.head.appendChild(resultsStyles);
 
   const resultsAlignmentStyles = document.createElement('link');
@@ -61,7 +61,7 @@
         nicheInference.async = false;
         nicheInference.onload = () => {
           const results = document.createElement('script');
-          results.src = './results-v6.js?v=3';
+          results.src = './results-v6.js?v=4';
           results.async = false;
           results.onload = () => {
             const nicheResults = document.createElement('script');

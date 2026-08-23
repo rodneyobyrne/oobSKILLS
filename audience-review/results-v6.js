@@ -199,6 +199,13 @@
       </section>
 
       <p class="results-v6-privacy">This review uses high-probability patterns about the field, relationship dynamics, behavioral decision patterns, and the survey evidence you provided. It is intended to improve communication, not diagnose individuals, stereotype an audience, or assume every person will respond in the same way.</p>
+
+      <aside class="results-v6-next-step">
+        <p class="results-v6-section-label">Optional human support</p>
+        <h4>Use the review first. Add help where the message or experience is still stuck.</h4>
+        <p>This result is yours to use without a consultation. If you want support applying it to an offer, website or customer journey, choose a defined service path after you know what needs to change.</p>
+        <a class="button secondary" href="/services/">See ways to work together</a>
+      </aside>
     `;
   }
 
