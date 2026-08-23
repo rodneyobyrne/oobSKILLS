@@ -1,5 +1,5 @@
-/* Reliable homepage SVG animation host.
-   The hero is a real document element, not a CSS background pseudo-element. */
+/* Static homepage hero image.
+   The hero is intentionally a normal PNG for predictable desktop rendering. */
 .hero-layout::after {
   content: none !important;
   display: none !important;
@@ -15,14 +15,14 @@
 }
 
 .hero-art__object {
+  display: none !important;
+}
+
+.hero-art__image {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 1535 / 1024;
-  min-height: 390px;
-  border: 0;
-  background: #fff;
-  pointer-events: none;
+  object-fit: contain;
 }
 
 .hero-art__caption {
@@ -39,17 +39,14 @@
 
 @media (max-width: 980px) {
   .hero-art {
-    width: min(100%, 820px);
+    width: min(100%, 780px);
     justify-self: center;
-  }
-
-  .hero-art__object {
-    min-height: 0;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero-art__object {
-    animation: none;
+@media (max-width: 620px) {
+  .hero-art {
+    width: calc(100% + 1rem);
+    margin-inline: -.5rem;
   }
 }
