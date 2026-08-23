@@ -2,7 +2,7 @@
 
 **Selected direction:** August 23, 2026
 **Applies to:** skills.oobcreative.com
-**Status:** Morning-ready free and local-service foundation implemented; paid assessment fulfillment remains in development
+**Status:** Free WORKFILE suite and local-service checkout implemented; organization-grade paid assessment fulfillment remains a later infrastructure decision
 
 ## Site role
 
@@ -63,18 +63,20 @@ Persona names remain internal. Public content describes the recognizable situati
 - Audience Review
 - AI Fit Check
 - Human Review Checklist
+- First AI Pilot WORKFILE (fillable PDF, Markdown and printable web version)
+- AI Workday Review (personalized browser assessment with Markdown and print export)
 
 Every free tool must produce a useful result without requiring purchase, email submission or a consultation.
 
-### First paid assessment direction
+### First personalized assessment
 
-**AI Workday Review**
+**AI Workday Review - free browser release is live**
 
 Search-facing promise: Find the first useful AI workflow for a small business or small team.
 
-Intended output:
+Current output:
 
-- task map;
+- readiness decision and work-area map;
 - three prioritized opportunities;
 - one bounded 14-day pilot;
 - explicit human/AI responsibilities;
@@ -83,7 +85,11 @@ Intended output:
 - portable Markdown context file; and
 - decisions about what not to automate.
 
-Do not publish a price or checkout until the output has been tested and secure payment verification, private generation, automated delivery, license, refund, privacy, support and failure-recovery terms exist. Static GitHub Pages cannot securely provide those functions by itself.
+The complete foundational version is free. It processes answers with deterministic browser-side rules, saves a draft only in local browser storage and produces a printable and downloadable Markdown WORKFILE. It does not transmit answers to an AI model or require an account.
+
+A future paid organization edition must add real value rather than place the existing result behind a gate. Candidate value includes multi-participant input, private server-side processing, shared approval, organization-specific policy alignment, durable account history or implementation support.
+
+Do not publish a paid assessment price or checkout until secure payment verification, private generation, automated delivery, license, refund, privacy, support and failure-recovery terms exist. Static GitHub Pages cannot securely provide those functions by itself.
 
 Required fulfillment path:
 
@@ -97,7 +103,7 @@ Required fulfillment path:
 
 Stripe secret keys, webhook secrets and model credentials must never be placed in the public GitHub Pages repository. Stripe’s fulfillment guidance requires server-side handling of completed payments; a browser redirect alone is not reliable fulfillment.
 
-### Morning-ready local offer
+### Live local offer
 
 **Local AI Phone, Scheduling and Intake Systems**
 
@@ -110,7 +116,9 @@ Entry situations:
 - customer intake that arrives incomplete;
 - requested estimates, callbacks and reminders that lose momentum.
 
-Offer: one 14-day working pilot beginning at $950 plus direct software and usage costs. The pilot maps one workflow, defines approved information and escalation, builds the smallest useful system, tests normal and failure cases, and ends with a keep, revise or stop decision.
+Offer: one $950, 14-day working pilot plus direct software and usage costs. The pilot maps one workflow, defines approved information and escalation, builds the smallest useful system, tests normal and failure cases, and ends with a keep, revise or stop decision.
+
+Purchase path: the service page establishes scope and exclusions, then requests a short written fit review. After fit, intended start date and cancellation terms are confirmed, the customer pays through the live Stripe Payment Link. The payment CTA is intentionally contained on the detailed service page rather than distributed across awareness pages.
 
 Position around the business result, not the phrase “local AI consultant.” Current local search results show little evidence of an established Roaring Fork Valley search category for that title. Locality is a trust, context and implementation advantage; the demand language is missed calls, appointment scheduling, intake and follow-up.
 
