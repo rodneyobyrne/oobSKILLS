@@ -3,398 +3,234 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A guided audience review that connects business values with the emotional and behavioral realities behind customer decisions.">
+  <meta name="description" content="A free, private audience review that turns what you know about your customers into clearer messaging and practical drafts.">
   <link rel="canonical" href="https://skills.oobcreative.com/audience-review/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Free Target Audience Review for Small Businesses">
-  <meta property="og:description" content="Describe your work and receive practical audience insights, message priorities and a useful next step without a sales gate.">
+  <meta property="og:description" content="Turn what you know about your customers into clearer message priorities and ready-to-use drafts. No account required.">
   <meta property="og:url" content="https://skills.oobcreative.com/audience-review/">
-  <title>Free Target Audience Review for Small Businesses</title>
+  <title>Free Target Audience Review | oobCREATIVE</title>
   <link rel="icon" href="../branding/Mark-black.svg" type="image/svg+xml">
   <style>
-    :root {
-      --black: #111111;
-      --white: #ffffff;
-      --off-white: #f7f7f5;
-      --gray: #929292;
-      --dark-gray: #444444;
-      --border: #d7d7d2;
-      --radius: 10px;
-      --max-width: 920px;
+    :root { --ink:#111; --paper:#fff; --wash:#f4f4ef; --muted:#5f625f; --line:#d8d8d1; --blue:#2145d8; --blue-soft:#eef2ff; --danger:#a1261d; --measure:760px; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; color:var(--ink); background:var(--wash); font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; line-height:1.55; }
+    button,input { font:inherit; }
+    a { color:inherit; text-underline-offset:.2em; }
+    a:focus-visible,button:focus-visible,input:focus-visible { outline:3px solid var(--blue); outline-offset:3px; }
+    [hidden] { display:none!important; }
+    .skip-link { position:fixed; z-index:10; top:10px; left:10px; padding:10px 14px; border-radius:8px; background:var(--ink); color:var(--paper); transform:translateY(-160%); }
+    .skip-link:focus { transform:translateY(0); }
+    .tool-shell { min-height:100vh; background:linear-gradient(180deg,var(--paper) 0 28rem,var(--wash) 28rem); }
+    .tool-bar { display:flex; width:min(calc(100% - 32px),1080px); min-height:76px; margin:0 auto; align-items:center; justify-content:space-between; gap:24px; border-bottom:1px solid var(--line); }
+    .brand-link { display:inline-flex; align-items:center; text-decoration:none; }
+    .brand-link img { display:block; width:190px; height:auto; }
+    .exit-links { display:flex; align-items:center; gap:20px; font-weight:700; }
+    .exit-links a:last-child { color:var(--muted); }
+    main { width:min(calc(100% - 32px),920px); margin:0 auto; padding:64px 0 96px; }
+    .hero { max-width:830px; margin-bottom:44px; }
+    .eyebrow { margin:0 0 14px; font-size:.78rem; font-weight:800; letter-spacing:.11em; text-transform:uppercase; }
+    h1,h2,h3 { line-height:1.04; letter-spacing:-.04em; }
+    h1 { max-width:800px; margin:0; font-size:clamp(2.55rem,7vw,5.6rem); }
+    .lede { max-width:700px; margin:24px 0 0; color:#343633; font-size:clamp(1.05rem,2vw,1.24rem); }
+    .promise-row { display:flex; flex-wrap:wrap; gap:10px 20px; margin:24px 0 0; padding:0; list-style:none; color:var(--muted); font-size:.94rem; }
+    .promise-row li::before { content:"✓"; margin-right:8px; color:var(--blue); font-weight:900; }
+    .review-card { overflow:hidden; border:1px solid var(--line); border-radius:22px; background:var(--paper); box-shadow:0 20px 60px rgba(17,17,17,.08); }
+    .review-progress { display:grid; grid-template-columns:repeat(3,1fr); margin:0; padding:0; list-style:none; border-bottom:1px solid var(--line); background:#fafaf7; }
+    .review-progress li { position:relative; padding:18px 22px; color:var(--muted); }
+    .review-progress li+li { border-left:1px solid var(--line); }
+    .review-progress span { display:block; font-size:.75rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+    .review-progress strong { display:block; margin-top:2px; font-size:.98rem; }
+    .review-progress .is-current { color:var(--ink); background:var(--blue-soft); }
+    .review-progress .is-current::after { content:""; position:absolute; right:18px; bottom:12px; left:18px; height:3px; border-radius:999px; background:var(--blue); }
+    .review-progress .is-complete { color:var(--ink); }
+    .stage { padding:clamp(28px,6vw,58px); }
+    .stage-heading { max-width:var(--measure); margin-bottom:34px; }
+    .stage-heading h2 { margin:0 0 12px; font-size:clamp(2rem,5vw,3.25rem); }
+    .stage-heading p { margin:0; color:var(--muted); }
+    .required-note { margin:0 0 24px; color:var(--muted); font-size:.9rem; }
+    .field,fieldset { margin:0 0 34px; padding:0; border:0; }
+    label.field-label,legend { display:block; margin:0 0 8px; padding:0; font-size:1.08rem; font-weight:800; }
+    .help { margin:0 0 14px; color:var(--muted); font-size:.92rem; }
+    .text-input { width:100%; min-height:52px; padding:13px 15px; border:2px solid var(--ink); border-radius:10px; background:var(--paper); color:var(--ink); }
+    .text-input:focus-visible { border-color:var(--blue); }
+    .options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .choice { position:relative; }
+    .choice input { position:absolute; width:1px; height:1px; opacity:0; }
+    .choice label { display:flex; min-height:58px; align-items:center; gap:12px; padding:13px 15px; border:1.5px solid var(--line); border-radius:11px; background:var(--paper); cursor:pointer; transition:border-color 120ms ease,background-color 120ms ease,transform 120ms ease; }
+    .choice label::before { content:""; flex:0 0 auto; width:18px; height:18px; border:2px solid #777a76; border-radius:50%; background:var(--paper); }
+    .choice--check label::before { border-radius:4px; }
+    .choice label:hover { border-color:var(--ink); transform:translateY(-1px); }
+    .choice input:checked+label { border-color:var(--blue); background:var(--blue-soft); box-shadow:inset 0 0 0 1px var(--blue); }
+    .choice input:checked+label::before { border-color:var(--blue); background:var(--blue); box-shadow:inset 0 0 0 4px var(--paper); }
+    .choice--check input:checked+label::before { box-shadow:inset 0 0 0 3px var(--paper); }
+    .choice input:focus-visible+label { outline:3px solid var(--blue); outline-offset:3px; }
+    fieldset[aria-invalid="true"] .choice label,.text-input[aria-invalid="true"] { border-color:var(--danger); }
+    .field-error { margin:10px 0 0; color:var(--danger); font-weight:750; }
+    .selection-count { margin:10px 0 0; color:var(--muted); font-size:.9rem; }
+    .validation-summary { margin:0 0 28px; padding:15px 17px; border-left:5px solid var(--danger); background:#fff0ee; font-weight:750; }
+    .actions { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:46px; }
+    .button { appearance:none; min-height:48px; padding:12px 22px; border:2px solid var(--ink); border-radius:999px; background:var(--ink); color:var(--paper); font-weight:800; cursor:pointer; }
+    .button:hover { transform:translateY(-1px); }
+    .button.secondary { background:transparent; color:var(--ink); }
+    .button.quiet { border-color:transparent; background:transparent; color:var(--muted); text-decoration:underline; text-underline-offset:.2em; }
+    .draft-controls { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-top:18px; }
+    .draft-status { margin:0; color:var(--muted); font-size:.9rem; }
+    .privacy-note { max-width:720px; margin:22px 0 0; padding:16px 18px; border:1px solid var(--line); border-radius:10px; background:#fafaf7; color:var(--muted); font-size:.9rem; }
+    .results-view { width:min(calc(100% - 32px),920px); margin:0 auto; padding:56px 0 96px; }
+    .results-header { max-width:780px; margin-bottom:30px; }
+    .results-header h2 { margin:0 0 16px; font-size:clamp(2.35rem,6vw,4.5rem); }
+    .results-header p { margin:0; color:var(--muted); font-size:1.08rem; }
+    .report { padding:clamp(24px,5vw,50px); border:2px solid var(--ink); border-radius:20px; background:var(--paper); }
+    .report-section { padding:30px 0; border-top:1px solid var(--line); }
+    .report-section:first-child { padding-top:0; border-top:0; }
+    .report-section:last-child { padding-bottom:0; }
+    .report-section h3 { margin:0 0 14px; font-size:clamp(1.45rem,3vw,2rem); }
+    .report-section p { max-width:740px; margin:10px 0; }
+    .report-section ol { margin:12px 0 0; padding-left:24px; }
+    .report-section li { margin:12px 0; }
+    .draft-card { margin-top:14px; padding:20px; border:1px solid var(--line); border-radius:12px; background:var(--wash); }
+    .draft-card h4 { margin:0 0 10px; font-size:1rem; }
+    .draft-card p { white-space:pre-line; }
+    .draft-card .button { min-height:42px; margin-top:10px; padding:8px 15px; font-size:.9rem; }
+    .results-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+    .status { min-height:1.5em; margin:14px 0 0; color:var(--blue); font-weight:750; }
+    @media(max-width:680px) {
+      .tool-bar { min-height:66px; } .brand-link img { width:150px; } .exit-links a:first-child { display:none; } main { padding-top:42px; }
+      .review-progress strong { font-size:.82rem; } .review-progress li { padding:14px 10px 20px; } .review-progress .is-current::after { right:10px; left:10px; }
+      .options { grid-template-columns:1fr; } .actions { align-items:stretch; flex-direction:column-reverse; } .actions .button,.results-actions .button { width:100%; } .results-actions { flex-direction:column; }
     }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: var(--off-white);
-      color: var(--black);
-      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.55;
-    }
-
-    button, input { font: inherit; }
-
-    .page {
-      width: min(calc(100% - 32px), var(--max-width));
-      margin: 0 auto;
-      padding: 64px 0 96px;
-    }
-
-    .eyebrow {
-      margin: 0 0 16px;
-      font-size: 0.8rem;
-      font-weight: 750;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      max-width: 780px;
-      margin: 0;
-      font-size: clamp(2.4rem, 7vw, 5.5rem);
-      line-height: 0.96;
-      letter-spacing: -0.055em;
-    }
-
-    .intro {
-      max-width: 690px;
-      margin: 28px 0 0;
-      font-size: 1.15rem;
-      color: var(--dark-gray);
-    }
-
-    .section-heading { margin-bottom: 40px; }
-
-    .section-heading h2 {
-      margin: 0 0 8px;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      letter-spacing: -0.035em;
-    }
-
-    .section-heading p {
-      max-width: 680px;
-      margin: 0;
-      color: var(--dark-gray);
-    }
-
-    .field { margin-bottom: 48px; }
-
-    .field-label,
-    .question-title {
-      display: block;
-      margin: 0 0 8px;
-      font-size: 1.2rem;
-      font-weight: 750;
-    }
-
-    .question-help {
-      margin: 0 0 18px;
-      color: var(--dark-gray);
-      font-size: 0.95rem;
-    }
-
-    .text-input {
-      width: 100%;
-      padding: 16px 18px;
-      border: 2px solid var(--black);
-      border-radius: var(--radius);
-      background: var(--white);
-      color: var(--black);
-      outline: none;
-    }
-
-    .text-input:focus { box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.1); }
-
-    .options {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .option { position: relative; }
-
-    .option input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .option label {
-      display: flex;
-      min-height: 64px;
-      align-items: center;
-      padding: 14px 16px;
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      background: var(--white);
-      cursor: pointer;
-      transition: border-color 120ms ease, background 120ms ease, transform 120ms ease;
-    }
-
-    .option label:hover { border-color: var(--black); }
-
-    .option input:checked + label {
-      background: var(--black);
-      border-color: var(--black);
-      color: var(--white);
-    }
-
-    .option input:focus-visible + label {
-      outline: 3px solid var(--gray);
-      outline-offset: 3px;
-    }
-
-    .option.disabled label {
-      opacity: 0.45;
-      cursor: not-allowed;
-    }
-
-    .selection-count {
-      margin-top: 10px;
-      color: var(--gray);
-      font-size: 0.85rem;
-    }
-
-    .error {
-      display: none;
-      margin: 16px 0;
-      padding: 12px 14px;
-      border-left: 5px solid var(--black);
-      background: #ecece7;
-      font-weight: 650;
-    }
-
-    .error.visible { display: block; }
-
-    .actions {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 56px;
-    }
-
-    .button {
-      appearance: none;
-      border: 2px solid var(--black);
-      border-radius: 999px;
-      padding: 13px 22px;
-      background: var(--black);
-      color: var(--white);
-      font-weight: 750;
-      cursor: pointer;
-    }
-
-    .button.secondary {
-      background: transparent;
-      color: var(--black);
-    }
-
-    .button:disabled {
-      opacity: 0.55;
-      cursor: wait;
-    }
-
-    .results-card {
-      margin-top: 30px;
-      padding: clamp(24px, 5vw, 48px);
-      border: 2px solid var(--black);
-      border-radius: 18px;
-      background: var(--white);
-    }
-
-    .results-card h3 {
-      margin: 0 0 18px;
-      font-size: clamp(1.7rem, 4vw, 2.4rem);
-      letter-spacing: -0.025em;
-    }
-
-    .results-card h4 {
-      margin: 0 0 10px;
-      font-size: 1.3rem;
-    }
-
-    .result-lead {
-      max-width: 760px;
-      margin: 0;
-      font-size: 1.2rem;
-      line-height: 1.6;
-    }
-
-    .result-group {
-      padding: 30px 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .result-group:first-of-type { border-top: 0; }
-
-    .result-label {
-      margin-bottom: 8px;
-      font-size: 0.77rem;
-      font-weight: 750;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--gray);
-    }
-
-    .human-question {
-      margin: 18px 0 0;
-      padding: 20px 22px;
-      border-left: 5px solid var(--black);
-      background: var(--off-white);
-      font-size: 1.2rem;
-      font-weight: 700;
-    }
-
-    .signal-list {
-      margin: 14px 0 0;
-      padding-left: 22px;
-    }
-
-    .signal-list li { margin: 9px 0; }
-
-    .message-example {
-      margin: 16px 0 0;
-      padding: 18px 20px;
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      background: var(--off-white);
-      font-size: 1.08rem;
-      font-weight: 650;
-    }
-
-    .connection-summary {
-      margin-top: 12px;
-      padding: 24px;
-      border: 2px solid var(--black);
-      border-radius: 14px;
-      background: var(--off-white);
-      font-size: 1.12rem;
-    }
-
-    .privacy {
-      margin-top: 32px;
-      max-width: 700px;
-      color: var(--dark-gray);
-      font-size: 0.88rem;
-    }
-
-    @media (max-width: 680px) {
-      .page { padding-top: 38px; }
-      .options { grid-template-columns: 1fr; }
-      .actions { flex-direction: column-reverse; }
-      .button { width: 100%; }
-    }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { scroll-behavior:auto!important; transition-duration:.01ms!important; } }
+    @media print { body { background:var(--paper); } .tool-shell,.results-header>p,.results-actions,.status { display:none!important; } .results-view { width:100%; padding:0; } .results-header { margin-bottom:20px; } .report { padding:0; border:0; } .draft-card { break-inside:avoid; background:var(--paper); } }
   </style>
-  <link rel="stylesheet" href="./experience.css?v=4">
-  <link rel="stylesheet" href="./flow-v2.css?v=2">
 </head>
-
 <body>
-<main class="page">
-  <header>
-    <p><a href="/free-tools/">← Free tools</a></p>
-    <p class="eyebrow">oobCREATIVE Audience Review</p>
-    <h1>What connects people to what you offer?</h1>
-    <p class="intro">
-      Start with your work. We’ll use that professional context to make the customer questions more relevant,
-      then connect what you know about your customers with the standards you bring to the work.
-    </p>
-    <div class="rough-rule" aria-hidden="true"></div>
-  </header>
-
-  <form id="audience-form" novalidate>
-    <div class="review-progress" aria-label="Audience Review progress">
-      <div class="progress-step is-current" data-progress-step="1" aria-current="step">
-        <img class="progress-icon progress-icon-step1" src="../branding/oob-NO_LIDcrop.png" alt="">
-        <div class="progress-copy"><span>Step 1</span><strong>Your work</strong></div>
-      </div>
-      <div class="progress-connector" aria-hidden="true"></div>
-      <div class="progress-step is-future" data-progress-step="2">
-        <img class="progress-icon progress-icon-step2" src="../branding/Mark-black.svg" alt="">
-        <div class="progress-copy"><span>Step 2</span><strong>Your customers</strong></div>
-      </div>
-      <div class="progress-connector" aria-hidden="true"></div>
-      <div class="progress-step is-future" data-progress-step="3">
-        <img class="progress-icon progress-icon-step3" src="../branding/oob-BOX.png" alt="">
-        <div class="progress-copy"><span>Step 3</span><strong>How you work</strong></div>
-      </div>
-    </div>
-
-    <div id="form-stage">
-      <section class="step active is-active" data-step="1">
-        <div class="section-heading">
-          <p class="eyebrow">Part 1</p>
-          <h2>Tell us about your work.</h2>
-          <p>
-            Start with the work itself. You do not need to describe your marketing or define an ideal customer yet.
-            Give us enough professional context to understand what people hire you to do.
-          </p>
-        </div>
-
-        <div class="field">
-          <label class="field-label" for="offer">What product, service, or professional role should we review?</label>
-          <input class="text-input" type="text" id="offer" name="offer" placeholder="Example: Drone pilot, dog daycare, auto repair, counseling..." required>
-        </div>
-
-        <div id="offer-type-question"></div>
-
-        <div class="field">
-          <label class="field-label" for="website">
-            Website or public page <span style="font-weight:400;color:#929292;">(optional)</span>
-          </label>
-          <input class="text-input" type="url" id="website" name="website" placeholder="https://">
-        </div>
-
-        <div class="error" id="step1-error">Please complete each required question before continuing.</div>
-
-        <div class="actions">
-          <span></span>
-          <button class="button" type="button" data-next="2">Next: Your Customers</button>
-        </div>
+  <a class="skip-link" href="#review-main">Skip to Audience Review</a>
+  <div class="tool-shell" id="tool-shell">
+    <nav class="tool-bar" aria-label="Audience Review">
+      <a class="brand-link" href="/" aria-label="oobCREATIVE home"><img src="../branding/oob_horiz-flat-lite.png" alt="oobCREATIVE" width="594" height="138"></a>
+      <div class="exit-links"><a href="/free-tools/">All free tools</a><a href="/free-tools/">Skip for now</a></div>
+    </nav>
+    <main id="review-main">
+      <header class="hero">
+        <p class="eyebrow">Free Audience Review</p>
+        <h1>Make your message easier to recognize and trust.</h1>
+        <p class="lede">Use what you already know about your customers to find the words that lower uncertainty, show your value, and help the right person take the next step.</p>
+        <ul class="promise-row" aria-label="What to expect"><li>About 4 minutes</li><li>No account or email</li><li>Useful drafts at the end</li></ul>
+      </header>
+      <section class="review-card" aria-label="Audience Review questions">
+        <ol class="review-progress" aria-label="Progress">
+          <li class="is-current" data-progress="1" aria-current="step"><span>Step 1</span><strong>Your work</strong></li>
+          <li data-progress="2"><span>Step 2</span><strong>Your customers</strong></li>
+          <li data-progress="3"><span>Step 3</span><strong>Your standards</strong></li>
+        </ol>
+        <form id="audience-form" novalidate>
+          <div class="stage">
+            <div class="validation-summary" id="validation-summary" role="alert" tabindex="-1" hidden></div>
+            <section data-step="1" aria-labelledby="step-1-title">
+              <header class="stage-heading"><p class="eyebrow">Start with what you know</p><h2 id="step-1-title" tabindex="-1">What work should we review?</h2><p>You do not need a polished pitch. A plain description gives us enough context to make the review useful.</p></header>
+              <p class="required-note">Required questions are marked “required.”</p>
+              <div class="field" data-field="offer">
+                <label class="field-label" for="offer">Product, service, or professional role — required</label>
+                <p class="help" id="offer-help">For example: residential electrician, leadership coach, or handmade skin care.</p>
+                <input class="text-input" id="offer" name="offer" type="text" autocomplete="organization-title" maxlength="120" aria-describedby="offer-help offer-error" required>
+                <p class="field-error" id="offer-error" hidden></p>
+              </div>
+              <fieldset data-field="offer_type" aria-describedby="offer-type-help offer-type-error">
+                <legend>Which description is closest? — required</legend>
+                <p class="help" id="offer-type-help">Choose one. “Not sure yet” is a useful answer.</p>
+                <div class="options">
+                  <div class="choice"><input id="type-service" name="offer_type" type="radio" value="service"><label for="type-service">A service people hire</label></div>
+                  <div class="choice"><input id="type-product" name="offer_type" type="radio" value="product"><label for="type-product">A product people buy</label></div>
+                  <div class="choice"><input id="type-role" name="offer_type" type="radio" value="professional-role"><label for="type-role">My professional role</label></div>
+                  <div class="choice"><input id="type-unsure" name="offer_type" type="radio" value="not-sure"><label for="type-unsure">Not sure yet</label></div>
+                </div><p class="field-error" id="offer-type-error" hidden></p>
+              </fieldset>
+              <div class="field">
+                <label class="field-label" for="website">Website or public page <span class="help">(optional)</span></label>
+                <p class="help" id="website-help">A reminder for you only. This tool does not visit or analyze the page.</p>
+                <input class="text-input" id="website" name="website" type="url" inputmode="url" placeholder="https://" aria-describedby="website-help">
+              </div>
+              <div class="actions"><a class="button quiet" href="/free-tools/">Leave this review</a><button class="button" type="button" data-next="2">Continue to your customers</button></div>
+            </section>
+            <section data-step="2" aria-labelledby="step-2-title" hidden>
+              <header class="stage-heading"><p class="eyebrow">Look for the decision underneath the purchase</p><h2 id="step-2-title" tabindex="-1">What is the customer working through?</h2><p>Choose the closest answer in each group. Your observations matter more than perfect certainty.</p></header>
+              <fieldset data-field="audience_values" aria-describedby="audience-values-error"><legend>What matters most to them? — required</legend><div class="options">
+                <div class="choice"><input id="values-clarity" name="audience_values" type="radio" value="clarity"><label for="values-clarity">Understanding the choice clearly</label></div>
+                <div class="choice"><input id="values-confidence" name="audience_values" type="radio" value="confidence"><label for="values-confidence">Feeling confident they chose well</label></div>
+                <div class="choice"><input id="values-quality" name="audience_values" type="radio" value="quality"><label for="values-quality">Getting work that holds up</label></div>
+                <div class="choice"><input id="values-time" name="audience_values" type="radio" value="time"><label for="values-time">Saving time or avoiding extra effort</label></div>
+                <div class="choice"><input id="values-unsure" name="audience_values" type="radio" value="not-sure"><label for="values-unsure">I do not see a clear pattern yet</label></div>
+              </div><p class="field-error" id="audience-values-error" hidden></p></fieldset>
+              <fieldset data-field="audience_trigger" aria-describedby="audience-trigger-error"><legend>What usually starts the search? — required</legend><div class="options">
+                <div class="choice"><input id="trigger-failing" name="audience_trigger" type="radio" value="current-way-failing"><label for="trigger-failing">Their current way is no longer working</label></div>
+                <div class="choice"><input id="trigger-urgent" name="audience_trigger" type="radio" value="urgent-problem"><label for="trigger-urgent">A problem has become urgent</label></div>
+                <div class="choice"><input id="trigger-evaluating" name="audience_trigger" type="radio" value="evaluating"><label for="trigger-evaluating">They are comparing available choices</label></div>
+                <div class="choice"><input id="trigger-change" name="audience_trigger" type="radio" value="growth-change"><label for="trigger-change">Growth or change has created a new need</label></div>
+                <div class="choice"><input id="trigger-unsure" name="audience_trigger" type="radio" value="not-sure"><label for="trigger-unsure">I am not sure what starts it</label></div>
+              </div><p class="field-error" id="audience-trigger-error" hidden></p></fieldset>
+              <fieldset data-field="audience_emotions" aria-describedby="audience-emotions-error"><legend>How are they likely to feel? — required</legend><div class="options">
+                <div class="choice"><input id="emotion-overwhelmed" name="audience_emotions" type="radio" value="overwhelmed"><label for="emotion-overwhelmed">Overwhelmed by choices or details</label></div>
+                <div class="choice"><input id="emotion-cautious" name="audience_emotions" type="radio" value="cautious"><label for="emotion-cautious">Cautious about making a mistake</label></div>
+                <div class="choice"><input id="emotion-frustrated" name="audience_emotions" type="radio" value="frustrated"><label for="emotion-frustrated">Frustrated that this is still a problem</label></div>
+                <div class="choice"><input id="emotion-hopeful" name="audience_emotions" type="radio" value="hopeful"><label for="emotion-hopeful">Hopeful that a better way is possible</label></div>
+                <div class="choice"><input id="emotion-unsure" name="audience_emotions" type="radio" value="not-sure"><label for="emotion-unsure">Their feelings vary too much to say</label></div>
+              </div><p class="field-error" id="audience-emotions-error" hidden></p></fieldset>
+              <fieldset data-field="audience_needs" aria-describedby="audience-needs-error"><legend>What helps them decide? — required</legend><div class="options">
+                <div class="choice"><input id="needs-next" name="audience_needs" type="radio" value="clear-next-step"><label for="needs-next">A clear, manageable next step</label></div>
+                <div class="choice"><input id="needs-proof" name="audience_needs" type="radio" value="proof"><label for="needs-proof">Evidence that the work can deliver</label></div>
+                <div class="choice"><input id="needs-process" name="audience_needs" type="radio" value="simple-process"><label for="needs-process">A process they can understand</label></div>
+                <div class="choice"><input id="needs-human" name="audience_needs" type="radio" value="human-guidance"><label for="needs-human">A real person who will listen</label></div>
+                <div class="choice"><input id="needs-unsure" name="audience_needs" type="radio" value="not-sure"><label for="needs-unsure">I am not sure what helps most</label></div>
+              </div><p class="field-error" id="audience-needs-error" hidden></p></fieldset>
+              <fieldset data-field="audience_hesitation" aria-describedby="audience-hesitation-error"><legend>What creates hesitation? — required</legend><div class="options">
+                <div class="choice"><input id="hesitation-price" name="audience_hesitation" type="radio" value="price-value"><label for="hesitation-price">Uncertainty about price and value</label></div>
+                <div class="choice"><input id="hesitation-trust" name="audience_hesitation" type="radio" value="trust"><label for="hesitation-trust">Uncertainty about who to trust</label></div>
+                <div class="choice"><input id="hesitation-effort" name="audience_hesitation" type="radio" value="time-effort"><label for="hesitation-effort">Concern about time or disruption</label></div>
+                <div class="choice"><input id="hesitation-fit" name="audience_hesitation" type="radio" value="fit"><label for="hesitation-fit">Concern that the offer may not fit</label></div>
+                <div class="choice"><input id="hesitation-unsure" name="audience_hesitation" type="radio" value="not-sure"><label for="hesitation-unsure">I have not heard a consistent concern</label></div>
+              </div><p class="field-error" id="audience-hesitation-error" hidden></p></fieldset>
+              <fieldset data-field="audience_outcome" aria-describedby="audience-outcome-error"><legend>What do they want to feel afterward? — required</legend><div class="options">
+                <div class="choice"><input id="outcome-relief" name="audience_outcome" type="radio" value="relief"><label for="outcome-relief">Relief that the problem is handled</label></div>
+                <div class="choice"><input id="outcome-confidence" name="audience_outcome" type="radio" value="confidence"><label for="outcome-confidence">Confidence in the path forward</label></div>
+                <div class="choice"><input id="outcome-progress" name="audience_outcome" type="radio" value="progress"><label for="outcome-progress">Momentum and visible progress</label></div>
+                <div class="choice"><input id="outcome-control" name="audience_outcome" type="radio" value="control"><label for="outcome-control">More control and fewer surprises</label></div>
+                <div class="choice"><input id="outcome-unsure" name="audience_outcome" type="radio" value="not-sure"><label for="outcome-unsure">The hoped-for result depends on the person</label></div>
+              </div><p class="field-error" id="audience-outcome-error" hidden></p></fieldset>
+              <div class="actions"><button class="button secondary" type="button" data-back="1">Back</button><button class="button" type="button" data-next="3">Continue to your standards</button></div>
+            </section>
+            <section data-step="3" aria-labelledby="step-3-title" hidden>
+              <header class="stage-heading"><p class="eyebrow">Connect the promise to your practice</p><h2 id="step-3-title" tabindex="-1">What can people count on from you?</h2><p>Choose up to three standards that genuinely shape the way you work.</p></header>
+              <fieldset data-field="business_values" aria-describedby="business-values-help business-values-error"><legend>Your working standards — required</legend><p class="help" id="business-values-help">Choose one to three.</p><div class="options">
+                <div class="choice choice--check"><input id="business-honesty" name="business_values" type="checkbox" value="honesty"><label for="business-honesty">Honesty about tradeoffs</label></div>
+                <div class="choice choice--check"><input id="business-quality" name="business_values" type="checkbox" value="quality"><label for="business-quality">Quality that holds up</label></div>
+                <div class="choice choice--check"><input id="business-clarity" name="business_values" type="checkbox" value="clarity"><label for="business-clarity">Clear expectations</label></div>
+                <div class="choice choice--check"><input id="business-care" name="business_values" type="checkbox" value="care"><label for="business-care">Care for the person affected</label></div>
+                <div class="choice choice--check"><input id="business-practicality" name="business_values" type="checkbox" value="practicality"><label for="business-practicality">Practical, usable decisions</label></div>
+                <div class="choice choice--check"><input id="business-unsure" name="business_values" type="checkbox" value="not-sure"><label for="business-unsure">I am still naming my standards</label></div>
+              </div><p class="selection-count" id="business-values-count" aria-live="polite">0 of 3 selected</p><p class="field-error" id="business-values-error" hidden></p></fieldset>
+              <fieldset data-field="business_message" aria-describedby="business-message-help"><legend>How should your message feel? <span class="help">(optional)</span></legend><p class="help" id="business-message-help">Choose one, or leave this blank.</p><div class="options">
+                <div class="choice"><input id="message-direct" name="business_message" type="radio" value="direct"><label for="message-direct">Direct and plainspoken</label></div>
+                <div class="choice"><input id="message-reassuring" name="business_message" type="radio" value="reassuring"><label for="message-reassuring">Calm and reassuring</label></div>
+                <div class="choice"><input id="message-educational" name="business_message" type="radio" value="educational"><label for="message-educational">Helpful and educational</label></div>
+                <div class="choice"><input id="message-unsure" name="business_message" type="radio" value="not-sure"><label for="message-unsure">I am not sure yet</label></div>
+              </div></fieldset>
+              <div class="actions"><button class="button secondary" type="button" data-back="2">Back</button><button class="button" type="submit">Build my audience review</button></div>
+            </section>
+            <div class="draft-controls"><p class="draft-status" id="draft-status" role="status" aria-live="polite">Your answers stay in this browser.</p><button class="button quiet" id="clear-draft" type="button">Clear saved answers</button></div>
+            <p class="privacy-note"><strong>Private by design:</strong> this review runs entirely in your browser. Your answers can be saved on this device so you can return, but they are not sent to oobCREATIVE. Clear them at any time.</p>
+          </div>
+        </form>
       </section>
-
-      <section class="step" data-step="2">
-        <div class="section-heading">
-          <p class="eyebrow">Part 2</p>
-          <h2>Help us understand what you already know about your customers.</h2>
-          <p id="step2-bridge">
-            We’ll use what you told us about your work as context, then ask you to confirm what you actually see in the people who hire, approve, recommend, use, or benefit from it.
-          </p>
-        </div>
-
-        <div id="audience-questions"></div>
-
-        <div class="error" id="step2-error">Please complete each question before continuing.</div>
-
-        <div class="actions">
-          <button class="button secondary" type="button" data-back="1">Back</button>
-          <button class="button" type="button" data-next="3">Next: How You Work</button>
-        </div>
-      </section>
-
-      <section class="step" data-step="3">
-        <div class="section-heading">
-          <p class="eyebrow">Part 3</p>
-          <h2>Tell us how you work.</h2>
-          <p id="step3-bridge">
-            We now have the professional context and your observations about the customer decision. Tell us which standards matter most in how you do the work.
-          </p>
-        </div>
-
-        <div id="business-questions"></div>
-
-        <div class="error" id="step3-error">Please complete the required question before continuing.</div>
-
-        <div class="actions">
-          <button class="button secondary" type="button" data-back="2">Back</button>
-          <button class="button" id="submit-review" type="submit">Review My Audience</button>
-        </div>
-      </section>
-    </div>
-  </form>
-</main>
-
-<script src="./app.js?v=11"></script>
+    </main>
+  </div>
+  <main class="results-view" id="results-view" hidden>
+    <header class="results-header"><p class="eyebrow">Your Audience Review</p><h2 id="results-title" tabindex="-1">A clearer path to the customer decision</h2><p>Use this as a working message, not a label for every customer. Keep what sounds true, test it in real conversations, and revise what you learn.</p></header>
+    <article class="report" id="results-report" aria-labelledby="results-title"></article>
+    <div class="results-actions" aria-label="Review actions"><button class="button" id="copy-review" type="button">Copy full review</button><button class="button secondary" id="download-review" type="button">Download Markdown</button><button class="button secondary" id="print-review" type="button">Print review</button><button class="button quiet" id="edit-review" type="button">Edit answers</button></div>
+    <p class="status" id="results-status" role="status" aria-live="polite"></p>
+  </main>
+  <script src="./app.js?v=12"></script>
 </body>
 </html>

@@ -18,11 +18,11 @@
 </head>
 <body class="content-page review-page">
   <a class="skip-link" href="#main-content">Skip to content</a>
-  <header class="site-header"><div class="site-shell header-inner"><a class="mark" href="/" aria-label="oobCREATIVE home"><img src="/branding/oob_horiz-flat-lite.png" alt="oobCREATIVE" width="225" height="52"></a><nav class="desktop-nav" aria-label="Primary navigation"><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a aria-current="page" href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a><a class="nav-cta" href="/audience-review/">Audience Review</a></nav><details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a aria-current="page" href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a><a class="nav-cta" href="/audience-review/">Audience Review</a></nav></details></div></header>
+  <header class="site-header"><div class="site-shell header-inner"><a class="mark" href="/" aria-label="oobCREATIVE home"><img src="/branding/Mark.svg" alt="" width="64" height="44"></a><nav class="desktop-nav" aria-label="Primary navigation"><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a aria-current="page" href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a><a class="nav-cta" href="/audience-review/">Audience Review</a></nav><details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a aria-current="page" href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a><a class="nav-cta" href="/audience-review/">Audience Review</a></nav></details></div></header>
 
   <main id="main-content">
     <div class="site-shell breadcrumbs"><nav aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/assessments/">Assessments</a></li><li aria-current="page">AI Workday Review</li></ol></nav></div>
-    <section class="content-hero content-hero--blue"><div class="site-shell content-hero__inner"><div><p class="eyebrow">Free · Private in your browser</p><h1>Find one useful AI pilot in the work you already do.</h1><p class="lead">Review a recurring task, protect the judgment that still belongs to people and leave with a result you can download—not a score designed to scare you into a sale.</p><div class="content-actions"><a class="button button--blue" href="#review">Begin the review</a><a class="text-link" href="#what-you-get">See what you will receive <span aria-hidden="true">→</span></a></div></div><aside class="content-hero__aside"><p class="meta">About 10 minutes</p><p>Your answers are processed on this device. A local draft is saved so an interruption does not erase your work. Do not enter confidential, regulated or identifying records.</p></aside></div></section>
+    <section class="content-hero content-hero--blue"><div class="site-shell content-hero__inner"><div><p class="eyebrow">Free · Private in your browser</p><h1>Find one useful AI pilot in the work you already do.</h1><p class="lead">Review one recurring task, protect the judgment that still belongs to people and leave with a result you can download and use.</p><div class="content-actions"><a class="button button--blue" href="#review">Begin the review</a><a class="text-link" href="#what-you-get">See what you will receive <span aria-hidden="true">→</span></a></div></div><aside class="content-hero__aside"><p class="meta">About 10 minutes</p><p>Your answers are processed on this device. A local draft is saved so an interruption does not erase your work. Do not enter confidential, regulated or identifying records.</p></aside></div></section>
     <div class="rough-rule" aria-hidden="true"></div>
 
     <section id="what-you-get"><div class="site-shell"><div class="section-heading-row"><div><p class="eyebrow">A WORKFILE, not an ebook</p><h2>Finish with a decision and the material needed to test it.</h2></div><p class="section-side-note">The product stays vendor-neutral so the result remains useful when AI products and pricing change.</p></div><div class="content-grid"><article class="content-card"><p class="meta">Decision</p><h3>A clear readiness call</h3><p>Pilot now, prepare first, keep human or choose a smaller support task.</p></article><article class="content-card"><p class="meta">Plan</p><h3>One bounded 14-day test</h3><p>A beginning, permitted inputs, human owner, review standard, measure and stopping condition.</p></article><article class="content-card"><p class="meta">Portable result</p><h3>Three reusable working briefs</h3><p>Copy the result, print it or download a Markdown file for your own records or approved AI workspace.</p></article></div></div></section>
@@ -31,7 +31,7 @@
       <div class="site-shell review-layout">
         <aside class="review-progress" aria-label="Assessment progress">
           <p class="meta">AI Workday Review</p>
-          <p id="progress-label">Step 1 of 4</p>
+          <p id="progress-label" role="status" aria-live="polite" aria-atomic="true">Step 1 of 4</p>
           <div class="progress-track" aria-hidden="true"><span id="progress-bar"></span></div>
           <ol>
             <li data-progress="1" aria-current="step">What matters</li>
@@ -46,7 +46,7 @@
         <div class="review-workspace">
           <form id="workday-review" novalidate>
             <fieldset class="review-step" data-step="1">
-              <legend><span>01</span> What are you trying to improve without weakening?</legend>
+              <legend tabindex="-1"><span>01</span> What are you trying to improve without weakening?</legend>
               <p class="step-intro">Start with the responsibility and pressure you recognize. The tool choice comes later.</p>
 
               <div class="field-grid">
@@ -74,10 +74,10 @@
             </fieldset>
 
             <fieldset class="review-step" data-step="2" hidden>
-              <legend><span>02</span> Name the work, not the technology.</legend>
+              <legend tabindex="-1"><span>02</span> Name the work, not the technology.</legend>
               <p class="step-intro">Choose the recurring areas around the task. These become the opportunity map in your result.</p>
 
-              <fieldset class="choice-group"><legend>Where does this work show up? <span>Select up to five.</span></legend>
+              <fieldset class="choice-group" id="work-area-group" aria-describedby="work-area-error"><legend>Where does this work show up? <span>Select up to five.</span></legend>
                 <div class="choice-list choice-list--compact" id="work-area-list">
                   <label><input type="checkbox" name="workArea" value="communication"><span>Drafting or adapting communication</span></label>
                   <label><input type="checkbox" name="workArea" value="intake"><span>Gathering requests or intake</span></label>
@@ -102,7 +102,7 @@
             </fieldset>
 
             <fieldset class="review-step" data-step="3" hidden>
-              <legend><span>03</span> Check the consequence before the convenience.</legend>
+              <legend tabindex="-1"><span>03</span> Check the consequence before the convenience.</legend>
               <p class="step-intro">A repetitive task is not automatically a responsible AI task. These answers determine whether to pilot, prepare or keep the work human.</p>
 
               <div class="field-grid">
@@ -118,7 +118,7 @@
             </fieldset>
 
             <fieldset class="review-step" data-step="4" hidden>
-              <legend><span>04</span> Make the pilot observable and stoppable.</legend>
+              <legend tabindex="-1"><span>04</span> Make the pilot observable and stoppable.</legend>
               <p class="step-intro">A pilot is useful when someone can compare it with the current process and make a keep, revise or stop decision.</p>
 
               <div class="field"><label for="owner">Who remains responsible for the final result?</label><input id="owner" name="owner" required placeholder="A name or role, such as Operations Manager"></div>
@@ -158,7 +158,7 @@
     </section>
   </main>
 
-  <footer><div class="site-shell footer-main"><div class="footer-brand"><strong>oob<span>CREATIVE</span></strong><p>Go deeper, not louder.</p><p class="footer-description">Human-centered strategy, communication, digital experiences and practical technology.</p></div><div class="footer-links"><div><p class="footer-label">Explore</p><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a></div><div><p class="footer-label">Connect</p><a href="/audience-review/">Audience Review</a><a href="mailto:hello@oobcreative.com">hello@oobcreative.com</a></div></div></div><div class="footer-bar"><div class="site-shell"><span>© 2018–2026 oobCREATIVE. All rights reserved.</span><span>Roaring Fork Valley, Colorado</span><a href="/privacy-policy/">Privacy Policy</a></div></div></footer>
+  <footer><div class="site-shell footer-main"><div class="footer-brand"><img class="footer-logo" src="/branding/logo_horiz-hex111111_background.png" alt="oobCREATIVE" width="270" height="68"><p>Go deeper, not louder.</p><p class="footer-description">Human-centered strategy, communication, digital experiences and practical technology.</p></div><div class="footer-links"><div><p class="footer-label">Explore</p><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a></div><div><p class="footer-label">Connect</p><a href="/audience-review/">Audience Review</a><a href="mailto:hello@oobcreative.com">hello@oobcreative.com</a></div></div></div><div class="footer-bar"><div class="site-shell"><span>© 2018–2026 oobCREATIVE. All rights reserved.</span><span>Roaring Fork Valley, Colorado</span><a href="/privacy-policy/">Privacy Policy</a></div></div></footer>
   <script src="/assessments/ai-workday-review/decision-engine.js"></script>
   <script src="/assessments/ai-workday-review/review.js"></script>
 </body>

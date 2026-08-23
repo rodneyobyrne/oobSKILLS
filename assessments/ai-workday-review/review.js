@@ -18,6 +18,11 @@
   const resultTitle = document.getElementById('result-title');
   const resultDate = document.getElementById('result-date');
   const copyStatus = document.getElementById('copy-status');
+  const workAreaGroup = document.getElementById('work-area-group');
+  const workAreaError = document.getElementById('work-area-error');
+  const reduceMotion = window.matchMedia
+    ? window.matchMedia('(prefers-reduced-motion: reduce)')
+    : { matches: false };
   let currentStep = 1;
   let currentMarkdown = '';
 
@@ -135,6 +140,34 @@
     });
   }
 
+  function addDescription(element, id) {
+    const ids = new Set((element.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
+    ids.add(id);
+    element.setAttribute('aria-describedby', Array.from(ids).join(' '));
+  }
+
+  function removeDescription(element, id) {
+    const ids = (element.getAttribute('aria-describedby') || '').split(/\s+/).filter((item) => item && item !== id);
+    if (ids.length) element.setAttribute('aria-describedby', ids.join(' '));
+    else element.removeAttribute('aria-describedby');
+  }
+
+  function fieldName(field) {
+    const explicitLabel = field.id ? form.querySelector(`label[for="${field.id}"]`) : null;
+    const wrappedLabel = field.closest('label');
+    const groupLegend = field.closest('fieldset')?.querySelector(':scope > legend');
+    return (explicitLabel || groupLegend || wrappedLabel)?.textContent.trim().replace(/\s+/g, ' ') || 'this question';
+  }
+
+  function markInvalid(field, message) {
+    field.setAttribute('aria-invalid', 'true');
+    addDescription(field, 'form-status');
+    status.textContent = message;
+    field.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'center' });
+    field.focus({ preventScroll: true });
+    return false;
+  }
+
   function showStep(stepNumber, shouldScroll = true) {
     currentStep = stepNumber;
     steps.forEach((step) => { step.hidden = Number(step.dataset.step) !== currentStep; });
@@ -151,7 +184,9 @@
     submitButton.hidden = currentStep !== steps.length;
     status.textContent = '';
     if (shouldScroll) {
-      steps[currentStep - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const activeStep = steps[currentStep - 1];
+      activeStep.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
+      activeStep.querySelector(':scope > legend')?.focus({ preventScroll: true });
     }
   }
 
@@ -160,20 +195,25 @@
     const required = Array.from(step.querySelectorAll('[required]'));
 
     if (currentStep === 2 && selected('workArea').length === 0) {
-      document.getElementById('work-area-error').hidden = false;
+      const firstArea = form.querySelector('[name="workArea"]');
+      workAreaError.hidden = false;
+      workAreaGroup.setAttribute('aria-invalid', 'true');
+      firstArea.setAttribute('aria-invalid', 'true');
+      addDescription(firstArea, 'work-area-error');
       status.textContent = 'Choose at least one recurring work area before continuing.';
+      firstArea.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'center' });
+      firstArea.focus({ preventScroll: true });
       return false;
     }
-    document.getElementById('work-area-error').hidden = true;
+    workAreaError.hidden = true;
+    workAreaGroup.removeAttribute('aria-invalid');
 
     for (const field of required) {
       if (!field.checkValidity()) {
-        field.setAttribute('aria-invalid', 'true');
-        field.reportValidity();
-        status.textContent = 'Complete the marked question before continuing.';
-        return false;
+        return markInvalid(field, `Complete “${fieldName(field)}” before continuing.`);
       }
       field.removeAttribute('aria-invalid');
+      removeDescription(field, 'form-status');
     }
     return true;
   }
@@ -273,7 +313,8 @@
 
     currentMarkdown = buildMarkdown(data, evaluation, briefs, date);
     result.hidden = false;
-    result.focus();
+    result.focus({ preventScroll: true });
+    result.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
   }
 
   nextButton.addEventListener('click', () => {
@@ -286,6 +327,7 @@
 
   form.addEventListener('input', (event) => {
     event.target.removeAttribute('aria-invalid');
+    removeDescription(event.target, 'form-status');
     status.textContent = '';
     if (event.target.name === 'workArea') {
       const areas = selected('workArea');
@@ -293,7 +335,15 @@
         event.target.checked = false;
         status.textContent = 'Choose no more than five work areas.';
       }
-      document.getElementById('work-area-error').hidden = selected('workArea').length > 0;
+      const hasArea = selected('workArea').length > 0;
+      workAreaError.hidden = hasArea;
+      if (hasArea) {
+        workAreaGroup.removeAttribute('aria-invalid');
+        form.querySelectorAll('[name="workArea"]').forEach((field) => {
+          field.removeAttribute('aria-invalid');
+          removeDescription(field, 'work-area-error');
+        });
+      }
     }
     saveDraft();
   });

@@ -99,7 +99,7 @@
 .review-option[data-review="opportunity"]::before { background-image: url('/images/ai-relationship/opportunity.webp'); }
 .review-option[data-review="friction"]::before { background-image: url('/images/ai-relationship/friction.webp'); }
 .review-option[data-review="team"]::before { background-image: url('/images/ai-relationship/team.webp'); }
-.review-option[data-review="build"]::before { background-image: url('/images/ai-relationship/build.webp'); }
+.review-option[data-review="build"]::before { background-image: url('/images/ai-relationship/build-v2.webp'); }
 .review-option[data-review="control"]::before { background-image: url('/images/ai-relationship/control.webp'); }
 
 /* Keep the original statements in the DOM while showing a concise label. */
