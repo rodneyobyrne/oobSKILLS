@@ -3,6 +3,9 @@ name: One-time Stripe product setup
 on:
   push:
     branches: ["ops/stripe-product-setup"]
+  pull_request:
+    branches: ["main"]
+    types: [opened, synchronize]
 
 permissions:
   contents: read
