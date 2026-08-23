@@ -33,9 +33,12 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Cache-bust homepage review stylesheet
+      - name: Use current homepage AI card stylesheet
         run: |
-          sed -i "s|/home-ai-review-20260822.css|/home-ai-review-20260822.css?v=${GITHUB_SHA}|" index.html
+          sed -i "s|/home-ai-review-20260822.css|/home-ai-cards-v3.css?v=${GITHUB_SHA}|" index.html
+          grep -F "/home-ai-cards-v3.css?v=${GITHUB_SHA}" index.html
+          grep -F "grid-template-columns: 1fr !important" home-ai-cards-v3.css
+          grep -F "flex-direction: column !important" home-ai-cards-v3.css
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
