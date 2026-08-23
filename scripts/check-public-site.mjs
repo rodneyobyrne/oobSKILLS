@@ -214,6 +214,45 @@ function checkPublicationBoundary() {
   }
 }
 
+function checkPrivacyDisclosure() {
+  const privacyPath = join(siteRoot, 'privacy-policy', 'index.html');
+  if (!existsSync(privacyPath)) {
+    report('privacy-policy/index.html', 'privacy policy is missing');
+    return;
+  }
+
+  const privacyText = stripNonVisibleContent(readFileSync(privacyPath, 'utf8'));
+  const draftTools = [
+    { name: 'Audience Review', script: 'audience-review/app.js' },
+    { name: 'Human Review Checklist', script: 'tools/human-review-checklist/review.js' },
+    { name: 'AI Workday Review', script: 'assessments/ai-workday-review/review.js' },
+    { name: 'Idea-to-Test Review', script: 'assessments/idea-to-test-review/review.js' },
+  ];
+
+  for (const tool of draftTools) {
+    const scriptPath = join(siteRoot, tool.script);
+    if (!existsSync(scriptPath)) {
+      report(tool.script, 'declared browser-draft tool script is missing');
+      continue;
+    }
+    if (!/\blocalStorage\b/.test(readFileSync(scriptPath, 'utf8'))) {
+      report(tool.script, 'declared browser-draft tool no longer uses local storage; update the disclosure registry');
+    }
+    const mentions = privacyText.split(tool.name).length - 1;
+    if (mentions < 3) {
+      report('privacy-policy/index.html', `${tool.name} must be named in the browser, no-endpoint and local-draft disclosures`);
+    }
+  }
+
+  const disclosedScripts = new Set(draftTools.map((tool) => tool.script));
+  for (const absolutePath of walk(siteRoot).filter((file) => extname(file).toLowerCase() === '.js')) {
+    const file = siteFileName(absolutePath);
+    if (/\blocalStorage\b/.test(readFileSync(absolutePath, 'utf8')) && !disclosedScripts.has(file)) {
+      report(file, 'uses local storage but is missing from the privacy disclosure registry');
+    }
+  }
+}
+
 function checkSitemap(htmlFiles) {
   const sitemapPath = join(siteRoot, 'sitemap.xml');
   if (!existsSync(sitemapPath)) {
@@ -294,6 +333,7 @@ for (const absolutePath of htmlFiles) {
 }
 
 checkPublicationBoundary();
+checkPrivacyDisclosure();
 checkSitemap(htmlFiles);
 
 if (problems.length > 0) {
