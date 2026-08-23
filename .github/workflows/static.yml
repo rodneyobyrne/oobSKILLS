@@ -35,10 +35,12 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Use current homepage AI card stylesheet
         run: |
-          sed -i "s|/home-ai-review-20260822.css|/home-ai-cards-v3.css?v=${GITHUB_SHA}|" index.html
-          grep -F "/home-ai-cards-v3.css?v=${GITHUB_SHA}" index.html
-          grep -F "grid-template-columns: 1fr !important" home-ai-cards-v3.css
-          grep -F "flex-direction: column !important" home-ai-cards-v3.css
+          sed -i "s|/home-ai-review-20260822.css|/home-ai-cards-v4.css?v=${GITHUB_SHA}|" index.html
+          grep -F "/home-ai-cards-v4.css?v=${GITHUB_SHA}" index.html
+          grep -F "images/ai-relationship-v2/opportunity.png" home-ai-cards-v4.css
+          grep -F "images/ai-relationship-v2/control.png" home-ai-cards-v4.css
+          grep -F "grid-template-columns: 1fr !important" home-ai-cards-v4.css
+          grep -F "flex-direction: column !important" home-ai-cards-v4.css
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
