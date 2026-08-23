@@ -250,6 +250,9 @@
     const blockers = evaluation.blockers.length
       ? `<ul>${evaluation.blockers.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
       : '<p>No immediate blocker was identified. Continue to test narrowly and review every result.</p>';
+    const optionalNextStep = evaluation.verdict === 'Pilot now - narrowly'
+      ? '<aside class="result-next-step"><p class="meta">Optional human support</p><h3>Keep the pilot bounded. Add help only if implementation gets stuck.</h3><p>This workfile is complete enough to use on its own. If the test reveals a defined workflow, review or adoption problem, oobCREATIVE can help implement that specific next step.</p><a class="button button--paper" href="/services/responsible-ai-implementation/">See responsible implementation support</a></aside>'
+      : '<aside class="result-next-step"><p class="meta">Optional human support</p><h3>Resolve the boundary before adding another AI tool.</h3><p>You can use this workfile independently. If ownership, source quality, review capacity or consequence involves several people, a bounded implementation review can help the team make the decision together.</p><a class="button button--paper" href="/services/responsible-ai-implementation/">See responsible implementation support</a></aside>';
 
     resultTitle.textContent = title;
     resultDate.textContent = date;
@@ -265,7 +268,8 @@
       <ul><li><strong>Bounded task:</strong> ${escapeHtml(data.task)}</li><li><strong>Human responsibility:</strong> ${escapeHtml(data.owner)} reviews and approves every result before use.</li><li><strong>Quality standard:</strong> ${escapeHtml(data.goodOutput)}</li><li><strong>Measure:</strong> Compare ${escapeHtml(measureLabels[data.measure])} with the current process.</li><li><strong>Stopping condition:</strong> ${escapeHtml(data.stopCondition)}</li><li><strong>End decision:</strong> Keep, revise, stop or choose a different problem.</li></ul>
       <h3>Three reusable working briefs</h3>
       ${briefs.map((brief) => `<pre class="working-brief">${escapeHtml(brief)}</pre>`).join('')}
-      <div class="content-note"><strong>Important boundary:</strong> This result is operational guidance, not legal, cybersecurity, compliance or professional advice. Do not use a general AI system with data your organization has not approved for that system.</div>`;
+      <div class="content-note"><strong>Important boundary:</strong> This result is operational guidance, not legal, cybersecurity, compliance or professional advice. Do not use a general AI system with data your organization has not approved for that system.</div>
+      ${optionalNextStep}`;
 
     currentMarkdown = buildMarkdown(data, evaluation, briefs, date);
     result.hidden = false;
