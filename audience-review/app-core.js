@@ -204,9 +204,8 @@ const PERSONA_PATTERNS = [
 ];
 
 /*
-  Local context profiles are a fallback, not the production research layer.
-  When an external LLM analyzer is connected, it should research the specific
-  offer and produce richer context under the contract in ANALYSIS-CONTRACT.md.
+  These local context profiles keep the public review available without
+  transmitting a visitor's answers to an external analysis service.
 */
 const OFFER_CONTEXTS = [
   {
