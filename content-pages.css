@@ -6,6 +6,7 @@
 .content-hero__aside { max-width: 31rem; padding-left: 1.4rem; border-left: 5px solid var(--ballpoint); }
 .content-hero__aside p:last-child { margin-bottom: 0; color: var(--soft); }
 .content-actions { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; margin-top: 2rem; }
+.content-actions button.text-link { padding-right: 0; padding-left: 0; border: 0; background: transparent; cursor: pointer; }
 .content-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; border: 1px solid var(--ink); background: var(--ink); }
 .content-grid--four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .content-card { display: flex; min-height: 320px; flex-direction: column; padding: clamp(1.5rem, 3vw, 2.5rem); background: var(--paper); }
