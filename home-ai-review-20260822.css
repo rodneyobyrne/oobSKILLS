@@ -1,336 +1,47 @@
-@import url('/doodle-system.css');
+@import url('/home-ai-review.css?rev=20260822-mobile1');
 
-/* Homepage AI relationship system.
-   The hero establishes the motion language. Relationship choices use the
-   supplied doodles as compact visual marks, keeping the full illustrations
-   available in /images/ai-relationship/ for later storytelling use. */
-
-.operator-hero {
-  padding-top: clamp(3.75rem, 7vw, 6.5rem);
-}
-
-.hero-layout {
-  display: grid;
-  grid-template-columns: minmax(0, .78fr) minmax(420px, 1.22fr);
-  grid-template-areas:
-    "copy art"
-    "review review";
-  column-gap: clamp(2.5rem, 6vw, 6rem);
-  row-gap: clamp(3.5rem, 7vw, 6rem);
-  align-items: center;
-}
-
-.hero-copy {
-  grid-area: copy;
-  position: static;
-  align-self: center;
-}
-
-.hero-layout::after {
-  content: "";
-  grid-area: art;
-  display: block;
-  width: 100%;
-  aspect-ratio: 1535 / 1024;
-  min-height: 390px;
-  background: url('/images/ai-relationship/hero-easy.svg') center / contain no-repeat;
-}
-
-.review-panel {
-  grid-area: review;
-  border: 0;
-  background: transparent;
-}
-
-.review-panel__heading {
-  max-width: 760px;
-  margin-bottom: clamp(1.7rem, 3vw, 2.4rem);
-  padding: 0;
-  border: 0;
-}
-
-.review-panel__heading h2 {
-  max-width: 15ch;
-  margin-bottom: 0;
-  font-size: clamp(2rem, 3.5vw, 3.4rem);
-}
-
+/* Responsive layout override for the homepage AI relationship choices.
+   Keep five across when space allows, wrap naturally through intermediate
+   widths, and switch to one full-width choice per row on phone/narrow views. */
 .review-options {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: clamp(.75rem, 1.5vw, 1.1rem);
-  padding: 0;
-  background: transparent;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
 }
 
-.review-option {
-  --review-tilt: 0deg;
-  position: relative;
-  display: grid;
-  grid-template-rows: 7.75rem minmax(4.9rem, auto);
-  min-width: 0;
-  min-height: 13rem;
-  padding: .8rem .9rem 1rem;
-  overflow: visible;
-  border: 1px solid #cfcfcb;
-  background: #fff;
-  box-shadow: none;
-  text-align: center;
-  cursor: pointer;
-  appearance: none;
-  isolation: isolate;
-  transform: translateY(0) rotate(0deg);
-  transition:
-    transform .24s var(--oob-doodle-ease),
-    border-color .18s ease,
-    box-shadow .24s ease,
-    background-color .18s ease,
-    opacity .2s ease,
-    filter .2s ease;
-}
-
-.review-option:nth-child(1) { --review-tilt: -.18deg; }
-.review-option:nth-child(2) { --review-tilt: .11deg; }
-.review-option:nth-child(3) { --review-tilt: -.09deg; }
-.review-option:nth-child(4) { --review-tilt: .17deg; }
-.review-option:nth-child(5) { --review-tilt: -.13deg; }
-
-.review-option__marker { display: none; }
-
-/* Compact visual mark. The full source illustration remains untouched. */
-.review-option::before {
-  content: "";
-  display: block;
-  align-self: center;
-  justify-self: center;
-  width: min(100%, 7rem);
-  height: 7rem;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  filter: grayscale(0) contrast(1.02);
-  transform: translateY(0) scale(1);
-  transition:
-    transform .24s var(--oob-doodle-ease),
-    filter .2s ease,
-    opacity .2s ease;
-}
-
-.review-option[data-review="opportunity"]::before { background-image: url('/images/ai-relationship/opportunity.webp'); }
-.review-option[data-review="friction"]::before { background-image: url('/images/ai-relationship/friction.webp'); }
-.review-option[data-review="team"]::before { background-image: url('/images/ai-relationship/team.webp'); }
-.review-option[data-review="build"]::before { background-image: url('/images/ai-relationship/build.webp'); }
-.review-option[data-review="control"]::before { background-image: url('/images/ai-relationship/control.webp'); }
-
-/* The full irregular perimeter is the selection mark. Applying the SVG only
-   on selection restarts the hand-drawn stroke animation each time. */
-.review-option::after {
-  content: "";
-  position: absolute;
-  z-index: 4;
-  inset: -6px;
-  pointer-events: none;
-  opacity: 0;
-  background: center / 100% 100% no-repeat;
-}
-
-.review-option.is-selected::after {
-  opacity: 1;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath pathLength='100' d='M3 5 C15 2 29 4 42 3 C58 5 74 2 96 5 C98 22 96 37 97 52 C96 68 98 82 95 96 C77 97 63 95 49 97 C34 95 18 98 4 95 C2 79 4 64 3 50 C4 35 2 19 3 5 Z' fill='none' stroke='%23244aa5' stroke-width='2.7' stroke-linecap='round' stroke-linejoin='round' stroke-dasharray='100' stroke-dashoffset='100' vector-effect='non-scaling-stroke'%3E%3Canimate attributeName='stroke-dashoffset' from='100' to='0' dur='.52s' calcMode='spline' keySplines='.2 .8 .2 1' fill='freeze'/%3E%3C/path%3E%3C/svg%3E");
-}
-
-/* Keep the original, more descriptive statements available to assistive
-   technology while presenting a short recognition label visually. */
-.review-option > span:last-child {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+.review-option,
+.review-option:nth-child(4),
+.review-option:nth-child(5),
+.review-option:last-child {
+  grid-column: auto;
   width: 100%;
-  min-height: 0;
-  padding: .55rem .25rem 0;
-  font-size: 0;
-  font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: -.025em;
-  text-align: center;
+  margin-left: 0;
+  justify-self: stretch;
 }
 
-.review-option > span:last-child::after {
-  display: block;
-  max-width: 15ch;
-  font-size: clamp(1rem, 1.35vw, 1.22rem);
-  line-height: 1.12;
-}
-
-.review-option[data-review="opportunity"] > span:last-child::after { content: "Find what’s useful."; }
-.review-option[data-review="friction"] > span:last-child::after { content: "Make work easier."; }
-.review-option[data-review="team"] > span:last-child::after { content: "Set better boundaries."; }
-.review-option[data-review="build"] > span:last-child::after { content: "Build what felt out of reach."; }
-.review-option[data-review="control"] > span:last-child::after { content: "Keep more control."; }
-
-.review-option:hover,
-.review-option:focus-visible {
-  outline: none;
-  border-color: #9c9c97;
-  box-shadow: 4px 5px 0 rgba(17, 17, 17, .07);
-  transform: translateY(-3px) rotate(var(--review-tilt));
-}
-
-.review-option:hover::before,
-.review-option:focus-visible::before {
-  transform: translateY(-2px) scale(1.035);
-}
-
-.review-option:focus-visible {
-  outline: 3px solid var(--ballpoint);
-  outline-offset: 6px;
-}
-
-.review-option.is-selected {
-  z-index: 2;
-  border-color: transparent;
-  background: #fff;
-  box-shadow: 7px 8px 0 rgba(36, 74, 165, .11);
-  opacity: 1;
-  filter: none;
-  transform: translateY(-4px) rotate(var(--review-tilt));
-}
-
-.review-option.is-selected::before {
-  transform: translateY(-2px) scale(1.045);
-}
-
-/* Once a choice exists, the other four step back clearly without becoming
-   disabled. The visitor can still change their mind with one tap. */
-.review-options:has(.review-option.is-selected) .review-option:not(.is-selected) {
-  border-color: #ddddda;
-  background: #f5f5f3;
-  color: #777772;
-  opacity: .56;
-  filter: grayscale(1);
-  box-shadow: none;
-  transform: none;
-}
-
-.review-options:has(.review-option.is-selected) .review-option:not(.is-selected)::before {
-  opacity: .7;
-  filter: grayscale(1) contrast(.86);
-  transform: none;
-}
-
-.review-options:has(.review-option.is-selected) .review-option:not(.is-selected):hover,
-.review-options:has(.review-option.is-selected) .review-option:not(.is-selected):focus-visible {
-  opacity: .84;
-  color: var(--ink);
-  border-color: #a9a9a4;
-  background: #fff;
-  filter: grayscale(.45);
-  transform: translateY(-2px);
-}
-
-.review-response {
-  max-width: 760px;
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
-  border-left: 5px solid var(--ballpoint);
-}
-
-@media (max-width: 1050px) {
-  .review-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .review-option:nth-child(4) { grid-column: 1 / 2; margin-left: 50%; }
-  .review-option:nth-child(5) { grid-column: 2 / 3; margin-left: 50%; }
-}
-
-@media (max-width: 900px) {
-  .hero-layout {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "copy"
-      "art"
-      "review";
-    row-gap: 2.4rem;
-  }
-
-  .hero-layout::after {
-    width: min(100%, 780px);
-    min-height: 0;
-    margin-inline: auto;
-  }
-
-  .review-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .review-option:nth-child(4),
-  .review-option:nth-child(5) { grid-column: auto; margin-left: 0; }
-  .review-option:last-child { grid-column: 1 / -1; width: min(50%, 360px); justify-self: center; }
-}
-
-@media (max-width: 620px) {
-  .operator-hero { padding-top: 3.25rem; }
-
-  .hero-layout { row-gap: 1.9rem; }
-
-  .hero-layout::after {
-    width: calc(100% + 1rem);
-    margin-inline: -.5rem;
-  }
-
+@media (max-width: 720px) {
   .review-options {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: .85rem;
+    grid-template-columns: 1fr;
+    gap: .9rem;
   }
 
   .review-option,
+  .review-option:nth-child(4),
+  .review-option:nth-child(5),
   .review-option:last-child {
     grid-column: auto;
     width: 100%;
-    min-height: 10.75rem;
-    grid-template-rows: 6.25rem minmax(3.5rem, auto);
-    padding: .65rem .65rem .85rem;
-  }
-
-  .review-option:last-child {
-    grid-column: 1 / -1;
-    width: calc(50% - .425rem);
-    justify-self: center;
+    min-height: 10.25rem;
+    grid-template-rows: 6rem minmax(3.25rem, auto);
+    margin-left: 0;
+    justify-self: stretch;
   }
 
   .review-option::before {
-    width: 5.8rem;
-    height: 5.8rem;
-  }
-
-  .review-option > span:last-child {
-    padding-top: .3rem;
+    width: 5.6rem;
+    height: 5.6rem;
   }
 
   .review-option > span:last-child::after {
-    max-width: 13ch;
-    font-size: clamp(.94rem, 4.2vw, 1.08rem);
-  }
-}
-
-@media (max-width: 390px) {
-  .review-options { grid-template-columns: 1fr; }
-  .review-option,
-  .review-option:last-child {
-    grid-column: auto;
-    width: 100%;
-    min-height: 9.75rem;
-    grid-template-rows: 5.6rem auto;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .review-option,
-  .review-option::before {
-    animation: none !important;
-    transition: none !important;
-  }
-
-  .review-option:hover,
-  .review-option:focus-visible,
-  .review-option.is-selected { transform: none; }
-
-  .review-option.is-selected::after {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M3 5 C15 2 29 4 42 3 C58 5 74 2 96 5 C98 22 96 37 97 52 C96 68 98 82 95 96 C77 97 63 95 49 97 C34 95 18 98 4 95 C2 79 4 64 3 50 C4 35 2 19 3 5 Z' fill='none' stroke='%23244aa5' stroke-width='2.7' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+    max-width: 18ch;
+    font-size: clamp(1rem, 4.6vw, 1.14rem);
   }
 }
