@@ -1,0 +1,229 @@
+/* Homepage AI relationship choices
+   Uses the existing review buttons and response logic. The five supplied
+   illustrations are presentation-only so the button text remains the label.
+*/
+
+.review-options {
+  display: grid;
+  gap: .9rem;
+  padding: .9rem;
+  background: var(--paper-soft);
+}
+
+.review-option {
+  --review-tilt: 0deg;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(132px, .48fr) minmax(0, 1.52fr);
+  gap: 0;
+  width: 100%;
+  min-height: 168px;
+  padding: 0;
+  overflow: hidden;
+  border: 1.5px solid var(--ink);
+  background: #fff;
+  box-shadow: none;
+  text-align: left;
+  cursor: pointer;
+  transform: translateY(0) rotate(0deg);
+  transition:
+    transform .22s cubic-bezier(.2, .8, .2, 1),
+    border-color .16s ease,
+    box-shadow .22s ease,
+    background-color .16s ease;
+}
+
+.review-option:nth-child(odd) { --review-tilt: -.12deg; }
+.review-option:nth-child(even) { --review-tilt: .12deg; }
+
+.review-option__marker {
+  display: none;
+}
+
+.review-option::before {
+  content: "";
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  align-self: stretch;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: min(92%, 160px) auto;
+  border-right: 1px solid var(--line);
+  transition: background-size .24s cubic-bezier(.2, .8, .2, 1);
+}
+
+.review-option[data-review="opportunity"]::before {
+  background-image: url('/images/ai-relationship/opportunity.webp');
+}
+
+.review-option[data-review="friction"]::before {
+  background-image: url('/images/ai-relationship/friction.webp');
+}
+
+.review-option[data-review="team"]::before {
+  background-image: url('/images/ai-relationship/team.webp');
+}
+
+.review-option[data-review="build"]::before {
+  background-image: url('/images/ai-relationship/build.webp');
+}
+
+.review-option[data-review="control"]::before {
+  background-image: url('/images/ai-relationship/control.webp');
+}
+
+.review-option::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 9px;
+  background: var(--ballpoint);
+  clip-path: polygon(
+    0 35%, 6% 20%, 13% 46%, 21% 27%, 29% 51%, 38% 23%,
+    47% 47%, 57% 26%, 67% 52%, 77% 26%, 87% 45%, 94% 23%,
+    100% 37%, 100% 67%, 92% 56%, 84% 79%, 74% 58%, 64% 81%,
+    54% 58%, 44% 78%, 34% 59%, 24% 82%, 14% 58%, 6% 76%, 0 67%
+  );
+  opacity: 0;
+  transform: scaleX(.035);
+  transform-origin: left center;
+  transition:
+    transform .34s cubic-bezier(.2, .8, .2, 1),
+    opacity .12s ease;
+}
+
+.review-option > span:last-child {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  max-width: 32ch;
+  padding: clamp(1.2rem, 2.7vw, 2rem);
+  font-size: clamp(1.08rem, 1.8vw, 1.42rem);
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -.02em;
+}
+
+.review-option:hover,
+.review-option:focus-visible {
+  outline: none;
+  background: #fff;
+  border-color: var(--ballpoint);
+  box-shadow: 7px 8px 0 rgba(36, 74, 165, .12);
+  transform: translateY(-3px) rotate(var(--review-tilt));
+}
+
+.review-option:hover::before,
+.review-option:focus-visible::before,
+.review-option.is-selected::before {
+  background-size: min(96%, 166px) auto;
+}
+
+.review-option:hover::after,
+.review-option:focus-visible::after,
+.review-option.is-selected::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.review-option:focus-visible {
+  outline: 3px solid var(--ballpoint);
+  outline-offset: 4px;
+}
+
+.review-option.is-selected {
+  background: var(--paper-blue);
+  border-color: var(--ballpoint);
+  box-shadow: 7px 8px 0 rgba(36, 74, 165, .14);
+  transform: translateY(-2px) rotate(var(--review-tilt));
+}
+
+.review-option.is-selected::after {
+  animation: review-ink-draw .34s cubic-bezier(.2, .8, .2, 1) both;
+}
+
+@keyframes review-ink-draw {
+  0% {
+    opacity: 0;
+    transform: scaleX(.035) rotate(-.2deg);
+  }
+  72% {
+    opacity: 1;
+    transform: scaleX(1.018) rotate(.08deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1) rotate(0deg);
+  }
+}
+
+@media (max-width: 760px) {
+  .review-panel {
+    margin-inline: 0;
+  }
+
+  .review-options {
+    gap: .75rem;
+    padding: .75rem;
+  }
+
+  .review-option {
+    grid-template-columns: 98px minmax(0, 1fr);
+    min-height: 126px;
+    padding: 0;
+  }
+
+  .review-option::before {
+    background-size: 90px auto;
+  }
+
+  .review-option:hover::before,
+  .review-option:focus-visible::before,
+  .review-option.is-selected::before {
+    background-size: 94px auto;
+  }
+
+  .review-option > span:last-child {
+    padding: 1rem .9rem 1.05rem;
+    font-size: clamp(1rem, 4.7vw, 1.2rem);
+    line-height: 1.2;
+  }
+}
+
+@media (max-width: 420px) {
+  .review-option {
+    grid-template-columns: 84px minmax(0, 1fr);
+    min-height: 118px;
+  }
+
+  .review-option::before {
+    background-size: 76px auto;
+  }
+
+  .review-option:hover::before,
+  .review-option:focus-visible::before,
+  .review-option.is-selected::before {
+    background-size: 79px auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-option,
+  .review-option::before,
+  .review-option::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .review-option:hover,
+  .review-option:focus-visible,
+  .review-option.is-selected {
+    transform: none;
+  }
+}
