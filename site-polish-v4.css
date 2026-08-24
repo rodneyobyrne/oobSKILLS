@@ -1,0 +1,77 @@
+/* Rendering hotfix: explicit character viewports, no sprite backgrounds. */
+
+.hero-art {
+  position: relative;
+  aspect-ratio: 1400 / 744;
+  overflow: visible !important;
+  background: #fff url('/images/ai-character/homepage-hero.png') center / contain no-repeat !important;
+}
+
+.hero-art__image {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.review-option::before {
+  content: none !important;
+  display: none !important;
+  background-image: none !important;
+}
+
+.review-option__art {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  flex: 0 0 auto;
+  background: #fff;
+  border-bottom: 1px solid var(--line, #d8d8d4);
+  overflow: hidden;
+}
+
+.review-option__art image {
+  image-rendering: auto;
+}
+
+.review-option > span:last-of-type {
+  max-width: 100%;
+  text-wrap: balance;
+}
+
+.content-hero__art {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  background: none !important;
+  overflow: hidden;
+}
+
+.content-hero__art image {
+  image-rendering: auto;
+}
+
+@media (max-width: 980px) {
+  .hero-art {
+    width: min(100%, 780px);
+    justify-self: center;
+  }
+
+  .content-hero__art {
+    width: min(58vw, 360px);
+    justify-self: center;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero-art {
+    width: calc(100% + 1rem);
+    margin-inline: -.5rem;
+  }
+}
