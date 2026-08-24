@@ -1,21 +1,20 @@
-/* Rendering hotfix: explicit character viewports, no sprite backgrounds. */
+/* Direct-image rendering: one file per visual asset, no sprites or crop math. */
 
 .hero-art {
   position: relative;
-  aspect-ratio: 1400 / 744;
   overflow: visible !important;
-  background: #fff url('/images/ai-character/homepage-hero.png') center / contain no-repeat !important;
+  background: none !important;
 }
 
 .hero-art__image {
-  position: absolute;
-  inset: 0;
+  display: block;
+  position: static;
   width: 100% !important;
-  height: 100% !important;
+  height: auto !important;
   max-height: none !important;
   object-fit: contain !important;
-  opacity: 0;
-  pointer-events: none;
+  opacity: 1 !important;
+  pointer-events: auto;
 }
 
 .review-option::before {
@@ -29,13 +28,10 @@
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
+  object-fit: contain;
   flex: 0 0 auto;
   background: #fff;
   border-bottom: 1px solid var(--line, #d8d8d4);
-  overflow: hidden;
-}
-
-.review-option__art image {
   image-rendering: auto;
 }
 
@@ -49,11 +45,8 @@
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
+  object-fit: contain;
   background: none !important;
-  overflow: hidden;
-}
-
-.content-hero__art image {
   image-rendering: auto;
 }
 
