@@ -1,74 +1,67 @@
 (() => {
-  const SPRITE = '/images/ai-character/poses.png';
-  const CELL = 720;
-  const SPRITE_WIDTH = 5760;
-
-  function makeSpriteSvg(cellIndex, className, label) {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('class', className);
-    svg.setAttribute('viewBox', `0 0 ${CELL} ${CELL}`);
-    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-    svg.setAttribute('role', 'img');
-    svg.setAttribute('aria-label', label);
-
-    const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-    image.setAttribute('href', SPRITE);
-    image.setAttribute('x', String(-CELL * cellIndex));
-    image.setAttribute('y', '0');
-    image.setAttribute('width', String(SPRITE_WIDTH));
-    image.setAttribute('height', String(CELL));
-    image.setAttribute('preserveAspectRatio', 'xMinYMin meet');
-    svg.append(image);
-    return svg;
-  }
-
   const path = window.location.pathname;
 
+  const cardImages = {
+    opportunity: '/images/ai-character/cards/opportunity.png',
+    friction: '/images/ai-character/cards/friction.png',
+    team: '/images/ai-character/cards/team.png',
+    build: '/images/ai-character/cards/build.png',
+    control: '/images/ai-character/cards/control.png'
+  };
+
   if (path === '/' || path === '/index.html') {
-    const cardCells = {
-      opportunity: 0,
-      friction: 1,
-      team: 2,
-      build: 3,
-      control: 4
-    };
+    const heroImage = document.querySelector('.hero-art__image');
+    if (heroImage) {
+      heroImage.src = '/images/ai-character/homepage-hero.png';
+      heroImage.width = 1400;
+      heroImage.height = 744;
+    }
 
     document.querySelectorAll('.review-option').forEach((option) => {
       const key = option.dataset.review;
-      if (!(key in cardCells)) return;
-      const existing = option.querySelector('.review-option__art');
-      if (existing) existing.remove();
+      const src = cardImages[key];
+      if (!src) return;
+
+      option.querySelector('.review-option__art')?.remove();
       const text = option.querySelector('span:last-of-type');
-      const art = makeSpriteSvg(
-        cardCells[key],
-        'review-option__art',
-        `The oobCREATIVE AI character illustrating ${text?.textContent?.trim() || key}.`
-      );
-      if (text) option.insertBefore(art, text);
-      else option.prepend(art);
+      const image = document.createElement('img');
+      image.className = 'review-option__art';
+      image.src = src;
+      image.width = 720;
+      image.height = 720;
+      image.loading = 'eager';
+      image.decoding = 'async';
+      image.alt = `The oobCREATIVE AI character illustrating ${text?.textContent?.trim() || key}.`;
+
+      if (text) option.insertBefore(image, text);
+      else option.prepend(image);
     });
   }
 
-  const heroCells = {
-    '/practical-ai/': 5,
-    '/tools/ai-fit-check/': 6,
-    '/tools/human-review-checklist/': 7,
-    '/tools/ai-pilot-starter/': 5,
-    '/assessments/ai-workday-review/': 6,
-    '/services/responsible-ai-implementation/': 5,
-    '/services/local-ai-systems/': 7,
-    '/services/ai-receptionist-small-business/': 7
+  const heroImages = {
+    '/practical-ai/': '/images/ai-character/poses/pointing.png',
+    '/tools/ai-fit-check/': '/images/ai-character/poses/thinking.png',
+    '/tools/human-review-checklist/': '/images/ai-character/poses/waving.png',
+    '/tools/ai-pilot-starter/': '/images/ai-character/poses/pointing.png',
+    '/assessments/ai-workday-review/': '/images/ai-character/poses/thinking.png',
+    '/services/responsible-ai-implementation/': '/images/ai-character/poses/pointing.png',
+    '/services/local-ai-systems/': '/images/ai-character/poses/waving.png',
+    '/services/ai-receptionist-small-business/': '/images/ai-character/poses/waving.png'
   };
 
-  if (path in heroCells) {
+  const heroSrc = heroImages[path];
+  if (heroSrc) {
     const current = document.querySelector('.content-hero__art');
     if (current) {
-      const replacement = makeSpriteSvg(
-        heroCells[path],
-        current.className || 'content-hero__art',
-        'The established oobCREATIVE AI character representing practical AI support with visible human ownership.'
-      );
-      current.replaceWith(replacement);
+      const image = document.createElement('img');
+      image.className = current.className || 'content-hero__art';
+      image.src = heroSrc;
+      image.width = 720;
+      image.height = 720;
+      image.loading = 'eager';
+      image.decoding = 'async';
+      image.alt = 'The established oobCREATIVE AI character representing practical AI support with visible human ownership.';
+      current.replaceWith(image);
     }
   }
 })();
