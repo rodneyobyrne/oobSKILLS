@@ -31,28 +31,39 @@ const { startStaticServer } = require('./static-server.cjs');
     const mobile = await page.evaluate(() => {
       const cards = [...document.querySelectorAll('.review-option')].map(el => el.getBoundingClientRect());
       const hero = document.querySelector('.hero-layout').getBoundingClientRect();
+      const heroArt = document.querySelector('.hero-art').getBoundingClientRect();
       const image = document.querySelector('.hero-art__image');
-      const firstCardImage = getComputedStyle(document.querySelector('.review-option'), '::before').backgroundImage;
+      const firstArt = document.querySelector('.review-option__art');
       return {
         cardCount: cards.length,
         cardXs: cards.map(card => Math.round(card.x)),
         cardWidths: cards.map(card => Math.round(card.width)),
         heroWidth: hero.width,
         viewportWidth: document.documentElement.clientWidth,
+        heroArtRatio: heroArt.height / heroArt.width,
         imageSrc: image.getAttribute('src'),
         heading: document.querySelector('#review-question').textContent.trim(),
         outlineCount: document.querySelectorAll('.review-option__outline').length,
-        firstCardImage,
+        artCount: document.querySelectorAll('.review-option__art').length,
+        firstArtTag: firstArt?.tagName.toLowerCase(),
+        firstArtViewBox: firstArt?.getAttribute('viewBox'),
+        firstSpriteHref: firstArt?.querySelector('image')?.getAttribute('href'),
+        oldPseudoDisplay: getComputedStyle(document.querySelector('.review-option'), '::before').display,
       };
     });
     assert.equal(mobile.cardCount, 5);
     assert.equal(new Set(mobile.cardXs).size, 1, 'Phone layout keeps one review card per row');
     assert.ok(Math.min(...mobile.cardWidths) > 300, 'Phone review cards remain comfortably full width');
     assert.ok(mobile.heroWidth <= mobile.viewportWidth, 'Phone hero remains inside the viewport');
+    assert.ok(mobile.heroArtRatio > 0.48 && mobile.heroArtRatio < 0.58, 'Phone hero keeps the full illustration aspect ratio');
     assert.equal(mobile.imageSrc, '/images/ai-character/homepage-hero.png');
     assert.equal(mobile.heading, 'Which problem feels most familiar right now?');
     assert.equal(mobile.outlineCount, 5, 'Every choice card gets a complete SVG outline');
-    assert.match(mobile.firstCardImage, /ai-character\/poses\.png/, 'Choice card art uses the locked character sprite');
+    assert.equal(mobile.artCount, 5, 'Every choice card gets an explicit artwork viewport');
+    assert.equal(mobile.firstArtTag, 'svg');
+    assert.equal(mobile.firstArtViewBox, '0 0 720 720');
+    assert.equal(mobile.firstSpriteHref, '/images/ai-character/poses.png');
+    assert.equal(mobile.oldPseudoDisplay, 'none', 'Legacy sprite backgrounds are disabled');
 
     await page.click('.review-option[data-review="opportunity"]');
     await page.waitForTimeout(80);
@@ -78,6 +89,7 @@ const { startStaticServer } = require('./static-server.cjs');
         viewportWidth: document.documentElement.clientWidth,
         copyTop: copy.top,
         artTop: art.top,
+        artRatio: art.height / art.width,
         copyWidth: copy.width,
         h1Width: h1.width,
         h1FontSize: parseFloat(getComputedStyle(document.querySelector('.hero-copy h1')).fontSize),
@@ -91,6 +103,7 @@ const { startStaticServer } = require('./static-server.cjs');
     });
     assert.ok(desktop.shellWidth / desktop.viewportWidth > 0.9, 'Desktop site shell uses most of the viewport width');
     assert.ok(Math.abs(desktop.artTop - desktop.copyTop) < 90, 'Desktop hero image aligns with the text block');
+    assert.ok(desktop.artRatio > 0.48 && desktop.artRatio < 0.58, 'Desktop hero cannot collapse into a shallow image strip');
     assert.ok(desktop.h1Width / desktop.copyWidth > 0.75, 'Desktop H1 uses the wider text column');
     assert.ok(desktop.h1FontSize < 82, 'Desktop H1 stays controlled rather than oversized');
     assert.ok(desktop.leadWidth / desktop.copyWidth > 0.85, 'Desktop intro paragraph uses the text column');
@@ -101,21 +114,28 @@ const { startStaticServer } = require('./static-server.cjs');
     assert.equal(desktop.signalDecoration, 'none', 'AI privacy question no longer has an underline');
 
     await page.goto(`${server.origin}/practical-ai/`, { waitUntil: 'networkidle' });
-    const practicalAiHero = await page.evaluate(() => ({
-      hasArt: Boolean(document.querySelector('.content-hero__art')),
-      hasLayoutClass: document.querySelector('.content-hero__inner')?.classList.contains('has-ai-art'),
-      background: getComputedStyle(document.querySelector('.content-hero__art')).backgroundImage,
-      overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
-    }));
+    const practicalAiHero = await page.evaluate(() => {
+      const art = document.querySelector('.content-hero__art');
+      return {
+        hasArt: Boolean(art),
+        tag: art?.tagName.toLowerCase(),
+        viewBox: art?.getAttribute('viewBox'),
+        spriteHref: art?.querySelector('image')?.getAttribute('href'),
+        hasLayoutClass: document.querySelector('.content-hero__inner')?.classList.contains('has-ai-art'),
+        overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+      };
+    });
     assert.equal(practicalAiHero.hasArt, true, 'Practical AI hero includes the oob AI character');
+    assert.equal(practicalAiHero.tag, 'svg');
+    assert.equal(practicalAiHero.viewBox, '0 0 720 720');
+    assert.equal(practicalAiHero.spriteHref, '/images/ai-character/poses.png');
     assert.equal(practicalAiHero.hasLayoutClass, true);
-    assert.match(practicalAiHero.background, /ai-character\/poses\.png/);
     assert.equal(practicalAiHero.overflow, false);
 
     assert.deepEqual(consoleErrors, []);
     assert.deepEqual(failedRequests, []);
     await context.close();
-    console.log('Homepage and AI hero polish passed at 320, 390, 768, 1440, and 1720 pixels.');
+    console.log('Homepage image rendering and responsive layout passed at 320, 390, 768, 1440, and 1720 pixels.');
   } finally {
     await browser.close();
     await server.close();
