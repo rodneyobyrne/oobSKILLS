@@ -1,0 +1,208 @@
+/* oobCREATIVE homepage + AI hero polish v3.
+   Desktop spacing is tightened while existing phone card stacking remains intact. */
+
+@media (min-width: 981px) {
+  :root { --space: clamp(3rem, 4.25vw, 4.75rem); }
+
+  .operator-hero {
+    padding-top: clamp(1.8rem, 2.6vw, 2.75rem) !important;
+    padding-bottom: clamp(2.5rem, 3.6vw, 3.75rem) !important;
+  }
+
+  .hero-layout {
+    grid-template-columns: minmax(0, .92fr) minmax(520px, 1.08fr) !important;
+    column-gap: clamp(2.25rem, 4vw, 4rem) !important;
+    row-gap: clamp(1.8rem, 2.8vw, 2.75rem) !important;
+    align-items: start !important;
+  }
+
+  .hero-copy h1 {
+    max-width: 15ch !important;
+    font-size: clamp(3.45rem, 4.1vw, 4.85rem) !important;
+  }
+
+  .hero-copy .lead {
+    max-width: 46rem !important;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-art {
+    margin-top: 0 !important;
+    align-self: start !important;
+  }
+
+  .hero-art__image {
+    max-height: 475px;
+    object-fit: contain;
+    object-position: center top;
+  }
+
+  .review-panel__heading {
+    margin-bottom: 1.25rem !important;
+  }
+
+  .review-panel__heading h2 {
+    max-width: 28ch !important;
+    font-size: clamp(2rem, 2.8vw, 3rem) !important;
+    text-wrap: balance;
+  }
+
+  .review-panel__prompt {
+    max-width: 48rem;
+    margin: .65rem 0 0;
+    color: var(--soft);
+    font-size: 1rem;
+  }
+
+  .review-response {
+    margin-top: 1.35rem !important;
+  }
+
+  .section-heading-row,
+  .section-intro {
+    margin-bottom: clamp(2.2rem, 3.5vw, 3.5rem) !important;
+  }
+
+  .content-hero {
+    padding-block: clamp(3rem, 4.2vw, 4.6rem) !important;
+  }
+}
+
+/* Homepage hero uses the locked oob AI character artwork. */
+.hero-art__image {
+  width: 100%;
+  height: auto;
+}
+
+/* Five homepage choice cards. */
+.review-option {
+  overflow: visible !important;
+}
+
+.review-option::before {
+  background-image: url('/images/ai-character/poses.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 800% 100% !important;
+  background-color: #fff !important;
+  background-position-y: 50% !important;
+}
+
+.review-option[data-review="opportunity"]::before { background-position-x: 0% !important; }
+.review-option[data-review="friction"]::before { background-position-x: 14.2857% !important; }
+.review-option[data-review="team"]::before { background-position-x: 28.5714% !important; }
+.review-option[data-review="build"]::before { background-position-x: 42.8571% !important; }
+.review-option[data-review="control"]::before { background-position-x: 57.1429% !important; }
+
+.review-option > span:last-of-type {
+  min-height: 4.1rem !important;
+  padding: .9rem .9rem 1rem !important;
+  font-size: clamp(1rem, 1.2vw, 1.15rem) !important;
+  font-weight: 700;
+  line-height: 1.16;
+  text-wrap: balance;
+}
+
+.review-option > span:last-of-type::after { content: none !important; display: none !important; }
+
+.review-option::after { content: none !important; display: none !important; }
+
+.review-option__outline {
+  position: absolute;
+  z-index: 5;
+  inset: -7px;
+  width: calc(100% + 14px);
+  height: calc(100% + 14px);
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.review-option__outline path {
+  fill: none;
+  stroke: var(--ballpoint, #244aa5);
+  stroke-width: 2.4;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+}
+
+.review-option.is-selected .review-option__outline { opacity: 1; }
+.review-option.is-selected .review-option__outline path {
+  animation: oob-card-draw .52s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes oob-card-draw {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Free-tool promise sits after the tools rather than competing with the heading. */
+.free-tool-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 1.35rem;
+  padding: 1rem 1.15rem;
+  border-left: 4px solid var(--ballpoint);
+  background: rgba(255,255,255,.55);
+}
+.free-tool-note p { margin: 0; max-width: 52rem; color: var(--soft); }
+.free-tool-note a { flex: 0 0 auto; }
+
+/* Remove the old signal underline from the AI privacy question. */
+.answer-item--signal h3 {
+  text-decoration: none !important;
+}
+
+/* AI representation in relevant content-page heroes. */
+.content-hero__inner.has-ai-art {
+  grid-template-columns: minmax(0, 1.08fr) minmax(210px, .42fr) minmax(260px, .62fr);
+  gap: clamp(1.75rem, 4vw, 4rem);
+  align-items: center;
+}
+
+.content-hero__art {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-image: url('/images/ai-character/poses.png');
+  background-repeat: no-repeat;
+  background-size: 800% 100%;
+  background-position-y: 50%;
+  background-color: transparent;
+}
+.content-hero__art--pointing { background-position-x: 71.4286%; }
+.content-hero__art--thinking { background-position-x: 85.7143%; }
+.content-hero__art--waving { background-position-x: 100%; }
+
+@media (max-width: 980px) {
+  .content-hero__inner.has-ai-art { grid-template-columns: 1fr; }
+  .content-hero__art {
+    width: min(58vw, 360px);
+    justify-self: center;
+    order: 2;
+  }
+  .content-hero__inner.has-ai-art .content-hero__aside { order: 3; }
+}
+
+@media (max-width: 720px) {
+  .operator-hero { padding-bottom: 3rem !important; }
+  .review-panel__heading { margin-bottom: 1rem !important; }
+  .review-panel__heading h2 { max-width: none !important; text-wrap: balance; }
+  .review-panel__prompt { margin: .55rem 0 0; color: var(--soft); }
+  .review-option > span:last-of-type {
+    min-height: 0 !important;
+    padding: 1rem 1.1rem 1.1rem !important;
+    font-size: clamp(1.15rem, 5vw, 1.35rem) !important;
+  }
+  .free-tool-note { align-items: flex-start; flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-option.is-selected .review-option__outline path {
+    animation: none !important;
+    stroke-dashoffset: 0;
+  }
+}
