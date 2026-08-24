@@ -79,11 +79,11 @@
   transition: opacity .18s ease, filter .18s ease, transform .22s ease;
 }
 
-.review-option[data-review="opportunity"]::before { background-image: url('/images/ai-relationship/opportunity.webp'); }
-.review-option[data-review="friction"]::before { background-image: url('/images/ai-relationship/friction.webp'); }
-.review-option[data-review="team"]::before { background-image: url('/images/ai-relationship/team.webp'); }
-.review-option[data-review="build"]::before { background-image: url('/images/ai-relationship/build-v2.webp'); }
-.review-option[data-review="control"]::before { background-image: url('/images/ai-relationship/control.webp'); }
+.review-option[data-review="opportunity"]::before { background-image: url('/images/ai-relationship-v2/opportunity.png'); }
+.review-option[data-review="friction"]::before { background-image: url('/images/ai-relationship-v2/friction.png'); }
+.review-option[data-review="team"]::before { background-image: url('/images/ai-relationship-v2/team.png'); }
+.review-option[data-review="build"]::before { background-image: url('/images/ai-relationship-v2/build.png'); }
+.review-option[data-review="control"]::before { background-image: url('/images/ai-relationship-v2/control.png'); }
 
 .review-option > span:last-child {
   display: block !important;
