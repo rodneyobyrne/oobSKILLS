@@ -221,13 +221,13 @@
         nextCopy.textContent = 'Use the AI Fit Check before adding another AI-supported task, or explore a team workflow when review should be consistent across more than one person.';
         nextPrimary.textContent = 'Check another task for AI fit';
         nextPrimary.href = '/tools/ai-fit-check/';
-        nextSecondary.innerHTML = 'Explore responsible AI implementation <span aria-hidden="true">→</span>';
+        nextSecondary.innerHTML = 'Explore AI workflow implementation <span aria-hidden="true">→</span>';
         nextSecondary.href = '/services/responsible-ai-implementation/';
       } else if (decision.verdict === 'revise') {
         nextKicker.textContent = 'If the same gaps keep returning';
         nextTitle.textContent = 'Build review into the way your team works.';
         nextCopy.textContent = 'oobCREATIVE can help turn scattered AI use into a bounded workflow with clear ownership, review standards and practical staff guidance.';
-        nextPrimary.textContent = 'Explore responsible AI implementation';
+        nextPrimary.textContent = 'Explore AI workflow implementation';
         nextPrimary.href = '/services/responsible-ai-implementation/';
         nextSecondary.innerHTML = 'Check whether AI fits the task <span aria-hidden="true">→</span>';
         nextSecondary.href = '/tools/ai-fit-check/';
@@ -237,7 +237,7 @@
         nextCopy.textContent = 'Use the free AI Fit Check to reconsider this task, or explore structured support when ownership, policy and review need to be established across a team.';
         nextPrimary.textContent = 'Use the AI Fit Check';
         nextPrimary.href = '/tools/ai-fit-check/';
-        nextSecondary.innerHTML = 'Explore responsible AI implementation <span aria-hidden="true">→</span>';
+        nextSecondary.innerHTML = 'Explore AI workflow implementation <span aria-hidden="true">→</span>';
         nextSecondary.href = '/services/responsible-ai-implementation/';
       }
       resultWrap.hidden = false;

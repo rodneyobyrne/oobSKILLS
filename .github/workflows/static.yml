@@ -28,8 +28,6 @@ jobs:
         run: npm ci
       - name: Build and validate public artifact
         run: npm run validate
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
       - name: Run browser journeys
         run: npm run test:browser
       - name: Verify homepage release assets

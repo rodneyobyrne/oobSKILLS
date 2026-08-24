@@ -73,7 +73,7 @@
     quality: 'Show the standard your work must meet and how people will recognize it.',
     clarity: 'Explain what happens next, who is responsible, and what a good result looks like.',
     care: 'Show how decisions account for the person affected by the work.',
-    practicality: 'Turn expertise into a next step people can actually use.',
+    practicality: 'Turn expertise into a next step people can use.',
     'not-sure': 'Keep the promise modest while you name and test the standards that matter most.'
   };
   const TRIGGER_DRAFTS = {
