@@ -19,6 +19,8 @@ const publicFiles = [
   'hero-animation.js',
   'home-ai-cards-v3.css',
   'site-layout-v2.css',
+  'site-polish-v3.css',
+  'site-polish-v3.js',
   '404.html',
   'index.html',
   'robots.txt',
@@ -62,9 +64,18 @@ function versionLocalAssets(html) {
   });
 }
 
-function injectSiteLayoutCss(html) {
-  if (html.includes('/site-layout-v2.css')) return html;
-  return html.replace('</head>', `    <link rel="stylesheet" href="/site-layout-v2.css?v=${releaseVersion}">\n  </head>`);
+function injectSiteAssets(html) {
+  let next = html;
+  if (!next.includes('/site-layout-v2.css')) {
+    next = next.replace('</head>', `    <link rel="stylesheet" href="/site-layout-v2.css?v=${releaseVersion}">\n  </head>`);
+  }
+  if (!next.includes('/site-polish-v3.css')) {
+    next = next.replace('</head>', `    <link rel="stylesheet" href="/site-polish-v3.css?v=${releaseVersion}">\n  </head>`);
+  }
+  if (!next.includes('/site-polish-v3.js')) {
+    next = next.replace('</head>', `    <script defer src="/site-polish-v3.js?v=${releaseVersion}"></script>\n  </head>`);
+  }
+  return next;
 }
 
 rmSync(outputRoot, { recursive: true, force: true });
@@ -78,7 +89,7 @@ for (const directory of publicDirectories) {
 for (const absolutePath of walk(outputRoot)) {
   if (extname(absolutePath).toLowerCase() !== '.html') continue;
   const html = readFileSync(absolutePath, 'utf8');
-  writeFileSync(absolutePath, injectSiteLayoutCss(versionLocalAssets(html)));
+  writeFileSync(absolutePath, injectSiteAssets(versionLocalAssets(html)));
 }
 
 writeFileSync(join(outputRoot, '.nojekyll'), '');
