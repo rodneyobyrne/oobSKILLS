@@ -14,7 +14,7 @@ const { startStaticServer } = require('./static-server.cjs');
     page.on('requestfailed', (request) => failedRequests.push(`${request.url()} ${request.failure()?.errorText || ''}`));
 
     await page.goto(`${server.origin}/assessments/idea-to-test-review/`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('h1').textContent(), 'Turn one promising idea into a test you can actually run.');
+    assert.equal(await page.locator('h1').textContent(), 'Turn one promising idea into a test you can run.');
     assert.equal(await page.locator('#progress-label').textContent(), 'Step 1 of 4');
     assert.equal(await page.locator('input[required], textarea[required], select[required]').count() > 10, true);
 
