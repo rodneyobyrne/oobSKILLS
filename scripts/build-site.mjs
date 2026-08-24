@@ -21,6 +21,8 @@ const publicFiles = [
   'site-layout-v2.css',
   'site-polish-v3.css',
   'site-polish-v3.js',
+  'site-polish-v4.css',
+  'site-polish-v4.js',
   '404.html',
   'index.html',
   'robots.txt',
@@ -72,8 +74,14 @@ function injectSiteAssets(html) {
   if (!next.includes('/site-polish-v3.css')) {
     next = next.replace('</head>', `    <link rel="stylesheet" href="/site-polish-v3.css?v=${releaseVersion}">\n  </head>`);
   }
+  if (!next.includes('/site-polish-v4.css')) {
+    next = next.replace('</head>', `    <link rel="stylesheet" href="/site-polish-v4.css?v=${releaseVersion}">\n  </head>`);
+  }
   if (!next.includes('/site-polish-v3.js')) {
     next = next.replace('</head>', `    <script defer src="/site-polish-v3.js?v=${releaseVersion}"></script>\n  </head>`);
+  }
+  if (!next.includes('/site-polish-v4.js')) {
+    next = next.replace('</head>', `    <script defer src="/site-polish-v4.js?v=${releaseVersion}"></script>\n  </head>`);
   }
   return next;
 }
