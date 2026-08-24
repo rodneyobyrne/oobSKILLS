@@ -18,6 +18,7 @@ const publicFiles = [
   'hero-animation.css',
   'hero-animation.js',
   'home-ai-cards-v3.css',
+  'site-layout-v2.css',
   '404.html',
   'index.html',
   'robots.txt',
@@ -61,6 +62,11 @@ function versionLocalAssets(html) {
   });
 }
 
+function injectSiteLayoutCss(html) {
+  if (html.includes('/site-layout-v2.css')) return html;
+  return html.replace('</head>', `    <link rel="stylesheet" href="/site-layout-v2.css?v=${releaseVersion}">\n  </head>`);
+}
+
 rmSync(outputRoot, { recursive: true, force: true });
 mkdirSync(outputRoot, { recursive: true });
 
@@ -72,7 +78,7 @@ for (const directory of publicDirectories) {
 for (const absolutePath of walk(outputRoot)) {
   if (extname(absolutePath).toLowerCase() !== '.html') continue;
   const html = readFileSync(absolutePath, 'utf8');
-  writeFileSync(absolutePath, versionLocalAssets(html));
+  writeFileSync(absolutePath, injectSiteLayoutCss(versionLocalAssets(html)));
 }
 
 writeFileSync(join(outputRoot, '.nojekyll'), '');
