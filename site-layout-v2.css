@@ -1,0 +1,52 @@
+/* Sitewide desktop width and homepage hero alignment.
+   Mobile geometry intentionally remains governed by the existing mobile styles. */
+
+:root {
+  --max: 1600px;
+  --gutter: clamp(1.25rem, 2.5vw, 2.5rem);
+}
+
+@media (min-width: 981px) {
+  .operator-hero {
+    padding-top: clamp(2rem, 3vw, 3rem);
+  }
+
+  .hero-layout {
+    grid-template-columns: minmax(0, .96fr) minmax(520px, 1.04fr);
+    column-gap: clamp(2.5rem, 4vw, 4.5rem);
+    row-gap: clamp(3rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  .hero-copy {
+    align-self: start;
+  }
+
+  .hero-copy h1 {
+    max-width: 16ch;
+    font-size: clamp(3.6rem, 4.4vw, 5.1rem);
+    line-height: .95;
+  }
+
+  .hero-copy .lead {
+    width: 100%;
+    max-width: none;
+    font-size: clamp(1.1rem, 1.2vw, 1.3rem);
+  }
+
+  .hero-art {
+    align-self: start;
+    margin-top: 1.75rem;
+  }
+
+  .hero-art__image {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+@media (min-width: 1400px) {
+  .hero-layout {
+    grid-template-columns: minmax(620px, .95fr) minmax(0, 1.05fr);
+  }
+}
