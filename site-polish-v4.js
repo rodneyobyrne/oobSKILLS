@@ -18,7 +18,7 @@
   };
 
   const poseImages = {
-    pointing: '/images/ai-character/poses/pointing.png',
+    pointing: '/images/ai-character/poses/pointing2.png',
     thinking: '/images/ai-character/poses/thinking.png',
     waving: '/images/ai-character/poses/waving.png'
   };
