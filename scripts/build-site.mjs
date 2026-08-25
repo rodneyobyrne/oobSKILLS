@@ -18,6 +18,7 @@ const publicFiles = [
   'hero-animation.css',
   'hero-animation.js',
   'home-ai-cards-v3.css',
+  'section-lockups.css',
   'site-layout-v2.css',
   'site-polish-v3.css',
   'site-polish-v3.js',
