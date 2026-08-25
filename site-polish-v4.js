@@ -1,25 +1,54 @@
 (() => {
   const path = window.location.pathname;
 
-  const cardImages = {
-    opportunity: '/images/ai-character/cards/opportunity.png',
-    friction: '/images/ai-character/cards/friction.png',
-    team: '/images/ai-character/cards/team.png',
-    build: '/images/ai-character/cards/build.png',
-    control: '/images/ai-character/cards/control.png'
+  /*
+   * Front-end image hierarchy:
+   * 1. Heroes: detailed scene PNGs with enough room to read the situation.
+   * 2. H2 lockups: simple solo oob AI robot pose PNGs only.
+   * 3. Five homepage choice tiles: experience/situation illustrations, not robot poses.
+   * Generic robot poses are never promoted into page heroes.
+   */
+
+  const experienceImages = {
+    opportunity: '/images/ai-relationship-v2/opportunity.png',
+    friction: '/images/ai-relationship-v2/friction.png',
+    team: '/images/ai-relationship-v2/team.png',
+    build: '/images/ai-relationship-v2/build.png',
+    control: '/images/ai-relationship-v2/control.png'
   };
 
-  if (path === '/' || path === '/index.html') {
-    const heroImage = document.querySelector('.hero-art__image');
-    if (heroImage) {
-      heroImage.src = '/images/ai-character/homepage-hero.png';
-      heroImage.width = 1400;
-      heroImage.height = 744;
-    }
+  const poseImages = {
+    pointing: '/images/ai-character/poses/pointing.png',
+    thinking: '/images/ai-character/poses/thinking.png',
+    waving: '/images/ai-character/poses/waving.png'
+  };
 
+  function poseForHeading(text = '') {
+    const normalized = text.toLowerCase();
+    if (/question|measure|decision|clarity|understand|review/.test(normalized)) return 'thinking';
+    if (/call|customer|human|together|support/.test(normalized)) return 'waving';
+    return 'pointing';
+  }
+
+  document.querySelectorAll('.section-lockup').forEach((lockup) => {
+    const image = lockup.querySelector('.section-lockup__art img');
+    const heading = lockup.querySelector('h2');
+    if (!image || !heading) return;
+
+    const pose = poseForHeading(heading.textContent || '');
+    image.src = poseImages[pose];
+    image.width = 720;
+    image.height = 720;
+    image.alt = '';
+    image.loading = lockup.classList.contains('section-lockup--compact') ? 'eager' : 'lazy';
+    image.decoding = 'async';
+    image.dataset.visualRole = 'headline-pose';
+  });
+
+  if (path === '/' || path === '/index.html') {
     document.querySelectorAll('.review-option').forEach((option) => {
       const key = option.dataset.review;
-      const src = cardImages[key];
+      const src = experienceImages[key];
       if (!src) return;
 
       option.querySelector('.review-option__art')?.remove();
@@ -27,41 +56,24 @@
       const image = document.createElement('img');
       image.className = 'review-option__art';
       image.src = src;
-      image.width = 720;
-      image.height = 720;
+      image.width = 1254;
+      image.height = 1254;
       image.loading = 'eager';
       image.decoding = 'async';
-      image.alt = `The oobCREATIVE AI character illustrating ${text?.textContent?.trim() || key}.`;
+      image.alt = `Illustrated business situation for ${text?.textContent?.trim() || key}.`;
+      image.dataset.visualRole = 'experience';
 
       if (text) option.insertBefore(image, text);
       else option.prepend(image);
     });
   }
 
-  const heroImages = {
-    '/practical-ai/': '/images/ai-character/poses/pointing.png',
-    '/tools/ai-fit-check/': '/images/ai-character/poses/thinking.png',
-    '/tools/human-review-checklist/': '/images/ai-character/poses/waving.png',
-    '/tools/ai-pilot-starter/': '/images/ai-character/poses/pointing.png',
-    '/assessments/ai-workday-review/': '/images/ai-character/poses/thinking.png',
-    '/services/responsible-ai-implementation/': '/images/ai-character/poses/pointing.png',
-    '/services/local-ai-systems/': '/images/ai-character/poses/waving.png',
-    '/services/ai-receptionist-small-business/': '/images/ai-character/poses/waving.png'
-  };
-
-  const heroSrc = heroImages[path];
-  if (heroSrc) {
-    const current = document.querySelector('.content-hero__art');
-    if (current) {
-      const image = document.createElement('img');
-      image.className = current.className || 'content-hero__art';
-      image.src = heroSrc;
-      image.width = 720;
-      image.height = 720;
-      image.loading = 'eager';
-      image.decoding = 'async';
-      image.alt = 'The established oobCREATIVE AI character representing practical AI support with visible human ownership.';
-      current.replaceWith(image);
+  /* Remove any stale generic pose that may have been injected by an older cached script. */
+  document.querySelectorAll('.content-hero__art').forEach((art) => {
+    const src = art.getAttribute('src') || '';
+    if (src.includes('/images/ai-character/poses/') || art.className.includes('content-hero__art--')) {
+      art.remove();
+      document.querySelector('.content-hero__inner')?.classList.remove('has-ai-art');
     }
-  }
+  });
 })();
