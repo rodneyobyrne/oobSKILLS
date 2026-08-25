@@ -1,5 +1,6 @@
-/* oobCREATIVE homepage + AI hero polish v3.
-   Desktop spacing is tightened while existing phone card stacking remains intact. */
+/* oobCREATIVE homepage + layout polish.
+   Visual hierarchy rule: detailed scene art belongs in heroes or page content.
+   H2 support art uses a simple solo robot pose loaded as a normal image file. */
 
 @media (min-width: 981px) {
   :root { --space: clamp(3rem, 4.25vw, 4.75rem); }
@@ -29,12 +30,6 @@
   .hero-art {
     margin-top: 0 !important;
     align-self: start !important;
-  }
-
-  .hero-art__image {
-    max-height: 475px;
-    object-fit: contain;
-    object-position: center top;
   }
 
   .review-panel__heading {
@@ -68,30 +63,22 @@
   }
 }
 
-/* Homepage hero uses the locked oob AI character artwork. */
+/* Homepage hero is a normal PNG scene, never a sprite or CSS background. */
 .hero-art__image {
   width: 100%;
   height: auto;
 }
 
-/* Five homepage choice cards. */
+/* Five homepage choice cards use experience illustrations inserted as <img>. */
 .review-option {
   overflow: visible !important;
 }
 
 .review-option::before {
-  background-image: url('/images/ai-character/poses.png') !important;
-  background-repeat: no-repeat !important;
-  background-size: 800% 100% !important;
-  background-color: #fff !important;
-  background-position-y: 50% !important;
+  content: none !important;
+  display: none !important;
+  background-image: none !important;
 }
-
-.review-option[data-review="opportunity"]::before { background-position-x: 0% !important; }
-.review-option[data-review="friction"]::before { background-position-x: 14.2857% !important; }
-.review-option[data-review="team"]::before { background-position-x: 28.5714% !important; }
-.review-option[data-review="build"]::before { background-position-x: 42.8571% !important; }
-.review-option[data-review="control"]::before { background-position-x: 57.1429% !important; }
 
 .review-option > span:last-of-type {
   min-height: 4.1rem !important;
@@ -103,7 +90,6 @@
 }
 
 .review-option > span:last-of-type::after { content: none !important; display: none !important; }
-
 .review-option::after { content: none !important; display: none !important; }
 
 .review-option__outline {
@@ -152,39 +138,13 @@
 .free-tool-note p { margin: 0; max-width: 52rem; color: var(--soft); }
 .free-tool-note a { flex: 0 0 auto; }
 
-/* Remove the old signal underline from the AI privacy question. */
 .answer-item--signal h3 {
   text-decoration: none !important;
 }
 
-/* AI representation in relevant content-page heroes. */
+/* Generic robot poses are intentionally not used as page-hero art. */
 .content-hero__inner.has-ai-art {
-  grid-template-columns: minmax(0, 1.08fr) minmax(210px, .42fr) minmax(260px, .62fr);
-  gap: clamp(1.75rem, 4vw, 4rem);
-  align-items: center;
-}
-
-.content-hero__art {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background-image: url('/images/ai-character/poses.png');
-  background-repeat: no-repeat;
-  background-size: 800% 100%;
-  background-position-y: 50%;
-  background-color: transparent;
-}
-.content-hero__art--pointing { background-position-x: 71.4286%; }
-.content-hero__art--thinking { background-position-x: 85.7143%; }
-.content-hero__art--waving { background-position-x: 100%; }
-
-@media (max-width: 980px) {
-  .content-hero__inner.has-ai-art { grid-template-columns: 1fr; }
-  .content-hero__art {
-    width: min(58vw, 360px);
-    justify-self: center;
-    order: 2;
-  }
-  .content-hero__inner.has-ai-art .content-hero__aside { order: 3; }
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, .65fr);
 }
 
 @media (max-width: 720px) {
