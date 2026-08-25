@@ -1,0 +1,211 @@
+/*
+ * oobCREATIVE section heading lockups
+ * Pairs major H2 section headings with the approved oob AI character while
+ * keeping every heading and supporting sentence as live browser text.
+ */
+
+.section-lockup {
+  display: grid;
+  grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+  margin-bottom: clamp(2.75rem, 5vw, 4.75rem);
+}
+
+.section-lockup__art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  margin: 0;
+}
+
+.section-lockup__art img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 220px;
+  object-fit: contain;
+}
+
+.section-lockup__copy {
+  min-width: 0;
+}
+
+.section-lockup__copy h2 {
+  max-width: 22ch;
+  margin-bottom: 1rem;
+}
+
+.section-lockup__copy > :last-child {
+  margin-bottom: 0;
+}
+
+.section-lockup__copy .section-side-note,
+.section-lockup__copy .section-copy {
+  max-width: 48rem;
+}
+
+/* The first-question lockup sits inside the existing review panel. */
+.section-lockup--compact {
+  grid-template-columns: minmax(78px, 108px) minmax(0, 1fr);
+  gap: clamp(.9rem, 2vw, 1.35rem);
+  margin: 0;
+}
+
+.section-lockup--compact .section-lockup__art img {
+  max-height: 108px;
+}
+
+.review-panel__heading .section-lockup__copy h2 {
+  max-width: 18ch;
+  margin-bottom: 0;
+  font-size: clamp(1.9rem, 3vw, 3rem);
+}
+
+/* Let layouts that previously carried the heading begin after the lockup. */
+.section-lockup + .content-grid,
+.section-lockup + .answer-list,
+.section-lockup + .capability-grid,
+.section-lockup + .work-grid,
+.section-lockup + .participation-grid,
+.section-lockup + .founder-copy,
+.section-lockup + .product-layout {
+  margin-top: 0;
+}
+
+.section-lockup + .founder-copy {
+  max-width: 52rem;
+  margin-left: clamp(0rem, 18vw, 15rem);
+}
+
+/* Dark final CTA: keep the robot on a clean white paper plate. */
+.final-cta__inner--lockup {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.final-cta__inner--lockup .section-lockup {
+  grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
+  margin-bottom: 0;
+}
+
+.section-lockup--inverse .section-lockup__art {
+  padding: .4rem;
+  background: #fff;
+}
+
+.section-lockup--inverse .section-lockup__copy h2 {
+  max-width: 17ch;
+  color: #fff;
+}
+
+.section-lockup--inverse .section-copy,
+.section-lockup--inverse .section-side-note,
+.section-lockup--inverse .section-lockup__copy > p:not(.eyebrow) {
+  color: #d5d5d5;
+}
+
+/* The local-systems section keeps its two-column product content below the heading. */
+.section-lockup-shell > .product-layout {
+  align-items: start;
+}
+
+@media (max-width: 980px) {
+  .section-lockup + .founder-copy {
+    margin-left: 0;
+  }
+
+  .final-cta__inner--lockup {
+    grid-template-columns: 1fr;
+  }
+
+  .final-cta__inner--lockup .section-lockup {
+    margin-bottom: .5rem;
+  }
+}
+
+@media (max-width: 760px) {
+  /* Stay side-by-side on phones: robot left, live H2 text right. */
+  .section-lockup {
+    grid-template-columns: minmax(88px, 28vw) minmax(0, 1fr);
+    gap: clamp(.9rem, 4vw, 1.35rem);
+    align-items: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-lockup__art img {
+    max-height: 145px;
+  }
+
+  .section-lockup__copy h2 {
+    max-width: none;
+    margin-bottom: .75rem;
+    font-size: clamp(1.7rem, 7.2vw, 2.55rem);
+    line-height: 1.02;
+    letter-spacing: -.04em;
+  }
+
+  .section-lockup__copy .eyebrow,
+  .section-lockup__copy .step-label {
+    margin-bottom: .55rem;
+    font-size: .68rem;
+  }
+
+  .section-lockup__copy .section-side-note,
+  .section-lockup__copy .section-copy {
+    font-size: .92rem;
+    line-height: 1.5;
+  }
+
+  .section-lockup--compact {
+    grid-template-columns: 76px minmax(0, 1fr);
+    gap: .85rem;
+  }
+
+  .section-lockup--compact .section-lockup__art img {
+    max-height: 88px;
+  }
+
+  .review-panel__heading {
+    padding: 1.1rem;
+  }
+
+  .review-panel__heading .section-lockup__copy h2 {
+    font-size: clamp(1.55rem, 6.5vw, 2.2rem);
+  }
+
+  .final-cta__inner--lockup .section-lockup {
+    grid-template-columns: minmax(88px, 28vw) minmax(0, 1fr);
+  }
+
+  .final-cta__actions {
+    width: 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  .section-lockup {
+    grid-template-columns: 84px minmax(0, 1fr);
+    gap: .85rem;
+  }
+
+  .section-lockup__art img {
+    max-height: 112px;
+  }
+
+  .section-lockup__copy h2 {
+    font-size: clamp(1.5rem, 6.9vw, 2rem);
+  }
+
+  .section-lockup--compact {
+    grid-template-columns: 68px minmax(0, 1fr);
+  }
+
+  .section-lockup--compact .section-lockup__art img {
+    max-height: 76px;
+  }
+}
