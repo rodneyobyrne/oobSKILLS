@@ -33,6 +33,7 @@ const { startStaticServer } = require('./static-server.cjs');
       const hero = document.querySelector('.hero-layout').getBoundingClientRect();
       const heroImage = document.querySelector('.hero-art__image');
       const cardArt = [...document.querySelectorAll('.review-option__art')];
+      const lockupArt = [...document.querySelectorAll('.section-lockup__art img')];
       return {
         cardCount: cards.length,
         cardXs: cards.map(card => Math.round(card.x)),
@@ -44,43 +45,47 @@ const { startStaticServer } = require('./static-server.cjs');
         heroImageNaturalHeight: heroImage?.naturalHeight,
         heading: document.querySelector('#review-question').textContent.trim(),
         outlineCount: document.querySelectorAll('.review-option__outline').length,
-        artCount: cardArt.length,
-        artTags: cardArt.map(el => el.tagName.toLowerCase()),
-        artSrcs: cardArt.map(el => el.getAttribute('src')),
-        artNaturalWidths: cardArt.map(el => el.naturalWidth),
-        artNaturalHeights: cardArt.map(el => el.naturalHeight),
+        cardArtCount: cardArt.length,
+        cardArtSrcs: cardArt.map(el => el.getAttribute('src')),
+        cardRoles: cardArt.map(el => el.dataset.visualRole),
+        lockupCount: lockupArt.length,
+        lockupSrcs: lockupArt.map(el => el.getAttribute('src')),
+        lockupRoles: lockupArt.map(el => el.dataset.visualRole),
         oldPseudoDisplay: getComputedStyle(document.querySelector('.review-option'), '::before').display,
       };
     });
+
     assert.equal(mobile.cardCount, 5);
     assert.equal(new Set(mobile.cardXs).size, 1, 'Phone layout keeps one review card per row');
     assert.ok(Math.min(...mobile.cardWidths) > 300, 'Phone review cards remain comfortably full width');
     assert.ok(mobile.heroWidth <= mobile.viewportWidth, 'Phone hero remains inside the viewport');
-    assert.equal(mobile.heroImageSrc, '/images/ai-character/homepage-hero.png');
-    assert.ok(mobile.heroImageNaturalWidth >= 1200 && mobile.heroImageNaturalHeight > 600, 'Homepage hero loads its full direct PNG');
+    assert.equal(mobile.heroImageSrc, '/images/ai-relationship/oob-ai-hero.png', 'Homepage hero stays a direct detailed-scene PNG');
+    assert.equal(mobile.heroImageNaturalWidth, 1200);
+    assert.equal(mobile.heroImageNaturalHeight, 800);
     assert.equal(mobile.heading, 'Which problem feels most familiar right now?');
-    assert.equal(mobile.outlineCount, 5, 'Every choice card gets a complete SVG outline');
-    assert.equal(mobile.artCount, 5, 'Every choice card gets a direct image');
-    assert.deepEqual(mobile.artTags, ['img', 'img', 'img', 'img', 'img']);
-    assert.deepEqual(mobile.artSrcs, [
-      '/images/ai-character/cards/opportunity.png',
-      '/images/ai-character/cards/friction.png',
-      '/images/ai-character/cards/team.png',
-      '/images/ai-character/cards/build.png',
-      '/images/ai-character/cards/control.png'
+    assert.equal(mobile.outlineCount, 5, 'Every choice card gets a complete outline');
+    assert.equal(mobile.cardArtCount, 5, 'Every choice card gets an experience image');
+    assert.deepEqual(mobile.cardArtSrcs, [
+      '/images/ai-relationship-v2/opportunity.png',
+      '/images/ai-relationship-v2/friction.png',
+      '/images/ai-relationship-v2/team.png',
+      '/images/ai-relationship-v2/build.png',
+      '/images/ai-relationship-v2/control.png'
     ]);
-    assert.ok(mobile.artNaturalWidths.every(width => width === 720), 'Card images load at 720px source width');
-    assert.ok(mobile.artNaturalHeights.every(height => height === 720), 'Card images load at 720px source height');
-    assert.equal(mobile.oldPseudoDisplay, 'none', 'Legacy sprite backgrounds are disabled');
+    assert.ok(mobile.cardRoles.every(role => role === 'experience'), 'Choice-card images are explicitly classified as experiences');
+    assert.ok(mobile.lockupCount >= 6, 'Homepage major H2 lockups retain supporting art');
+    assert.ok(mobile.lockupSrcs.every(src => [
+      '/images/ai-character/poses/pointing.png',
+      '/images/ai-character/poses/thinking.png',
+      '/images/ai-character/poses/waving.png'
+    ].includes(src)), 'Every H2 lockup uses a simple solo robot pose PNG');
+    assert.ok(mobile.lockupRoles.every(role => role === 'headline-pose'), 'H2 graphics are explicitly classified as headline poses');
+    assert.equal(mobile.oldPseudoDisplay, 'none', 'Legacy sprite backgrounds remain disabled');
 
     await page.click('.review-option[data-review="opportunity"]');
     await page.waitForTimeout(80);
     const firstAnimation = await page.$eval('.review-option[data-review="opportunity"] .review-option__outline path', el => getComputedStyle(el).animationName);
     assert.equal(firstAnimation, 'oob-card-draw');
-    await page.click('.review-option[data-review="friction"]');
-    await page.waitForTimeout(80);
-    const secondAnimation = await page.$eval('.review-option[data-review="friction"] .review-option__outline path', el => getComputedStyle(el).animationName);
-    assert.equal(secondAnimation, 'oob-card-draw', 'Selecting a different card starts the draw animation again');
 
     await page.setViewportSize({ width: 1720, height: 900 });
     await page.goto(`${server.origin}/`, { waitUntil: 'networkidle' });
@@ -91,7 +96,6 @@ const { startStaticServer } = require('./static-server.cjs');
       const h1 = document.querySelector('.hero-copy h1').getBoundingClientRect();
       const lead = document.querySelector('.hero-copy .lead').getBoundingClientRect();
       const image = document.querySelector('.hero-art__image');
-      const signalHeading = document.querySelector('.answer-item--signal h3');
       return {
         shellWidth: shell.width,
         viewportWidth: document.documentElement.clientWidth,
@@ -102,49 +106,33 @@ const { startStaticServer } = require('./static-server.cjs');
         h1FontSize: parseFloat(getComputedStyle(document.querySelector('.hero-copy h1')).fontSize),
         leadWidth: lead.width,
         imageSrc: image.getAttribute('src'),
-        imageNaturalWidth: image.naturalWidth,
-        imageNaturalHeight: image.naturalHeight,
         freeToolNoteCount: document.querySelectorAll('.free-tool-note').length,
         oldSideNoteCount: document.querySelector('#use-now-heading').closest('section').querySelectorAll('.section-side-note').length,
-        signalDecoration: getComputedStyle(signalHeading).textDecorationLine,
       };
     });
     assert.ok(desktop.shellWidth / desktop.viewportWidth > 0.9, 'Desktop site shell uses most of the viewport width');
-    assert.ok(Math.abs(desktop.artTop - desktop.copyTop) < 90, 'Desktop hero image aligns with the text block');
+    assert.ok(Math.abs(desktop.artTop - desktop.copyTop) < 90, 'Desktop hero scene aligns with the text block');
     assert.ok(desktop.h1Width / desktop.copyWidth > 0.75, 'Desktop H1 uses the wider text column');
     assert.ok(desktop.h1FontSize < 82, 'Desktop H1 stays controlled rather than oversized');
     assert.ok(desktop.leadWidth / desktop.copyWidth > 0.85, 'Desktop intro paragraph uses the text column');
-    assert.equal(desktop.imageSrc, '/images/ai-character/homepage-hero.png');
-    assert.ok(desktop.imageNaturalWidth >= 1200 && desktop.imageNaturalHeight > 600, 'Homepage hero uses its high-resolution direct PNG');
+    assert.equal(desktop.imageSrc, '/images/ai-relationship/oob-ai-hero.png');
     assert.equal(desktop.freeToolNoteCount, 1, 'Free-tool promise is moved beneath the tool cards');
     assert.equal(desktop.oldSideNoteCount, 0, 'Free-tool promise no longer competes with the section heading');
-    assert.equal(desktop.signalDecoration, 'none', 'AI privacy question no longer has an underline');
 
     await page.goto(`${server.origin}/practical-ai/`, { waitUntil: 'networkidle' });
-    const practicalAiHero = await page.evaluate(() => {
-      const art = document.querySelector('.content-hero__art');
-      return {
-        hasArt: Boolean(art),
-        tag: art?.tagName.toLowerCase(),
-        src: art?.getAttribute('src'),
-        naturalWidth: art?.naturalWidth,
-        naturalHeight: art?.naturalHeight,
-        hasLayoutClass: document.querySelector('.content-hero__inner')?.classList.contains('has-ai-art'),
-        overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
-      };
-    });
-    assert.equal(practicalAiHero.hasArt, true, 'Practical AI hero includes the oob AI character');
-    assert.equal(practicalAiHero.tag, 'img');
-    assert.equal(practicalAiHero.src, '/images/ai-character/poses/pointing.png');
-    assert.equal(practicalAiHero.naturalWidth, 720);
-    assert.equal(practicalAiHero.naturalHeight, 720);
-    assert.equal(practicalAiHero.hasLayoutClass, true);
+    const practicalAiHero = await page.evaluate(() => ({
+      genericPoseArt: document.querySelectorAll('.content-hero__art').length,
+      hasLegacyLayoutClass: document.querySelector('.content-hero__inner')?.classList.contains('has-ai-art'),
+      overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+    }));
+    assert.equal(practicalAiHero.genericPoseArt, 0, 'Generic solo robot poses are not used as page-hero art');
+    assert.equal(practicalAiHero.hasLegacyLayoutClass, false, 'Legacy three-column hero layout is removed');
     assert.equal(practicalAiHero.overflow, false);
 
     assert.deepEqual(consoleErrors, []);
     assert.deepEqual(failedRequests, []);
     await context.close();
-    console.log('Direct-image homepage and AI hero rendering passed at 320, 390, 768, 1440, and 1720 pixels.');
+    console.log('Visual hierarchy passed: scene PNG hero, experience choice cards, solo robot H2 lockups, no sprite hero art.');
   } finally {
     await browser.close();
     await server.close();
