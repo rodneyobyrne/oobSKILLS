@@ -6,12 +6,13 @@
   "scripts": {
     "build": "node scripts/build-site.mjs",
     "check:site": "node scripts/check-public-site.mjs _site",
+    "check:links": "node scripts/check-internal-links.mjs _site",
     "check:secrets": "node scripts/scan-secrets.mjs",
     "test:dom": "node tests/test-human-review.cjs && node tests/test-idea-to-test.cjs && node tests/test-idea-to-test-dom.cjs && node tests/test-audience-review.cjs && node tests/test-local-fit-request.cjs && node tests/test-ai-receptionist-page.cjs",
     "install:chromium": "node scripts/install-playwright-chromium.mjs",
     "test:browser:journeys": "node tests/test-homepage-browser.cjs && node tests/test-idea-to-test-browser.cjs && node tests/test-workday-browser.cjs && node tests/test-audience-review-browser.cjs && node tests/test-ai-receptionist-browser.cjs",
     "test:browser": "npm run install:chromium && npm run test:browser:journeys",
-    "validate": "npm run build && npm run check:site && npm run check:secrets && npm run test:dom"
+    "validate": "npm run build && npm run check:site && npm run check:links && npm run check:secrets && npm run test:dom"
   },
   "devDependencies": {
     "jsdom": "26.1.0",

@@ -47,6 +47,46 @@ const publicDirectories = [
   'workfiles',
 ];
 
+const contextualLinkBlocks = new Map([
+  [
+    'assessments/ai-workday-review/index.html',
+    `<section class="content-section--soft" data-related-links="true">
+      <div class="site-shell section-heading-row">
+        <div><p class="eyebrow">Related next steps</p><h2>Keep the pilot connected to the larger decision.</h2></div>
+        <p class="section-side-note">Use the broader guidance only where it helps you understand the responsibility, compare the level of support or confirm how browser-based tools handle your information.</p>
+      </div>
+      <div class="site-shell content-grid">
+        <article class="content-card"><p class="meta">Understand the method</p><h3>Practical AI</h3><p>See why oobCREATIVE starts with the workflow, human review and consequence before choosing an AI tool.</p><a class="text-link" href="/practical-ai/">Read the Practical AI guidance <span aria-hidden="true">→</span></a></article>
+        <article class="content-card"><p class="meta">Compare the options</p><h3>Assessments</h3><p>See the other guided WORKFILE paths and choose the amount of structure that fits the question.</p><a class="text-link" href="/assessments/">See all assessments <span aria-hidden="true">→</span></a></article>
+        <article class="content-card"><p class="meta">Browser privacy</p><h3>How your information is handled</h3><p>Review the site privacy details for browser processing, local drafts and the limits of these tools.</p><a class="text-link" href="/privacy-policy/">Read the Privacy Policy <span aria-hidden="true">→</span></a></article>
+      </div>
+    </section>`,
+  ],
+  [
+    'assessments/idea-to-test-review/index.html',
+    `<section class="content-section--soft" data-related-links="true">
+      <div class="site-shell section-heading-row">
+        <div><p class="eyebrow">Related next steps</p><h2>Keep the test connected to the audience and the real problem.</h2></div>
+        <p class="section-side-note">Use these only if the test reveals that the starting problem or audience decision still needs clarification.</p>
+      </div>
+      <div class="site-shell content-grid">
+        <article class="content-card"><p class="meta">Need a different starting point?</p><h3>Start Here</h3><p>Return to the recognizable problem before deciding whether the next move is a test, workflow, message or service.</p><a class="text-link" href="/start-here/">Find the right starting point <span aria-hidden="true">→</span></a></article>
+        <article class="content-card"><p class="meta">Need audience clarity?</p><h3>Audience Review</h3><p>Unbox the customer decision before rewriting the message or expanding the test.</p><a class="text-link" href="/audience-review/">Start the Audience Review <span aria-hidden="true">→</span></a></article>
+      </div>
+    </section>`,
+  ],
+  [
+    'privacy-policy/index.html',
+    `<section class="content-section--soft" data-related-links="true">
+      <div class="site-shell section-heading-row">
+        <div><p class="eyebrow">Related resources</p><h2>See the tools this policy is protecting.</h2></div>
+        <p class="section-side-note">The free tools explain their browser, draft and review behavior in context. Use only the tool that fits the decision in front of you.</p>
+      </div>
+      <div class="site-shell"><a class="text-link" href="/free-tools/">See the free practical tools <span aria-hidden="true">→</span></a></div>
+    </section>`,
+  ],
+]);
+
 function requireSource(pathFromRoot) {
   const absolutePath = join(sourceRoot, pathFromRoot);
   if (!existsSync(absolutePath)) throw new Error(`Required public source is missing: ${pathFromRoot}`);
@@ -87,6 +127,12 @@ function injectSiteAssets(html) {
   return next;
 }
 
+function injectContextualLinks(html, outputFile) {
+  const block = contextualLinkBlocks.get(outputFile);
+  if (!block || html.includes('data-related-links="true"') || !/<\/main>/i.test(html)) return html;
+  return html.replace(/<\/main>/i, `${block}\n  </main>`);
+}
+
 rmSync(outputRoot, { recursive: true, force: true });
 mkdirSync(outputRoot, { recursive: true });
 
@@ -97,8 +143,10 @@ for (const directory of publicDirectories) {
 
 for (const absolutePath of walk(outputRoot)) {
   if (extname(absolutePath).toLowerCase() !== '.html') continue;
+  const outputFile = relative(outputRoot, absolutePath).split(sep).join('/');
   const html = readFileSync(absolutePath, 'utf8');
-  writeFileSync(absolutePath, injectSiteAssets(versionLocalAssets(html)));
+  const withContextualLinks = injectContextualLinks(html, outputFile);
+  writeFileSync(absolutePath, injectSiteAssets(versionLocalAssets(withContextualLinks)));
 }
 
 writeFileSync(join(outputRoot, '.nojekyll'), '');
