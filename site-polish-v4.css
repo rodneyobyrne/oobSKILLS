@@ -1,4 +1,4 @@
-/* Direct-image rendering: one file per visual asset, no sprites or crop math. */
+/* Direct-image rendering: normal image files, no sprite sheets or crop math. */
 
 .hero-art {
   position: relative;
@@ -40,24 +40,19 @@
   text-wrap: balance;
 }
 
-.content-hero__art {
+/* H2 support art is intentionally small and simple: one solo robot pose. */
+.section-lockup__art img[data-visual-role="headline-pose"] {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
-  aspect-ratio: 1 / 1;
   object-fit: contain;
-  background: none !important;
   image-rendering: auto;
 }
 
 @media (max-width: 980px) {
   .hero-art {
     width: min(100%, 780px);
-    justify-self: center;
-  }
-
-  .content-hero__art {
-    width: min(58vw, 360px);
     justify-self: center;
   }
 }
