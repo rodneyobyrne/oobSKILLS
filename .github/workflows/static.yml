@@ -26,6 +26,19 @@ jobs:
           name: image-audit-source-${{ github.event.pull_request.number }}
           path: images
           compression-level: 0
+      - name: Upload source markup for audit
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: image-audit-markup-${{ github.event.pull_request.number }}
+          path: |
+            **/*.html
+            *.css
+            *.js
+            scripts/*.mjs
+            tests/*.cjs
+            package.json
+          compression-level: 6
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
