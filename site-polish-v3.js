@@ -2,14 +2,6 @@
   const path = window.location.pathname;
 
   if (path === '/' || path === '/index.html') {
-    const heroImage = document.querySelector('.hero-art__image');
-    if (heroImage) {
-      heroImage.src = '/images/ai-character/homepage-hero.png';
-      heroImage.width = 1400;
-      heroImage.height = 744;
-      heroImage.alt = 'A business owner sorts through a confusing workload while the oobCREATIVE AI character points toward a short, human-reviewed checklist.';
-    }
-
     const heading = document.querySelector('#review-question');
     if (heading) heading.textContent = 'Which problem feels most familiar right now?';
 
@@ -67,32 +59,6 @@
         grid.after(note);
         sideNote.remove();
       }
-    }
-  }
-
-  const aiHeroPoses = {
-    '/practical-ai/': 'pointing',
-    '/tools/ai-fit-check/': 'thinking',
-    '/tools/human-review-checklist/': 'waving',
-    '/tools/ai-pilot-starter/': 'pointing',
-    '/assessments/ai-workday-review/': 'thinking',
-    '/services/responsible-ai-implementation/': 'pointing',
-    '/services/local-ai-systems/': 'waving',
-    '/services/ai-receptionist-small-business/': 'waving'
-  };
-
-  const pose = aiHeroPoses[path];
-  if (pose) {
-    const inner = document.querySelector('.content-hero__inner');
-    if (inner && !inner.querySelector('.content-hero__art')) {
-      inner.classList.add('has-ai-art');
-      const art = document.createElement('div');
-      art.className = `content-hero__art content-hero__art--${pose}`;
-      art.setAttribute('role', 'img');
-      art.setAttribute('aria-label', 'The established oobCREATIVE AI character, representing practical AI support with visible human ownership.');
-      const aside = inner.querySelector('.content-hero__aside');
-      if (aside) inner.insertBefore(art, aside);
-      else inner.append(art);
     }
   }
 })();
