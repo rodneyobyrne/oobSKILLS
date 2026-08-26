@@ -1,4 +1,4 @@
-/* Direct-image rendering: normal image files, no sprite sheets or crop math. */
+/* Direct-image rendering: semantic WebP image files, no sprite sheets or crop math. */
 
 .hero-art {
   position: relative;
@@ -40,7 +40,7 @@
   text-wrap: balance;
 }
 
-/* H2 support art is intentionally small and simple: one solo robot pose. */
+/* H2 support art is intentionally small and simple: one solo robot pose WebP. */
 .section-lockup__art img[data-visual-role="headline-pose"] {
   display: block;
   width: auto;

@@ -59,26 +59,22 @@ const { startStaticServer } = require('./static-server.cjs');
     assert.equal(new Set(mobile.cardXs).size, 1, 'Phone layout keeps one review card per row');
     assert.ok(Math.min(...mobile.cardWidths) > 300, 'Phone review cards remain comfortably full width');
     assert.ok(mobile.heroWidth <= mobile.viewportWidth, 'Phone hero remains inside the viewport');
-    assert.equal(mobile.heroImageSrc, '/images/ai-relationship/oob-ai-hero.png', 'Homepage hero stays a direct detailed-scene PNG');
-    assert.equal(mobile.heroImageNaturalWidth, 1200);
-    assert.equal(mobile.heroImageNaturalHeight, 800);
+    assert.equal(mobile.heroImageSrc, '/images/ai-relationship/ai-workflow-map.webp', 'Homepage hero stays a direct detailed-scene PNG');
+    assert.equal(mobile.heroImageNaturalWidth, 1122);
+    assert.equal(mobile.heroImageNaturalHeight, 1402);
     assert.equal(mobile.heading, 'Which problem feels most familiar right now?');
     assert.equal(mobile.outlineCount, 5, 'Every choice card gets a complete outline');
     assert.equal(mobile.cardArtCount, 5, 'Every choice card gets an experience image');
     assert.deepEqual(mobile.cardArtSrcs, [
-      '/images/ai-relationship-v2/opportunity.png',
-      '/images/ai-relationship-v2/friction.png',
-      '/images/ai-relationship-v2/team.png',
-      '/images/ai-relationship-v2/build.png',
-      '/images/ai-relationship-v2/control.png'
+      '/images/experiences/missed-calls.webp',
+      '/images/experiences/repeated-admin.webp',
+      '/images/experiences/team-ai-boundaries.webp',
+      '/images/experiences/website-message-clarity.webp',
+      '/images/experiences/idea-to-test.webp'
     ]);
     assert.ok(mobile.cardRoles.every(role => role === 'experience'), 'Choice-card images are explicitly classified as experiences');
     assert.ok(mobile.lockupCount >= 6, 'Homepage major H2 lockups retain supporting art');
-    assert.ok(mobile.lockupSrcs.every(src => [
-      '/images/ai-character/poses/pointing.png',
-      '/images/ai-character/poses/thinking.png',
-      '/images/ai-character/poses/waving.png'
-    ].includes(src)), 'Every H2 lockup uses a simple solo robot pose PNG');
+    assert.ok(mobile.lockupSrcs.every(src => src.startsWith('/images/ai-character/poses/robot-') && src.endsWith('.webp')), 'Every H2 lockup uses a semantic solo robot WebP');
     assert.ok(mobile.lockupRoles.every(role => role === 'headline-pose'), 'H2 graphics are explicitly classified as headline poses');
     assert.equal(mobile.oldPseudoDisplay, 'none', 'Legacy sprite backgrounds remain disabled');
 
@@ -115,24 +111,43 @@ const { startStaticServer } = require('./static-server.cjs');
     assert.ok(desktop.h1Width / desktop.copyWidth > 0.75, 'Desktop H1 uses the wider text column');
     assert.ok(desktop.h1FontSize < 82, 'Desktop H1 stays controlled rather than oversized');
     assert.ok(desktop.leadWidth / desktop.copyWidth > 0.85, 'Desktop intro paragraph uses the text column');
-    assert.equal(desktop.imageSrc, '/images/ai-relationship/oob-ai-hero.png');
+    assert.equal(desktop.imageSrc, '/images/ai-relationship/ai-workflow-map.webp');
     assert.equal(desktop.freeToolNoteCount, 1, 'Free-tool promise is moved beneath the tool cards');
     assert.equal(desktop.oldSideNoteCount, 0, 'Free-tool promise no longer competes with the section heading');
 
-    await page.goto(`${server.origin}/practical-ai/`, { waitUntil: 'networkidle' });
-    const practicalAiHero = await page.evaluate(() => ({
-      genericPoseArt: document.querySelectorAll('.content-hero__art').length,
-      hasLegacyLayoutClass: document.querySelector('.content-hero__inner')?.classList.contains('has-ai-art'),
-      overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
-    }));
-    assert.equal(practicalAiHero.genericPoseArt, 0, 'Generic solo robot poses are not used as page-hero art');
-    assert.equal(practicalAiHero.hasLegacyLayoutClass, false, 'Legacy three-column hero layout is removed');
-    assert.equal(practicalAiHero.overflow, false);
+    const heroPages = {
+      '/start-here/': '/images/ai-relationship/choose-the-right-path.webp',
+      '/free-tools/': '/images/ai-relationship/practical-ai-toolkit.webp',
+      '/assessments/': '/images/ai-relationship/human-reviewed-ai-workflow-steps.webp',
+      '/practical-ai/': '/images/ai-relationship/ai-workflow-map.webp',
+      '/tools/ai-fit-check/': '/images/ai-relationship/choose-the-right-path.webp',
+      '/tools/human-review-checklist/': '/images/ai-relationship/human-reviewed-ai-workflow-steps.webp',
+      '/tools/ai-pilot-starter/': '/images/ai-relationship/responsible-ai-working-plan.webp',
+      '/assessments/ai-workday-review/': '/images/ai-relationship/ai-workflow-map.webp',
+      '/assessments/idea-to-test-review/': '/images/ai-relationship/human-reviewed-ai-workflow-steps.webp',
+      '/services/': '/images/ai-relationship/choose-the-right-path.webp',
+      '/services/responsible-ai-implementation/': '/images/ai-relationship/responsible-ai-working-plan.webp',
+      '/services/local-ai-systems/': '/images/ai-relationship/local-small-business-ai-workflow.webp',
+      '/services/ai-receptionist-small-business/': '/images/ai-relationship/ai-receptionist-human-handoff.webp',
+    };
+    for (const [route, expectedSrc] of Object.entries(heroPages)) {
+      await page.goto(`${server.origin}${route}`, { waitUntil: 'networkidle' });
+      const heroState = await page.evaluate(() => ({
+        sceneSrc: document.querySelector('.content-hero__scene')?.getAttribute('src'),
+        genericPoseArt: document.querySelectorAll('.content-hero__art').length,
+        hasLegacyLayoutClass: document.querySelector('.content-hero__inner')?.classList.contains('has-ai-art'),
+        overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+      }));
+      assert.equal(heroState.sceneSrc, expectedSrc, `${route} uses the mapped detailed WebP scene`);
+      assert.equal(heroState.genericPoseArt, 0, `${route} does not use generic solo robot hero art`);
+      assert.equal(heroState.hasLegacyLayoutClass, false, `${route} has no legacy three-column hero class`);
+      assert.equal(heroState.overflow, false, `${route} has no horizontal overflow`);
+    }
 
     assert.deepEqual(consoleErrors, []);
     assert.deepEqual(failedRequests, []);
     await context.close();
-    console.log('Visual hierarchy passed: scene PNG hero, experience choice cards, solo robot H2 lockups, no sprite hero art.');
+    console.log('Visual hierarchy passed: scene WebP hero, experience choice cards, solo robot H2 lockups, no sprite hero art.');
   } finally {
     await browser.close();
     await server.close();
