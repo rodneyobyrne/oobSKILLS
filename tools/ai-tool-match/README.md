@@ -1,0 +1,1 @@
+This tool starts with the workflow and recommends an AI tool category plus evaluation criteria. It deliberately avoids a static vendor ranking that will become stale.

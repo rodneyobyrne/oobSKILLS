@@ -1,0 +1,1 @@
+This tool reviews website messaging for service businesses by checking what the site says, who it is for, why it matters, proof, and next-step clarity.

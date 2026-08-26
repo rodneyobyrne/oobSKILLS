@@ -1,0 +1,1 @@
+This tool identifies founder-dependent approvals, judgment, context and repeatable standards that can be transferred into team resources and clearer decision paths.
