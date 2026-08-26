@@ -1,1 +1,0 @@
-Deprecated placeholder path created during implementation. Use /tools/website-message-clarity-review/ for the active tool.
