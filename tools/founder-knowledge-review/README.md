@@ -1,0 +1,1 @@
+Deprecated placeholder path created during implementation. Use /tools/founder-bottleneck-review/ for the active tool.
