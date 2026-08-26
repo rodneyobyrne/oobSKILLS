@@ -1,1 +1,0 @@
-Replace starter index with interactive review and link from hub pages.
