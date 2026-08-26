@@ -21,67 +21,18 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
-      - name: Generate optimized semantic WebP assets
-        if: github.event_name == 'pull_request'
+      - name: Apply semantic image system
+        if: github.event_name == 'pull_request' && hashFiles('scripts/apply-image-audit.py') != ''
         run: |
           set -euo pipefail
-          if [ -f images/ai-relationship/ai-workflow-map.webp ]; then
-            echo "Optimized image set already exists; skipping generator."
-            exit 0
-          fi
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq webp imagemagick
-          mkdir -p images/ai-relationship images/ai-character/poses images/ai-character/illustrations images/experiences /tmp/oob-images
-
-          cwebp -quiet -q 84 images/ai-relationship/connect-trust.png -o images/ai-relationship/ai-receptionist-human-handoff.webp
-          cwebp -quiet -q 84 images/ai-relationship/sign-post.png -o images/ai-relationship/choose-the-right-path.webp
-          cwebp -quiet -q 84 images/ai-relationship/small-business.png -o images/ai-relationship/local-small-business-ai-workflow.webp
-          cwebp -quiet -q 84 images/ai-relationship/success-steps.png -o images/ai-relationship/human-reviewed-ai-workflow-steps.webp
-          cwebp -quiet -q 84 images/ai-relationship/tool-chest.png -o images/ai-relationship/practical-ai-toolkit.webp
-          cwebp -quiet -q 84 images/ai-relationship/work-map.png -o images/ai-relationship/ai-workflow-map.webp
-          cwebp -quiet -q 84 images/ai-relationship/working-plan.png -o images/ai-relationship/responsible-ai-working-plan.webp
-
-          cwebp -quiet -q 88 images/ai-character/poses/AI-BOT-POSE-01.png -o images/ai-character/poses/robot-neutral.webp
-          cwebp -quiet -q 88 images/ai-character/poses/AI-BOT-POSE-02.png -o images/ai-character/poses/robot-thumbs-up.webp
-          cwebp -quiet -q 88 images/ai-character/poses/AI-BOT-POSE-03.png -o images/ai-character/poses/robot-arms-crossed.webp
-          cwebp -quiet -q 88 images/ai-character/poses/AI-BOT-POSE-06.png -o images/ai-character/poses/robot-confident.webp
-          cwebp -quiet -q 88 images/ai-character/poses/AI-BOT-POSE-07.png -o images/ai-character/poses/robot-walking.webp
-          cwebp -quiet -q 88 images/ai-character/poses/AI-BOT-POSE-08.png -o images/ai-character/poses/robot-sitting.webp
-          cwebp -quiet -q 88 images/ai-character/poses/AI-BOT-POSE-10.png -o images/ai-character/poses/robot-running.webp
-          cwebp -quiet -q 88 images/ai-character/poses/pointing2.png -o images/ai-character/poses/robot-pointing.webp
-          cwebp -quiet -q 88 images/ai-character/poses/thinking.png -o images/ai-character/poses/robot-thinking.webp
-          cwebp -quiet -q 88 images/ai-character/poses/waving.png -o images/ai-character/poses/robot-waving.webp
-
-          for spec in \
-            "ChatGPT Image Aug 25, 2026, 02_49_02 PM (2).png|robot-explaining.webp" \
-            "ChatGPT Image Aug 25, 2026, 02_49_02 PM (3).png|robot-question.webp" \
-            "ChatGPT Image Aug 25, 2026, 02_49_02 PM (4).png|robot-reviewing-checklist.webp" \
-            "ChatGPT Image Aug 25, 2026, 02_49_02 PM (5).png|robot-weighing-options.webp" \
-            "ChatGPT Image Aug 25, 2026, 02_49_02 PM (6).png|robot-unboxing.webp" \
-            "ChatGPT Image Aug 25, 2026, 02_49_02 PM (8).png|robot-call-workflow.webp"; do
-            src="${spec%%|*}"; dest="${spec##*|}"
-            convert "images/ai-character/section-lockups/$src" -resize '720x720>' "/tmp/oob-images/$dest.png"
-            cwebp -quiet -q 86 "/tmp/oob-images/$dest.png" -o "images/ai-character/illustrations/$dest"
-          done
-
-          make_experience() {
-            src="$1"; dest="$2"
-            convert "$src" -fuzz 8% -trim +repage -bordercolor white -border 40 -resize '472x472>' -gravity center -background white -extent 512x512 /tmp/oob-images/experience.png
-            cwebp -quiet -q 84 /tmp/oob-images/experience.png -o "$dest"
-          }
-          make_experience images/ai-relationship/connect-trust.png images/experiences/missed-calls.webp
-          make_experience images/ai-relationship/work-map.png images/experiences/repeated-admin.webp
-          make_experience images/ai-relationship/working-plan.png images/experiences/team-ai-boundaries.webp
-          make_experience images/ai-relationship/sign-post.png images/experiences/website-message-clarity.webp
-          make_experience images/ai-relationship/success-steps.png images/experiences/idea-to-test.webp
-
-          git config user.name "oobCREATIVE image optimizer"
+          python3 scripts/apply-image-audit.py
+          git config user.name "oobCREATIVE site updater"
           git config user.email "actions@users.noreply.github.com"
-          git add images/ai-relationship/*.webp images/ai-character/poses/*.webp images/ai-character/illustrations/*.webp images/experiences/*.webp
+          git add -A
           if git diff --cached --quiet; then
-            echo "No generated image changes to commit."
+            echo "No site changes to commit."
           else
-            git commit -m "Optimize and rename image assets as WebP"
+            git commit -m "Apply semantic WebP image system sitewide"
             git push origin HEAD:${{ github.event.pull_request.head.ref }}
           fi
       - name: Setup Node
@@ -97,8 +48,8 @@ jobs:
         run: npm run test:browser
       - name: Verify homepage release assets
         run: |
-          file _site/images/ai-relationship/oob-ai-hero.png | grep -F "PNG image data"
-          grep -F 'src="/images/ai-relationship/oob-ai-hero.png"' _site/index.html
+          file _site/images/ai-relationship/ai-workflow-map.webp | grep -F "Web/P image"
+          grep -F 'src="/images/ai-relationship/ai-workflow-map.webp"' _site/index.html
           grep -F "/home-ai-cards-v3.css?v=${GITHUB_SHA}" _site/index.html
           ! grep -F 'oob-ai-hero-animated.svg' _site/index.html
       - name: Upload tested Pages artifact
