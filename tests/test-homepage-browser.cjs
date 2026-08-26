@@ -62,7 +62,7 @@ const { startStaticServer } = require('./static-server.cjs');
     assert.equal(mobile.heroImageSrc, '/images/ai-relationship/ai-workflow-map.webp', 'Homepage hero stays a direct detailed-scene PNG');
     assert.equal(mobile.heroImageNaturalWidth, 1122);
     assert.equal(mobile.heroImageNaturalHeight, 1402);
-    assert.equal(mobile.heading, 'Which problem feels most familiar right now?');
+    assert.equal(mobile.heading, 'Which AI, workflow, customer-contact or website problem is costing you most?');
     assert.equal(mobile.outlineCount, 5, 'Every choice card gets a complete outline');
     assert.equal(mobile.cardArtCount, 5, 'Every choice card gets an experience image');
     assert.deepEqual(mobile.cardArtSrcs, [
