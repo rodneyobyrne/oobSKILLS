@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   validate:
@@ -19,23 +19,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
-      - name: Apply semantic image system
-        if: github.event_name == 'pull_request' && hashFiles('scripts/apply-image-audit.py') != ''
-        run: |
-          set -euo pipefail
-          python3 scripts/apply-image-audit.py
-          git restore .github/workflows/static.yml scripts/apply-image-audit.py
-          git config user.name "oobCREATIVE site updater"
-          git config user.email "actions@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "No site changes to commit."
-          else
-            git commit -m "Apply semantic WebP image system sitewide"
-            git push origin HEAD:${{ github.event.pull_request.head.ref }}
-          fi
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
