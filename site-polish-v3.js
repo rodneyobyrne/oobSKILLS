@@ -2,32 +2,18 @@
   const path = window.location.pathname;
 
   if (path === '/' || path === '/index.html') {
-    const heading = document.querySelector('#review-question');
-    if (heading) heading.textContent = 'Which problem feels most familiar right now?';
-
     const reviewGroup = document.querySelector('.review-options');
-    if (reviewGroup) reviewGroup.setAttribute('aria-label', 'Choose the problem that feels most familiar right now');
+    if (reviewGroup) reviewGroup.setAttribute('aria-label', 'Choose the AI, workflow, customer-contact or website problem that best matches your current need');
 
     const headingWrap = document.querySelector('.review-panel__heading');
     if (headingWrap && !headingWrap.querySelector('.review-panel__prompt')) {
       const prompt = document.createElement('p');
       prompt.className = 'review-panel__prompt';
-      prompt.textContent = 'Choose the one that sounds most like what is getting in your way. We’ll show you a useful first move.';
+      prompt.textContent = 'Choose the business problem closest to your current need. Each option connects to a practical diagnostic and a defined implementation path.';
       headingWrap.append(prompt);
     }
 
-    const labels = {
-      opportunity: 'Find what’s useful.',
-      friction: 'Make work easier.',
-      team: 'Set better boundaries.',
-      build: 'Build what felt out of reach.',
-      control: 'Keep more control.'
-    };
-
     document.querySelectorAll('.review-option').forEach((option) => {
-      const textSpan = option.querySelector('span:last-of-type');
-      if (textSpan && labels[option.dataset.review]) textSpan.textContent = labels[option.dataset.review];
-
       if (!option.querySelector('.review-option__outline')) {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('class', 'review-option__outline');
