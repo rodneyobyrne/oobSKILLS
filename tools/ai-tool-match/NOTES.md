@@ -1,0 +1,1 @@
+Selection criteria validated against current 2026 guidance: start with the job/workflow, then compare workflow fit, output quality, privacy/trust, cost control, integrations and switching effort.
