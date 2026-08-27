@@ -16,7 +16,9 @@ const { startStaticServer } = require('./static-server.cjs');
     await page.goto(`${server.origin}/assessments/customer-flow-review/`, { waitUntil: 'networkidle' });
     assert.equal(await page.locator('h1').textContent(), 'Is your business outgrowing its systems?');
     assert.equal(await page.locator('#progress-label').textContent(), 'Step 1 of 5');
-    assert.match(await page.locator('main').textContent(), /No software pitch/);
+    assert.match(await page.locator('main').textContent(), /How do you know when your business has outgrown the way it works/);
+    assert.match(await page.locator('main').textContent(), /Private by design/);
+    assert.match(await page.locator('main').textContent(), /No lead-capture gate/);
 
     await page.fill('#business-name', 'High Country Service');
     for (const channel of ['phone', 'email', 'website', 'text', 'google']) {
@@ -35,16 +37,14 @@ const { startStaticServer } = require('./static-server.cjs');
     await page.click('#next-step');
     assert.equal(await page.locator('#progress-label').textContent(), 'Step 3 of 5');
 
-    for (const id of ['task-copy', 'task-reenter', 'task-check', 'task-remind', 'task-tell', 'task-voicemail', 'task-messages', 'task-contacted', 'task-lookup', 'task-reschedule']) {
+    for (const id of ['task-copy', 'task-reenter', 'task-check', 'task-remind', 'task-tell', 'task-handled']) {
       await page.selectOption(`#${id}`, 'weekly');
     }
     await page.selectOption('#admin-time', 'four8');
     await page.click('#next-step');
     assert.equal(await page.locator('#progress-label').textContent(), 'Step 4 of 5');
 
-    for (const tool of ['phone', 'accounting', 'docs', 'website', 'spreadsheets']) {
-      await page.check(`input[name="toolCategories"][value="${tool}"]`);
-    }
+    // Tool categories are deliberately optional in v2.1.
     await page.fill('#product-names', 'Google Workspace, QuickBooks, Google Sheets');
     await page.selectOption('#tool-feeling', 'added');
     for (const change of ['customers', 'employees', 'inquiries']) {
@@ -62,19 +62,25 @@ const { startStaticServer } = require('./static-server.cjs');
     assert.equal(await page.locator('input[name="improvementPriorities"][value="systems"]').isChecked(), false);
 
     await page.selectOption('#year-concern', 'time');
-    await page.selectOption('#change-timing', 'one3');
+    await page.selectOption('#change-timing', 'slower');
+    assert.equal(await page.locator('#slow-period-wrap').isVisible(), true);
     await page.selectOption('#slow-period', 'winter');
     await page.check('#review-boundary');
     await page.click('#create-result');
 
     await page.locator('#review-result').waitFor({ state: 'visible' });
     assert.match(await page.locator('.result-verdict h3').textContent(), /Successful but Stretched/);
+    assert.match(await page.locator('#result-content').textContent(), /What appears to be working/);
     assert.match(await page.locator('#result-content').textContent(), /Did someone already talk to them/);
     assert.match(await page.locator('#result-content').textContent(), /4–8 hours/);
-    assert.match(await page.locator('#result-content').textContent(), /We don't have a favorite system/);
-    assert.match(await page.locator('#result-content').textContent(), /You shouldn't have to become an AI expert/);
-    assert.match(await page.locator('#result-content').textContent(), /Review My Customer Flow/);
+    assert.match(await page.locator('#result-content').textContent(), /Useful tools to consider/);
+    assert.match(await page.locator('#result-content').textContent(), /Before you buy anything/);
+    assert.match(await page.locator('#result-content').textContent(), /Share My Results for Review/);
+    assert.match(await page.locator('#result-content').textContent(), /directional signals based on your answers/);
     assert.equal(await page.locator('.health-card').count(), 5);
+    assert.equal(await page.locator('.health-meter').count(), 0, 'Do not render percentage-style meters');
+    assert.equal(await page.locator('.tool-card').count() >= 2, true);
+    assert.match(await page.locator('#share-result-link').getAttribute('href'), /^mailto:hello@oobcreative\.com/);
 
     const downloadPromise = page.waitForEvent('download');
     await page.click('#download-result');
@@ -102,7 +108,7 @@ const { startStaticServer } = require('./static-server.cjs');
 
     assert.deepEqual(consoleErrors, []);
     assert.deepEqual(failedRequests, []);
-    console.log('Customer Flow self-recognition browser journey: 25+ assertions passed at four viewport widths.');
+    console.log('Customer Flow v2.1 browser journey: answer-first, privacy, results and responsive assertions passed.');
     await context.close();
   } finally {
     await browser.close();
