@@ -1,0 +1,41 @@
+.review-progress .progress-track span { width: 20%; }
+.review-progress ol { margin-bottom: 1rem; }
+
+.frequency-table { display: grid; gap: .5rem; }
+.frequency-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(150px, .3fr); gap: 1rem; align-items: center; padding: .8rem 0; border-bottom: 1px solid var(--line); }
+.frequency-row label { margin: 0; font-weight: 650; }
+.frequency-row select { width: 100%; min-height: 46px; padding: .7rem .8rem; border: 1px solid var(--ink); border-radius: 0; background: var(--paper); color: var(--ink); }
+.frequency-row select:focus-visible { outline: 3px solid var(--ballpoint); outline-offset: 2px; }
+
+.health-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-block: 1rem 2rem; }
+.health-card { padding: 1.25rem; border: 1px solid var(--ink); background: var(--paper); }
+.health-card:last-child { grid-column: 1 / -1; }
+.health-card__heading { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
+.health-card__heading h3 { margin: 0; }
+.health-card__heading strong { color: var(--ballpoint); font-size: .85rem; }
+.health-card p { margin: .75rem 0 0; color: var(--soft); font-size: .9rem; }
+.health-meter { height: 9px; margin-top: .9rem; overflow: hidden; border: 1px solid var(--ink); background: var(--paper-soft); }
+.health-meter span { display: block; height: 100%; background: var(--ballpoint); }
+
+.recognition-block { border-left: 6px solid var(--ballpoint); }
+.recognition-block ul { margin-bottom: 0; }
+.neutrality-block, .technology-block { margin-block: 2rem; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--ink); background: var(--paper-soft); }
+.neutrality-block h3, .technology-block h3 { margin-top: 0; }
+.technology-block { border-style: dashed; background: var(--paper); }
+.review-privacy-note { color: var(--soft); font-size: .85rem; }
+
+@media (max-width: 820px) {
+  .review-progress ol { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+@media (max-width: 700px) {
+  .frequency-row { grid-template-columns: 1fr; gap: .45rem; }
+  .health-grid { grid-template-columns: 1fr; }
+  .health-card:last-child { grid-column: auto; }
+  .review-progress ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media print {
+  .health-meter { border: 1px solid #111; }
+  .neutrality-block, .technology-block { break-inside: avoid; }
+}
