@@ -1,14 +1,11 @@
 /* oobCREATIVE reusable drawn component primitives
-   The hand-drawn feeling comes from line overshoot and slight asymmetry,
-   not rounded or melted corners. Corners remain 90 degrees.
+   IMPORTANT: this treatment is for OUTER content/specimen boxes, not buttons.
 
-   Production intent:
+   Box rule:
+   - corners remain 90 degrees
+   - each edge uses the same irregular ink language as .rough-rule
+   - strokes overlap/carry slightly past the nominal corner
    - live browser text stays separate from illustration
-   - horizontal and vertical ink strokes cross slightly past each corner
-   - black ink is structural
-   - ballpoint blue is interaction / active state
-   - vermilion is restrained human emphasis
-   - warm yellow is strong action / callback
 */
 
 :root {
@@ -20,19 +17,16 @@
 }
 
 /*
-  Square hand-drawn box.
-  Two pseudo-elements draw four independent strokes. Each stroke extends
-  beyond the nominal corner so the intersection reads like pen lines that
-  were intentionally carried slightly past one another.
+  The frame uses four textured ink strips modeled on the site's .rough-rule
+  contour. The frame extends outside the content box; the edge strips are
+  inset slightly inside that frame so each line continues past the corner
+  intersection like a hand-drawn pen stroke.
 */
 .oob-drawn-box,
 .oob-content-box {
   --oob-box-edge: var(--oob-component-ink);
-  --oob-box-stroke: 2px;
-  --oob-box-over-left: 7px;
-  --oob-box-over-right: 9px;
-  --oob-box-over-top: 8px;
-  --oob-box-over-bottom: 7px;
+  --oob-box-over: 9px;
+  --oob-box-corner-cross: 4px;
   position: relative;
   border: 0 !important;
   border-radius: 0 !important;
@@ -44,49 +38,33 @@
   content: "";
   position: absolute;
   z-index: 4;
-  left: calc(-1 * var(--oob-box-over-left));
-  right: calc(-1 * var(--oob-box-over-right));
-  top: 0;
-  bottom: 0;
-  background:
-    linear-gradient(var(--oob-box-edge), var(--oob-box-edge)) left top / 100% var(--oob-box-stroke) no-repeat,
-    linear-gradient(var(--oob-box-edge), var(--oob-box-edge)) left bottom / 100% var(--oob-box-stroke) no-repeat;
+  inset: calc(-1 * var(--oob-box-over));
   pointer-events: none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 12' preserveAspectRatio='none'%3E%3Cpolygon fill='%23111111' points='0,5.8 4,3.7 9,5.2 15,2.3 21,6.2 27,4.3 34,7 41,3 48,5.5 55,3.4 63,6.6 70,4.1 77,5.9 84,2.8 91,5.3 96,3.6 100,5.6 100,7.8 95,9.4 89,7.1 82,9.7 75,7.4 68,9.1 61,7 54,9.6 47,7.3 39,8.9 31,6.6 24,9.5 17,7.6 10,9 5,7 0,8.4'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 12' preserveAspectRatio='none'%3E%3Cpolygon fill='%23111111' points='0,4.6 5,6.1 11,2.9 18,5.4 25,3.5 32,6.5 40,4.1 47,2.4 54,5.8 62,3.7 69,6.8 76,3.2 83,6 90,4.3 96,6.6 100,4.9 100,8.6 94,7.3 88,9.6 81,7.1 74,8.9 66,6.8 59,9.5 51,7.6 44,9.2 36,6.7 29,8.5 22,7.2 15,9.8 8,7.7 3,9.1 0,7.9'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 100' preserveAspectRatio='none'%3E%3Cpolygon fill='%23111111' points='5.8,0 3.7,4 5.2,9 2.3,15 6.2,21 4.3,27 7,34 3,41 5.5,48 3.4,55 6.6,63 4.1,70 5.9,77 2.8,84 5.3,91 3.6,96 5.6,100 7.8,100 9.4,95 7.1,89 9.7,82 7.4,75 9.1,68 7,61 9.6,54 7.3,47 8.9,39 6.6,31 9.5,24 7.6,17 9,10 7,5 8.4,0'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 100' preserveAspectRatio='none'%3E%3Cpolygon fill='%23111111' points='4.6,0 6.1,5 2.9,11 5.4,18 3.5,25 6.5,32 4.1,40 2.4,47 5.8,54 3.7,62 6.8,69 3.2,76 6,83 4.3,90 6.6,96 4.9,100 8.6,100 7.3,94 9.6,88 7.1,81 8.9,74 6.8,66 9.5,59 7.6,51 9.2,44 6.7,36 8.5,29 7.2,22 9.8,15 7.7,8 9.1,3 7.9,0'/%3E%3C/svg%3E");
+  background-position:
+    left var(--oob-box-corner-cross) top var(--oob-box-corner-cross),
+    left var(--oob-box-corner-cross) bottom var(--oob-box-corner-cross),
+    left var(--oob-box-corner-cross) top var(--oob-box-corner-cross),
+    right var(--oob-box-corner-cross) top var(--oob-box-corner-cross);
+  background-size:
+    calc(100% - (2 * var(--oob-box-corner-cross))) 12px,
+    calc(100% - (2 * var(--oob-box-corner-cross))) 12px,
+    12px calc(100% - (2 * var(--oob-box-corner-cross))),
+    12px calc(100% - (2 * var(--oob-box-corner-cross)));
+  background-repeat: no-repeat;
 }
 
+/* No second decorative outline: one hand-drawn frame is enough. */
 .oob-drawn-box::after,
 .oob-content-box::after {
-  content: "";
-  position: absolute;
-  z-index: 4;
-  top: calc(-1 * var(--oob-box-over-top));
-  bottom: calc(-1 * var(--oob-box-over-bottom));
-  left: 0;
-  right: 0;
-  background:
-    linear-gradient(var(--oob-box-edge), var(--oob-box-edge)) left top / var(--oob-box-stroke) 100% no-repeat,
-    linear-gradient(var(--oob-box-edge), var(--oob-box-edge)) right top / var(--oob-box-stroke) 100% no-repeat;
-  pointer-events: none;
+  content: none;
 }
 
-/* Slightly different line lengths keep a repeated row from reading as a CAD grid. */
-.oob-drawn-box:nth-child(3n + 2),
-.oob-content-box:nth-child(3n + 2) {
-  --oob-box-over-left: 9px;
-  --oob-box-over-right: 6px;
-  --oob-box-over-top: 6px;
-  --oob-box-over-bottom: 9px;
-}
-
-.oob-drawn-box:nth-child(3n),
-.oob-content-box:nth-child(3n) {
-  --oob-box-over-left: 6px;
-  --oob-box-over-right: 10px;
-  --oob-box-over-top: 9px;
-  --oob-box-over-bottom: 6px;
-}
-
-/* Useful state hooks for future site-wide card adoption. */
+/* Future state hooks for whole-card interactions only. */
 .oob-content-box--interactive {
   color: inherit;
   text-decoration: none;
@@ -109,23 +87,11 @@
 }
 
 .oob-content-box--action {
-  --oob-box-edge: var(--oob-component-ink);
   background:
     repeating-linear-gradient(-10deg, rgba(255,255,255,.3) 0 1px, transparent 1px 6px),
     var(--oob-component-action);
 }
 
-/* A whole card may be clickable, but ordinary editorial boxes should not fake interactivity. */
-.oob-content-box--interactive:hover {
-  background:
-    repeating-linear-gradient(-11deg, rgba(255,255,255,.18) 0 1px, transparent 1px 5px),
-    repeating-linear-gradient(8deg, rgba(0,0,0,.06) 0 1px, transparent 1px 7px),
-    var(--oob-component-blue);
-  color: #fff;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .oob-content-box--interactive {
-    transition: none !important;
-  }
+  .oob-content-box--interactive { transition: none; }
 }
