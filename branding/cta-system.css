@@ -1,11 +1,14 @@
 @import url('/branding/components.css');
 
 /* oobCREATIVE reusable CTA system
-   Live browser type + square hand-drawn outlines + ballpoint scribble interaction.
+   Live browser type + hand-drawn outlines + ballpoint scribble interaction.
    Color roles:
    - ballpoint blue: interaction / selection / hover
    - vermilion: human emphasis / secondary signal
    - warm yellow: callback / strong action
+
+   NOTE: square crossing-corner treatment belongs to OUTER boxes only.
+   CTA buttons retain the previously approved softer hand-drawn button shape.
 */
 
 :root {
@@ -17,7 +20,6 @@
 }
 
 .oob-cta {
-  --oob-cta-edge: var(--oob-ink);
   position: relative;
   isolation: isolate;
   display: inline-flex;
@@ -26,9 +28,9 @@
   justify-content: center;
   gap: .75rem;
   padding: .85rem 1.2rem;
-  overflow: visible;
-  border: 0;
-  border-radius: 0;
+  overflow: hidden;
+  border: 2px solid var(--oob-ink);
+  border-radius: 8px 5px 10px 6px / 6px 10px 5px 9px;
   background: var(--oob-paper);
   color: var(--oob-ink);
   font: inherit;
@@ -39,7 +41,7 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  transition: color .16s ease, transform .16s ease;
+  transition: color .16s ease, border-color .16s ease, transform .16s ease;
 }
 
 .oob-cta > * {
@@ -51,35 +53,33 @@
   content: "";
   position: absolute;
   z-index: 0;
-  inset: -12% -2%;
+  inset: -18% -5%;
   background-color: var(--oob-blue);
   background-image:
     repeating-linear-gradient(-11deg, rgba(255,255,255,.18) 0 1px, transparent 1px 5px),
     repeating-linear-gradient(8deg, rgba(0,0,0,.08) 0 1px, transparent 1px 7px);
   clip-path: inset(0 100% 0 0);
-  transform: scale(1.01);
+  transform: rotate(-.35deg) scale(1.03);
   transform-origin: left center;
   transition: clip-path .26s cubic-bezier(.2,.78,.22,1);
 }
 
-/* Four square pen strokes. They extend beyond each nominal corner. */
 .oob-cta::after {
   content: "";
   position: absolute;
   z-index: 3;
-  inset: -6px -8px -7px -7px;
-  background:
-    linear-gradient(var(--oob-cta-edge), var(--oob-cta-edge)) left 6px / 100% 2px no-repeat,
-    linear-gradient(var(--oob-cta-edge), var(--oob-cta-edge)) left calc(100% - 7px) / 100% 2px no-repeat,
-    linear-gradient(var(--oob-cta-edge), var(--oob-cta-edge)) 7px top / 2px 100% no-repeat,
-    linear-gradient(var(--oob-cta-edge), var(--oob-cta-edge)) calc(100% - 8px) top / 2px 100% no-repeat;
+  inset: -3px -4px -4px -3px;
+  border: 1px solid currentColor;
+  border-radius: 6px 10px 5px 9px / 10px 5px 9px 6px;
+  opacity: .42;
   pointer-events: none;
+  transform: rotate(.22deg);
 }
 
 .oob-cta:hover,
 .oob-cta:focus-visible,
 .oob-cta.is-active {
-  --oob-cta-edge: var(--oob-blue);
+  border-color: var(--oob-blue);
   color: #fff;
 }
 
@@ -90,12 +90,12 @@
 }
 
 .oob-cta:hover {
-  transform: translateY(-1px);
+  transform: translateY(-1px) rotate(-.08deg);
 }
 
 .oob-cta:focus-visible {
   outline: 3px solid var(--oob-blue);
-  outline-offset: 8px;
+  outline-offset: 4px;
 }
 
 .oob-cta--wide {
@@ -103,7 +103,7 @@
 }
 
 .oob-cta--signal {
-  --oob-cta-edge: var(--oob-vermilion);
+  border-color: var(--oob-vermilion);
 }
 
 .oob-cta--signal::before {
@@ -113,11 +113,11 @@
 .oob-cta--signal:hover,
 .oob-cta--signal:focus-visible,
 .oob-cta--signal.is-active {
-  --oob-cta-edge: var(--oob-vermilion);
+  border-color: var(--oob-vermilion);
 }
 
 .oob-cta--callback {
-  --oob-cta-edge: var(--oob-ink);
+  border-color: var(--oob-ink);
   color: var(--oob-ink);
 }
 
@@ -132,13 +132,13 @@
 .oob-cta--callback:hover,
 .oob-cta--callback:focus-visible,
 .oob-cta--callback.is-active {
-  --oob-cta-edge: var(--oob-ink);
+  border-color: var(--oob-ink);
   color: var(--oob-ink);
 }
 
 .oob-cta--callback:hover::before,
 .oob-cta--callback:focus-visible::before {
-  transform: scale(1.045);
+  transform: rotate(.3deg) scale(1.07);
 }
 
 .oob-cta__arrow {
@@ -218,45 +218,27 @@
 .oob-assessment-lockup__copy span { margin-top: .2rem; color: var(--soft, #444); font-size: .9rem; }
 .oob-assessment-lockup__arrow { color: var(--oob-blue); font-size: 1.5rem; }
 .oob-assessment-lockup:hover,
-.oob-assessment-lockup:focus-visible { --oob-box-edge: var(--oob-blue); color: var(--oob-blue); }
-.oob-assessment-lockup:focus-visible { outline: 3px solid var(--oob-blue); outline-offset: 8px; }
+.oob-assessment-lockup:focus-visible { color: var(--oob-blue); }
+.oob-assessment-lockup:focus-visible { outline: 3px solid var(--oob-blue); outline-offset: 5px; }
 
 .oob-pace-stage {
-  --oob-stage-edge: var(--oob-ink);
   position: relative;
   display: grid;
   grid-template-columns: repeat(3,minmax(0,1fr));
-  border: 0;
-  border-radius: 0;
+  border: 2px solid var(--oob-ink);
+  border-radius: 12px 8px 10px 7px / 7px 12px 8px 11px;
   background: var(--oob-paper);
-}
-
-.oob-pace-stage::before {
-  content: "";
-  position: absolute;
-  z-index: 3;
-  left: -8px;
-  right: -10px;
-  top: 0;
-  bottom: 0;
-  background:
-    linear-gradient(var(--oob-stage-edge), var(--oob-stage-edge)) left top / 100% 2px no-repeat,
-    linear-gradient(var(--oob-stage-edge), var(--oob-stage-edge)) left bottom / 100% 2px no-repeat;
-  pointer-events: none;
 }
 
 .oob-pace-stage::after {
   content: "";
   position: absolute;
-  z-index: 3;
-  top: -9px;
-  bottom: -7px;
-  left: 0;
-  right: 0;
-  background:
-    linear-gradient(var(--oob-stage-edge), var(--oob-stage-edge)) left top / 2px 100% no-repeat,
-    linear-gradient(var(--oob-stage-edge), var(--oob-stage-edge)) right top / 2px 100% no-repeat;
+  inset: -4px -3px -3px -4px;
+  border: 1px solid var(--oob-ink);
+  border-radius: 9px 12px 7px 11px / 12px 7px 11px 8px;
+  opacity: .35;
   pointer-events: none;
+  transform: rotate(-.1deg);
 }
 
 .oob-pace-step {
@@ -291,12 +273,13 @@
   height: 3px;
   background: currentColor;
   opacity: .9;
+  transform: rotate(-.35deg);
 }
 .oob-pace-step--crawl { color: var(--oob-blue); }
 .oob-pace-step--walk { color: var(--oob-vermilion); }
 .oob-pace-step--run { color: #b88900; }
 .oob-pace-step:focus-visible { outline: 3px solid var(--oob-blue); outline-offset: -6px; }
-.oob-pace-step:hover img { transform: translateY(-2px); }
+.oob-pace-step:hover img { transform: translateY(-2px) rotate(-1deg); }
 
 @media (max-width: 760px) {
   .oob-assessment-lockup { grid-template-columns: 1fr auto; }
