@@ -65,7 +65,7 @@
   }
 
   function stageFor(flowFriction, pressure) {
-    if (flowFriction >= 80 || (flowFriction >= 68 && pressure >= 78)) return 5;
+    if ((flowFriction >= 80 && pressure >= 60) || (flowFriction >= 68 && pressure >= 78)) return 5;
     if (flowFriction >= 60) return 4;
     if (flowFriction >= 40) return 3;
     if (flowFriction >= 20) return 2;
