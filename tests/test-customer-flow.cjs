@@ -29,7 +29,9 @@ assert.equal(evaluate({ relationshipModel: 'professional', existingSystem: 'shee
 assert.equal(evaluate({ relationshipModel: 'appointment', existingSystem: 'none' }).verdict, 'Keep the vertical platform at the center.');
 assert.equal(evaluate({ relationshipModel: 'transactional', existingSystem: 'none' }).verdict, 'Keep the customer transaction system at the center.');
 assert.equal(evaluate({ relationshipModel: 'mixed', existingSystem: 'scattered' }).verdict, 'Audit the customer flow before choosing another platform.');
-assert.equal(evaluate({ sensitiveData: 'yes', existingSystem: 'sheets' }).verdict, 'Keep the vertical platform at the center.');
+const sensitiveField = evaluate({ sensitiveData: 'yes', existingSystem: 'sheets' });
+assert.equal(sensitiveField.verdict, 'Move job-based operations toward one operational source of truth.');
+assert.ok(sensitiveField.warnings.some((item) => /sensitive or regulated records/.test(item)));
 
 assert.equal(evaluate({ accessReadiness: 'hard' }).readiness, 'access-first');
 assert.equal(evaluate({ recordQuality: 'weak' }).readiness, 'clean-first');
@@ -63,4 +65,4 @@ const verticalExisting = evaluate({
 assert.equal(verticalExisting.verdict, 'Keep the system. Fix the connections.');
 assert.equal(verticalExisting.primarySystem, 'Existing vertical platform');
 
-console.log('Customer Flow decision engine: 18 assertions passed.');
+console.log('Customer Flow decision engine: 19 assertions passed.');
