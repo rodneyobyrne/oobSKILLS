@@ -14,58 +14,77 @@ const { startStaticServer } = require('./static-server.cjs');
     page.on('requestfailed', (request) => failedRequests.push(`${request.url()} ${request.failure()?.errorText || ''}`));
 
     await page.goto(`${server.origin}/assessments/customer-flow-review/`, { waitUntil: 'networkidle' });
-    assert.equal(await page.locator('h1').textContent(), 'Find where your customer information should actually live.');
-    assert.equal(await page.locator('#progress-label').textContent(), 'Step 1 of 4');
-    assert.equal(await page.locator('input[required], textarea[required], select[required]').count() > 15, true);
+    assert.equal(await page.locator('h1').textContent(), 'Is your business outgrowing its systems?');
+    assert.equal(await page.locator('#progress-label').textContent(), 'Step 1 of 5');
+    assert.match(await page.locator('main').textContent(), /No software pitch/);
 
     await page.fill('#business-name', 'High Country Service');
-    await page.fill('#role', 'Owner');
-    await page.selectOption('#relationship-model', 'field');
-    await page.check('input[name="sensitiveData"][value="no"]');
-    await page.selectOption('#existing-system', 'sheets');
-    await page.selectOption('#record-quality', 'weak');
+    for (const channel of ['phone', 'email', 'website', 'text', 'google']) {
+      await page.check(`input[name="contactChannels"][value="${channel}"]`);
+    }
+    await page.selectOption('#response-confidence', 'depends');
+    await page.selectOption('#missed-call', 'depends');
     await page.click('#next-step');
-    assert.equal(await page.locator('#progress-label').textContent(), 'Step 2 of 4');
+    assert.equal(await page.locator('#progress-label').textContent(), 'Step 2 of 5');
 
-    await page.selectOption('#primary-channel', 'phone');
-    await page.selectOption('#first-capture', 'inbox');
-    await page.fill('#customer-step', 'The office manager returns the call, copies the customer into a spreadsheet, prepares an estimate, schedules a crew and later re-enters invoice details.');
-    await page.selectOption('#retyping', 'frequent');
-    await page.selectOption('#followup', 'missed');
-    await page.selectOption('#conversation-history', 'inbox');
+    for (const place of ['crm', 'email', 'texts', 'sheets']) {
+      await page.check(`input[name="infoPlaces"][value="${place}"]`);
+    }
+    await page.selectOption('#history-ease', 'couple');
+    await page.check('input[name="familiarPhrase"][value="talked"]');
     await page.click('#next-step');
-    assert.equal(await page.locator('#progress-label').textContent(), 'Step 3 of 4');
+    assert.equal(await page.locator('#progress-label').textContent(), 'Step 3 of 5');
 
-    await page.selectOption('#source-ownership', 'unclear');
-    await page.selectOption('#sheets-role', 'central');
-    await page.selectOption('#integration', 'manual');
-    await page.selectOption('#accounting-as-crm', 'yes');
-    await page.selectOption('#access-readiness', 'ready');
+    for (const id of ['task-copy', 'task-reenter', 'task-check', 'task-remind', 'task-tell', 'task-voicemail', 'task-messages', 'task-contacted', 'task-lookup', 'task-reschedule']) {
+      await page.selectOption(`#${id}`, 'weekly');
+    }
+    await page.selectOption('#admin-time', 'four8');
     await page.click('#next-step');
-    assert.equal(await page.locator('#progress-label').textContent(), 'Step 4 of 4');
+    assert.equal(await page.locator('#progress-label').textContent(), 'Step 4 of 5');
 
-    await page.selectOption('#pain-point', 'admin');
-    await page.selectOption('#change-timing', 'offseason');
-    await page.check('input[name="willingness"][value="yes"]');
-    await page.fill('#success-meaning', 'Anyone can see the customer, estimate, job status and next action without checking a spreadsheet, phone and accounting system.');
+    for (const tool of ['phone', 'accounting', 'docs', 'website', 'spreadsheets']) {
+      await page.check(`input[name="toolCategories"][value="${tool}"]`);
+    }
+    await page.fill('#product-names', 'Google Workspace, QuickBooks, Google Sheets');
+    await page.selectOption('#tool-feeling', 'added');
+    for (const change of ['customers', 'employees', 'inquiries']) {
+      await page.check(`input[name="growthChanges"][value="${change}"]`);
+    }
+    await page.selectOption('#pace-match', 'little');
+    await page.click('#next-step');
+    assert.equal(await page.locator('#progress-label').textContent(), 'Step 5 of 5');
+
+    for (const priority of ['missed', 'admin', 'existing']) {
+      await page.check(`input[name="improvementPriorities"][value="${priority}"]`);
+    }
+    assert.match(await page.locator('#priority-help').textContent(), /3 of 3 selected/);
+    await page.check('input[name="improvementPriorities"][value="systems"]');
+    assert.equal(await page.locator('input[name="improvementPriorities"][value="systems"]').isChecked(), false);
+
+    await page.selectOption('#year-concern', 'time');
+    await page.selectOption('#change-timing', 'one3');
+    await page.selectOption('#slow-period', 'winter');
     await page.check('#review-boundary');
     await page.click('#create-result');
 
     await page.locator('#review-result').waitFor({ state: 'visible' });
-    assert.match(await page.locator('.result-verdict h3').textContent(), /Move job-based operations/);
-    assert.match(await page.locator('#result-content').textContent(), /Jobber is one candidate/);
-    assert.match(await page.locator('#result-content').textContent(), /Google Sheets/);
-    assert.match(await page.locator('#result-content').textContent(), /Do not solve the wrong problem first/);
+    assert.match(await page.locator('.result-verdict h3').textContent(), /Successful but Stretched/);
+    assert.match(await page.locator('#result-content').textContent(), /Did someone already talk to them/);
+    assert.match(await page.locator('#result-content').textContent(), /4–8 hours/);
+    assert.match(await page.locator('#result-content').textContent(), /We don't have a favorite system/);
+    assert.match(await page.locator('#result-content').textContent(), /You shouldn't have to become an AI expert/);
+    assert.match(await page.locator('#result-content').textContent(), /Review My Customer Flow/);
+    assert.equal(await page.locator('.health-card').count(), 5);
 
     const downloadPromise = page.waitForEvent('download');
     await page.click('#download-result');
     const download = await downloadPromise;
-    assert.equal(download.suggestedFilename(), 'high-country-service-customer-flow-workfile.md');
+    assert.equal(download.suggestedFilename(), 'high-country-service-customer-flow-health.md');
     assert.ok(await download.path());
 
     await page.reload({ waitUntil: 'networkidle' });
     assert.equal(await page.inputValue('#business-name'), 'High Country Service');
-    assert.equal(await page.inputValue('#relationship-model'), 'field');
+    assert.equal(await page.locator('input[name="contactChannels"]:checked').count(), 5);
 
     for (const width of [320, 768, 1024, 1440]) {
       await page.setViewportSize({ width, height: 900 });
@@ -83,7 +102,7 @@ const { startStaticServer } = require('./static-server.cjs');
 
     assert.deepEqual(consoleErrors, []);
     assert.deepEqual(failedRequests, []);
-    console.log('Customer Flow browser journey: 20+ assertions passed at four viewport widths.');
+    console.log('Customer Flow self-recognition browser journey: 25+ assertions passed at four viewport widths.');
     await context.close();
   } finally {
     await browser.close();
