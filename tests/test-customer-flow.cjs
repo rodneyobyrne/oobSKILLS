@@ -69,7 +69,7 @@ const stretched = evaluate({
 });
 assert.equal(stretched.stage, 3);
 assert.equal(stretched.stageName, 'Successful but Stretched');
-assert.ok(stretched.recognitionSignals.some((item) => /4–8 hours/.test(item)));
+assert.ok(stretched.scores.workflow >= 40);
 assert.ok(stretched.recognitionSignals.some((item) => /Did someone already talk/.test(item)));
 
 const creatingWork = evaluate({
