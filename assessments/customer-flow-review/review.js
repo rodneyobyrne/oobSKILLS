@@ -96,7 +96,7 @@
 
   function saveDraft() {
     try {
-      localStorage.setItem(storageKey, JSON.stringify(serializeDraft()));
+      sessionStorage.setItem(storageKey, JSON.stringify(serializeDraft()));
     } catch (error) {
       // The review remains usable when browser storage is unavailable.
     }
@@ -105,7 +105,7 @@
   function restoreDraft() {
     let draft;
     try {
-      draft = JSON.parse(localStorage.getItem(storageKey) || 'null');
+      draft = JSON.parse(sessionStorage.getItem(storageKey) || 'null');
     } catch (error) {
       draft = null;
     }
@@ -309,7 +309,7 @@
   });
 
   document.getElementById('clear-draft').addEventListener('click', function () {
-    try { localStorage.removeItem(storageKey); } catch (error) { /* no-op */ }
+    try { sessionStorage.removeItem(storageKey); } catch (error) { /* no-op */ }
     form.reset();
     result.hidden = true;
     currentMarkdown = '';
@@ -318,7 +318,7 @@
   });
 
   document.getElementById('start-over').addEventListener('click', function () {
-    try { localStorage.removeItem(storageKey); } catch (error) { /* no-op */ }
+    try { sessionStorage.removeItem(storageKey); } catch (error) { /* no-op */ }
     form.reset();
     result.hidden = true;
     currentMarkdown = '';
