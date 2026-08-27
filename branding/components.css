@@ -1,0 +1,131 @@
+/* oobCREATIVE reusable drawn component primitives
+   The hand-drawn feeling comes from line overshoot and slight asymmetry,
+   not rounded or melted corners. Corners remain 90 degrees.
+
+   Production intent:
+   - live browser text stays separate from illustration
+   - horizontal and vertical ink strokes cross slightly past each corner
+   - black ink is structural
+   - ballpoint blue is interaction / active state
+   - vermilion is restrained human emphasis
+   - warm yellow is strong action / callback
+*/
+
+:root {
+  --oob-component-ink: var(--ink, #111111);
+  --oob-component-paper: var(--paper, #ffffff);
+  --oob-component-blue: var(--ballpoint, #244aa5);
+  --oob-component-signal: var(--signal, #e4572e);
+  --oob-component-action: var(--action, #f2c94c);
+}
+
+/*
+  Square hand-drawn box.
+  Two pseudo-elements draw four independent strokes. Each stroke extends
+  beyond the nominal corner so the intersection reads like pen lines that
+  were intentionally carried slightly past one another.
+*/
+.oob-drawn-box,
+.oob-content-box {
+  --oob-box-edge: var(--oob-component-ink);
+  --oob-box-stroke: 2px;
+  --oob-box-over-left: 7px;
+  --oob-box-over-right: 9px;
+  --oob-box-over-top: 8px;
+  --oob-box-over-bottom: 7px;
+  position: relative;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--oob-component-paper);
+}
+
+.oob-drawn-box::before,
+.oob-content-box::before {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  left: calc(-1 * var(--oob-box-over-left));
+  right: calc(-1 * var(--oob-box-over-right));
+  top: 0;
+  bottom: 0;
+  background:
+    linear-gradient(var(--oob-box-edge), var(--oob-box-edge)) left top / 100% var(--oob-box-stroke) no-repeat,
+    linear-gradient(var(--oob-box-edge), var(--oob-box-edge)) left bottom / 100% var(--oob-box-stroke) no-repeat;
+  pointer-events: none;
+}
+
+.oob-drawn-box::after,
+.oob-content-box::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  top: calc(-1 * var(--oob-box-over-top));
+  bottom: calc(-1 * var(--oob-box-over-bottom));
+  left: 0;
+  right: 0;
+  background:
+    linear-gradient(var(--oob-box-edge), var(--oob-box-edge)) left top / var(--oob-box-stroke) 100% no-repeat,
+    linear-gradient(var(--oob-box-edge), var(--oob-box-edge)) right top / var(--oob-box-stroke) 100% no-repeat;
+  pointer-events: none;
+}
+
+/* Slightly different line lengths keep a repeated row from reading as a CAD grid. */
+.oob-drawn-box:nth-child(3n + 2),
+.oob-content-box:nth-child(3n + 2) {
+  --oob-box-over-left: 9px;
+  --oob-box-over-right: 6px;
+  --oob-box-over-top: 6px;
+  --oob-box-over-bottom: 9px;
+}
+
+.oob-drawn-box:nth-child(3n),
+.oob-content-box:nth-child(3n) {
+  --oob-box-over-left: 6px;
+  --oob-box-over-right: 10px;
+  --oob-box-over-top: 9px;
+  --oob-box-over-bottom: 6px;
+}
+
+/* Useful state hooks for future site-wide card adoption. */
+.oob-content-box--interactive {
+  color: inherit;
+  text-decoration: none;
+  transition: background-color .16s ease, color .16s ease;
+}
+
+.oob-content-box--interactive:hover,
+.oob-content-box--interactive:focus-visible,
+.oob-content-box--interactive.is-active {
+  --oob-box-edge: var(--oob-component-blue);
+}
+
+.oob-content-box--interactive:focus-visible {
+  outline: 3px solid var(--oob-component-blue);
+  outline-offset: 10px;
+}
+
+.oob-content-box--signal {
+  --oob-box-edge: var(--oob-component-signal);
+}
+
+.oob-content-box--action {
+  --oob-box-edge: var(--oob-component-ink);
+  background:
+    repeating-linear-gradient(-10deg, rgba(255,255,255,.3) 0 1px, transparent 1px 6px),
+    var(--oob-component-action);
+}
+
+/* A whole card may be clickable, but ordinary editorial boxes should not fake interactivity. */
+.oob-content-box--interactive:hover {
+  background:
+    repeating-linear-gradient(-11deg, rgba(255,255,255,.18) 0 1px, transparent 1px 5px),
+    repeating-linear-gradient(8deg, rgba(0,0,0,.06) 0 1px, transparent 1px 7px),
+    var(--oob-component-blue);
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oob-content-box--interactive {
+    transition: none !important;
+  }
+}
