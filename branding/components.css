@@ -17,16 +17,16 @@
 }
 
 /*
-  The frame uses four textured ink strips modeled on the site's .rough-rule
-  contour. The frame extends outside the content box; the edge strips are
-  inset slightly inside that frame so each line continues past the corner
-  intersection like a hand-drawn pen stroke.
+  The frame uses four textured ink strips modeled directly on the site's
+  .rough-rule contour. The frame extends outside the content box; each edge
+  is inset 4px inside that frame, so the horizontal and vertical strokes
+  carry visibly past their 90-degree intersection like pen lines.
 */
 .oob-drawn-box,
 .oob-content-box {
-  --oob-box-edge: var(--oob-component-ink);
   --oob-box-over: 9px;
   --oob-box-corner-cross: 4px;
+  --oob-box-corner-span: 8px;
   position: relative;
   border: 0 !important;
   border-radius: 0 !important;
@@ -51,14 +51,14 @@
     left var(--oob-box-corner-cross) top var(--oob-box-corner-cross),
     right var(--oob-box-corner-cross) top var(--oob-box-corner-cross);
   background-size:
-    calc(100% - (2 * var(--oob-box-corner-cross))) 12px,
-    calc(100% - (2 * var(--oob-box-corner-cross))) 12px,
-    12px calc(100% - (2 * var(--oob-box-corner-cross))),
-    12px calc(100% - (2 * var(--oob-box-corner-cross)));
+    calc(100% - var(--oob-box-corner-span)) 12px,
+    calc(100% - var(--oob-box-corner-span)) 12px,
+    12px calc(100% - var(--oob-box-corner-span)),
+    12px calc(100% - var(--oob-box-corner-span));
   background-repeat: no-repeat;
 }
 
-/* No second decorative outline: one hand-drawn frame is enough. */
+/* One hand-drawn frame only; no doubled decorative outline. */
 .oob-drawn-box::after,
 .oob-content-box::after {
   content: none;
@@ -71,19 +71,9 @@
   transition: background-color .16s ease, color .16s ease;
 }
 
-.oob-content-box--interactive:hover,
-.oob-content-box--interactive:focus-visible,
-.oob-content-box--interactive.is-active {
-  --oob-box-edge: var(--oob-component-blue);
-}
-
 .oob-content-box--interactive:focus-visible {
   outline: 3px solid var(--oob-component-blue);
   outline-offset: 10px;
-}
-
-.oob-content-box--signal {
-  --oob-box-edge: var(--oob-component-signal);
 }
 
 .oob-content-box--action {
