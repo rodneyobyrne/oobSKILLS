@@ -1,5 +1,6 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
+const path = require('node:path');
 const engine = require('../_site/assessments/customer-flow-review/decision-engine.js');
 
 const neverTasks = {
@@ -131,7 +132,7 @@ for (const result of [holding, manyChannels, uncertainty, patchwork, stretched, 
   assert.ok(Array.isArray(result.usefulTools));
 }
 
-const reviewSource = fs.readFileSync('../_site/assessments/customer-flow-review/review.js', 'utf8');
+const reviewSource = fs.readFileSync(path.join(__dirname, '../_site/assessments/customer-flow-review/review.js'), 'utf8');
 assert.doesNotMatch(reviewSource, /\bfetch\s*\(/, 'Assessment must not automatically transmit answers with fetch');
 assert.doesNotMatch(reviewSource, /XMLHttpRequest/, 'Assessment must not automatically transmit answers with XHR');
 assert.doesNotMatch(reviewSource, /navigator\.sendBeacon/, 'Assessment must not automatically transmit answers with sendBeacon');
