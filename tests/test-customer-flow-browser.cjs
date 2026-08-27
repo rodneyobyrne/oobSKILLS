@@ -58,7 +58,7 @@ const { startStaticServer } = require('./static-server.cjs');
       await page.check(`input[name="improvementPriorities"][value="${priority}"]`);
     }
     assert.match(await page.locator('#priority-help').textContent(), /3 of 3 selected/);
-    await page.check('input[name="improvementPriorities"][value="systems"]');
+    await page.click('input[name="improvementPriorities"][value="systems"]');
     assert.equal(await page.locator('input[name="improvementPriorities"][value="systems"]').isChecked(), false);
 
     await page.selectOption('#year-concern', 'time');
