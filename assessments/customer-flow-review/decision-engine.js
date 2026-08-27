@@ -16,7 +16,7 @@
       return 'strengthen-existing';
     }
 
-    if (input.relationshipModel === 'appointment' || input.sensitiveData === 'yes') return 'vertical-first';
+    if (input.relationshipModel === 'appointment') return 'vertical-first';
     if (input.relationshipModel === 'transactional') return 'pos-first';
     if (input.relationshipModel === 'field') return 'job-operations';
     if (input.relationshipModel === 'professional') return 'relationship-crm';
@@ -40,7 +40,7 @@
       },
       'vertical-first': {
         verdict: 'Keep the vertical platform at the center.',
-        direction: 'Appointments, specialized service records or sensitive information are better anchored in the platform designed for that operating context. Add communication around it before adding a second CRM.',
+        direction: 'Appointments and specialized service records are usually better anchored in the platform designed for that operating context. Add communication around it before adding a second CRM.',
         system: 'Vertical scheduling / practice / service platform',
         example: 'Use the existing or selected vertical platform as the system of record; connect website, phone, reminders and reporting around it.'
       },
@@ -103,7 +103,7 @@
 
   function buildWarnings(input) {
     const warnings = [];
-    if (input.sensitiveData === 'yes') warnings.push('Do not move sensitive or regulated records into a general-purpose CRM or automation path until privacy, permissions and vendor suitability are confirmed.');
+    if (input.sensitiveData === 'yes') warnings.push('Do not move sensitive or regulated records into a general-purpose CRM or automation path until privacy, permissions and vendor suitability are confirmed. Treat this as a platform requirement, not a reason to ignore the business operating model.');
     if (input.willingness === 'no') warnings.push('A new platform will not solve the problem if the team is not prepared to use one authoritative record.');
     if (input.existingSystem === 'scattered') warnings.push('Several systems currently appear to compete as the customer record. Integration alone can make conflicting records move faster.');
     if (input.sheetsRole === 'central') warnings.push('Google Sheets is currently acting as an operational database. Migration should include field mapping and ownership rules, not just a CSV import.');
