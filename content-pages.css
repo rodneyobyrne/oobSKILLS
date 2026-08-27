@@ -10,6 +10,23 @@
 .content-hero__aside p:last-child { margin-bottom: 0; color: var(--soft); }
 .content-actions { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; margin-top: 2rem; }
 .content-actions button.text-link { padding-right: 0; padding-left: 0; border: 0; background: transparent; cursor: pointer; }
+
+/* Assessment-entry actions use the oobCREATIVE loose-paper / cut-here language. */
+.button[href^="/assessments/"], .review-page .content-hero .button[href="#review"] { position: relative; isolation: isolate; overflow: visible; }
+.button[href^="/assessments/"]::before, .review-page .content-hero .button[href="#review"]::before { content: ""; position: absolute; z-index: -1; inset: -7px -9px; border: 2px dashed var(--ink); border-radius: 5px 2px 6px 3px / 3px 6px 2px 5px; transform: rotate(-.22deg); opacity: .78; pointer-events: none; }
+.button[href^="/assessments/"]::after, .review-page .content-hero .button[href="#review"]::after { content: ""; position: absolute; z-index: -1; inset: -7px -9px; transform: rotate(.15deg); opacity: 0; pointer-events: none; background: linear-gradient(var(--ballpoint), var(--ballpoint)) left top / 0 2px no-repeat, linear-gradient(var(--ballpoint), var(--ballpoint)) right top / 2px 0 no-repeat, linear-gradient(var(--ballpoint), var(--ballpoint)) right bottom / 0 2px no-repeat, linear-gradient(var(--ballpoint), var(--ballpoint)) left bottom / 2px 0 no-repeat; }
+.button[href^="/assessments/"]:is(:hover,:focus-visible)::after, .review-page .content-hero .button[href="#review"]:is(:hover,:focus-visible)::after { opacity: .9; animation: assessment-outline-draw .72s ease-out forwards; }
+@keyframes assessment-outline-draw {
+  0% { background-size: 0 2px, 2px 0, 0 2px, 2px 0; }
+  25% { background-size: 100% 2px, 2px 0, 0 2px, 2px 0; }
+  50% { background-size: 100% 2px, 2px 100%, 0 2px, 2px 0; }
+  75% { background-size: 100% 2px, 2px 100%, 100% 2px, 2px 0; }
+  100% { background-size: 100% 2px, 2px 100%, 100% 2px, 2px 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .button[href^="/assessments/"]:is(:hover,:focus-visible)::after, .review-page .content-hero .button[href="#review"]:is(:hover,:focus-visible)::after { animation: none; opacity: .9; background-size: 100% 2px, 2px 100%, 100% 2px, 2px 100%; }
+}
+
 .content-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; border: 1px solid var(--ink); background: var(--ink); }
 .content-grid--four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .content-card { display: flex; min-height: 320px; flex-direction: column; padding: clamp(1.5rem, 3vw, 2.5rem); background: var(--paper); }
