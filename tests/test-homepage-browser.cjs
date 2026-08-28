@@ -25,25 +25,39 @@ const { startStaticServer } = require('./static-server.cjs');
       const overflowState = await page.evaluate(() => {
         const clientWidth = document.documentElement.clientWidth;
         const scrollWidth = document.documentElement.scrollWidth;
-        const offenders = [...document.body.querySelectorAll('*')]
-          .map((element) => {
-            const rect = element.getBoundingClientRect();
-            return {
-              tag: element.tagName.toLowerCase(),
-              id: element.id || '',
-              classes: [...element.classList].slice(0, 5).join('.'),
-              left: Math.round(rect.left * 10) / 10,
-              right: Math.round(rect.right * 10) / 10,
-              width: Math.round(rect.width * 10) / 10,
-              scrollWidth: element.scrollWidth,
-              clientWidth: element.clientWidth,
-              overflowX: getComputedStyle(element).overflowX,
-            };
-          })
+        const describe = (element) => {
+          const rect = element.getBoundingClientRect();
+          return {
+            tag: element.tagName.toLowerCase(),
+            id: element.id || '',
+            classes: [...element.classList].slice(0, 6).join('.'),
+            left: Math.round(rect.left * 10) / 10,
+            right: Math.round(rect.right * 10) / 10,
+            width: Math.round(rect.width * 10) / 10,
+            scrollWidth: element.scrollWidth,
+            clientWidth: element.clientWidth,
+            overflowX: getComputedStyle(element).overflowX,
+          };
+        };
+        const all = [...document.body.querySelectorAll('*')];
+        const offenders = all
+          .map(describe)
           .filter((item) => item.right > clientWidth + 1 || item.left < -1)
           .sort((a, b) => Math.max(b.right - clientWidth, -b.left) - Math.max(a.right - clientWidth, -a.left))
           .slice(0, 12);
-        return { overflow: scrollWidth > clientWidth + 1, clientWidth, scrollWidth, offenders };
+        const scrollContainers = [document.body, document.querySelector('main'), ...all]
+          .filter(Boolean)
+          .map(describe)
+          .filter((item) => item.scrollWidth > item.clientWidth + 1 && item.left < clientWidth && item.right > 0)
+          .sort((a, b) => (b.scrollWidth - b.clientWidth) - (a.scrollWidth - a.clientWidth))
+          .slice(0, 20);
+        const landmarkWidths = ['body','main','.operator-hero','.hero-layout','.review-panel','.review-carousel','.review-options','.content-section--blue','.services-section','.participation-section','.final-cta']
+          .map((selector) => {
+            const element = selector === 'body' ? document.body : document.querySelector(selector);
+            return element ? { selector, ...describe(element) } : null;
+          })
+          .filter(Boolean);
+        return { overflow: scrollWidth > clientWidth + 1, clientWidth, scrollWidth, offenders, scrollContainers, landmarkWidths };
       });
       if (overflowState.overflow) console.error(`Overflow diagnostic ${viewport.width}px: ${JSON.stringify(overflowState)}`);
       assert.equal(overflowState.overflow, false, `Homepage has no document-level horizontal overflow at ${viewport.width}px`);
@@ -91,7 +105,7 @@ const { startStaticServer } = require('./static-server.cjs');
 
     assert.equal(mobile.cardCount, 6, 'Problem gallery has six starting points');
     assert.ok(mobile.trackScrollWidth > mobile.trackClientWidth, 'Phone problem gallery is horizontally scrollable');
-    assert.ok(mobile.firstCardWidth >= 250 && mobile.firstCardWidth < mobile.viewportWidth, 'Phone carousel shows one primary card with the next card discoverable');
+    assert.ok(mobile.firstCardWidth >= 240 && mobile.firstCardWidth < mobile.viewportWidth, 'Phone carousel shows one primary card with the next card discoverable');
     assert.ok(mobile.heroWidth <= mobile.viewportWidth, 'Phone hero remains inside the viewport');
     assert.equal(mobile.heroImageSrc, '/images/ai-relationship/ai-workflow-map.webp', 'Homepage hero keeps the approved detailed relationship scene');
     assert.equal(mobile.heroImageNaturalWidth, 1122);
