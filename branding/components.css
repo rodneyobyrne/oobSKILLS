@@ -30,6 +30,10 @@
   border: 0 !important;
   border-radius: 0 !important;
   background: var(--oob-component-paper);
+  /* Paint the approved crossing strokes 2px past the nominal card edge while
+     keeping that decorative ink out of scroll-width calculations. */
+  overflow: clip;
+  overflow-clip-margin: var(--oob-box-over);
 }
 
 /* Four independent low-frequency pen strokes. Each line extends past the
