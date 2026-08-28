@@ -75,6 +75,7 @@
 .review-carousel {
   position: relative;
   min-width: 0;
+  max-width: 100%;
 }
 
 .review-carousel__controls {
@@ -119,6 +120,7 @@
   grid-template-columns: none !important;
   gap: 1rem;
   width: 100%;
+  max-width: 100%;
   padding: 10px 8px 14px;
   overflow-x: auto;
   overflow-y: visible;
@@ -318,11 +320,13 @@
   }
 
   .review-options {
-    grid-auto-columns: minmax(255px, 86%);
+    grid-auto-columns: minmax(250px, 86%);
     gap: .85rem;
-    margin-inline: calc(var(--gutter, 1.25rem) * -.35);
-    width: calc(100% + (var(--gutter, 1.25rem) * .7));
-    padding-inline: calc(var(--gutter, 1.25rem) * .35 + 7px);
+    width: 100%;
+    max-width: 100%;
+    margin-inline: 0;
+    padding: 10px 4px 14px;
+    scroll-padding-inline: 4px;
   }
 
   .review-option__art {
