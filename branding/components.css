@@ -6,7 +6,7 @@
    - 5px rise/fall
    - 3.4–5.3px nominal line thickness
    - 1 pressure pool per edge
-   - 6px corner overshoot
+   - 3px corner overshoot
    - true 90-degree crossings
 */
 
@@ -20,7 +20,7 @@
 
 .oob-drawn-box,
 .oob-content-box {
-  --oob-box-over: 6px;
+  --oob-box-over: 3px;
   position: relative;
   border: 0 !important;
   border-radius: 0 !important;
