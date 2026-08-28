@@ -183,3 +183,22 @@ body.home-ui-v4 .review-option > span:last-of-type {
     font-size: 1.08rem !important;
   }
 }
+
+/* Sitewide text-link interaction: the underline is an action cue, so it draws
+   from left to right in ballpoint blue instead of sitting under the link. */
+.text-link::after {
+  background: var(--ballpoint, #244aa5) !important;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .28s cubic-bezier(.2,.78,.22,1);
+}
+
+.text-link:is(:hover, :focus-visible)::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-link::after {
+    transition: none;
+  }
+}
