@@ -2,6 +2,13 @@
    The experience choices are a swipeable gallery, not a stacked form.
    Outer borders come from the shared oobCREATIVE production line component. */
 
+/* Production box strokes intentionally cross their nominal corners by 2px.
+   Clip only document-edge decoration here; the nested problem gallery keeps
+   its own horizontal scrolling behavior. */
+body.home-ui-v4 main {
+  overflow-x: clip;
+}
+
 .operator-hero {
   padding-top: clamp(3.5rem, 6vw, 5.75rem);
 }
