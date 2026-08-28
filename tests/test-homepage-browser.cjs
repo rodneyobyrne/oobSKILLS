@@ -52,7 +52,7 @@ const { startStaticServer } = require('./static-server.cjs');
           .filter((item) => item.scrollWidth > item.clientWidth + 1 && item.left < clientWidth && item.right > 0)
           .sort((a, b) => (b.scrollWidth - b.clientWidth) - (a.scrollWidth - a.clientWidth))
           .slice(0, 20);
-        const landmarkWidths = ['body','main','.operator-hero','.hero-layout','.review-panel','.review-carousel','.review-options','.content-section--blue','.services-section','.participation-section','.final-cta']
+        const landmarkWidths = ['body','main','.operator-hero','.hero-layout','.review-panel','.review-carousel','.review-stage','.review-options','.content-section--blue','.services-section','.participation-section','.final-cta']
           .map((selector) => {
             const element = selector === 'body' ? document.body : document.querySelector(selector);
             return element ? { selector, ...describe(element) } : null;
@@ -96,12 +96,24 @@ const { startStaticServer } = require('./static-server.cjs');
       const cardArt = [...document.querySelectorAll('.review-option__art')];
       const lockupArt = [...document.querySelectorAll('.section-lockup__art img')];
       const firstCardStyle = getComputedStyle(cards[0], '::before');
-      const firstCardHoverStyle = getComputedStyle(cards[0], '::after');
+      const secondCardHoverStyle = getComputedStyle(cards[1], '::after');
+      const stage = document.querySelector('.review-stage');
+      const stageRect = stage?.getBoundingClientRect();
+      const trackRect = track?.getBoundingClientRect();
+      const stageImage = document.querySelector('.review-stage__image');
       return {
         cardCount: cards.length,
         firstCardWidth: firstCard?.width || 0,
         trackClientWidth: track?.clientWidth || 0,
         trackScrollWidth: track?.scrollWidth || 0,
+        trackTop: trackRect?.top || 0,
+        stageBottom: stageRect?.bottom || 0,
+        stageExists: Boolean(stage),
+        stageRole: stage?.getAttribute('role'),
+        stageImageSrc: stageImage?.getAttribute('src'),
+        selectedCount: document.querySelectorAll('.review-option.is-selected').length,
+        selectedReview: document.querySelector('.review-option.is-selected')?.dataset.review,
+        controlCount: document.querySelectorAll('.review-carousel__controls').length,
         heroWidth: hero.width,
         viewportWidth: document.documentElement.clientWidth,
         heroImageSrc: heroImage?.getAttribute('src'),
@@ -118,15 +130,22 @@ const { startStaticServer } = require('./static-server.cjs');
         lockupRoles: lockupArt.map(el => el.dataset.visualRole),
         productionClassCount: document.querySelectorAll('.review-option.oob-content-box--interactive').length,
         restingOutlineImage: firstCardStyle.backgroundImage,
-        hoverOutlineImage: firstCardHoverStyle.backgroundImage,
+        hoverOutlineImage: secondCardHoverStyle.backgroundImage,
         participationCta: Boolean(document.querySelector('.participation-actions .oob-cta')),
         localCallback: Boolean(document.querySelector('.local-pilot-note') && document.querySelector('a.oob-cta--callback[href="/services/local-ai-systems/"]')),
       };
     });
 
-    assert.equal(mobile.cardCount, 6, 'Problem gallery has six starting points');
-    assert.ok(mobile.trackScrollWidth > mobile.trackClientWidth, 'Phone problem gallery is horizontally scrollable');
-    assert.ok(mobile.firstCardWidth >= 240 && mobile.firstCardWidth < mobile.viewportWidth, 'Phone carousel shows one primary card with the next card discoverable');
+    assert.equal(mobile.cardCount, 6, 'Problem selector has six persistent starting points');
+    assert.ok(mobile.trackScrollWidth <= mobile.trackClientWidth + 2, 'Phone selector does not create a hidden horizontal navigation page');
+    assert.ok(mobile.firstCardWidth >= 44 && mobile.firstCardWidth < 90, 'Phone selector keeps six usable thumbnail targets in one visible row');
+    assert.equal(mobile.stageExists, true, 'Phone layout has one active content display');
+    assert.equal(mobile.stageRole, 'tabpanel', 'Active content display exposes tab-panel semantics');
+    assert.ok(mobile.stageBottom <= mobile.trackTop + 2, 'Phone thumbnails sit below the active display');
+    assert.equal(mobile.stageImageSrc, '/images/experiences/missed-calls.webp', 'First active state shows the matching experience image');
+    assert.equal(mobile.selectedCount, 1, 'Exactly one problem state is selected');
+    assert.equal(mobile.selectedReview, 'opportunity', 'The first problem state initializes as selected');
+    assert.equal(mobile.controlCount, 0, 'Previous/next carousel controls are retired');
     assert.ok(mobile.heroWidth <= mobile.viewportWidth, 'Phone hero remains inside the viewport');
     assert.equal(mobile.heroImageSrc, '/images/ai-relationship/ai-workflow-map.webp', 'Homepage hero keeps the approved detailed relationship scene');
     assert.equal(mobile.heroImageNaturalWidth, 1122);
@@ -134,10 +153,10 @@ const { startStaticServer } = require('./static-server.cjs');
     assert.ok(mobile.heroImageHeight <= 300, 'Phone hero art is intentionally compact');
     assert.equal(mobile.heading, 'The right first move depends on where the work is breaking.');
     assert.equal(mobile.legacyOutlineCount, 0, 'Legacy injected card outlines are retired');
-    assert.equal(mobile.productionClassCount, 6, 'Every problem card uses the shared production box component');
-    assert.ok(mobile.restingOutlineImage.includes('line-top.svg'), 'Resting card perimeter uses approved production line assets');
-    assert.ok(mobile.hoverOutlineImage.includes('line-top-blue.svg'), 'Interactive card perimeter uses matching blue line assets');
-    assert.equal(mobile.cardArtCount, 6, 'Every problem card keeps a supporting visual');
+    assert.equal(mobile.productionClassCount, 6, 'Every problem thumbnail uses the shared production box component');
+    assert.ok(mobile.restingOutlineImage.includes('line-top.svg'), 'Resting thumbnail perimeter uses approved production line assets');
+    assert.ok(mobile.hoverOutlineImage.includes('line-top-blue.svg'), 'Interactive thumbnail perimeter uses matching blue line assets');
+    assert.equal(mobile.cardArtCount, 6, 'Every problem thumbnail keeps its supporting visual');
     assert.deepEqual(mobile.cardArtSrcs.slice(0, 5), [
       '/images/experiences/missed-calls.webp',
       '/images/experiences/repeated-admin.webp',
@@ -147,25 +166,47 @@ const { startStaticServer } = require('./static-server.cjs');
     ]);
     assert.equal(mobile.cardArtSrcs[5], '/images/ai-character/poses/robot-arms-crossed.webp');
     assert.ok(mobile.cardRoles.slice(0, 5).every(role => role === 'experience'), 'First five gallery visuals remain experience illustrations');
-    assert.equal(mobile.cardRoles[5], 'headline-pose', 'Founder-capacity card uses a canonical robot pose');
+    assert.equal(mobile.cardRoles[5], 'headline-pose', 'Founder-capacity thumbnail uses a canonical robot pose');
     assert.ok(mobile.lockupCount >= 6, 'Homepage major H2 lockups retain supporting art');
     assert.ok(mobile.lockupSrcs.every(src => src.startsWith('/images/ai-character/poses/robot-') && src.endsWith('.webp')), 'Every H2 lockup uses a semantic solo robot WebP');
     assert.ok(mobile.lockupRoles.every(role => role === 'headline-pose'), 'H2 graphics are explicitly classified as headline poses');
     assert.equal(mobile.participationCta, true, 'Ways to work together ends with a clear CTA');
     assert.equal(mobile.localCallback, true, 'Local pilot uses the strong callback CTA treatment');
 
-    await page.hover('.review-option[data-review="opportunity"]');
+    await page.hover('.review-option[data-review="friction"]');
     await page.waitForTimeout(40);
-    const hoverAnimation = await page.$eval('.review-option[data-review="opportunity"]', el => getComputedStyle(el, '::after').animationName);
-    assert.equal(hoverAnimation, 'oob-box-outline-draw', 'Card hover redraws the production outline in blue');
+    const hoverAnimation = await page.$eval('.review-option[data-review="friction"]', el => getComputedStyle(el, '::after').animationName);
+    assert.equal(hoverAnimation, 'oob-box-outline-draw', 'Unselected thumbnail hover redraws the production outline in blue');
 
     await page.click('.review-option[data-review="founder"]');
     const founderResponse = await page.evaluate(() => ({
       title: document.querySelector('[data-response-title]').textContent.trim(),
       href: document.querySelector('[data-response-link]').getAttribute('href'),
+      imageSrc: document.querySelector('.review-stage__image')?.getAttribute('src'),
+      selectedReview: document.querySelector('.review-option.is-selected')?.dataset.review,
     }));
     assert.equal(founderResponse.title, 'Separate founder judgment from reusable team context.');
     assert.equal(founderResponse.href, '/tools/founder-bottleneck-review/');
+    assert.equal(founderResponse.imageSrc, '/images/ai-character/poses/robot-arms-crossed.webp');
+    assert.equal(founderResponse.selectedReview, 'founder');
+
+    await page.setViewportSize({ width: 320, height: 568 });
+    await page.goto(`${server.origin}/`, { waitUntil: 'networkidle' });
+    const narrowPhone = await page.evaluate(() => {
+      const cards = [...document.querySelectorAll('.review-option')];
+      const first = cards[0].getBoundingClientRect();
+      const fourth = cards[3].getBoundingClientRect();
+      return {
+        firstWidth: first.width,
+        firstTop: first.top,
+        fourthTop: fourth.top,
+        trackScrollWidth: document.querySelector('.review-options').scrollWidth,
+        trackClientWidth: document.querySelector('.review-options').clientWidth,
+      };
+    });
+    assert.ok(narrowPhone.fourthTop > narrowPhone.firstTop, 'Narrow phones use a 3-by-2 thumbnail grid');
+    assert.ok(narrowPhone.firstWidth >= 70, 'Narrow-phone thumbnail targets remain comfortably tappable');
+    assert.ok(narrowPhone.trackScrollWidth <= narrowPhone.trackClientWidth + 2, 'Narrow-phone selector still has no horizontal scroll');
 
     await page.setViewportSize({ width: 1720, height: 900 });
     await page.goto(`${server.origin}/`, { waitUntil: 'networkidle' });
@@ -176,8 +217,11 @@ const { startStaticServer } = require('./static-server.cjs');
       const h1 = document.querySelector('.hero-copy h1').getBoundingClientRect();
       const lead = document.querySelector('.hero-copy .lead').getBoundingClientRect();
       const image = document.querySelector('.hero-art__image');
-      const track = document.querySelector('.review-options');
+      const track = document.querySelector('.review-options').getBoundingClientRect();
       const card = document.querySelector('.review-option').getBoundingClientRect();
+      const stage = document.querySelector('.review-stage').getBoundingClientRect();
+      const stageVisual = document.querySelector('.review-stage__visual').getBoundingClientRect();
+      const stageContent = document.querySelector('.review-stage__content').getBoundingClientRect();
       const answers = document.querySelector('.answer-list').getBoundingClientRect();
       const freeCard = document.querySelector('.content-section--blue .content-card');
       const serviceCard = document.querySelector('.capability-grid article');
@@ -194,8 +238,14 @@ const { startStaticServer } = require('./static-server.cjs');
         imageHeight: image.getBoundingClientRect().height,
         freeToolNoteCount: document.querySelectorAll('.free-tool-note').length,
         oldSideNoteCount: document.querySelector('#use-now-heading').closest('section').querySelectorAll('.section-side-note').length,
-        trackWidth: track.getBoundingClientRect().width,
+        trackLeft: track.left,
+        trackRight: track.right,
+        trackWidth: track.width,
         cardWidth: card.width,
+        stageLeft: stage.left,
+        stageWidth: stage.width,
+        stageVisualRight: stageVisual.right,
+        stageContentLeft: stageContent.left,
         answersWidth: answers.width,
         freeCardUsesBox: freeCard.classList.contains('oob-content-box--interactive'),
         serviceCardUsesBox: serviceCard.classList.contains('oob-content-box--interactive'),
@@ -210,7 +260,10 @@ const { startStaticServer } = require('./static-server.cjs');
     assert.ok(desktop.imageHeight <= 525, 'Desktop hero art is bounded instead of dominating the page');
     assert.equal(desktop.freeToolNoteCount, 1, 'Free-tool promise stays beneath the tool cards');
     assert.equal(desktop.oldSideNoteCount, 0, 'Free-tool promise does not compete with the section heading');
-    assert.ok(desktop.cardWidth / desktop.trackWidth > 0.28 && desktop.cardWidth / desktop.trackWidth < 0.4, 'Desktop problem gallery shows about three cards at once');
+    assert.ok(desktop.cardWidth / desktop.trackWidth > 0.8, 'Desktop problem navigation is one thumbnail-wide vertical rail');
+    assert.ok(desktop.stageLeft > desktop.trackRight, 'Desktop active display sits to the right of the thumbnail rail');
+    assert.ok(desktop.stageWidth > desktop.trackWidth * 5, 'Desktop active display receives the dominant width');
+    assert.ok(desktop.stageContentLeft >= desktop.stageVisualRight - 2, 'Desktop active display keeps image and response in adjacent columns');
     assert.ok(desktop.answersWidth <= 950, 'Direct Answers keeps the successful narrow reading pattern on desktop');
     assert.equal(desktop.freeCardUsesBox, true, 'Free-tool cards use the production outer-box component');
     assert.equal(desktop.serviceCardUsesBox, true, 'Implementation cards use the production outer-box component');
@@ -247,7 +300,7 @@ const { startStaticServer } = require('./static-server.cjs');
     assert.deepEqual(consoleErrors, []);
     assert.deepEqual(failedRequests, []);
     await context.close();
-    console.log('Homepage production UI passed: compact hero, swipe gallery, shared line math, bounded desktop reading widths.');
+    console.log('Homepage production UI passed: compact hero, persistent problem selector, one active display, shared line math, bounded desktop reading widths.');
   } finally {
     await browser.close();
     await server.close();
