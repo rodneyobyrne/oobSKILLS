@@ -68,20 +68,20 @@ body.home-ui-v4 .review-option.oob-content-box::before {
   content: "" !important;
   display: block !important;
   background-image:
-    url('/branding/line-top.svg'),
-    url('/branding/line-bottom.svg'),
-    url('/branding/line-left.svg'),
-    url('/branding/line-right.svg') !important;
+    url('/branding/line-top.svg?v=20260828-gray-22-43'),
+    url('/branding/line-bottom.svg?v=20260828-gray-22-43'),
+    url('/branding/line-left.svg?v=20260828-gray-22-43'),
+    url('/branding/line-right.svg?v=20260828-gray-22-43') !important;
 }
 
 body.home-ui-v4 .review-option.oob-content-box--interactive::after {
   content: "" !important;
   display: block !important;
   background-image:
-    url('/branding/line-top-blue.svg'),
-    url('/branding/line-bottom-blue.svg'),
-    url('/branding/line-left-blue.svg'),
-    url('/branding/line-right-blue.svg') !important;
+    url('/branding/line-top-blue.svg?v=20260828-gray-22-43'),
+    url('/branding/line-bottom-blue.svg?v=20260828-gray-22-43'),
+    url('/branding/line-left-blue.svg?v=20260828-gray-22-43'),
+    url('/branding/line-right-blue.svg?v=20260828-gray-22-43') !important;
 }
 
 body.home-ui-v4 .review-option__outline {
