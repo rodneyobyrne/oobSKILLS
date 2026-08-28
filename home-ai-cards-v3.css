@@ -76,8 +76,8 @@
   position: relative;
   min-width: 0;
   max-width: 100%;
-  /* The track itself scrolls. This wrapper clips only the 2px decorative ink
-     overshoot so it cannot increase the document width on narrow screens. */
+  /* The track itself scrolls. This wrapper clips only the decorative ink
+     beyond the carousel viewport; each card reserves its own 2px overshoot. */
   overflow-x: clip;
   overflow-y: visible;
 }
@@ -148,9 +148,12 @@
   grid-column: auto !important;
   scroll-snap-align: start;
   min-width: 0;
-  width: 100% !important;
-  min-height: 100% !important;
-  margin: 0 !important;
+  /* Reserve the approved 2px line overshoot inside the carousel cell. The
+     visible perimeter still crosses each nominal card corner by 2px, but the
+     decorative ink no longer adds 2px to the document's scroll width. */
+  width: calc(100% - (2 * var(--oob-box-over, 2px))) !important;
+  min-height: calc(100% - (2 * var(--oob-box-over, 2px))) !important;
+  margin: var(--oob-box-over, 2px) !important;
   padding: 0 0 1.1rem !important;
   overflow: visible;
   border: 0 !important;
