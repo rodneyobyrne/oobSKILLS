@@ -1,12 +1,13 @@
-/* Direct-image rendering: semantic WebP image files, no sprite sheets or crop math. */
+/* Direct-image rendering: semantic WebP image files, no sprite sheets or crop math.
+   The homepage production UI now owns its own hero/card geometry. */
 
-.hero-art {
+body:not(.home-ui-v4) .hero-art {
   position: relative;
   overflow: visible !important;
   background: none !important;
 }
 
-.hero-art__image {
+body:not(.home-ui-v4) .hero-art__image {
   display: block;
   position: static;
   width: 100% !important;
@@ -17,13 +18,13 @@
   pointer-events: auto;
 }
 
-.review-option::before {
+body:not(.home-ui-v4) .review-option::before {
   content: none !important;
   display: none !important;
   background-image: none !important;
 }
 
-.review-option__art {
+body:not(.home-ui-v4) .review-option__art {
   display: block;
   width: 100%;
   height: auto;
@@ -51,14 +52,14 @@
 }
 
 @media (max-width: 980px) {
-  .hero-art {
+  body:not(.home-ui-v4) .hero-art {
     width: min(100%, 780px);
     justify-self: center;
   }
 }
 
 @media (max-width: 720px) {
-  .hero-art {
+  body:not(.home-ui-v4) .hero-art {
     width: calc(100% + 1rem);
     margin-inline: -.5rem;
   }
