@@ -4,9 +4,9 @@
    Approved outer-box profile:
    - 2 broad peaks per edge
    - 5px rise/fall
-   - 1.9–4.7px nominal line thickness
+   - 3.4–5.3px nominal line thickness
    - 1 pressure pool per edge
-   - 9px corner overshoot
+   - 6px corner overshoot
    - true 90-degree crossings
 */
 
@@ -20,7 +20,7 @@
 
 .oob-drawn-box,
 .oob-content-box {
-  --oob-box-over: 9px;
+  --oob-box-over: 6px;
   position: relative;
   border: 0 !important;
   border-radius: 0 !important;
