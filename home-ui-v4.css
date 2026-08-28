@@ -1,0 +1,265 @@
+/* oobCREATIVE homepage production UI v4
+   Uses the shared branding line component as the source of truth.
+   Scope: homepage only via body.home-ui-v4. */
+
+.home-ui-v4 .operator-hero .hero-jump {
+  max-width: 32rem;
+}
+
+.home-ui-v4 .review-panel__heading .section-lockup {
+  margin-bottom: 0;
+}
+
+.home-ui-v4 .review-panel__heading .section-lockup__copy {
+  max-width: 820px;
+}
+
+/* Free diagnostics: actual drawn cards rather than a table grid. */
+.home-ui-v4 #use-now-heading {
+  max-width: 16ch;
+}
+
+.home-ui-v4 #use-now-heading + * {
+  max-width: 52rem;
+}
+
+.home-ui-v4 #use-now-heading,
+.home-ui-v4 #use-now-heading ~ * {
+  min-width: 0;
+}
+
+.home-ui-v4 .content-section--blue .content-grid {
+  width: min(100%, 1040px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 1.8rem);
+  border: 0;
+  background: transparent;
+}
+
+.home-ui-v4 .content-section--blue .content-card {
+  min-height: 320px;
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  border: 0;
+  background: var(--paper, #fff);
+  overflow: visible;
+  isolation: isolate;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.home-ui-v4 .content-section--blue .content-card:nth-child(even) {
+  background: var(--paper, #fff);
+}
+
+.home-ui-v4 .content-section--blue .content-card:hover,
+.home-ui-v4 .content-section--blue .content-card:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 6px 7px 0 rgba(17,17,17,.055);
+}
+
+.home-ui-v4 .content-section--blue .content-card .text-link {
+  position: relative;
+  z-index: 6;
+}
+
+.home-ui-v4 .free-tool-note,
+.home-ui-v4 .content-section--blue .content-actions {
+  width: min(100%, 1040px);
+  margin-inline: auto;
+}
+
+.home-ui-v4 .free-tool-note {
+  margin-top: clamp(1.8rem, 4vw, 3rem);
+  padding: 1rem 1.25rem;
+  border-left: 5px solid var(--ballpoint, #244aa5);
+  background: rgba(255,255,255,.62);
+  color: var(--ink, #111);
+  font-size: 1rem;
+}
+
+/* Direct answers: preserve the strong mobile reading pattern on desktop. */
+.home-ui-v4 .answers-section .site-shell {
+  max-width: 1040px;
+}
+
+.home-ui-v4 .answers-section .section-lockup,
+.home-ui-v4 .answer-list {
+  width: min(100%, 940px);
+  margin-inline: auto;
+}
+
+.home-ui-v4 .answer-item {
+  grid-template-columns: 3.25rem minmax(0,1fr);
+  gap: 1rem;
+}
+
+.home-ui-v4 .answer-item > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .65rem;
+}
+
+.home-ui-v4 .answer-item h3 {
+  max-width: 28ch;
+}
+
+.home-ui-v4 .answer-item .text-link {
+  justify-self: start;
+}
+
+/* Implementation cards: shared outer-box system, 2-column bounded layout. */
+.home-ui-v4 .services-section .capability-grid {
+  width: min(100%, 1060px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 1.8rem);
+  border: 0;
+  background: transparent;
+}
+
+.home-ui-v4 .services-section .capability-grid article {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  border: 0;
+  background: var(--paper, #fff);
+  overflow: visible;
+  isolation: isolate;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.home-ui-v4 .services-section .capability-grid article:nth-child(2),
+.home-ui-v4 .services-section .capability-grid article:nth-child(3) {
+  background: var(--paper, #fff);
+}
+
+.home-ui-v4 .services-section .capability-grid article:hover,
+.home-ui-v4 .services-section .capability-grid article:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 6px 7px 0 rgba(17,17,17,.055);
+}
+
+.home-ui-v4 .services-section .capability-grid .text-link {
+  position: relative;
+  z-index: 6;
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* Local offer: make the purchase signal distinct from ordinary cards. */
+.home-ui-v4 .content-section--soft .product-layout {
+  width: min(100%, 1040px);
+  margin-inline: auto;
+}
+
+.home-ui-v4 .decision-note.local-pilot-note {
+  position: static;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border: 0;
+  background: var(--action, #f2c94c);
+  color: var(--ink, #111);
+}
+
+.home-ui-v4 .decision-note.local-pilot-note .meta,
+.home-ui-v4 .decision-note.local-pilot-note p {
+  color: var(--ink, #111);
+}
+
+.home-ui-v4 .decision-note.local-pilot-note h3 {
+  font-size: clamp(1.8rem, 3vw, 2.65rem);
+}
+
+/* Before / intervention / after is explanatory, not another card wall. */
+.home-ui-v4 .work-section .site-shell {
+  max-width: 1080px;
+}
+
+.home-ui-v4 .work-grid {
+  width: min(100%, 1040px);
+  margin-inline: auto;
+}
+
+/* Participation gets one explicit decision CTA after the three modes. */
+.home-ui-v4 .participation-section .site-shell {
+  max-width: 1080px;
+}
+
+.home-ui-v4 .participation-grid,
+.home-ui-v4 .participation-actions {
+  width: min(100%, 1040px);
+  margin-inline: auto;
+}
+
+.home-ui-v4 .participation-actions {
+  margin-top: clamp(1.8rem, 4vw, 2.8rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+}
+
+/* Standard CTA compatibility on the homepage. */
+.home-ui-v4 .oob-cta {
+  position: relative;
+  z-index: 2;
+}
+
+.home-ui-v4 .oob-cta--callback {
+  min-width: min(100%, 250px);
+}
+
+/* Keep all drawn boxes clear of neighboring section edges. */
+.home-ui-v4 .oob-content-box,
+.home-ui-v4 .oob-drawn-box {
+  isolation: isolate;
+}
+
+@media (max-width: 900px) {
+  .home-ui-v4 .content-section--blue .content-grid,
+  .home-ui-v4 .services-section .capability-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-ui-v4 .content-section--blue .content-card,
+  .home-ui-v4 .services-section .capability-grid article {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .home-ui-v4 .content-section--blue .content-grid,
+  .home-ui-v4 .services-section .capability-grid {
+    gap: 1.35rem;
+  }
+
+  .home-ui-v4 .content-section--blue .content-card,
+  .home-ui-v4 .services-section .capability-grid article {
+    padding: 1.45rem 1.25rem;
+  }
+
+  .home-ui-v4 .answer-item {
+    grid-template-columns: 2.4rem minmax(0,1fr);
+    gap: .55rem;
+  }
+
+  .home-ui-v4 .work-grid {
+    border-top: 1px solid var(--ink, #111);
+    border-bottom: 1px solid var(--ink, #111);
+  }
+
+  .home-ui-v4 .participation-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-ui-v4 .content-card,
+  .home-ui-v4 .capability-grid article {
+    transition: none !important;
+    transform: none !important;
+  }
+}
