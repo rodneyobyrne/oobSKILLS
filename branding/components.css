@@ -1,12 +1,13 @@
 /* oobCREATIVE reusable drawn component primitives
    IMPORTANT: this treatment is for OUTER content/specimen boxes, not buttons.
 
-   Box rule:
-   - corners remain 90 degrees
-   - each edge uses the same irregular ink language as .rough-rule
-   - strokes overlap/carry slightly past the nominal corner
-   - line weight varies like pen pressure instead of reading as a perfect border
-   - live browser text stays separate from illustration
+   Approved outer-box profile:
+   - 3 broad peaks per long edge
+   - 5px rise/fall
+   - 1.6–3.1px nominal line thickness
+   - 2 pressure pools on long edges
+   - 13px corner overshoot
+   - true 90-degree crossings
 */
 
 :root {
@@ -17,23 +18,21 @@
   --oob-component-action: var(--action, #f2c94c);
 }
 
-/*
-  The frame uses four independent rough-rule-style ink strips. Each strip has
-  more frequent contour changes plus small pressure pools, so long box edges
-  retain a visible hand wobble instead of stretching into a near-straight line.
-  Horizontal and vertical strokes still cross at true 90-degree corners.
-*/
 .oob-drawn-box,
 .oob-content-box {
-  --oob-box-over: 9px;
-  --oob-box-corner-cross: 4px;
-  --oob-box-corner-span: 8px;
+  --oob-box-over: 13px;
   position: relative;
   border: 0 !important;
   border-radius: 0 !important;
   background: var(--oob-component-paper);
 }
 
+/*
+  Four independent SVG ink ribbons. Horizontal edges use three broad phases;
+  shorter vertical edges use two. The pseudo-element is expanded 13px beyond
+  the content box while each edge is aligned to the nominal corner, so every
+  stroke visibly carries past the 90-degree intersection.
+*/
 .oob-drawn-box::before,
 .oob-content-box::before {
   content: "";
@@ -42,30 +41,28 @@
   inset: calc(-1 * var(--oob-box-over));
   pointer-events: none;
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 14' preserveAspectRatio='none'%3E%3Cpath fill='%23111111' d='M0 6.2 L5 4.3 10 5.8 15 3.1 20 6.6 25 4.9 30 7.3 35 4.1 40 5.5 45 3.4 50 6.9 55 4.5 60 7.6 65 4.8 70 5.9 75 3.6 80 6.8 85 4.1 90 7.2 95 5.1 100 6.4 105 3.3 110 6.1 115 4.7 120 7.4 125 4.2 130 6.8 135 3.8 140 5.7 145 4.5 150 7.1 155 4.0 160 5.8 L160 8.8 155 10.2 150 8.4 145 10.8 140 8.1 135 10.0 130 8.6 125 10.6 120 8.3 115 9.8 110 8.0 105 10.4 100 8.7 95 10.9 90 8.2 85 9.6 80 8.4 75 10.5 70 8.1 65 9.9 60 8.5 55 10.7 50 8.2 45 9.5 40 8.7 35 10.3 30 8.0 25 9.9 20 8.4 15 10.6 10 8.3 5 9.7 0 8.6 Z'/%3E%3Cellipse fill='%23111111' cx='31' cy='7.1' rx='2.8' ry='1.2'/%3E%3Cellipse fill='%23111111' cx='91' cy='7.3' rx='3.2' ry='1.35'/%3E%3Cellipse fill='%23111111' cx='137' cy='6.7' rx='2.4' ry='1.1'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 14' preserveAspectRatio='none'%3E%3Cpath fill='%23111111' d='M0 5.1 L5 6.5 10 3.5 15 5.9 20 4.1 25 7.0 30 4.6 35 6.3 40 3.2 45 5.5 50 4.0 55 7.4 60 4.8 65 6.7 70 3.9 75 5.2 80 4.4 85 7.1 90 4.3 95 6.6 100 3.1 105 5.8 110 4.7 115 7.5 120 4.2 125 6.0 130 3.6 135 5.7 140 4.1 145 7.2 150 4.5 155 6.4 160 4.7 L160 8.6 155 9.5 150 8.1 145 10.4 140 8.0 135 9.8 130 8.5 125 10.7 120 8.3 115 9.6 110 8.1 105 10.3 100 8.8 95 10.8 90 8.2 85 9.9 80 8.4 75 10.5 70 8.3 65 9.7 60 8.0 55 10.6 50 8.2 45 9.4 40 8.7 35 10.2 30 8.1 25 9.8 20 8.4 15 10.5 10 8.2 5 9.6 0 8.3 Z'/%3E%3Cellipse fill='%23111111' cx='18' cy='7.0' rx='2.2' ry='1.1'/%3E%3Cellipse fill='%23111111' cx='73' cy='7.2' rx='3.0' ry='1.3'/%3E%3Cellipse fill='%23111111' cx='126' cy='7.0' rx='2.7' ry='1.2'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 160' preserveAspectRatio='none'%3E%3Cpath fill='%23111111' d='M6.0 0 L4.2 5 5.9 10 3.1 15 6.5 20 4.7 25 7.2 30 4.0 35 5.4 40 3.3 45 6.8 50 4.4 55 7.5 60 4.7 65 5.8 70 3.5 75 6.7 80 4.0 85 7.1 90 5.0 95 6.3 100 3.2 105 6.0 110 4.6 115 7.3 120 4.1 125 6.7 130 3.7 135 5.6 140 4.4 145 7.0 150 3.9 155 5.7 160 L8.7 160 10.1 155 8.3 150 10.7 145 8.0 140 9.9 135 8.5 130 10.5 125 8.2 120 9.7 115 7.9 110 10.3 105 8.6 100 10.8 95 8.1 90 9.5 85 8.3 80 10.4 75 8.0 70 9.8 65 8.4 60 10.6 55 8.1 50 9.4 45 8.6 40 10.2 35 7.9 30 9.8 25 8.3 20 10.5 15 8.2 10 9.6 5 8.5 0 Z'/%3E%3Cellipse fill='%23111111' cx='7.0' cy='34' rx='1.25' ry='3.0'/%3E%3Cellipse fill='%23111111' cx='7.1' cy='93' rx='1.35' ry='3.4'/%3E%3Cellipse fill='%23111111' cx='6.8' cy='139' rx='1.15' ry='2.5'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 160' preserveAspectRatio='none'%3E%3Cpath fill='%23111111' d='M5.0 0 L6.4 5 3.4 10 5.8 15 4.0 20 6.9 25 4.5 30 6.2 35 3.1 40 5.4 45 3.9 50 7.3 55 4.7 60 6.6 65 3.8 70 5.1 75 4.3 80 7.0 85 4.2 90 6.5 95 3.0 100 5.7 105 4.6 110 7.4 115 4.1 120 5.9 125 3.5 130 5.6 135 4.0 140 7.1 145 4.4 150 6.3 155 4.6 160 L8.5 160 9.4 155 8.0 150 10.3 145 7.9 140 9.7 135 8.4 130 10.6 125 8.2 120 9.5 115 8.0 110 10.2 105 8.7 100 10.7 95 8.1 90 9.8 85 8.3 80 10.4 75 8.2 70 9.6 65 7.9 60 10.5 55 8.1 50 9.3 45 8.6 40 10.1 35 8.0 30 9.7 25 8.3 20 10.4 15 8.1 10 9.5 5 8.2 0 Z'/%3E%3Cellipse fill='%23111111' cx='7.0' cy='20' rx='1.1' ry='2.3'/%3E%3Cellipse fill='%23111111' cx='7.2' cy='76' rx='1.3' ry='3.1'/%3E%3Cellipse fill='%23111111' cx='6.9' cy='128' rx='1.2' ry='2.7'/%3E%3C/svg%3E");
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxNjAgMTInIHByZXNlcnZlQXNwZWN0UmF0aW89J25vbmUnPjxwYXRoIGZpbGw9JyMxMTExMTEnIGQ9J00gMC4wIDUuNSBMIDYuNyA3LjEgTCAxMy4zIDcuNSBMIDIwLjAgNi42IEwgMjYuNyA0LjkgTCAzMy4zIDMuNCBMIDQwLjAgMy4xIEwgNDYuNyAzLjkgTCA1My4zIDUuNSBMIDYwLjAgNy4yIEwgNjYuNyA3LjUgTCA3My4zIDYuMyBMIDgwLjAgNC4xIEwgODYuNyAyLjMgTCA5My4zIDEuNyBMIDEwMC4wIDIuNSBMIDEwNi43IDQuMyBMIDExMy4zIDYuMiBMIDEyMC4wIDcuMCBMIDEyNi43IDYuMSBMIDEzMy4zIDQuMiBMIDE0MC4wIDIuNCBMIDE0Ni43IDEuOCBMIDE1My4zIDIuNiBMIDE2MC4wIDQuNCBMIDE2MC4wIDcuNSBMIDE1My4zIDUuNCBMIDE0Ni43IDQuMiBMIDE0MC4wIDQuNCBMIDEzMy4zIDUuOSBMIDEyNi43IDcuNyBMIDEyMC4wIDguOCBMIDExMy4zIDguOCBMIDEwNi43IDcuNiBMIDEwMC4wIDUuOCBMIDkzLjMgNC44IEwgODYuNyA1LjQgTCA4MC4wIDcuMCBMIDczLjMgOC44IEwgNjYuNyA5LjggTCA2MC4wIDkuNCBMIDUzLjMgOC4wIEwgNDYuNyA2LjAgTCA0MC4wIDUuMCBMIDMzLjMgNS43IEwgMjYuNyA3LjYgTCAyMC4wIDkuNiBMIDEzLjMgMTAuNiBMIDYuNyAxMC4xIEwgMC4wIDguMiBaJy8+PC9zdmc+"),
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxNjAgMTInIHByZXNlcnZlQXNwZWN0UmF0aW89J25vbmUnPjxwYXRoIGZpbGw9JyMxMTExMTEnIGQ9J00gMC4wIDYuOSBMIDYuNyA1LjQgTCAxMy4zIDMuNiBMIDIwLjAgMi41IEwgMjYuNyAyLjcgTCAzMy4zIDQuMSBMIDQwLjAgNS44IEwgNDYuNyA2LjUgTCA1My4zIDUuOCBMIDYwLjAgNC4zIEwgNjYuNyAyLjUgTCA3My4zIDEuNSBMIDgwLjAgMi4wIEwgODYuNyAzLjggTCA5My4zIDUuOSBMIDEwMC4wIDcuMSBMIDEwNi43IDYuNyBMIDExMy4zIDUuNCBMIDEyMC4wIDMuNiBMIDEyNi43IDIuNCBMIDEzMy4zIDIuNiBMIDE0MC4wIDQuMSBMIDE0Ni43IDYuMiBMIDE1My4zIDcuNSBMIDE2MC4wIDcuNSBMIDE2MC4wIDkuOSBMIDE1My4zIDEwLjMgTCAxNDYuNyA5LjIgTCAxNDAuMCA3LjIgTCAxMzMuMyA1LjUgTCAxMjYuNyA1LjAgTCAxMjAuMCA1LjkgTCAxMTMuMyA3LjcgTCAxMDYuNyA5LjIgTCAxMDAuMCA5LjIgTCA5My4zIDcuOCBMIDg2LjcgNi4wIEwgODAuMCA0LjYgTCA3My4zIDQuNSBMIDY2LjcgNS43IEwgNjAuMCA3LjggTCA1My4zIDkuNCBMIDQ2LjcgOS4zIEwgNDAuMCA3LjggTCAzMy4zIDUuOCBMIDI2LjcgNC4zIEwgMjAuMCA0LjMgTCAxMy4zIDUuNyBMIDYuNyA3LjkgTCAwLjAgOS43IFonLz48L3N2Zz4="),
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMiAxMDAnIHByZXNlcnZlQXNwZWN0UmF0aW89J25vbmUnPjxwYXRoIGZpbGw9JyMxMTExMTEnIGQ9J00gNi45IDAuMCBMIDcuNSA2LjIgTCA2LjggMTIuNSBMIDUuMCAxOC44IEwgMy4zIDI1LjAgTCAyLjcgMzEuMiBMIDMuNCAzNy41IEwgNC45IDQzLjggTCA2LjEgNTAuMCBMIDYuOCA1Ni4yIEwgNS45IDYyLjUgTCAzLjkgNjguOCBMIDIuMSA3NS4wIEwgMS41IDgxLjIgTCAyLjUgODcuNSBMIDQuNiA5My44IEwgNi43IDEwMC4wIEwgOC43IDEwMC4wIEwgNy4wIDkzLjggTCA1LjIgODcuNSBMIDQuNSA4MS4yIEwgNS4yIDc1LjAgTCA2LjggNjguOCBMIDguNSA2Mi41IEwgOS4yIDU2LjIgTCA4LjcgNTAuMCBMIDYuNyA0My44IEwgNS4wIDM3LjUgTCA0LjUgMzEuMiBMIDUuNSAyNS4wIEwgNy42IDE4LjggTCA5LjcgMTIuNSBMIDEwLjYgNi4yIEwgOS45IDAuMCBaJy8+PC9zdmc+"),
+    url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMiAxMDAnIHByZXNlcnZlQXNwZWN0UmF0aW89J25vbmUnPjxwYXRoIGZpbGw9JyMxMTExMTEnIGQ9J00gNS41IDAuMCBMIDMuNyA2LjIgTCAyLjMgMTIuNSBMIDIuMyAxOC44IEwgMy42IDI1LjAgTCA1LjQgMzEuMiBMIDYuNiAzNy41IEwgNi40IDQzLjggTCA0LjcgNTAuMCBMIDMuMyA1Ni4yIEwgMi4zIDYyLjUgTCAyLjYgNjguOCBMIDQuMyA3NS4wIEwgNi41IDgxLjIgTCA4LjEgODcuNSBMIDguMSA5My44IEwgNi42IDEwMC4wIEwgOC41IDEwMC4wIEwgOS43IDkzLjggTCA5LjcgODcuNSBMIDguMyA4MS4yIEwgNi41IDc1LjAgTCA1LjIgNjguOCBMIDUuMiA2Mi41IEwgNi42IDU2LjIgTCA4LjYgNTAuMCBMIDkuNCA0My44IEwgOS4wIDM3LjUgTCA3LjQgMzEuMiBMIDUuMyAyNS4wIEwgMy45IDE4LjggTCA0LjAgMTIuNSBMIDUuNyA2LjIgTCA3LjkgMC4wIFonLz48L3N2Zz4=");
   background-position:
-    left var(--oob-box-corner-cross) top var(--oob-box-corner-cross),
-    left var(--oob-box-corner-cross) bottom var(--oob-box-corner-cross),
-    left var(--oob-box-corner-cross) top var(--oob-box-corner-cross),
-    right var(--oob-box-corner-cross) top var(--oob-box-corner-cross);
+    left top var(--oob-box-over),
+    left bottom var(--oob-box-over),
+    left var(--oob-box-over) top,
+    right var(--oob-box-over) top;
   background-size:
-    calc(100% - var(--oob-box-corner-span)) 14px,
-    calc(100% - var(--oob-box-corner-span)) 14px,
-    14px calc(100% - var(--oob-box-corner-span)),
-    14px calc(100% - var(--oob-box-corner-span));
+    100% 12px,
+    100% 12px,
+    12px 100%,
+    12px 100%;
   background-repeat: no-repeat;
 }
 
-/* One hand-drawn frame only; no doubled decorative outline. */
 .oob-drawn-box::after,
 .oob-content-box::after {
   content: none;
 }
 
-/* Future state hooks for whole-card interactions only. */
 .oob-content-box--interactive {
   color: inherit;
   text-decoration: none;
