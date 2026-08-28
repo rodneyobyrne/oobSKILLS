@@ -190,20 +190,24 @@
   gap: 1rem;
   align-items: center;
   min-height: 112px;
-  margin-top: 3.4rem;
+  margin-top: 4.4rem;
   padding: 1.45rem 1.35rem 1.2rem;
   color: inherit;
   text-decoration: none;
 }
 
+/* The robot sits on the top pen line. Preserve the source aspect ratio rather
+   than forcing the tall character into a short crop box. */
 .oob-assessment-lockup__bot {
   position: absolute;
-  top: -60px;
-  left: 1.1rem;
-  width: 96px;
-  height: 70px;
-  object-fit: cover;
-  object-position: 50% 5%;
+  z-index: 6;
+  left: 1.35rem;
+  bottom: calc(100% - 4px);
+  width: 88px;
+  height: auto;
+  max-height: 132px;
+  object-fit: contain;
+  object-position: center bottom;
   filter: grayscale(1) contrast(1.08);
   pointer-events: none;
 }
@@ -282,9 +286,17 @@
 .oob-pace-step:hover img { transform: translateY(-2px) rotate(-1deg); }
 
 @media (max-width: 760px) {
-  .oob-assessment-lockup { grid-template-columns: 1fr auto; }
+  .oob-assessment-lockup {
+    grid-template-columns: 1fr auto;
+    margin-top: 4.8rem;
+  }
   .oob-assessment-lockup__copy { padding-left: 5.5rem; }
-  .oob-assessment-lockup__bot { width: 82px; }
+  .oob-assessment-lockup__bot {
+    left: 1rem;
+    bottom: calc(100% - 4px);
+    width: 76px;
+    max-height: 118px;
+  }
   .oob-pace-stage { grid-template-columns: 1fr; }
   .oob-pace-step + .oob-pace-step { border-left: 0; border-top: 1px solid var(--oob-ink); }
   .oob-pace-step { min-height: 150px; }
