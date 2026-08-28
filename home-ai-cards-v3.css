@@ -36,7 +36,8 @@ body.home-ui-v4 main {
 }
 
 .hero-copy .lead {
-  max-width: 39rem;
+  width: 100%;
+  max-width: none;
 }
 
 .hero-art {
@@ -143,9 +144,6 @@ body.home-ui-v4 main {
 
 .review-option {
   --review-tilt: 0deg;
-  /* The carousel cell itself reserves the approved 2px crossing space. Its
-     line assets therefore draw at inset 0 inside that reserved cell rather
-     than adding another 2px of scrollable overflow to the nested scroller. */
   --oob-box-over: 0px;
   position: relative;
   display: flex !important;
