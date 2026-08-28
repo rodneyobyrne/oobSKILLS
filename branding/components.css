@@ -5,6 +5,7 @@
    - corners remain 90 degrees
    - each edge uses the same irregular ink language as .rough-rule
    - strokes overlap/carry slightly past the nominal corner
+   - line weight varies like pen pressure instead of reading as a perfect border
    - live browser text stays separate from illustration
 */
 
@@ -17,10 +18,10 @@
 }
 
 /*
-  The frame uses four textured ink strips modeled directly on the site's
-  .rough-rule contour. The frame extends outside the content box; each edge
-  is inset 4px inside that frame, so the horizontal and vertical strokes
-  carry visibly past their 90-degree intersection like pen lines.
+  The frame uses four independent rough-rule-style ink strips. Each strip has
+  more frequent contour changes plus small pressure pools, so long box edges
+  retain a visible hand wobble instead of stretching into a near-straight line.
+  Horizontal and vertical strokes still cross at true 90-degree corners.
 */
 .oob-drawn-box,
 .oob-content-box {
@@ -41,20 +42,20 @@
   inset: calc(-1 * var(--oob-box-over));
   pointer-events: none;
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 12' preserveAspectRatio='none'%3E%3Cpolygon fill='%23111111' points='0,5.8 4,3.7 9,5.2 15,2.3 21,6.2 27,4.3 34,7 41,3 48,5.5 55,3.4 63,6.6 70,4.1 77,5.9 84,2.8 91,5.3 96,3.6 100,5.6 100,7.8 95,9.4 89,7.1 82,9.7 75,7.4 68,9.1 61,7 54,9.6 47,7.3 39,8.9 31,6.6 24,9.5 17,7.6 10,9 5,7 0,8.4'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 12' preserveAspectRatio='none'%3E%3Cpolygon fill='%23111111' points='0,4.6 5,6.1 11,2.9 18,5.4 25,3.5 32,6.5 40,4.1 47,2.4 54,5.8 62,3.7 69,6.8 76,3.2 83,6 90,4.3 96,6.6 100,4.9 100,8.6 94,7.3 88,9.6 81,7.1 74,8.9 66,6.8 59,9.5 51,7.6 44,9.2 36,6.7 29,8.5 22,7.2 15,9.8 8,7.7 3,9.1 0,7.9'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 100' preserveAspectRatio='none'%3E%3Cpolygon fill='%23111111' points='5.8,0 3.7,4 5.2,9 2.3,15 6.2,21 4.3,27 7,34 3,41 5.5,48 3.4,55 6.6,63 4.1,70 5.9,77 2.8,84 5.3,91 3.6,96 5.6,100 7.8,100 9.4,95 7.1,89 9.7,82 7.4,75 9.1,68 7,61 9.6,54 7.3,47 8.9,39 6.6,31 9.5,24 7.6,17 9,10 7,5 8.4,0'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 100' preserveAspectRatio='none'%3E%3Cpolygon fill='%23111111' points='4.6,0 6.1,5 2.9,11 5.4,18 3.5,25 6.5,32 4.1,40 2.4,47 5.8,54 3.7,62 6.8,69 3.2,76 6,83 4.3,90 6.6,96 4.9,100 8.6,100 7.3,94 9.6,88 7.1,81 8.9,74 6.8,66 9.5,59 7.6,51 9.2,44 6.7,36 8.5,29 7.2,22 9.8,15 7.7,8 9.1,3 7.9,0'/%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 14' preserveAspectRatio='none'%3E%3Cpath fill='%23111111' d='M0 6.2 L5 4.3 10 5.8 15 3.1 20 6.6 25 4.9 30 7.3 35 4.1 40 5.5 45 3.4 50 6.9 55 4.5 60 7.6 65 4.8 70 5.9 75 3.6 80 6.8 85 4.1 90 7.2 95 5.1 100 6.4 105 3.3 110 6.1 115 4.7 120 7.4 125 4.2 130 6.8 135 3.8 140 5.7 145 4.5 150 7.1 155 4.0 160 5.8 L160 8.8 155 10.2 150 8.4 145 10.8 140 8.1 135 10.0 130 8.6 125 10.6 120 8.3 115 9.8 110 8.0 105 10.4 100 8.7 95 10.9 90 8.2 85 9.6 80 8.4 75 10.5 70 8.1 65 9.9 60 8.5 55 10.7 50 8.2 45 9.5 40 8.7 35 10.3 30 8.0 25 9.9 20 8.4 15 10.6 10 8.3 5 9.7 0 8.6 Z'/%3E%3Cellipse fill='%23111111' cx='31' cy='7.1' rx='2.8' ry='1.2'/%3E%3Cellipse fill='%23111111' cx='91' cy='7.3' rx='3.2' ry='1.35'/%3E%3Cellipse fill='%23111111' cx='137' cy='6.7' rx='2.4' ry='1.1'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 14' preserveAspectRatio='none'%3E%3Cpath fill='%23111111' d='M0 5.1 L5 6.5 10 3.5 15 5.9 20 4.1 25 7.0 30 4.6 35 6.3 40 3.2 45 5.5 50 4.0 55 7.4 60 4.8 65 6.7 70 3.9 75 5.2 80 4.4 85 7.1 90 4.3 95 6.6 100 3.1 105 5.8 110 4.7 115 7.5 120 4.2 125 6.0 130 3.6 135 5.7 140 4.1 145 7.2 150 4.5 155 6.4 160 4.7 L160 8.6 155 9.5 150 8.1 145 10.4 140 8.0 135 9.8 130 8.5 125 10.7 120 8.3 115 9.6 110 8.1 105 10.3 100 8.8 95 10.8 90 8.2 85 9.9 80 8.4 75 10.5 70 8.3 65 9.7 60 8.0 55 10.6 50 8.2 45 9.4 40 8.7 35 10.2 30 8.1 25 9.8 20 8.4 15 10.5 10 8.2 5 9.6 0 8.3 Z'/%3E%3Cellipse fill='%23111111' cx='18' cy='7.0' rx='2.2' ry='1.1'/%3E%3Cellipse fill='%23111111' cx='73' cy='7.2' rx='3.0' ry='1.3'/%3E%3Cellipse fill='%23111111' cx='126' cy='7.0' rx='2.7' ry='1.2'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 160' preserveAspectRatio='none'%3E%3Cpath fill='%23111111' d='M6.0 0 L4.2 5 5.9 10 3.1 15 6.5 20 4.7 25 7.2 30 4.0 35 5.4 40 3.3 45 6.8 50 4.4 55 7.5 60 4.7 65 5.8 70 3.5 75 6.7 80 4.0 85 7.1 90 5.0 95 6.3 100 3.2 105 6.0 110 4.6 115 7.3 120 4.1 125 6.7 130 3.7 135 5.6 140 4.4 145 7.0 150 3.9 155 5.7 160 L8.7 160 10.1 155 8.3 150 10.7 145 8.0 140 9.9 135 8.5 130 10.5 125 8.2 120 9.7 115 7.9 110 10.3 105 8.6 100 10.8 95 8.1 90 9.5 85 8.3 80 10.4 75 8.0 70 9.8 65 8.4 60 10.6 55 8.1 50 9.4 45 8.6 40 10.2 35 7.9 30 9.8 25 8.3 20 10.5 15 8.2 10 9.6 5 8.5 0 Z'/%3E%3Cellipse fill='%23111111' cx='7.0' cy='34' rx='1.25' ry='3.0'/%3E%3Cellipse fill='%23111111' cx='7.1' cy='93' rx='1.35' ry='3.4'/%3E%3Cellipse fill='%23111111' cx='6.8' cy='139' rx='1.15' ry='2.5'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 160' preserveAspectRatio='none'%3E%3Cpath fill='%23111111' d='M5.0 0 L6.4 5 3.4 10 5.8 15 4.0 20 6.9 25 4.5 30 6.2 35 3.1 40 5.4 45 3.9 50 7.3 55 4.7 60 6.6 65 3.8 70 5.1 75 4.3 80 7.0 85 4.2 90 6.5 95 3.0 100 5.7 105 4.6 110 7.4 115 4.1 120 5.9 125 3.5 130 5.6 135 4.0 140 7.1 145 4.4 150 6.3 155 4.6 160 L8.5 160 9.4 155 8.0 150 10.3 145 7.9 140 9.7 135 8.4 130 10.6 125 8.2 120 9.5 115 8.0 110 10.2 105 8.7 100 10.7 95 8.1 90 9.8 85 8.3 80 10.4 75 8.2 70 9.6 65 7.9 60 10.5 55 8.1 50 9.3 45 8.6 40 10.1 35 8.0 30 9.7 25 8.3 20 10.4 15 8.1 10 9.5 5 8.2 0 Z'/%3E%3Cellipse fill='%23111111' cx='7.0' cy='20' rx='1.1' ry='2.3'/%3E%3Cellipse fill='%23111111' cx='7.2' cy='76' rx='1.3' ry='3.1'/%3E%3Cellipse fill='%23111111' cx='6.9' cy='128' rx='1.2' ry='2.7'/%3E%3C/svg%3E");
   background-position:
     left var(--oob-box-corner-cross) top var(--oob-box-corner-cross),
     left var(--oob-box-corner-cross) bottom var(--oob-box-corner-cross),
     left var(--oob-box-corner-cross) top var(--oob-box-corner-cross),
     right var(--oob-box-corner-cross) top var(--oob-box-corner-cross);
   background-size:
-    calc(100% - var(--oob-box-corner-span)) 12px,
-    calc(100% - var(--oob-box-corner-span)) 12px,
-    12px calc(100% - var(--oob-box-corner-span)),
-    12px calc(100% - var(--oob-box-corner-span));
+    calc(100% - var(--oob-box-corner-span)) 14px,
+    calc(100% - var(--oob-box-corner-span)) 14px,
+    14px calc(100% - var(--oob-box-corner-span)),
+    14px calc(100% - var(--oob-box-corner-span));
   background-repeat: no-repeat;
 }
 
