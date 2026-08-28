@@ -8,6 +8,30 @@ body.home-ui-v4 {
   overflow-x: hidden;
 }
 
+/* The homepage hero is intentionally open paper, not a framed box.
+   Keep all production box math on the interactive/card components below it. */
+.home-ui-v4 .operator-hero,
+.home-ui-v4 .hero-layout,
+.home-ui-v4 .review-panel {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none;
+}
+
+.home-ui-v4 .operator-hero::before,
+.home-ui-v4 .operator-hero::after,
+.home-ui-v4 .hero-layout::before,
+.home-ui-v4 .hero-layout::after,
+.home-ui-v4 .review-panel::before,
+.home-ui-v4 .review-panel::after {
+  content: none !important;
+  display: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
 .home-ui-v4 .operator-hero .hero-jump {
   max-width: 32rem;
 }
