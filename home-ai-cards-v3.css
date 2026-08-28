@@ -1,10 +1,11 @@
-/* Homepage problem gallery + hero layout.
-   The experience choices are a swipeable gallery, not a stacked form.
+/* Homepage problem selector + hero layout.
+   Six persistent thumbnails control one active content panel.
+   Desktop: thumbnail rail on the left. Mobile: thumbnail grid below the panel.
    Outer borders come from the shared oobCREATIVE production line component. */
 
 /* Production box strokes intentionally cross their nominal corners by 2px.
-   Clip only document-edge decoration here; the nested problem gallery keeps
-   its own horizontal scrolling behavior. */
+   Clip only document-edge decoration here. The selector itself never creates
+   a second horizontal navigation page. */
 body.home-ui-v4 main {
   overflow-x: clip;
 }
@@ -80,86 +81,61 @@ body.home-ui-v4 main {
   color: var(--soft, #444);
 }
 
+/* Base state remains usable if JavaScript is delayed: six visible choices,
+   never a hidden horizontal carousel. JS then promotes this into the active
+   selector + panel layout below. */
 .review-carousel {
   position: relative;
   min-width: 0;
   max-width: 100%;
-  overflow-x: clip;
-  overflow-y: visible;
 }
 
 .review-carousel__controls {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: .7rem;
-  margin: 0 0 .8rem;
-}
-
-.review-carousel__status {
-  margin-right: auto;
-  color: var(--soft, #444);
-  font-size: .82rem;
-}
-
-.review-carousel__button {
-  width: 44px;
-  height: 44px;
-  display: inline-grid;
-  place-items: center;
-  padding: 0;
-  border: 1px solid var(--ink, #111);
-  border-radius: 0;
-  background: #fff;
-  color: var(--ink, #111);
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-.review-carousel__button:hover,
-.review-carousel__button:focus-visible {
-  border-color: var(--ballpoint, #244aa5);
-  background: var(--ballpoint, #244aa5);
-  color: #fff;
+  display: none !important;
 }
 
 .review-options {
   box-sizing: border-box;
   display: grid !important;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(270px, calc((100% - 2rem) / 3));
-  grid-template-columns: none !important;
-  gap: 1rem;
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  gap: .7rem;
   width: 100%;
   max-width: 100%;
-  padding: 10px 8px 14px;
-  overflow-x: auto;
-  overflow-y: visible;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: 8px;
-  overscroll-behavior-inline: contain;
-  scrollbar-width: thin;
+  margin: 0;
+  padding: 5px;
+  overflow: visible;
   background: transparent;
+}
+
+.review-carousel.is-gallery-ready {
+  display: grid;
+  grid-template-columns: clamp(92px, 10vw, 126px) minmax(0, 1fr);
+  grid-template-areas: "nav stage";
+  gap: clamp(1.2rem, 3vw, 2.4rem);
+  align-items: start;
+  overflow: visible;
+}
+
+.review-carousel.is-gallery-ready .review-options {
+  grid-area: nav;
+  grid-template-columns: 1fr !important;
+  align-content: start;
+  gap: clamp(.65rem, 1.4vw, .9rem);
+  padding: 5px;
 }
 
 .review-option {
   --review-tilt: 0deg;
-  --oob-box-over: 0px;
+  --oob-box-over: 2px;
   position: relative;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: stretch !important;
-  justify-content: flex-start !important;
-  grid-template-columns: none !important;
-  grid-template-rows: none !important;
-  grid-column: auto !important;
-  scroll-snap-align: start;
+  display: block !important;
   min-width: 0;
-  width: calc(100% - 4px) !important;
-  min-height: calc(100% - 4px) !important;
-  margin: 2px !important;
-  padding: 0 0 1.1rem !important;
-  overflow: visible;
+  width: 100% !important;
+  aspect-ratio: 1 / 1;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: clip !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: #fff;
@@ -170,7 +146,7 @@ body.home-ui-v4 main {
   appearance: none;
   isolation: isolate;
   transform: translateY(0) rotate(0deg);
-  transition: transform .2s ease, background-color .18s ease, box-shadow .2s ease;
+  transition: transform .18s ease, background-color .18s ease, box-shadow .18s ease;
 }
 
 .review-option:nth-child(1) { --review-tilt: -.08deg; }
@@ -188,27 +164,31 @@ body.home-ui-v4 main {
 .review-option__art {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-bottom: 1px solid var(--line, #d8d8d4);
+  border: 0;
   background: var(--paper-soft, #f7f7f5);
 }
 
 .review-option__art--pose {
   object-fit: contain;
-  padding: 1.2rem;
+  padding: .45rem;
 }
 
+/* Keep the full situation statement in the accessibility tree while the
+   visual navigation behaves as a true thumbnail rail/grid. */
 .review-option > span:last-child {
-  display: block !important;
-  width: 100% !important;
-  margin: 0 !important;
-  padding: 1rem 1rem 0 !important;
-  font-size: clamp(1.02rem, 1.25vw, 1.18rem) !important;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -.025em;
-  text-align: left !important;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 .review-option > span:last-child::after {
@@ -219,20 +199,20 @@ body.home-ui-v4 main {
 .review-option:hover,
 .review-option:focus-visible {
   outline: none;
-  box-shadow: 5px 6px 0 rgba(17,17,17,.06);
-  transform: translateY(-2px) rotate(var(--review-tilt));
+  box-shadow: 4px 5px 0 rgba(17,17,17,.055);
+  transform: translateY(-1px) rotate(var(--review-tilt));
 }
 
 .review-option:focus-visible {
   outline: 3px solid var(--ballpoint, #244aa5);
-  outline-offset: 8px;
+  outline-offset: 7px;
 }
 
 .review-option.is-selected {
   z-index: 2;
   background: var(--paper-blue, #f3f6fd);
-  box-shadow: 6px 7px 0 rgba(36,74,165,.1);
-  transform: translateY(-2px) rotate(var(--review-tilt));
+  box-shadow: 5px 6px 0 rgba(36,74,165,.1);
+  transform: translateY(-1px) rotate(var(--review-tilt));
 }
 
 .review-option.is-selected::after {
@@ -241,23 +221,76 @@ body.home-ui-v4 main {
   background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100%;
 }
 
-.review-response {
-  max-width: 840px;
-  margin-top: clamp(1.5rem, 3vw, 2.3rem);
-  padding: clamp(1.3rem, 3vw, 2rem);
-  border: 0;
-  border-left: 5px solid var(--ballpoint, #244aa5);
+/* One active display. The visual and its answer move together as one state. */
+.review-stage {
+  grid-area: stage;
+  min-width: 0;
+  min-height: 500px;
+  display: grid;
+  grid-template-columns: minmax(260px, .9fr) minmax(320px, 1.1fr);
+  background: var(--paper, #fff);
+}
+
+.review-stage__visual {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: clamp(1rem, 2.5vw, 2rem);
+  overflow: hidden;
+  border-right: 1px solid var(--line, #d8d8d4);
   background: var(--paper-soft, #f7f7f5);
+}
+
+.review-stage__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 460px;
+  object-fit: contain;
+  transition: opacity .14s ease, transform .14s ease;
+}
+
+.review-stage__image--pose {
+  width: min(72%, 280px);
+  height: auto;
+  max-height: 390px;
+}
+
+.review-stage__content {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  padding: clamp(1.6rem, 4vw, 3.6rem);
+}
+
+.review-response {
+  width: 100%;
+  max-width: 650px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.review-response .response-kicker {
+  margin-bottom: .7rem;
 }
 
 .review-response h3 {
   max-width: 22ch;
+  margin-bottom: .9rem;
+  font-size: clamp(1.75rem, 2.7vw, 2.65rem);
+  line-height: 1.04;
 }
 
-@media (max-width: 1080px) {
-  .review-options {
-    grid-auto-columns: minmax(270px, calc((100% - 1rem) / 2.15));
-  }
+.review-response > p:not(.response-kicker) {
+  max-width: 42rem;
+}
+
+.review-response .oob-cta {
+  margin-top: .55rem;
 }
 
 @media (max-width: 980px) {
@@ -276,6 +309,40 @@ body.home-ui-v4 main {
 
   .hero-art__image {
     max-height: 380px;
+  }
+
+  .review-carousel.is-gallery-ready {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "stage"
+      "nav";
+    gap: 1rem;
+  }
+
+  .review-carousel.is-gallery-ready .review-options {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    gap: .6rem;
+    width: 100%;
+  }
+
+  .review-stage {
+    min-height: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .review-stage__visual {
+    min-height: clamp(240px, 58vw, 390px);
+    max-height: 390px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line, #d8d8d4);
+  }
+
+  .review-stage__image {
+    max-height: 340px;
+  }
+
+  .review-stage__content {
+    padding: clamp(1.4rem, 5vw, 2.4rem);
   }
 }
 
@@ -323,40 +390,42 @@ body.home-ui-v4 main {
     font-size: clamp(2rem, 9vw, 2.65rem);
   }
 
-  .review-carousel__controls {
-    margin-bottom: .45rem;
+  .review-carousel.is-gallery-ready .review-options {
+    gap: .45rem;
+    padding: 4px;
   }
 
-  .review-carousel__status {
-    font-size: .76rem;
+  .review-stage__visual {
+    min-height: clamp(210px, 64vw, 300px);
+    padding: 1rem;
   }
 
-  .review-options {
-    grid-auto-columns: minmax(250px, 86%);
-    gap: .85rem;
-    width: 100%;
-    max-width: 100%;
-    margin-inline: 0;
-    padding: 10px 4px 14px;
-    scroll-padding-inline: 4px;
+  .review-stage__image {
+    max-height: 270px;
   }
 
-  .review-option__art {
-    aspect-ratio: 16 / 10;
+  .review-stage__content {
+    padding: 1.35rem 1.2rem 1.5rem;
   }
 
-  .review-option > span:last-child {
-    padding: .9rem .95rem 0 !important;
-    font-size: 1.08rem !important;
+  .review-response h3 {
+    font-size: clamp(1.65rem, 7vw, 2.15rem);
   }
+}
 
-  .review-response {
-    margin-top: 1.35rem;
+/* On the narrowest phones, preserve real touch targets instead of forcing
+   six tiny squares across one row. All six choices still remain visible. */
+@media (max-width: 380px) {
+  .review-options,
+  .review-carousel.is-gallery-ready .review-options {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: .55rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .review-option {
+  .review-option,
+  .review-stage__image {
     transition: none !important;
   }
 
