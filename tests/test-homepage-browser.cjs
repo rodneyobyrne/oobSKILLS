@@ -22,8 +22,31 @@ const { startStaticServer } = require('./static-server.cjs');
     ]) {
       await page.setViewportSize(viewport);
       await page.goto(`${server.origin}/`, { waitUntil: 'networkidle' });
-      const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
-      assert.equal(overflow, false, `Homepage has no document-level horizontal overflow at ${viewport.width}px`);
+      const overflowState = await page.evaluate(() => {
+        const clientWidth = document.documentElement.clientWidth;
+        const scrollWidth = document.documentElement.scrollWidth;
+        const offenders = [...document.body.querySelectorAll('*')]
+          .map((element) => {
+            const rect = element.getBoundingClientRect();
+            return {
+              tag: element.tagName.toLowerCase(),
+              id: element.id || '',
+              classes: [...element.classList].slice(0, 5).join('.'),
+              left: Math.round(rect.left * 10) / 10,
+              right: Math.round(rect.right * 10) / 10,
+              width: Math.round(rect.width * 10) / 10,
+              scrollWidth: element.scrollWidth,
+              clientWidth: element.clientWidth,
+              overflowX: getComputedStyle(element).overflowX,
+            };
+          })
+          .filter((item) => item.right > clientWidth + 1 || item.left < -1)
+          .sort((a, b) => Math.max(b.right - clientWidth, -b.left) - Math.max(a.right - clientWidth, -a.left))
+          .slice(0, 12);
+        return { overflow: scrollWidth > clientWidth + 1, clientWidth, scrollWidth, offenders };
+      });
+      if (overflowState.overflow) console.error(`Overflow diagnostic ${viewport.width}px: ${JSON.stringify(overflowState)}`);
+      assert.equal(overflowState.overflow, false, `Homepage has no document-level horizontal overflow at ${viewport.width}px`);
     }
 
     await page.setViewportSize({ width: 390, height: 844 });
