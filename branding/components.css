@@ -4,19 +4,20 @@
    Approved outer-box profile:
    - 2 broad peaks per edge
    - 4px rise/fall
-   - 3.2–6.3px nominal line thickness
-   - 2 pressure pools on long edges
+   - 2.2–4.3px nominal line thickness
+   - 2 pressure pools on each edge
    - 2px corner overshoot
    - true 90-degree crossings
 
    Interaction rule:
-   - resting perimeter uses black approved line assets
-   - hover/focus redraws the same geometry in ballpoint blue
+   - resting perimeter uses #808080 approved line assets
+   - hover/focus removes the resting perimeter before redrawing the same geometry in ballpoint blue
    - blue indicates interaction, never decoration
 */
 
 :root {
   --oob-component-ink: var(--ink, #111111);
+  --oob-component-line: #808080;
   --oob-component-paper: var(--paper, #ffffff);
   --oob-component-blue: var(--ballpoint, #244aa5);
   --oob-component-signal: var(--signal, #e4572e);
@@ -46,6 +47,7 @@
   z-index: 4;
   inset: calc(-1 * var(--oob-box-over));
   pointer-events: none;
+  opacity: 1;
   background-image:
     url('/branding/line-top.svg'),
     url('/branding/line-bottom.svg'),
@@ -76,8 +78,8 @@
 }
 
 /* Interactive boxes redraw the exact production perimeter in ballpoint blue.
-   The four edges animate in reading order rather than swapping to a generic
-   CSS border, preserving the approved line math on interaction. */
+   The resting gray stroke is removed first so the blue ink draws onto clean
+   paper rather than stacking on top of the base line. */
 .oob-content-box--interactive::after {
   content: "";
   position: absolute;
@@ -101,6 +103,12 @@
     18px 0,
     18px 0;
   background-repeat: no-repeat;
+}
+
+.oob-content-box--interactive:is(:hover, :focus-visible)::before,
+.oob-content-box--interactive:focus-within::before,
+.oob-content-box--interactive.is-selected::before {
+  opacity: 0;
 }
 
 .oob-content-box--interactive:is(:hover, :focus-visible)::after,
