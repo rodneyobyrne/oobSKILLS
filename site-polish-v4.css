@@ -41,7 +41,6 @@ body:not(.home-ui-v4) .review-option__art {
   text-wrap: balance;
 }
 
-/* H2 support art is intentionally small and simple: one solo robot pose WebP. */
 .section-lockup__art img[data-visual-role="headline-pose"] {
   display: block;
   width: auto;
@@ -65,9 +64,6 @@ body:not(.home-ui-v4) .review-option__art {
   }
 }
 
-/* Homepage v4 is loaded before the legacy polish files by the release builder.
-   These high-specificity rules preserve the approved production geometry after
-   those legacy layers run. */
 body.home-ui-v4 .review-option.oob-content-box::before {
   content: "" !important;
   display: block !important;
@@ -133,7 +129,8 @@ body.home-ui-v4 .review-option > span:last-of-type {
   }
 
   body.home-ui-v4 .hero-copy .lead {
-    max-width: 39rem !important;
+    width: 100% !important;
+    max-width: none !important;
     margin-bottom: 1.8rem;
   }
 
