@@ -76,6 +76,10 @@
   position: relative;
   min-width: 0;
   max-width: 100%;
+  /* The track itself scrolls. This wrapper clips only the 2px decorative ink
+     overshoot so it cannot increase the document width on narrow screens. */
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .review-carousel__controls {
@@ -114,6 +118,7 @@
 }
 
 .review-options {
+  box-sizing: border-box;
   display: grid !important;
   grid-auto-flow: column;
   grid-auto-columns: minmax(270px, calc((100% - 2rem) / 3));
