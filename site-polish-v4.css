@@ -148,6 +148,13 @@ body.home-ui-v4 .review-option > span:last-of-type {
     max-width: 16ch !important;
     font-size: clamp(2rem, 3.4vw, 3.35rem) !important;
   }
+
+  /* Desktop gallery is intentionally a 3-up viewport. Keep the card width
+     deterministic so legacy grid sizing cannot collapse it below the visual
+     target while the strip still scrolls to the remaining cards. */
+  body.home-ui-v4 .review-options {
+    grid-auto-columns: calc((100% - 2rem) / 3) !important;
+  }
 }
 
 @media (max-width: 720px) {
