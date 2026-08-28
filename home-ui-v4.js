@@ -56,7 +56,7 @@
     });
 
     if (sourceImage) {
-      stageImage.src = sourceImage.currentSrc || sourceImage.getAttribute('src') || '';
+      stageImage.src = sourceImage.getAttribute('src') || sourceImage.currentSrc || '';
       stageImage.classList.toggle('review-stage__image--pose', sourceImage.classList.contains('review-option__art--pose'));
     }
 
