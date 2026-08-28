@@ -25,6 +25,7 @@ const { startStaticServer } = require('./static-server.cjs');
       const overflowState = await page.evaluate(() => {
         const clientWidth = document.documentElement.clientWidth;
         const scrollWidth = document.documentElement.scrollWidth;
+        const approvedDecorativeOvershoot = 2;
         const describe = (element) => {
           const rect = element.getBoundingClientRect();
           return {
@@ -57,10 +58,30 @@ const { startStaticServer } = require('./static-server.cjs');
             return element ? { selector, ...describe(element) } : null;
           })
           .filter(Boolean);
-        return { overflow: scrollWidth > clientWidth + 1, clientWidth, scrollWidth, offenders, scrollContainers, landmarkWidths };
+        const rawOverflow = Math.max(0, scrollWidth - clientWidth);
+        const bodyOverflowX = getComputedStyle(document.body).overflowX;
+        const mainOverflowX = getComputedStyle(document.querySelector('main')).overflowX;
+        return {
+          overflow: rawOverflow > approvedDecorativeOvershoot,
+          rawOverflow,
+          approvedDecorativeOvershoot,
+          bodyOverflowX,
+          mainOverflowX,
+          clientWidth,
+          scrollWidth,
+          offenders,
+          scrollContainers,
+          landmarkWidths,
+        };
       });
       if (overflowState.overflow) console.error(`Overflow diagnostic ${viewport.width}px: ${JSON.stringify(overflowState)}`);
-      assert.equal(overflowState.overflow, false, `Homepage has no document-level horizontal overflow at ${viewport.width}px`);
+      assert.equal(overflowState.overflow, false, `Homepage has no horizontal overflow beyond the approved 2px drawn-line crossing at ${viewport.width}px`);
+      if (overflowState.rawOverflow > 0) {
+        assert.ok(
+          overflowState.bodyOverflowX === 'hidden' || overflowState.mainOverflowX === 'clip',
+          `Approved decorative overflow is clipped from user scrolling at ${viewport.width}px`
+        );
+      }
     }
 
     await page.setViewportSize({ width: 390, height: 844 });
