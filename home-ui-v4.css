@@ -2,6 +2,12 @@
    Uses the shared branding line component as the source of truth.
    Scope: homepage only via body.home-ui-v4. */
 
+body.home-ui-v4 {
+  /* The 2px hand-drawn stroke overshoot is intentional. Keep it visual rather
+     than allowing decorative ink to create document-level sideways scrolling. */
+  overflow-x: hidden;
+}
+
 .home-ui-v4 .operator-hero .hero-jump {
   max-width: 32rem;
 }
@@ -205,6 +211,12 @@
 .home-ui-v4 .oob-cta {
   position: relative;
   z-index: 2;
+  max-width: 100%;
+}
+
+.home-ui-v4 .oob-cta > span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .home-ui-v4 .oob-cta--callback {
@@ -253,6 +265,11 @@
   .home-ui-v4 .participation-actions {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .home-ui-v4 .participation-actions .oob-cta,
+  .home-ui-v4 .final-cta .oob-cta {
+    width: 100%;
   }
 }
 
