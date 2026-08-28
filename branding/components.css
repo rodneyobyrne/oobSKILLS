@@ -3,10 +3,10 @@
 
    Approved outer-box profile:
    - 2 broad peaks per edge
-   - 5px rise/fall
-   - 3.4–5.3px nominal line thickness
-   - 1 pressure pool per edge
-   - 3px corner overshoot
+   - 7px rise/fall
+   - 3.2–6.3px nominal line thickness
+   - 2 pressure pools on long edges
+   - 2px corner overshoot
    - true 90-degree crossings
 */
 
@@ -20,7 +20,7 @@
 
 .oob-drawn-box,
 .oob-content-box {
-  --oob-box-over: 3px;
+  --oob-box-over: 2px;
   position: relative;
   border: 0 !important;
   border-radius: 0 !important;
@@ -47,10 +47,10 @@
     left var(--oob-box-over) top,
     right var(--oob-box-over) top;
   background-size:
-    100% 14px,
-    100% 14px,
-    14px 100%,
-    14px 100%;
+    100% 18px,
+    100% 18px,
+    18px 100%,
+    18px 100%;
   background-repeat: no-repeat;
 }
 
