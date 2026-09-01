@@ -5,33 +5,40 @@ const { JSDOM } = require('jsdom');
 
 const root = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-const polish = fs.readFileSync(path.join(root, 'site-polish-v3.js'), 'utf8');
 const dom = new JSDOM(html);
 const { document } = dom.window;
 
-assert.equal(
-  document.querySelector('#review-question')?.textContent.trim(),
-  'The right first move depends on where the work is breaking.',
-  'Homepage problem H2 states the useful answer rather than repeating the question.'
+const cards = [...document.querySelectorAll('.review-path-card')];
+assert.equal(cards.length, 6, 'Homepage has six standalone problem-path cards.');
+assert.equal(document.querySelectorAll('[data-review-carousel], .review-option, .review-stage').length, 0, 'Legacy selector/carousel markup is retired.');
+
+assert.deepEqual(
+  cards.map(card => card.querySelector('.review-path-card__front .eyebrow')?.textContent.trim()),
+  ['Customer Contact', 'Workflow + Systems', 'AI + Your Team', 'Website + Message', 'Test an Idea', 'Founder Bottleneck'],
+  'The six public categories remain explicit in crawlable HTML.'
 );
 
 assert.deepEqual(
-  [...document.querySelectorAll('.review-option span:last-of-type')].map((node) => node.textContent.trim()),
+  cards.map(card => card.querySelector('h2')?.textContent.trim()),
   [
-    'We miss calls, scheduling, intake or follow-up.',
-    'Repeated work and disconnected systems keep stealing time.',
-    'My team uses AI, but we need clearer rules or better tool choices.',
-    'Our website or message does not explain why people should choose us.',
-    'I have an idea to test before a full build.',
-    'Too many decisions and corrections keep coming back to me.'
+    'Fix the first customer handoff that gets missed.',
+    'Map the repeated work before automating it.',
+    'Choose AI around the work, not around the demo.',
+    'Test the buying information before redesigning the website.',
+    'Test who it is for and why they would care before building the whole idea.',
+    'Give the team more context without giving up the standard.'
   ],
-  'Homepage gallery retains direct problem language rather than generic labels.'
+  'Each pathway H2 is an answer that matches the situation and image.'
 );
 
-assert.equal(document.querySelectorAll('.review-option').length, 6, 'Homepage problem gallery has six bounded starting points.');
-assert.ok(document.querySelector('[data-review-carousel]'), 'Homepage problem choices are explicitly presented as a carousel.');
-assert.equal(polish.includes('Which problem feels most familiar right now?'), false, 'Runtime polish script must not overwrite the H2.');
-assert.equal(polish.includes("opportunity: 'Find what’s useful.'"), false, 'Runtime polish script must not overwrite problem labels.');
-assert.equal(polish.includes('review-option__outline'), false, 'Legacy SVG outline injection is retired in favor of shared production line math.');
+for (const card of cards) {
+  assert.ok(card.querySelector('.review-path-card__front p:not(.eyebrow):not(.review-path-card__hint)')?.textContent.trim(), 'Front supporting copy is in source HTML.');
+  assert.ok(card.querySelector('.review-path-card__back h3')?.textContent.trim(), 'Next-step heading is in source HTML.');
+  assert.ok(card.querySelector('.review-path-card__back p:not(.eyebrow)')?.textContent.trim(), 'Next-step supporting copy is in source HTML.');
+  assert.ok(card.querySelector('.review-path-card__back a[href]')?.textContent.trim(), 'CTA label and destination are in source HTML.');
+}
 
-console.log('Homepage problem-first copy and carousel guard tests passed.');
+assert.equal(document.querySelector('script[src="/home-ui-v4.js"]'), null, 'The old selector JavaScript is no longer required by the homepage.');
+assert.ok(document.querySelector('link[href="/review-path-cards.css"]'), 'Homepage loads the dedicated pathway-card presentation layer.');
+
+console.log('Homepage six-path SEO/LLM content tests passed.');
