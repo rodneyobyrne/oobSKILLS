@@ -32,8 +32,8 @@ jobs:
         run: npm run test:browser
       - name: Verify homepage release assets
         run: |
-          file _site/images/ai-relationship/ai-workflow-map.webp | grep -F "Web/P image"
-          grep -F 'src="/images/ai-relationship/ai-workflow-map.webp"' _site/index.html
+          file _site/images/ai-character/poses/robot-confident.webp | grep -F "Web/P image"
+          grep -F 'src="/images/ai-character/poses/robot-confident.webp"' _site/index.html
           grep -F "/home-ai-cards-v3.css?v=${GITHUB_SHA}" _site/index.html
           ! grep -F 'oob-ai-hero-animated.svg' _site/index.html
       - name: Upload tested Pages artifact
