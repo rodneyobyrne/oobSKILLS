@@ -1,0 +1,160 @@
+/* Canonical oobSKILLS primary navigation.
+   Reviews = understand what is happening.
+   Tools for AI = decide, test and implement AI deliberately.
+   Start Here remains the guided navigator above both paths. */
+
+.desktop-nav {
+  gap: clamp(.65rem, 1.15vw, 1.25rem);
+}
+
+.desktop-nav .nav-group {
+  position: relative;
+}
+
+.desktop-nav .nav-group > summary {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  padding-block: .4rem;
+  cursor: pointer;
+  list-style: none;
+  font-size: .73rem;
+  font-weight: 700;
+  letter-spacing: .055em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.desktop-nav .nav-group > summary::-webkit-details-marker,
+.mobile-nav .nav-group > summary::-webkit-details-marker {
+  display: none;
+}
+
+.desktop-nav .nav-group > summary::after {
+  content: "▾";
+  color: #aebbe7;
+  font-size: .72rem;
+  transform: translateY(-1px);
+}
+
+.desktop-nav .nav-group > summary::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .18s ease;
+}
+
+.desktop-nav .nav-group:hover > summary::before,
+.desktop-nav .nav-group:focus-within > summary::before,
+.desktop-nav .nav-group[open] > summary::before {
+  transform: scaleX(1);
+}
+
+.nav-group__menu {
+  display: none;
+}
+
+.desktop-nav .nav-group__menu {
+  position: absolute;
+  z-index: 1100;
+  top: calc(100% + .65rem);
+  left: -.9rem;
+  width: min(360px, 88vw);
+  padding: .55rem;
+  background: #000;
+  border: 1px solid #444;
+  box-shadow: 7px 9px 0 rgba(0,0,0,.16);
+}
+
+.desktop-nav .nav-group:hover .nav-group__menu,
+.desktop-nav .nav-group:focus-within .nav-group__menu,
+.desktop-nav .nav-group[open] .nav-group__menu {
+  display: grid;
+}
+
+.desktop-nav .nav-group__menu a,
+.mobile-nav .nav-group__menu a {
+  display: block;
+  padding: .68rem .75rem;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .01em;
+  line-height: 1.3;
+  text-transform: none;
+}
+
+.desktop-nav .nav-group__menu a:hover,
+.desktop-nav .nav-group__menu a:focus-visible {
+  background: #fff;
+  color: #111;
+  outline: none;
+}
+
+.desktop-nav .nav-group__menu .nav-menu-all {
+  margin-top: .2rem;
+  padding-top: .8rem;
+  border-top: 1px solid #444;
+  color: #bfcaf0;
+}
+
+.mobile-nav .nav-group {
+  border-top: 1px solid #333;
+}
+
+.mobile-nav .nav-group > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .8rem 0;
+  cursor: pointer;
+  list-style: none;
+  font-size: .73rem;
+  font-weight: 700;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+
+.mobile-nav .nav-group > summary::after {
+  content: "+";
+  color: #aebbe7;
+  font-size: 1rem;
+}
+
+.mobile-nav .nav-group[open] > summary::after {
+  content: "−";
+}
+
+.mobile-nav .nav-group__menu {
+  padding: 0 0 .65rem .65rem;
+  border-left: 2px solid var(--ballpoint, #244aa5);
+}
+
+.mobile-nav .nav-group[open] .nav-group__menu {
+  display: block;
+}
+
+.mobile-nav .nav-group__menu .nav-menu-all {
+  color: #bfcaf0;
+}
+
+@media (max-width: 1080px) {
+  .desktop-nav {
+    gap: .65rem;
+  }
+  .desktop-nav a,
+  .desktop-nav .nav-group > summary {
+    font-size: .67rem;
+    letter-spacing: .035em;
+  }
+  .nav-cta {
+    padding-inline: .85rem;
+  }
+}
