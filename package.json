@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Build and release checks for the oobCREATIVE Skills static site.",
   "scripts": {
-    "build": "node scripts/build-site.mjs",
+    "build": "node scripts/build-site.mjs && node scripts/postbuild-homepage-pathways.mjs",
     "check:site": "node scripts/check-public-site.mjs _site",
     "check:links": "node scripts/check-internal-links.mjs _site",
     "check:secrets": "node scripts/scan-secrets.mjs",
