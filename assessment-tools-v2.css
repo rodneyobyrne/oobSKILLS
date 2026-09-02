@@ -1,0 +1,430 @@
+/* Unified oobSKILLS review/tool experience.
+   This stylesheet is injected only on review, assessment and tool pages.
+   Goal: one clear workfile language instead of mixed SaaS cards, shadows and rounded panels. */
+
+:root {
+  --oob-work-paper: var(--paper, #fff);
+  --oob-work-soft: var(--paper-soft, #f5f5f1);
+  --oob-work-blue: var(--paper-blue, #eef3ff);
+  --oob-work-ink: var(--ink, #111);
+  --oob-work-line: #808080;
+  --oob-work-accent: var(--ballpoint, #244aa5);
+}
+
+body[data-oob-experience] .content-hero {
+  padding-block: clamp(3.4rem, 7vw, 6rem);
+}
+
+body[data-oob-experience] .content-hero__inner {
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+body[data-oob-experience] .content-hero h1,
+body[data-oob-experience] .review-hero h1,
+body[data-oob-experience] .hero h1 {
+  max-width: 15ch;
+  text-wrap: balance;
+}
+
+body[data-oob-experience] .content-hero__aside,
+body[data-oob-experience] .decision-note,
+body[data-oob-experience] .product-summary,
+body[data-oob-experience] .review-guide,
+body[data-oob-experience] .review-context,
+body[data-oob-experience] .privacy-note {
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background-color: var(--oob-work-paper) !important;
+  background-image:
+    url('/branding/line-top.svg?v=20260902-workfile'),
+    url('/branding/line-bottom.svg?v=20260902-workfile'),
+    url('/branding/line-left.svg?v=20260902-workfile'),
+    url('/branding/line-right.svg?v=20260902-workfile');
+  background-position: left top, left bottom, left top, right top;
+  background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100%;
+  background-repeat: no-repeat;
+  color: var(--oob-work-ink) !important;
+}
+
+body[data-oob-experience] .content-hero__aside,
+body[data-oob-experience] .decision-note,
+body[data-oob-experience] .product-summary,
+body[data-oob-experience] .review-guide,
+body[data-oob-experience] .review-context {
+  padding: clamp(1.2rem, 2.6vw, 1.8rem);
+}
+
+body[data-oob-experience] .content-hero__aside p,
+body[data-oob-experience] .decision-note p,
+body[data-oob-experience] .product-summary p,
+body[data-oob-experience] .review-guide p,
+body[data-oob-experience] .review-context p {
+  color: var(--soft, #444) !important;
+}
+
+body[data-oob-experience] .product-summary .meta,
+body[data-oob-experience] .decision-note .meta,
+body[data-oob-experience] .content-hero__aside .meta {
+  color: var(--oob-work-accent) !important;
+}
+
+body[data-oob-experience] .product-summary .text-link,
+body[data-oob-experience] .product-summary .text-link--light {
+  color: var(--oob-work-accent) !important;
+}
+
+/* The interactive area should read like a physical working sheet. */
+body[data-oob-experience] .review-workspace,
+body[data-oob-experience] .review-result,
+body[data-oob-experience] .tool-form,
+body[data-oob-experience] .fit-form,
+body[data-oob-experience] .tool-result,
+body[data-oob-experience] .fit-result,
+body[data-oob-experience] .review-card,
+body[data-oob-experience] .report {
+  position: relative;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background-color: var(--oob-work-paper) !important;
+  background-image:
+    url('/branding/line-top.svg?v=20260902-workfile'),
+    url('/branding/line-bottom.svg?v=20260902-workfile'),
+    url('/branding/line-left.svg?v=20260902-workfile'),
+    url('/branding/line-right.svg?v=20260902-workfile');
+  background-position: left top, left bottom, left top, right top;
+  background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100%;
+  background-repeat: no-repeat;
+}
+
+body[data-oob-experience] .tool-form,
+body[data-oob-experience] .fit-form {
+  margin-top: 1.4rem;
+  padding: clamp(1.35rem, 3.5vw, 2.4rem);
+}
+
+body[data-oob-experience] .review-workspace,
+body[data-oob-experience] .review-result,
+body[data-oob-experience] .tool-result,
+body[data-oob-experience] .fit-result,
+body[data-oob-experience] .report {
+  padding: clamp(1.35rem, 4vw, 3rem);
+}
+
+/* Progress is useful, but it should not dominate the page. */
+body[data-oob-experience] .review-progress {
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background-color: var(--oob-work-paper) !important;
+  background-image:
+    url('/branding/line-top.svg?v=20260902-workfile'),
+    url('/branding/line-bottom.svg?v=20260902-workfile'),
+    url('/branding/line-left.svg?v=20260902-workfile'),
+    url('/branding/line-right.svg?v=20260902-workfile');
+  background-position: left top, left bottom, left top, right top;
+  background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100%;
+  background-repeat: no-repeat;
+}
+
+body[data-oob-experience] .review-progress li {
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+body[data-oob-experience] .review-progress li[aria-current='step'],
+body[data-oob-experience] .review-progress .is-current {
+  background: var(--oob-work-blue) !important;
+  color: var(--oob-work-ink) !important;
+  box-shadow: inset 0 -4px 0 var(--oob-work-accent);
+}
+
+body[data-oob-experience] .progress-track,
+body[data-oob-experience] .review-progress__track {
+  height: 5px;
+  background: #dcdcd6;
+}
+
+/* Questions and inputs: calm hierarchy, larger targets, less generic form chrome. */
+body[data-oob-experience] .field,
+body[data-oob-experience] .tool-form > label,
+body[data-oob-experience] .tool-form > fieldset {
+  margin: 0;
+}
+
+body[data-oob-experience] .tool-form > label,
+body[data-oob-experience] .tool-form > fieldset {
+  padding: 1rem 0 1.2rem;
+  border: 0;
+  border-bottom: 1px solid var(--line, #d8d8d4);
+}
+
+body[data-oob-experience] .tool-form > label:first-child,
+body[data-oob-experience] .tool-form > fieldset:first-child {
+  padding-top: .2rem;
+}
+
+body[data-oob-experience] .tool-form label,
+body[data-oob-experience] .field label,
+body[data-oob-experience] .choice-group > legend,
+body[data-oob-experience] .fit-form legend {
+  color: var(--oob-work-ink);
+  font-weight: 760;
+  line-height: 1.35;
+}
+
+body[data-oob-experience] .tool-form input,
+body[data-oob-experience] .tool-form textarea,
+body[data-oob-experience] .tool-form select,
+body[data-oob-experience] .field input,
+body[data-oob-experience] .field textarea,
+body[data-oob-experience] .field select,
+body[data-oob-experience] .text-input {
+  border: 1px solid #73736e !important;
+  border-radius: 0 !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+body[data-oob-experience] .tool-form input:focus,
+body[data-oob-experience] .tool-form textarea:focus,
+body[data-oob-experience] .tool-form select:focus,
+body[data-oob-experience] .field input:focus-visible,
+body[data-oob-experience] .field textarea:focus-visible,
+body[data-oob-experience] .field select:focus-visible,
+body[data-oob-experience] .text-input:focus-visible {
+  border-color: var(--oob-work-accent) !important;
+  outline: 3px solid var(--oob-work-accent) !important;
+  outline-offset: 2px;
+}
+
+body[data-oob-experience] .choice-list,
+body[data-oob-experience] .fit-options,
+body[data-oob-experience] .review-options,
+body[data-oob-experience] .options {
+  gap: .65rem;
+}
+
+body[data-oob-experience] .choice-list label,
+body[data-oob-experience] .review-consent label,
+body[data-oob-experience] .fit-options label,
+body[data-oob-experience] .review-options label > span,
+body[data-oob-experience] .choice label {
+  border: 1px solid #9b9b95 !important;
+  border-radius: 0 !important;
+  background: var(--oob-work-paper) !important;
+  box-shadow: none !important;
+}
+
+body[data-oob-experience] .choice-list label:hover,
+body[data-oob-experience] .fit-options label:hover,
+body[data-oob-experience] .review-options label:hover > span,
+body[data-oob-experience] .choice label:hover {
+  border-color: var(--oob-work-ink) !important;
+}
+
+body[data-oob-experience] .choice-list label:has(input:checked),
+body[data-oob-experience] .review-consent label:has(input:checked),
+body[data-oob-experience] .fit-options label:has(input:checked),
+body[data-oob-experience] .review-options input:checked + span,
+body[data-oob-experience] .choice input:checked + label {
+  border-color: var(--oob-work-accent) !important;
+  background: var(--oob-work-blue) !important;
+  box-shadow: inset 0 -4px 0 var(--oob-work-accent) !important;
+}
+
+body[data-oob-experience] .fit-form fieldset {
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--line, #d8d8d4);
+}
+
+body[data-oob-experience] .fit-form fieldset:first-child {
+  border-top: 0;
+}
+
+body[data-oob-experience] .fit-options label {
+  min-height: 48px;
+  padding: .7rem .9rem;
+}
+
+body[data-oob-experience] .review-step > legend,
+body[data-oob-experience] .stage-heading h2,
+body[data-oob-experience] .review-section__heading h3 {
+  text-wrap: balance;
+}
+
+/* Results should feel like the completed version of the same sheet. */
+body[data-oob-experience] .tool-result,
+body[data-oob-experience] .fit-result,
+body[data-oob-experience] .review-result {
+  margin-top: clamp(1.75rem, 4vw, 3rem);
+}
+
+body[data-oob-experience] .tool-result::before {
+  width: min(9rem, 34%);
+  height: 3px;
+  background: var(--oob-work-accent);
+}
+
+body[data-oob-experience] .result-grid,
+body[data-oob-experience] .review-result__grid {
+  gap: .8rem;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+body[data-oob-experience] .result-card,
+body[data-oob-experience] .health-card,
+body[data-oob-experience] .tool-card,
+body[data-oob-experience] .draft-card,
+body[data-oob-experience] .result-check {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--oob-work-soft) !important;
+  box-shadow: inset 4px 0 0 var(--oob-work-accent);
+}
+
+body[data-oob-experience] .result-verdict,
+body[data-oob-experience] .result-next-step,
+body[data-oob-experience] .next-decision,
+body[data-oob-experience] .content-note,
+body[data-oob-experience] .review-result__status {
+  border-radius: 0 !important;
+}
+
+body[data-oob-experience] .review-submit,
+body[data-oob-experience] .review-next-step {
+  background: var(--oob-work-blue) !important;
+  color: var(--oob-work-ink) !important;
+  border-top: 5px solid var(--oob-work-accent);
+}
+
+body[data-oob-experience] .review-submit p,
+body[data-oob-experience] .review-next-step p:not(.meta) {
+  color: var(--soft, #444) !important;
+}
+
+/* Audience Review still has its older standalone style. Bring it into the same family without changing its logic. */
+body[data-oob-experience='audience-review'] {
+  background: var(--oob-work-soft) !important;
+}
+
+body[data-oob-experience='audience-review'] .tool-shell {
+  background: linear-gradient(180deg, #fff 0 25rem, var(--oob-work-soft) 25rem) !important;
+}
+
+body[data-oob-experience='audience-review'] .review-card,
+body[data-oob-experience='audience-review'] .report {
+  overflow: visible;
+}
+
+body[data-oob-experience='audience-review'] .button {
+  border-radius: 8px 5px 10px 6px / 6px 10px 5px 9px !important;
+}
+
+body[data-oob-experience='audience-review'] .privacy-note {
+  padding: 1rem 1.1rem !important;
+}
+
+/* Reviews hub: cards read as a library of decisions, not a pricing/product page. */
+body[data-oob-experience='reviews-hub'] .product-layout {
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+body[data-oob-experience='reviews-hub'] .product-summary {
+  top: 108px;
+}
+
+body[data-oob-experience='reviews-hub'] .product-summary h2 {
+  max-width: 16ch;
+}
+
+@media (max-width: 820px) {
+  body[data-oob-experience] .review-progress ol,
+  body[data-oob-experience] .review-progress {
+    min-width: 0;
+  }
+
+  body[data-oob-experience] .review-progress ol {
+    display: flex !important;
+    grid-template-columns: none !important;
+    gap: .45rem !important;
+    overflow-x: auto;
+    padding-bottom: .35rem;
+    scroll-snap-type: x proximity;
+  }
+
+  body[data-oob-experience] .review-progress ol li {
+    flex: 0 0 auto;
+    min-width: min(13rem, 72vw);
+    padding: .7rem .8rem;
+    white-space: normal;
+    scroll-snap-align: start;
+  }
+
+  body[data-oob-experience] .review-progress:not(:has(ol)) {
+    overflow: hidden;
+  }
+
+  body[data-oob-experience] .review-card > .review-progress {
+    display: flex !important;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+  }
+
+  body[data-oob-experience] .review-card > .review-progress li {
+    flex: 0 0 min(14rem, 76vw);
+    scroll-snap-align: start;
+  }
+
+  body[data-oob-experience] .content-hero__aside,
+  body[data-oob-experience] .decision-note,
+  body[data-oob-experience] .product-summary {
+    width: 100%;
+  }
+}
+
+@media (max-width: 620px) {
+  body[data-oob-experience] .review-workspace,
+  body[data-oob-experience] .review-result,
+  body[data-oob-experience] .tool-form,
+  body[data-oob-experience] .fit-form,
+  body[data-oob-experience] .tool-result,
+  body[data-oob-experience] .fit-result,
+  body[data-oob-experience] .report {
+    padding: 1.15rem;
+  }
+
+  body[data-oob-experience] .review-step > legend {
+    font-size: clamp(1.8rem, 9vw, 2.6rem);
+  }
+
+  body[data-oob-experience] .tool-form .button,
+  body[data-oob-experience] .fit-form .button,
+  body[data-oob-experience] .review-actions .button,
+  body[data-oob-experience] .result-actions .button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-oob-experience] .choice label,
+  body[data-oob-experience] .review-options label > span,
+  body[data-oob-experience] .choice-list label,
+  body[data-oob-experience] .fit-options label {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+@media print {
+  body[data-oob-experience] .review-workspace,
+  body[data-oob-experience] .review-result,
+  body[data-oob-experience] .tool-result,
+  body[data-oob-experience] .fit-result,
+  body[data-oob-experience] .report {
+    background-image: none !important;
+    border: 1px solid #111 !important;
+  }
+}
