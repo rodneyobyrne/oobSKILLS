@@ -20,6 +20,7 @@ const publicFiles = [
   'home-ai-cards-v3.css',
   'home-ui-v4.css',
   'home-ui-v4.js',
+  'navigation-v2.css',
   'review-path-cards.css',
   'section-lockups.css',
   'site-layout-v2.css',
@@ -50,6 +51,75 @@ const publicDirectories = [
   'workfiles',
 ];
 
+const desktopNavigation = `<nav class="desktop-nav" aria-label="Primary navigation">
+  <a href="/">Home</a>
+  <a href="/start-here/">Start Here</a>
+  <details class="nav-group nav-group--reviews">
+    <summary>Reviews</summary>
+    <div class="nav-group__menu">
+      <a href="/assessments/customer-flow-review/">Customer Flow Health Review</a>
+      <a href="/audience-review/">Audience Review</a>
+      <a href="/tools/founder-bottleneck-review/">Founder Bottleneck Review</a>
+      <a href="/tools/workflow-systems-review/">Workflow &amp; Systems Review</a>
+      <a href="/tools/website-message-clarity-review/">Website Message Clarity Review</a>
+      <a href="/tools/customer-contact-workflow-review/">Customer Contact Workflow Review</a>
+      <a href="/tools/digital-project-recovery-review/">Digital Project Recovery Review</a>
+      <a href="/assessments/idea-to-test-review/">Idea-to-Test Review</a>
+      <a class="nav-menu-all" href="/assessments/">All Reviews</a>
+    </div>
+  </details>
+  <details class="nav-group nav-group--ai">
+    <summary>Tools for AI</summary>
+    <div class="nav-group__menu">
+      <a href="/assessments/ai-workday-review/">Review Your Workday for AI</a>
+      <a href="/tools/ai-pilot-starter/">Start an AI Pilot</a>
+      <a href="/workfiles/ai-workday-map/">Map Your AI Workflow</a>
+      <a href="/tools/ai-fit-check/">AI Fit Check</a>
+      <a href="/tools/ai-tool-match/">AI Tool Match</a>
+      <a href="/tools/human-review-checklist/">Human Review Checklist</a>
+    </div>
+  </details>
+  <a href="/free-tools/">Resources</a>
+  <a href="https://oobcreative.com/">About</a>
+  <a class="nav-cta" href="mailto:hello@oobcreative.com?subject=oobSKILLS%20conversation">Talk to oobCREATIVE</a>
+</nav>`;
+
+const mobileNavigation = `<details class="mobile-nav">
+  <summary aria-label="Open navigation"><span></span><span></span><span></span></summary>
+  <nav aria-label="Mobile navigation">
+    <a href="/">Home</a>
+    <a href="/start-here/">Start Here</a>
+    <details class="nav-group nav-group--reviews">
+      <summary>Reviews</summary>
+      <div class="nav-group__menu">
+        <a href="/assessments/customer-flow-review/">Customer Flow Health Review</a>
+        <a href="/audience-review/">Audience Review</a>
+        <a href="/tools/founder-bottleneck-review/">Founder Bottleneck Review</a>
+        <a href="/tools/workflow-systems-review/">Workflow &amp; Systems Review</a>
+        <a href="/tools/website-message-clarity-review/">Website Message Clarity Review</a>
+        <a href="/tools/customer-contact-workflow-review/">Customer Contact Workflow Review</a>
+        <a href="/tools/digital-project-recovery-review/">Digital Project Recovery Review</a>
+        <a href="/assessments/idea-to-test-review/">Idea-to-Test Review</a>
+        <a class="nav-menu-all" href="/assessments/">All Reviews</a>
+      </div>
+    </details>
+    <details class="nav-group nav-group--ai">
+      <summary>Tools for AI</summary>
+      <div class="nav-group__menu">
+        <a href="/assessments/ai-workday-review/">Review Your Workday for AI</a>
+        <a href="/tools/ai-pilot-starter/">Start an AI Pilot</a>
+        <a href="/workfiles/ai-workday-map/">Map Your AI Workflow</a>
+        <a href="/tools/ai-fit-check/">AI Fit Check</a>
+        <a href="/tools/ai-tool-match/">AI Tool Match</a>
+        <a href="/tools/human-review-checklist/">Human Review Checklist</a>
+      </div>
+    </details>
+    <a href="/free-tools/">Resources</a>
+    <a href="https://oobcreative.com/">About</a>
+    <a class="nav-cta" href="mailto:hello@oobcreative.com?subject=oobSKILLS%20conversation">Talk to oobCREATIVE</a>
+  </nav>
+</details>`;
+
 const contextualLinkBlocks = new Map([
   [
     'assessments/ai-workday-review/index.html',
@@ -60,7 +130,7 @@ const contextualLinkBlocks = new Map([
       </div>
       <div class="site-shell content-grid">
         <article class="content-card"><p class="meta">Understand the method</p><h3>Practical AI</h3><p>See why oobCREATIVE starts with the workflow, human review and consequence before choosing an AI tool.</p><a class="text-link" href="/practical-ai/">Read the Practical AI guidance <span aria-hidden="true">→</span></a></article>
-        <article class="content-card"><p class="meta">Compare the options</p><h3>Assessments</h3><p>See the other guided WORKFILE paths and choose the amount of structure that fits the question.</p><a class="text-link" href="/assessments/">See all assessments <span aria-hidden="true">→</span></a></article>
+        <article class="content-card"><p class="meta">Compare the options</p><h3>Reviews</h3><p>See the other guided review paths and choose the amount of structure that fits the question.</p><a class="text-link" href="/assessments/">See all reviews <span aria-hidden="true">→</span></a></article>
         <article class="content-card"><p class="meta">Browser privacy</p><h3>How your information is handled</h3><p>Review the site privacy details for browser processing, local drafts and the limits of these tools.</p><a class="text-link" href="/privacy-policy/">Read the Privacy Policy <span aria-hidden="true">→</span></a></article>
       </div>
     </section>`,
@@ -85,7 +155,7 @@ const contextualLinkBlocks = new Map([
         <div><p class="eyebrow">Related resources</p><h2>See the tools this policy is protecting.</h2></div>
         <p class="section-side-note">The free tools explain their browser, draft and review behavior in context. Use only the tool that fits the decision in front of you.</p>
       </div>
-      <div class="site-shell"><a class="text-link" href="/free-tools/">See the free practical tools <span aria-hidden="true">→</span></a></div>
+      <div class="site-shell"><a class="text-link" href="/free-tools/">See the resources <span aria-hidden="true">→</span></a></div>
     </section>`,
   ],
 ]);
@@ -112,6 +182,9 @@ function versionLocalAssets(html) {
 
 function injectSiteAssets(html) {
   let next = html;
+  if (!next.includes('/navigation-v2.css')) {
+    next = next.replace('</head>', `    <link rel="stylesheet" href="/navigation-v2.css?v=${releaseVersion}">\n  </head>`);
+  }
   if (!next.includes('/site-layout-v2.css')) {
     next = next.replace('</head>', `    <link rel="stylesheet" href="/site-layout-v2.css?v=${releaseVersion}">\n  </head>`);
   }
@@ -127,6 +200,12 @@ function injectSiteAssets(html) {
   if (!next.includes('/site-polish-v4.js')) {
     next = next.replace('</head>', `    <script defer src="/site-polish-v4.js?v=${releaseVersion}"></script>\n  </head>`);
   }
+  return next;
+}
+
+function replacePrimaryNavigation(html) {
+  let next = html.replace(/<nav class="desktop-nav"[^>]*>[\s\S]*?<\/nav>/i, desktopNavigation);
+  next = next.replace(/<details class="mobile-nav"[^>]*>[\s\S]*?<\/details>/i, mobileNavigation);
   return next;
 }
 
@@ -149,7 +228,8 @@ for (const absolutePath of walk(outputRoot)) {
   const outputFile = relative(outputRoot, absolutePath).split(sep).join('/');
   const html = readFileSync(absolutePath, 'utf8');
   const withContextualLinks = injectContextualLinks(html, outputFile);
-  writeFileSync(absolutePath, injectSiteAssets(versionLocalAssets(withContextualLinks)));
+  const withCanonicalNavigation = replacePrimaryNavigation(withContextualLinks);
+  writeFileSync(absolutePath, injectSiteAssets(versionLocalAssets(withCanonicalNavigation)));
 }
 
 writeFileSync(join(outputRoot, '.nojekyll'), '');
