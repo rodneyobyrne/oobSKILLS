@@ -1,5 +1,6 @@
-/* Direct-image rendering: semantic WebP image files, no sprite sheets or crop math.
-   The homepage production UI now owns its own hero/card geometry. */
+/* Direct-image rendering for non-homepage content pages.
+   The homepage now owns its hero and card geometry through hero-animation.css,
+   home-ui-v4.css, review-path-cards.css and branding/components.css. */
 
 body:not(.home-ui-v4) .hero-art {
   position: relative;
@@ -61,126 +62,6 @@ body:not(.home-ui-v4) .review-option__art {
   body:not(.home-ui-v4) .hero-art {
     width: calc(100% + 1rem);
     margin-inline: -.5rem;
-  }
-}
-
-body.home-ui-v4 .review-option.oob-content-box::before {
-  content: "" !important;
-  display: block !important;
-  background-image:
-    url('/branding/line-top.svg?v=20260828-gray-22-43'),
-    url('/branding/line-bottom.svg?v=20260828-gray-22-43'),
-    url('/branding/line-left.svg?v=20260828-gray-22-43'),
-    url('/branding/line-right.svg?v=20260828-gray-22-43') !important;
-}
-
-body.home-ui-v4 .review-option.oob-content-box--interactive::after {
-  content: "" !important;
-  display: block !important;
-  background-image:
-    url('/branding/line-top-blue.svg?v=20260828-gray-22-43'),
-    url('/branding/line-bottom-blue.svg?v=20260828-gray-22-43'),
-    url('/branding/line-left-blue.svg?v=20260828-gray-22-43'),
-    url('/branding/line-right-blue.svg?v=20260828-gray-22-43') !important;
-}
-
-body.home-ui-v4 .review-option__outline {
-  display: none !important;
-}
-
-body.home-ui-v4 .review-option__art {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  flex: 0 0 auto;
-  background: var(--paper-soft, #f7f7f5);
-  border-bottom: 1px solid var(--line, #d8d8d4);
-}
-
-body.home-ui-v4 .review-option__art--pose {
-  object-fit: contain;
-  padding: 1.2rem;
-}
-
-body.home-ui-v4 .review-option > span:last-of-type {
-  min-height: 0 !important;
-  padding: 1rem 1rem 0 !important;
-  font-size: clamp(1.02rem, 1.25vw, 1.18rem) !important;
-}
-
-@media (min-width: 981px) {
-  body.home-ui-v4 .operator-hero {
-    padding-top: clamp(3.5rem, 6vw, 5.75rem) !important;
-    padding-bottom: var(--space) !important;
-  }
-
-  body.home-ui-v4 .hero-layout {
-    grid-template-columns: minmax(0, 1.08fr) minmax(320px, .72fr) !important;
-    column-gap: clamp(2.5rem, 6vw, 6rem) !important;
-    row-gap: clamp(3rem, 6vw, 5rem) !important;
-    align-items: center !important;
-  }
-
-  body.home-ui-v4 .hero-copy h1 {
-    max-width: 13ch !important;
-    font-size: clamp(3.25rem, 5.4vw, 5.65rem) !important;
-  }
-
-  body.home-ui-v4 .hero-copy .lead {
-    width: 100% !important;
-    max-width: none !important;
-    margin-bottom: 1.8rem;
-  }
-
-  body.home-ui-v4 .hero-art {
-    align-self: center !important;
-  }
-
-  body.home-ui-v4 .hero-art__image {
-    width: auto !important;
-    max-width: 100% !important;
-    max-height: 520px !important;
-  }
-
-  body.home-ui-v4 .review-panel__heading h2 {
-    max-width: 16ch !important;
-    font-size: clamp(2rem, 3.4vw, 3.35rem) !important;
-  }
-
-  /* Desktop gallery is intentionally a 3-up viewport. Keep the card width
-     deterministic so legacy grid sizing cannot collapse it below the visual
-     target while the strip still scrolls to the remaining cards. */
-  body.home-ui-v4 .review-options {
-    grid-auto-columns: calc((100% - 2rem) / 3) !important;
-  }
-}
-
-@media (max-width: 720px) {
-  body.home-ui-v4 .hero-art {
-    width: 100%;
-    margin: 0;
-  }
-
-  body.home-ui-v4 .hero-art__image {
-    width: auto !important;
-    max-width: min(82vw, 330px) !important;
-    max-height: 290px !important;
-  }
-
-  body.home-ui-v4 .review-panel__heading h2 {
-    max-width: 13ch !important;
-    font-size: clamp(2rem, 9vw, 2.65rem) !important;
-  }
-
-  body.home-ui-v4 .review-option__art {
-    aspect-ratio: 16 / 10;
-  }
-
-  body.home-ui-v4 .review-option > span:last-of-type {
-    padding: .9rem .95rem 0 !important;
-    font-size: 1.08rem !important;
   }
 }
 
