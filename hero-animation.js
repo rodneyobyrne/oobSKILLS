@@ -6,10 +6,10 @@
 
   const image = document.createElement('img');
   image.className = 'hero-art__image';
-  image.src = '/images/ai-relationship/ai-workflow-map.webp';
-  image.alt = 'A business owner and AI assistant map a workflow together, making steps, handoffs and decisions visible.';
-  image.width = 1122;
-  image.height = 1402;
+  image.src = '/images/ai-character/poses/robot-confident.webp';
+  image.alt = 'The oobCREATIVE robot stands beside the homepage introduction.';
+  image.width = 305;
+  image.height = 526;
   image.decoding = 'async';
   image.fetchPriority = 'high';
   hero.replaceWith(image);
