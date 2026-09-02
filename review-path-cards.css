@@ -2,7 +2,7 @@
    All primary copy and links are present in the initial HTML for search/LLM retrieval.
    Static at every viewport: supplied scene first, useful CTA directly below, no flip state.
    Outer perimeter follows the shared oobCREATIVE line system:
-   2 peaks · 4px rise/fall · 2.5–4.0px thickness · 1 pressure pool · 0px corner overshoot. */
+   2 peaks · 4px rise/fall · 2.5–4.0px thickness · 1 pressure pool · clean corner joins. */
 
 .home-ui-v4 #review-paths {
   width: min(100%, 1120px);
@@ -23,18 +23,16 @@
   letter-spacing: -.045em;
 }
 
-/* Retire the obsolete hover instruction without depending on JavaScript. */
 .home-ui-v4 #review-paths .review-panel__prompt {
   max-width: 690px;
   margin: 0;
   color: var(--soft, #444);
-  font-size: 0;
+  font-size: 1rem;
+  line-height: 1.55;
 }
 
 .home-ui-v4 #review-paths .review-panel__prompt::after {
-  content: "Choose the situation that sounds closest. Each illustrated tile shows the useful first move and the review or tool to use next.";
-  font-size: 1rem;
-  line-height: 1.55;
+  content: none;
 }
 
 .review-path-grid {
@@ -49,7 +47,9 @@
   min-width: 0;
 }
 
-/* One perimeter surrounds the complete scene + copy + CTA tile. */
+/* One static gray perimeter surrounds the complete scene + copy + CTA tile.
+   The four line layers are inset by 9px so their endpoints meet instead of
+   over-drawing one another at each corner. */
 .review-path-card__inner {
   position: relative;
   display: flex;
@@ -59,12 +59,16 @@
   overflow: hidden;
   background-color: var(--paper, #fff);
   background-image:
-    url('/branding/line-top.svg'),
-    url('/branding/line-bottom.svg'),
-    url('/branding/line-left.svg'),
-    url('/branding/line-right.svg');
-  background-position: left top, left bottom, left top, right top;
-  background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100%;
+    url('/branding/line-top.svg?v=20260902-clean-corners'),
+    url('/branding/line-bottom.svg?v=20260902-clean-corners'),
+    url('/branding/line-left.svg?v=20260902-clean-corners'),
+    url('/branding/line-right.svg?v=20260902-clean-corners');
+  background-position: 9px 0, 9px 100%, 0 9px, 100% 9px;
+  background-size:
+    calc(100% - 18px) 18px,
+    calc(100% - 18px) 18px,
+    18px calc(100% - 18px),
+    18px calc(100% - 18px);
   background-repeat: no-repeat;
   transform: none;
 }
@@ -179,7 +183,7 @@
   left: 0;
   height: 16px;
   pointer-events: none;
-  background: url('/branding/line-top.svg') center top / 100% 16px no-repeat;
+  background: url('/branding/line-top.svg?v=20260902-clean-corners') center top / 100% 16px no-repeat;
 }
 
 .review-path-card__back .eyebrow {
@@ -221,7 +225,12 @@
 
   .review-path-card__inner {
     padding: 10px;
-    background-size: 100% 16px, 100% 16px, 16px 100%, 16px 100%;
+    background-position: 8px 0, 8px 100%, 0 8px, 100% 8px;
+    background-size:
+      calc(100% - 16px) 16px,
+      calc(100% - 16px) 16px,
+      16px calc(100% - 16px),
+      16px calc(100% - 16px);
   }
 
   .review-path-card__art {
