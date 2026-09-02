@@ -13,6 +13,7 @@ const releaseVersion = String(process.env.SITE_RELEASE_VERSION || process.env.GI
 
 const publicFiles = [
   'CNAME',
+  'assessment-tools-v2.css',
   'content-pages.css',
   'doodle-system.css',
   'hero-animation.css',
@@ -180,10 +181,32 @@ function versionLocalAssets(html) {
   });
 }
 
-function injectSiteAssets(html) {
+function getExperience(outputFile) {
+  if (outputFile === 'assessments/index.html') return 'reviews-hub';
+  if (outputFile === 'audience-review/index.html') return 'audience-review';
+  if (/^assessments\/[^/]+\/index\.html$/i.test(outputFile)) return 'review';
+  if (/^tools\/[^/]+\/index\.html$/i.test(outputFile)) return 'tool';
+  if (outputFile === 'workfiles/ai-workday-map/index.html') return 'tool';
+  return '';
+}
+
+function annotateExperience(html, outputFile) {
+  const experience = getExperience(outputFile);
+  if (!experience) return html;
+  return html.replace(/<body\b([^>]*)>/i, (match, attrs) => {
+    if (/\bdata-oob-experience=/i.test(attrs)) return match;
+    return `<body${attrs} data-oob-experience="${experience}">`;
+  });
+}
+
+function injectSiteAssets(html, outputFile) {
   let next = html;
+  const experience = getExperience(outputFile);
   if (!next.includes('/navigation-v2.css')) {
     next = next.replace('</head>', `    <link rel="stylesheet" href="/navigation-v2.css?v=${releaseVersion}">\n  </head>`);
+  }
+  if (experience && !next.includes('/assessment-tools-v2.css')) {
+    next = next.replace('</head>', `    <link rel="stylesheet" href="/assessment-tools-v2.css?v=${releaseVersion}">\n  </head>`);
   }
   if (!next.includes('/site-layout-v2.css')) {
     next = next.replace('</head>', `    <link rel="stylesheet" href="/site-layout-v2.css?v=${releaseVersion}">\n  </head>`);
@@ -229,7 +252,8 @@ for (const absolutePath of walk(outputRoot)) {
   const html = readFileSync(absolutePath, 'utf8');
   const withContextualLinks = injectContextualLinks(html, outputFile);
   const withCanonicalNavigation = replacePrimaryNavigation(withContextualLinks);
-  writeFileSync(absolutePath, injectSiteAssets(versionLocalAssets(withCanonicalNavigation)));
+  const withExperience = annotateExperience(withCanonicalNavigation, outputFile);
+  writeFileSync(absolutePath, injectSiteAssets(versionLocalAssets(withExperience), outputFile));
 }
 
 writeFileSync(join(outputRoot, '.nojekyll'), '');
