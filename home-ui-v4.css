@@ -139,6 +139,10 @@ body.home-ui-v4 {
 }
 
 /* Implementation cards: shared outer-box system, 2-column bounded layout. */
+.home-ui-v4 .services-section {
+  background: #c5cfe1;
+}
+
 .home-ui-v4 .services-section .capability-grid {
   width: min(100%, 1060px);
   margin-inline: auto;
