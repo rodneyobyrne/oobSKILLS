@@ -7,7 +7,7 @@
    - 2.5–4.0px line thickness
    - 1 pressure pool per edge
    - 0px corner overshoot
-   - strokes terminate at the shared corner meeting point
+   - horizontal and vertical strokes meet at one shared corner point
 
    Interaction rule:
    - static drawn boxes may use the #808080 perimeter
@@ -36,7 +36,8 @@
   overflow-clip-margin: 0 !important;
 }
 
-/* Four independent low-frequency pen strokes meet at the nominal corners. */
+/* Each 18px line asset is inset by half its thickness envelope so the four
+   strokes meet at one point instead of passing through one another. */
 .oob-drawn-box::before,
 .oob-content-box::before {
   content: "";
@@ -50,8 +51,12 @@
     url('/branding/line-bottom.svg?v=20260902-clean-corners'),
     url('/branding/line-left.svg?v=20260902-clean-corners'),
     url('/branding/line-right.svg?v=20260902-clean-corners');
-  background-position: left top, left bottom, left top, right top;
-  background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100%;
+  background-position: 9px 0, 9px 100%, 0 9px, 100% 9px;
+  background-size:
+    calc(100% - 18px) 18px,
+    calc(100% - 18px) 18px,
+    18px calc(100% - 18px),
+    18px calc(100% - 18px);
   background-repeat: no-repeat;
 }
 
@@ -83,7 +88,7 @@
     url('/branding/line-bottom-blue.svg?v=20260902-clean-corners'),
     url('/branding/line-left-blue.svg?v=20260902-clean-corners'),
     url('/branding/line-right-blue.svg?v=20260902-clean-corners');
-  background-position: left top, left bottom, left top, right top;
+  background-position: 9px 0, 9px 100%, 0 9px, 100% 9px;
   background-size: 0 18px, 0 18px, 18px 0, 18px 0;
   background-repeat: no-repeat;
 }
@@ -96,11 +101,21 @@
 }
 
 @keyframes oob-box-outline-draw {
-  0% { background-size: 0 18px, 0 18px, 18px 0, 18px 0; }
-  25% { background-size: 100% 18px, 0 18px, 18px 0, 18px 0; }
-  50% { background-size: 100% 18px, 0 18px, 18px 0, 18px 100%; }
-  75% { background-size: 100% 18px, 100% 18px, 18px 0, 18px 100%; }
-  100% { background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100%; }
+  0% {
+    background-size: 0 18px, 0 18px, 18px 0, 18px 0;
+  }
+  25% {
+    background-size: calc(100% - 18px) 18px, 0 18px, 18px 0, 18px 0;
+  }
+  50% {
+    background-size: calc(100% - 18px) 18px, 0 18px, 18px 0, 18px calc(100% - 18px);
+  }
+  75% {
+    background-size: calc(100% - 18px) 18px, calc(100% - 18px) 18px, 18px 0, 18px calc(100% - 18px);
+  }
+  100% {
+    background-size: calc(100% - 18px) 18px, calc(100% - 18px) 18px, 18px calc(100% - 18px), 18px calc(100% - 18px);
+  }
 }
 
 .oob-content-box--interactive:focus-visible {
@@ -121,6 +136,10 @@
   .oob-content-box--interactive.is-selected::after {
     animation: none;
     opacity: 1;
-    background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100%;
+    background-size:
+      calc(100% - 18px) 18px,
+      calc(100% - 18px) 18px,
+      18px calc(100% - 18px),
+      18px calc(100% - 18px);
   }
 }
