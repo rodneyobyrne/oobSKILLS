@@ -1,6 +1,7 @@
 /* Homepage six-pathway tiles.
    All primary copy and links are present in the initial HTML for search/LLM retrieval.
-   Static at every viewport: supplied scene first, useful CTA directly below, no flip state.
+   The card never flips or hides its CTA. Desktop hover/focus and mobile scroll
+   can temporarily reveal a simplified blue takeaway over the existing front.
    Outer perimeter follows the shared oobCREATIVE line system:
    2 peaks · 4px rise/fall · 2.5–4.0px thickness · 1 pressure pool · clean corner joins. */
 
@@ -45,6 +46,7 @@
 .review-path-card {
   position: relative;
   min-width: 0;
+  transition: opacity .2s ease, filter .2s ease;
 }
 
 /* One static gray perimeter surrounds the complete scene + copy + CTA tile.
@@ -89,6 +91,97 @@
 
 .review-path-card__front {
   flex: 1 1 auto;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Visual-only reveal layer. JS copies the already-crawlable supporting
+   paragraph into this layer so the source HTML remains the content authority.
+   The hand-drawn blue stroke is the leading edge of the rising ink field. */
+.review-path-card__reveal {
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.45rem, 3.5vw, 2.35rem);
+  overflow: hidden;
+  pointer-events: none;
+  background-image:
+    url('/branding/line-top-blue.svg?v=20260902-clean-corners'),
+    linear-gradient(var(--ballpoint, #244aa5), var(--ballpoint, #244aa5));
+  background-position: center top, left 15px;
+  background-size: 100% 18px, 100% calc(100% - 14px);
+  background-repeat: no-repeat;
+  transform: translateY(calc(100% + 20px));
+  transition: transform .42s cubic-bezier(.2,.78,.22,1);
+}
+
+.review-path-card__reveal p {
+  max-width: 18ch !important;
+  margin: 0 !important;
+  color: #fff !important;
+  font-size: clamp(1.55rem, 3vw, 2.35rem) !important;
+  font-weight: 650;
+  line-height: 1.12 !important;
+  letter-spacing: -.025em;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .18s ease .2s, transform .22s ease .18s;
+}
+
+/* Keyboard focus always gets the reveal. Touch/coarse-pointer scrolling adds
+   .is-scroll-active in site-polish-v4.js. */
+.review-path-card:focus-within .review-path-card__reveal,
+.review-path-card.is-scroll-active .review-path-card__reveal {
+  transform: translateY(0);
+}
+
+.review-path-card:focus-within .review-path-card__reveal p,
+.review-path-card.is-scroll-active .review-path-card__reveal p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.review-path-card:focus-within .review-path-card__back .oob-cta,
+.review-path-card.is-scroll-active .review-path-card__back .oob-cta {
+  border-color: var(--ballpoint, #244aa5);
+  color: #fff;
+}
+
+.review-path-card:focus-within .review-path-card__back .oob-cta::before,
+.review-path-card.is-scroll-active .review-path-card__back .oob-cta::before {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Only true hover devices use hover as the trigger. This avoids sticky hover
+   behavior on phones and touch-first tablets. */
+@media (hover: hover) and (pointer: fine) {
+  .review-path-card:hover .review-path-card__reveal {
+    transform: translateY(0);
+  }
+
+  .review-path-card:hover .review-path-card__reveal p {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .review-path-card:hover .review-path-card__back .oob-cta {
+    border-color: var(--ballpoint, #244aa5);
+    color: #fff;
+  }
+
+  .review-path-card:hover .review-path-card__back .oob-cta::before {
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* A restrained sibling fade makes the active card read as the focal object
+     without making the remaining choices look disabled. */
+  .review-path-grid:has(.review-path-card:hover) .review-path-card:not(:hover),
+  .review-path-grid:has(.review-path-card:focus-within) .review-path-card:not(:focus-within) {
+    opacity: .82;
+    filter: grayscale(.16);
+  }
 }
 
 /* The supplied portrait workfiles are cropped just above their blank working
@@ -167,8 +260,7 @@
   display: none;
 }
 
-/* Lower CTA strip: a visible first move, separated from the explanatory copy
-   by the same hand-drawn stroke language used by the outer box. */
+/* Lower CTA strip stays continuously visible and actionable. */
 .review-path-card__back {
   flex: 0 0 auto;
   gap: .8rem;
@@ -216,6 +308,16 @@
   .review-path-card__art {
     aspect-ratio: 1229 / 400;
   }
+
+  .review-path-card__reveal {
+    align-items: center;
+    padding: clamp(1.8rem, 7vw, 2.8rem);
+  }
+
+  .review-path-card__reveal p {
+    max-width: 20ch !important;
+    font-size: clamp(1.55rem, 6.2vw, 2.25rem) !important;
+  }
 }
 
 @media (max-width: 620px) {
@@ -250,12 +352,40 @@
   .review-path-card__back .oob-cta {
     width: 100%;
   }
+
+  .review-path-card__reveal {
+    padding: 1.6rem 1.4rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .review-path-card,
   .review-path-card__inner,
-  .review-path-card__face {
-    transition: none;
-    transform: none !important;
+  .review-path-card__face,
+  .review-path-card__reveal,
+  .review-path-card__reveal p {
+    transition: none !important;
+    transform: none;
+  }
+
+  .review-path-card__reveal {
+    opacity: 0;
+  }
+
+  .review-path-card:focus-within .review-path-card__reveal,
+  .review-path-card.is-scroll-active .review-path-card__reveal {
+    opacity: 1;
+  }
+
+  .review-path-card:focus-within .review-path-card__reveal p,
+  .review-path-card.is-scroll-active .review-path-card__reveal p {
+    opacity: 1;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .review-path-card:hover .review-path-card__reveal,
+    .review-path-card:hover .review-path-card__reveal p {
+      opacity: 1;
+    }
   }
 }
