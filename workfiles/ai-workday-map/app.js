@@ -3,7 +3,6 @@
   const result = document.querySelector('[data-workflow-map-result]');
   if (!form || !result) return;
 
-  const storageKey = 'oob-ai-workflow-map-v1';
   const status = document.querySelector('[data-draft-status]');
   const resultStatus = document.querySelector('[data-result-status]');
   const pathList = document.querySelector('[data-workflow-path]');
@@ -48,28 +47,6 @@
       data[field.name] = field.value;
     });
     return data;
-  }
-
-  function saveDraft() {
-    try {
-      localStorage.setItem(storageKey, JSON.stringify(serialize()));
-      if (status) status.textContent = 'Draft saved in this browser.';
-    } catch {
-      if (status) status.textContent = 'Draft could not be saved in this browser.';
-    }
-  }
-
-  function loadDraft() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
-      Object.entries(saved).forEach(([name, savedValue]) => {
-        const field = form.elements[name];
-        if (field && typeof savedValue === 'string') field.value = savedValue;
-      });
-      if (Object.keys(saved).length && status) status.textContent = 'Saved draft restored from this browser.';
-    } catch {
-      // A broken local draft should never block the tool.
-    }
   }
 
   function addPathStep(title, text) {
@@ -137,7 +114,7 @@
   }
 
   form.addEventListener('input', () => {
-    saveDraft();
+    if (status) status.textContent = 'Answers stay on this page while it is open.';
     if (!result.hidden) result.hidden = true;
   });
 
@@ -175,7 +152,6 @@
     result.hidden = false;
     result.focus({ preventScroll: true });
     result.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-    saveDraft();
   });
 
   copyButton?.addEventListener('click', async () => {
@@ -204,13 +180,10 @@
   });
 
   clearButton?.addEventListener('click', () => {
-    localStorage.removeItem(storageKey);
     form.reset();
     result.hidden = true;
     latestMarkdown = '';
-    if (status) status.textContent = 'Saved draft cleared.';
+    if (status) status.textContent = 'Answers cleared.';
     form.querySelector('input,select,textarea')?.focus();
   });
-
-  loadDraft();
 })();
