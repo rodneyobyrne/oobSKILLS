@@ -6,7 +6,7 @@
    - 4px rise/fall
    - 2.2–4.3px nominal line thickness
    - 2 pressure pools on each edge
-   - 2px corner overshoot
+   - 0px corner overshoot
    - true 90-degree crossings
 
    Interaction rule:
@@ -26,20 +26,18 @@
 
 .oob-drawn-box,
 .oob-content-box {
-  --oob-box-over: 2px;
+  --oob-box-over: 0px;
   position: relative;
   border: 0 !important;
   border-radius: 0 !important;
   background: var(--oob-component-paper);
-  /* Paint the approved crossing strokes 2px past the nominal card edge while
-     keeping decorative ink out of layout/scroll width. `!important` is
-     intentional because some legacy card rules still set overflow: visible. */
+  /* Keep the drawn perimeter inside the nominal component edge. `!important`
+     is intentional because some legacy card rules still set overflow: visible. */
   overflow: clip !important;
   overflow-clip-margin: var(--oob-box-over) !important;
 }
 
-/* Four independent low-frequency pen strokes. Each line extends past the
-   nominal corner so the intersections read as four hand-drawn 90° strokes. */
+/* Four independent low-frequency pen strokes meet at the nominal corners. */
 .oob-drawn-box::before,
 .oob-content-box::before {
   content: "";
