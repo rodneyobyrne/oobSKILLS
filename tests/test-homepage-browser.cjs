@@ -29,6 +29,7 @@ const { startStaticServer } = require('./static-server.cjs');
         backs: document.querySelectorAll('.review-path-card__back').length,
         legacy: document.querySelectorAll('[data-review-carousel], .review-option, .review-stage').length,
         heroSrc: document.querySelector('.hero-art__image')?.getAttribute('src'),
+        prompt: document.querySelector('.review-panel__prompt')?.textContent.trim(),
         ctas: document.querySelectorAll('.review-path-card__back a[href]').length,
         visibleFaces: [...document.querySelectorAll('.review-path-card__face')].every(face => face.getBoundingClientRect().height > 0),
       }));
@@ -39,7 +40,8 @@ const { startStaticServer } = require('./static-server.cjs');
       assert.equal(state.ctas, 6);
       assert.equal(state.visibleFaces, true, 'The scene/copy and CTA portions remain visible at every viewport.');
       assert.equal(state.legacy, 0, 'Legacy selector/carousel is absent.');
-      assert.equal(state.heroSrc, '/images/ai-relationship/ai-workflow-map.webp');
+      assert.equal(state.heroSrc, '/images/ai-character/poses/robot-confident.webp');
+      assert.equal(state.prompt, 'Choose the situation that sounds closest. Each illustrated tile shows the useful first move and the review or tool to use next.');
     }
 
     await page.setViewportSize({ width: 1440, height: 900 });
@@ -57,6 +59,7 @@ const { startStaticServer } = require('./static-server.cjs');
         frontHeight: front.getBoundingClientRect().height,
         backHeight: back.getBoundingClientRect().height,
         artHeight: art.getBoundingClientRect().height,
+        perimeter: getComputedStyle(inner).backgroundImage,
       };
     });
     assert.equal(desktop.transform, 'none', 'Desktop pathway tiles do not use a flip transform.');
@@ -64,12 +67,40 @@ const { startStaticServer } = require('./static-server.cjs');
     assert.equal(desktop.backPosition, 'relative', 'Desktop CTA remains directly below in normal flow.');
     assert.equal(desktop.backTransform, 'none', 'Desktop CTA is never hidden on a reverse face.');
     assert.ok(desktop.frontHeight > 0 && desktop.backHeight > 0 && desktop.artHeight > 0, 'Desktop shows the scene, copy and CTA together.');
+    assert.notEqual(desktop.perimeter, 'none', 'Static pathway cards retain their gray drawn perimeter.');
 
     const beforeHover = await page.$eval('.review-path-card--workflow .review-path-card__inner', el => getComputedStyle(el).transform);
     await page.hover('.review-path-card--workflow');
     await page.waitForTimeout(250);
     const afterHover = await page.$eval('.review-path-card--workflow .review-path-card__inner', el => getComputedStyle(el).transform);
     assert.equal(afterHover, beforeHover, 'Hover does not replace or flip pathway content.');
+
+    const interactiveSelector = '.content-section--blue .oob-content-box--interactive';
+    const restingInteractive = await page.$eval(interactiveSelector, el => ({
+      grayOpacity: getComputedStyle(el, '::before').opacity,
+      blueOpacity: getComputedStyle(el, '::after').opacity,
+    }));
+    assert.equal(restingInteractive.grayOpacity, '0', 'Interactive cards do not show the gray perimeter at rest.');
+    assert.equal(restingInteractive.blueOpacity, '0', 'Interactive cards do not show blue until interaction.');
+
+    await page.hover(interactiveSelector);
+    await page.waitForTimeout(650);
+    const hoveredInteractive = await page.$eval(interactiveSelector, el => ({
+      grayOpacity: getComputedStyle(el, '::before').opacity,
+      blueOpacity: getComputedStyle(el, '::after').opacity,
+    }));
+    assert.equal(hoveredInteractive.grayOpacity, '0', 'Hover never restores the gray perimeter.');
+    assert.equal(hoveredInteractive.blueOpacity, '1', 'Hover reveals the blue drawn perimeter.');
+
+    const selectedInteractive = await page.$eval(interactiveSelector, el => {
+      el.classList.add('is-selected');
+      return {
+        grayOpacity: getComputedStyle(el, '::before').opacity,
+        blueOpacity: getComputedStyle(el, '::after').opacity,
+      };
+    });
+    assert.equal(selectedInteractive.grayOpacity, '0', 'Selected state remains free of the gray perimeter.');
+    assert.equal(selectedInteractive.blueOpacity, '1', 'Selected state keeps the blue perimeter visible.');
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`${server.origin}/`, { waitUntil: 'networkidle' });
@@ -91,7 +122,7 @@ const { startStaticServer } = require('./static-server.cjs');
 
     assert.deepEqual(consoleErrors, [], `Homepage emitted console errors: ${consoleErrors.join(' | ')}`);
     assert.deepEqual(failedRequests, [], `Homepage had failed requests: ${failedRequests.join(' | ')}`);
-    console.log('Homepage static six-path tile browser tests passed.');
+    console.log('Homepage hero, static pathway and interactive-card browser tests passed.');
   } finally {
     await browser.close();
     await server.close();
