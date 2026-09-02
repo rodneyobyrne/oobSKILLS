@@ -30,23 +30,46 @@ const { startStaticServer } = require('./static-server.cjs');
         legacy: document.querySelectorAll('[data-review-carousel], .review-option, .review-stage').length,
         heroSrc: document.querySelector('.hero-art__image')?.getAttribute('src'),
         ctas: document.querySelectorAll('.review-path-card__back a[href]').length,
+        visibleFaces: [...document.querySelectorAll('.review-path-card__face')].every(face => face.getBoundingClientRect().height > 0),
       }));
       assert.ok(state.scrollWidth <= state.clientWidth + 2, `Homepage has no horizontal scroll at ${viewport.width}px`);
       assert.equal(state.cards, 6, 'Six pathway cards remain present at every viewport.');
       assert.equal(state.fronts, 6);
       assert.equal(state.backs, 6);
       assert.equal(state.ctas, 6);
+      assert.equal(state.visibleFaces, true, 'The scene/copy and CTA portions remain visible at every viewport.');
       assert.equal(state.legacy, 0, 'Legacy selector/carousel is absent.');
       assert.equal(state.heroSrc, '/images/ai-relationship/ai-workflow-map.webp');
     }
 
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto(`${server.origin}/`, { waitUntil: 'networkidle' });
-    const desktopBefore = await page.$eval('.review-path-card--workflow .review-path-card__inner', el => getComputedStyle(el).transform);
+    const desktop = await page.$eval('.review-path-card--workflow', card => {
+      const inner = card.querySelector('.review-path-card__inner');
+      const front = card.querySelector('.review-path-card__front');
+      const back = card.querySelector('.review-path-card__back');
+      const art = card.querySelector('.review-path-card__art img');
+      return {
+        transform: getComputedStyle(inner).transform,
+        frontPosition: getComputedStyle(front).position,
+        backPosition: getComputedStyle(back).position,
+        backTransform: getComputedStyle(back).transform,
+        frontHeight: front.getBoundingClientRect().height,
+        backHeight: back.getBoundingClientRect().height,
+        artHeight: art.getBoundingClientRect().height,
+      };
+    });
+    assert.equal(desktop.transform, 'none', 'Desktop pathway tiles do not use a flip transform.');
+    assert.equal(desktop.frontPosition, 'relative', 'Desktop scene/copy remains in normal flow.');
+    assert.equal(desktop.backPosition, 'relative', 'Desktop CTA remains directly below in normal flow.');
+    assert.equal(desktop.backTransform, 'none', 'Desktop CTA is never hidden on a reverse face.');
+    assert.ok(desktop.frontHeight > 0 && desktop.backHeight > 0 && desktop.artHeight > 0, 'Desktop shows the scene, copy and CTA together.');
+
+    const beforeHover = await page.$eval('.review-path-card--workflow .review-path-card__inner', el => getComputedStyle(el).transform);
     await page.hover('.review-path-card--workflow');
-    await page.waitForTimeout(600);
-    const desktopAfter = await page.$eval('.review-path-card--workflow .review-path-card__inner', el => getComputedStyle(el).transform);
-    assert.notEqual(desktopAfter, desktopBefore, 'Desktop hover changes the card presentation to the next-step face.');
+    await page.waitForTimeout(250);
+    const afterHover = await page.$eval('.review-path-card--workflow .review-path-card__inner', el => getComputedStyle(el).transform);
+    assert.equal(afterHover, beforeHover, 'Hover does not replace or flip pathway content.');
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(`${server.origin}/`, { waitUntil: 'networkidle' });
@@ -61,14 +84,14 @@ const { startStaticServer } = require('./static-server.cjs');
         frontHeight: front.getBoundingClientRect().height,
       };
     });
-    assert.equal(mobile.frontPosition, 'relative', 'Touch layout keeps front content in normal flow.');
-    assert.equal(mobile.backPosition, 'relative', 'Touch layout keeps next-step content in normal flow.');
-    assert.equal(mobile.backTransform, 'none', 'Touch layout does not hide copy on the reverse side of a 3D card.');
-    assert.ok(mobile.frontHeight > 0 && mobile.backHeight > 0, 'Both semantic card states are visible on mobile.');
+    assert.equal(mobile.frontPosition, 'relative', 'Mobile keeps scene/copy in normal flow.');
+    assert.equal(mobile.backPosition, 'relative', 'Mobile keeps CTA in normal flow.');
+    assert.equal(mobile.backTransform, 'none', 'Mobile has no hidden reverse side.');
+    assert.ok(mobile.frontHeight > 0 && mobile.backHeight > 0, 'Both tile portions are visible on mobile.');
 
     assert.deepEqual(consoleErrors, [], `Homepage emitted console errors: ${consoleErrors.join(' | ')}`);
     assert.deepEqual(failedRequests, [], `Homepage had failed requests: ${failedRequests.join(' | ')}`);
-    console.log('Homepage six-path card browser tests passed.');
+    console.log('Homepage static six-path tile browser tests passed.');
   } finally {
     await browser.close();
     await server.close();
