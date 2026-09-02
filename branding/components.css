@@ -7,11 +7,12 @@
    - 2.5–4.0px line thickness
    - 1 pressure pool per edge
    - 0px corner overshoot
-   - true 90-degree crossings
+   - strokes terminate at the shared corner meeting point
 
    Interaction rule:
-   - resting perimeter uses #808080 approved line assets
-   - hover/focus removes the resting perimeter before redrawing the same geometry in ballpoint blue
+   - static drawn boxes may use the #808080 perimeter
+   - interactive boxes have no resting perimeter
+   - hover/focus/selected redraw the same geometry in ballpoint blue
    - blue indicates interaction, never decoration
 */
 
@@ -45,10 +46,10 @@
   pointer-events: none;
   opacity: 1;
   background-image:
-    url('/branding/line-top.svg?v=20260901-2p-4r-25-40-1pool-0over'),
-    url('/branding/line-bottom.svg?v=20260901-2p-4r-25-40-1pool-0over'),
-    url('/branding/line-left.svg?v=20260901-2p-4r-25-40-1pool-0over'),
-    url('/branding/line-right.svg?v=20260901-2p-4r-25-40-1pool-0over');
+    url('/branding/line-top.svg?v=20260902-clean-corners'),
+    url('/branding/line-bottom.svg?v=20260902-clean-corners'),
+    url('/branding/line-left.svg?v=20260902-clean-corners'),
+    url('/branding/line-right.svg?v=20260902-clean-corners');
   background-position: left top, left bottom, left top, right top;
   background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100%;
   background-repeat: no-repeat;
@@ -65,6 +66,11 @@
   transition: background-color .16s ease, color .16s ease;
 }
 
+/* Interactive cards are visually unframed until the visitor interacts. */
+.oob-content-box--interactive::before {
+  opacity: 0;
+}
+
 .oob-content-box--interactive::after {
   content: "";
   position: absolute;
@@ -73,23 +79,18 @@
   pointer-events: none;
   opacity: 0;
   background-image:
-    url('/branding/line-top-blue.svg?v=20260901-2p-4r-25-40-1pool-0over'),
-    url('/branding/line-bottom-blue.svg?v=20260901-2p-4r-25-40-1pool-0over'),
-    url('/branding/line-left-blue.svg?v=20260901-2p-4r-25-40-1pool-0over'),
-    url('/branding/line-right-blue.svg?v=20260901-2p-4r-25-40-1pool-0over');
+    url('/branding/line-top-blue.svg?v=20260902-clean-corners'),
+    url('/branding/line-bottom-blue.svg?v=20260902-clean-corners'),
+    url('/branding/line-left-blue.svg?v=20260902-clean-corners'),
+    url('/branding/line-right-blue.svg?v=20260902-clean-corners');
   background-position: left top, left bottom, left top, right top;
   background-size: 0 18px, 0 18px, 18px 0, 18px 0;
   background-repeat: no-repeat;
 }
 
-.oob-content-box--interactive:is(:hover, :focus-visible)::before,
-.oob-content-box--interactive:focus-within::before,
-.oob-content-box--interactive.is-selected::before {
-  opacity: 0;
-}
-
 .oob-content-box--interactive:is(:hover, :focus-visible)::after,
-.oob-content-box--interactive:focus-within::after {
+.oob-content-box--interactive:focus-within::after,
+.oob-content-box--interactive.is-selected::after {
   opacity: 1;
   animation: oob-box-outline-draw .58s cubic-bezier(.2,.78,.22,1) forwards;
 }
@@ -116,7 +117,8 @@
 @media (prefers-reduced-motion: reduce) {
   .oob-content-box--interactive { transition: none; }
   .oob-content-box--interactive:is(:hover, :focus-visible)::after,
-  .oob-content-box--interactive:focus-within::after {
+  .oob-content-box--interactive:focus-within::after,
+  .oob-content-box--interactive.is-selected::after {
     animation: none;
     opacity: 1;
     background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100%;
