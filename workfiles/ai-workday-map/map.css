@@ -1,0 +1,55 @@
+/* Map Your AI Workflow: Step 3 of the practical AI path. */
+.workflow-map-form { display:grid; gap:0; }
+.workflow-map-form fieldset { margin:0; padding:clamp(1.35rem,3vw,2rem) 0; border:0; border-top:1px solid var(--line,#d8d8d4); }
+.workflow-map-form fieldset:first-child { padding-top:.25rem; border-top:0; }
+.workflow-map-form legend { width:100%; margin:0 0 .55rem; padding:0; font-size:clamp(1.4rem,2.5vw,2rem); font-weight:800; letter-spacing:-.02em; }
+.workflow-map-form .step-kicker { display:block; margin-bottom:.45rem; color:var(--ballpoint,#244aa5); font-size:.76rem; letter-spacing:.1em; text-transform:uppercase; }
+.workflow-map-form .step-copy { max-width:48rem; margin:0 0 1.4rem; color:var(--soft,#444); }
+.workflow-map-form .field-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem 1.25rem; }
+.workflow-map-form .field { margin:0 0 1.15rem; }
+.workflow-map-form .field--full { grid-column:1/-1; }
+.workflow-map-form label { display:block; margin-bottom:.4rem; font-size:.9rem; font-weight:760; }
+.workflow-map-form label span { color:var(--soft,#555); font-weight:400; }
+.workflow-map-form input,
+.workflow-map-form select,
+.workflow-map-form textarea { width:100%; min-height:50px; padding:.8rem .9rem; border:1px solid #73736e; border-radius:0; background:#fff; color:var(--ink,#111); font:inherit; }
+.workflow-map-form textarea { min-height:110px; resize:vertical; }
+.workflow-map-form input:focus-visible,
+.workflow-map-form select:focus-visible,
+.workflow-map-form textarea:focus-visible { outline:3px solid var(--ballpoint,#244aa5); outline-offset:2px; border-color:var(--ballpoint,#244aa5); }
+.workflow-map-form .field-help { margin:.35rem 0 0; color:var(--soft,#555); font-size:.8rem; }
+.workflow-map-form .form-actions { display:flex; flex-wrap:wrap; gap:.8rem; align-items:center; padding-top:1.4rem; }
+.workflow-map-form .draft-status { min-height:1.2em; margin:.65rem 0 0; color:var(--soft,#555); font-size:.78rem; }
+.workflow-map-result { margin-top:clamp(2rem,5vw,4rem); }
+.workflow-verdict { margin:0 0 2rem; padding:1.25rem 1.4rem; border-left:6px solid var(--ballpoint,#244aa5); background:var(--paper-blue,#eef3ff); }
+.workflow-verdict[data-state="revise"] { border-left-color:var(--signal,#e4572e); }
+.workflow-verdict[data-state="stop"] { border-left-color:#8d2f37; }
+.workflow-verdict h2 { margin:.2rem 0 .55rem; }
+.workflow-verdict p:last-child { margin-bottom:0; }
+.workflow-path { display:grid; gap:0; margin:1.5rem 0 2rem; padding:0; list-style:none; counter-reset:workflow-step; }
+.workflow-path li { display:grid; grid-template-columns:3rem minmax(0,1fr); gap:1rem; align-items:start; padding:1rem 0; border-top:1px solid var(--line,#d8d8d4); counter-increment:workflow-step; }
+.workflow-path li:last-child { border-bottom:1px solid var(--line,#d8d8d4); }
+.workflow-path li::before { content:counter(workflow-step,decimal-leading-zero); display:grid; width:2.35rem; height:2.35rem; place-items:center; background:var(--ink,#111); color:#fff; font-size:.72rem; font-weight:800; }
+.workflow-path strong { display:block; margin-bottom:.15rem; color:var(--ballpoint,#244aa5); }
+.workflow-brief { margin:1.5rem 0; padding:1.35rem; border-left:5px solid var(--ballpoint,#244aa5); background:var(--paper-soft,#f5f5f1); white-space:pre-wrap; }
+.workflow-result-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.8rem; margin:1.5rem 0; }
+.workflow-result-card { padding:1rem 1.1rem; background:var(--paper-soft,#f5f5f1); box-shadow:inset 4px 0 0 var(--ballpoint,#244aa5); }
+.workflow-result-card p { margin:.25rem 0 0; color:var(--soft,#444); }
+.workflow-result-actions { display:flex; flex-wrap:wrap; gap:.8rem; align-items:center; margin-top:1.5rem; }
+.workflow-status { min-height:1.3rem; margin:.6rem 0 0; color:var(--ballpoint,#244aa5); font-size:.82rem; font-weight:700; }
+.ai-path-context { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1px; margin-top:1.5rem; background:var(--ink,#111); border:1px solid var(--ink,#111); }
+.ai-path-context article { padding:1rem; background:#fff; }
+.ai-path-context article[aria-current="step"] { background:var(--paper-blue,#eef3ff); box-shadow:inset 0 -4px 0 var(--ballpoint,#244aa5); }
+.ai-path-context .meta { margin-bottom:.25rem; }
+.ai-path-context h3 { margin:.2rem 0 .45rem; font-size:1.15rem; }
+.ai-path-context p:last-child { margin-bottom:0; color:var(--soft,#444); font-size:.88rem; }
+@media(max-width:720px){
+  .workflow-map-form .field-grid,.workflow-result-grid,.ai-path-context { grid-template-columns:1fr; }
+  .workflow-map-form .field--full { grid-column:auto; }
+  .workflow-map-form .form-actions .button,.workflow-result-actions .button { width:100%; }
+}
+@media print {
+  .site-header,.breadcrumbs,.content-hero,.rough-rule,.workflow-map-form,.workflow-result-actions,.workflow-status,footer,.ai-path-context { display:none!important; }
+  .workflow-map-result { display:block!important; margin:0; padding:0!important; background:#fff!important; }
+  .workflow-path li,.workflow-result-card,.workflow-brief { break-inside:avoid; }
+}
