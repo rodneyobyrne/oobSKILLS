@@ -1,11 +1,11 @@
 /* oobCREATIVE reusable drawn component primitives
    IMPORTANT: this treatment is for OUTER content/specimen boxes, not buttons.
 
-   Approved outer-box profile:
-   - 2 broad peaks per edge
+   Canonical outer-box profile:
+   - 2 peaks per edge
    - 4px rise/fall
-   - 2.2–4.3px nominal line thickness
-   - 2 pressure pools on each edge
+   - 2.5–4.0px line thickness
+   - 1 pressure pool per edge
    - 0px corner overshoot
    - true 90-degree crossings
 
@@ -31,10 +31,8 @@
   border: 0 !important;
   border-radius: 0 !important;
   background: var(--oob-component-paper);
-  /* Keep the drawn perimeter inside the nominal component edge. `!important`
-     is intentional because some legacy card rules still set overflow: visible. */
   overflow: clip !important;
-  overflow-clip-margin: var(--oob-box-over) !important;
+  overflow-clip-margin: 0 !important;
 }
 
 /* Four independent low-frequency pen strokes meet at the nominal corners. */
@@ -43,24 +41,16 @@
   content: "";
   position: absolute;
   z-index: 4;
-  inset: calc(-1 * var(--oob-box-over));
+  inset: 0;
   pointer-events: none;
   opacity: 1;
   background-image:
-    url('/branding/line-top.svg?v=20260828-gray-22-43'),
-    url('/branding/line-bottom.svg?v=20260828-gray-22-43'),
-    url('/branding/line-left.svg?v=20260828-gray-22-43'),
-    url('/branding/line-right.svg?v=20260828-gray-22-43');
-  background-position:
-    left top var(--oob-box-over),
-    left bottom var(--oob-box-over),
-    left var(--oob-box-over) top,
-    right var(--oob-box-over) top;
-  background-size:
-    100% 18px,
-    100% 18px,
-    18px 100%,
-    18px 100%;
+    url('/branding/line-top.svg?v=20260901-2p-4r-25-40-1pool-0over'),
+    url('/branding/line-bottom.svg?v=20260901-2p-4r-25-40-1pool-0over'),
+    url('/branding/line-left.svg?v=20260901-2p-4r-25-40-1pool-0over'),
+    url('/branding/line-right.svg?v=20260901-2p-4r-25-40-1pool-0over');
+  background-position: left top, left bottom, left top, right top;
+  background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100%;
   background-repeat: no-repeat;
 }
 
@@ -75,31 +65,20 @@
   transition: background-color .16s ease, color .16s ease;
 }
 
-/* Interactive boxes redraw the exact production perimeter in ballpoint blue.
-   The resting gray stroke is removed first so the blue ink draws onto clean
-   paper rather than stacking on top of the base line. */
 .oob-content-box--interactive::after {
   content: "";
   position: absolute;
   z-index: 5;
-  inset: calc(-1 * var(--oob-box-over));
+  inset: 0;
   pointer-events: none;
   opacity: 0;
   background-image:
-    url('/branding/line-top-blue.svg?v=20260828-gray-22-43'),
-    url('/branding/line-bottom-blue.svg?v=20260828-gray-22-43'),
-    url('/branding/line-left-blue.svg?v=20260828-gray-22-43'),
-    url('/branding/line-right-blue.svg?v=20260828-gray-22-43');
-  background-position:
-    left top var(--oob-box-over),
-    left bottom var(--oob-box-over),
-    left var(--oob-box-over) top,
-    right var(--oob-box-over) top;
-  background-size:
-    0 18px,
-    0 18px,
-    18px 0,
-    18px 0;
+    url('/branding/line-top-blue.svg?v=20260901-2p-4r-25-40-1pool-0over'),
+    url('/branding/line-bottom-blue.svg?v=20260901-2p-4r-25-40-1pool-0over'),
+    url('/branding/line-left-blue.svg?v=20260901-2p-4r-25-40-1pool-0over'),
+    url('/branding/line-right-blue.svg?v=20260901-2p-4r-25-40-1pool-0over');
+  background-position: left top, left bottom, left top, right top;
+  background-size: 0 18px, 0 18px, 18px 0, 18px 0;
   background-repeat: no-repeat;
 }
 
@@ -116,21 +95,11 @@
 }
 
 @keyframes oob-box-outline-draw {
-  0% {
-    background-size: 0 18px, 0 18px, 18px 0, 18px 0;
-  }
-  25% {
-    background-size: 100% 18px, 0 18px, 18px 0, 18px 0;
-  }
-  50% {
-    background-size: 100% 18px, 0 18px, 18px 0, 18px 100%;
-  }
-  75% {
-    background-size: 100% 18px, 100% 18px, 18px 0, 18px 100%;
-  }
-  100% {
-    background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100%;
-  }
+  0% { background-size: 0 18px, 0 18px, 18px 0, 18px 0; }
+  25% { background-size: 100% 18px, 0 18px, 18px 0, 18px 0; }
+  50% { background-size: 100% 18px, 0 18px, 18px 0, 18px 100%; }
+  75% { background-size: 100% 18px, 100% 18px, 18px 0, 18px 100%; }
+  100% { background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100%; }
 }
 
 .oob-content-box--interactive:focus-visible {
