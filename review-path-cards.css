@@ -1,6 +1,6 @@
 /* Homepage six-pathway tiles.
-   All copy, links and image alt text remain in initial HTML for search/LLM retrieval.
-   Static at every viewport: scene first, useful next step directly below, no flip state.
+   All primary copy and links are present in the initial HTML for search/LLM retrieval.
+   Static at every viewport: supplied scene first, useful CTA directly below, no flip state.
    Outer perimeter follows the shared oobCREATIVE line system:
    2 peaks · 4px rise/fall · 2.5–4.0px thickness · 1 pressure pool · 0px corner overshoot. */
 
@@ -23,10 +23,18 @@
   letter-spacing: -.045em;
 }
 
+/* Retire the obsolete hover instruction without depending on JavaScript. */
 .home-ui-v4 #review-paths .review-panel__prompt {
   max-width: 690px;
   margin: 0;
   color: var(--soft, #444);
+  font-size: 0;
+}
+
+.home-ui-v4 #review-paths .review-panel__prompt::after {
+  content: "Choose the situation that sounds closest. Each illustrated tile shows the useful first move and the review or tool to use next.";
+  font-size: 1rem;
+  line-height: 1.55;
 }
 
 .review-path-grid {
@@ -41,7 +49,7 @@
   min-width: 0;
 }
 
-/* One perimeter surrounds the complete image + copy + CTA tile. */
+/* One perimeter surrounds the complete scene + copy + CTA tile. */
 .review-path-card__inner {
   position: relative;
   display: flex;
@@ -79,36 +87,41 @@
   flex: 1 1 auto;
 }
 
-/* The supplied scene templates are portrait workfiles. Crop to the illustrated
-   header so the live HTML occupies the working area beneath it. */
+/* The supplied portrait workfiles are cropped just above their blank working
+   area. The live HTML below remains the actual readable/searchable content. */
 .review-path-card__art {
   position: relative;
   width: 100%;
   aspect-ratio: 1229 / 420;
   margin: 0;
   overflow: hidden;
-  background: #fff;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 100% auto;
 }
 
 .review-path-card__art img {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-width: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 
-.review-path-card--contact .review-path-card__art img { content: url('/images/pathway-scenes/customer-contact.svg'); }
-.review-path-card--workflow .review-path-card__art img { content: url('/images/pathway-scenes/workflow-systems.svg'); }
-.review-path-card--ai .review-path-card__art img { content: url('/images/pathway-scenes/ai-team.svg'); }
-.review-path-card--website .review-path-card__art img { content: url('/images/pathway-scenes/website-message.svg'); }
-.review-path-card--idea .review-path-card__art img { content: url('/images/pathway-scenes/test-idea.svg'); }
-.review-path-card--founder .review-path-card__art img { content: url('/images/pathway-scenes/founder-bottleneck.svg'); }
+.review-path-card--contact .review-path-card__art { background-image: url('/images/pathway-scenes/customer-contact.svg'); }
+.review-path-card--workflow .review-path-card__art { background-image: url('/images/pathway-scenes/workflow-systems.svg'); }
+.review-path-card--ai .review-path-card__art { background-image: url('/images/pathway-scenes/ai-team.svg'); }
+.review-path-card--website .review-path-card__art { background-image: url('/images/pathway-scenes/website-message.svg'); }
+.review-path-card--idea .review-path-card__art { background-image: url('/images/pathway-scenes/test-idea.svg'); }
+.review-path-card--founder .review-path-card__art { background-image: url('/images/pathway-scenes/founder-bottleneck.svg'); }
 
 .review-path-card__panel {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  padding: clamp(1.35rem, 3vw, 2rem) clamp(1.25rem, 3vw, 1.9rem) clamp(1.15rem, 2.6vw, 1.65rem);
+  padding: clamp(1.35rem, 3vw, 2rem) clamp(1.25rem, 3vw, 1.9rem) clamp(1.2rem, 2.6vw, 1.65rem);
 }
 
 .review-path-card .eyebrow {
@@ -146,15 +159,16 @@
   line-height: 1.55;
 }
 
-/* The old flip instruction is intentionally retired. */
 .review-path-card__hint {
   display: none;
 }
 
-/* Lower CTA section: same tile, separated by another hand-drawn stroke. */
+/* Lower CTA strip: a visible first move, separated from the explanatory copy
+   by the same hand-drawn stroke language used by the outer box. */
 .review-path-card__back {
   flex: 0 0 auto;
-  padding: clamp(1.5rem, 3vw, 2rem) clamp(1.25rem, 3vw, 1.9rem) clamp(1.45rem, 3vw, 1.9rem);
+  gap: .8rem;
+  padding: clamp(1.35rem, 3vw, 1.75rem) clamp(1.25rem, 3vw, 1.9rem) clamp(1.45rem, 3vw, 1.9rem);
 }
 
 .review-path-card__back::before {
@@ -169,17 +183,19 @@
 }
 
 .review-path-card__back .eyebrow {
-  margin-top: .35rem;
+  margin: .35rem 0 0;
 }
 
+/* The front already contains the canonical heading/body. Avoid repeating the
+   same explanation visually; the CTA remains fully visible and actionable. */
+.review-path-card__back h3,
 .review-path-card__back p:not(.eyebrow) {
-  margin-bottom: 1.15rem;
-  font-size: .96rem;
+  display: none;
 }
 
 .review-path-card__back .oob-cta {
   align-self: flex-start;
-  margin-top: .1rem;
+  margin-top: 0;
 }
 
 .review-path-card:hover .review-path-card__inner,
@@ -220,6 +236,10 @@
 
   .review-path-card h2 {
     font-size: clamp(1.6rem, 7.5vw, 2.05rem);
+  }
+
+  .review-path-card__back .oob-cta {
+    width: 100%;
   }
 }
 
