@@ -78,6 +78,66 @@ body:not(.home-ui-v4) .review-option__art {
   transform: scaleX(1);
 }
 
+/* AI Fit Check: the result remains the result. The broader oobCREATIVE
+   invitation sits in the persistent right rail beneath the limitation note. */
+.fit-result[data-fit-result] .fit-result-plan {
+  display: none !important;
+}
+
+.fit-check-section .fit-side-rail {
+  position: sticky;
+  top: 118px;
+  display: grid;
+  gap: 1.1rem;
+  align-self: start;
+}
+
+.fit-check-section .fit-side-rail .decision-note {
+  position: static;
+  top: auto;
+}
+
+.fit-human-cta {
+  padding: clamp(1.3rem, 2.6vw, 1.8rem);
+  background: var(--paper-soft, #f7f7f5);
+  border-top: 4px solid var(--ballpoint, #244aa5);
+}
+
+.fit-human-cta .meta {
+  margin-bottom: .65rem;
+  color: var(--ballpoint, #244aa5) !important;
+}
+
+.fit-human-cta h3 {
+  max-width: 13ch;
+  margin-bottom: .9rem;
+  font-size: clamp(1.6rem, 2.25vw, 2rem);
+  text-wrap: balance;
+}
+
+.fit-human-cta p {
+  color: var(--soft, #444) !important;
+}
+
+.fit-human-cta__invite {
+  margin-bottom: 1rem;
+  color: var(--ink, #111) !important;
+  font-weight: 700;
+}
+
+.fit-human-cta .button {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+@media (max-width: 980px) {
+  .fit-check-section .fit-side-rail {
+    position: static;
+    top: auto;
+  }
+}
+
 /* Homepage pathway reveal trial.
    Illustration and CTA remain visible. The middle text panel gets a deliberately
    taller field so the blue state has room to act as a visual stop instead of
