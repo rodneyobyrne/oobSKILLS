@@ -9,6 +9,18 @@
      add the human invitation inside that same content block. */
   const fitForm = document.querySelector('[data-fit-form]');
   if (fitForm) {
+    const supportLink = document.querySelector('[data-fit-support-link]');
+    const setPracticalAiLink = () => {
+      if (!supportLink) return;
+      supportLink.href = '/practical-ai/';
+      supportLink.innerHTML = 'Find more Practical AI Tool <span aria-hidden="true">→</span>';
+    };
+
+    /* The page's own result logic updates this href during submit. Register this
+       after it so the persistent browse-more link wins without changing scoring. */
+    setPracticalAiLink();
+    fitForm.addEventListener('submit', setPracticalAiLink);
+
     const decisionNote = document.querySelector('.fit-check-section .decision-note');
     if (decisionNote && !decisionNote.querySelector('[data-fit-human-invite]')) {
       const eyebrow = document.createElement('p');
