@@ -78,6 +78,34 @@ body:not(.home-ui-v4) .review-option__art {
   transform: scaleX(1);
 }
 
+/* Canonical loose-line corners: each 18px edge asset stops at the centerline of
+   the adjoining edge. This keeps the hand-drawn meeting point but removes the
+   doubled/overdrawn corner tails sitewide. */
+body[data-oob-experience] .content-hero__aside,
+body[data-oob-experience] .decision-note,
+body[data-oob-experience] .product-summary,
+body[data-oob-experience] .review-guide,
+body[data-oob-experience] .review-context,
+body[data-oob-experience] .privacy-note,
+body[data-oob-experience] .review-workspace,
+body[data-oob-experience] .review-result,
+body[data-oob-experience] .tool-form,
+body[data-oob-experience] .fit-form,
+body[data-oob-experience] .tool-result,
+body[data-oob-experience] .fit-result,
+body[data-oob-experience] .review-card,
+body[data-oob-experience] .report,
+body[data-oob-experience] .review-progress,
+body[data-oob-experience='reviews-hub'] .review-library-card {
+  background-position: 9px 0, 9px 100%, 0 9px, 100% 9px !important;
+  background-size:
+    calc(100% - 18px) 18px,
+    calc(100% - 18px) 18px,
+    18px calc(100% - 18px),
+    18px calc(100% - 18px) !important;
+  background-repeat: no-repeat !important;
+}
+
 /* AI Fit Check: keep the generated next-step plan out of the result and place
    the human invitation inside the existing sticky decision note. No wrapper,
    second box or sticky-position override is introduced here. */
@@ -93,8 +121,12 @@ body[data-oob-experience] .fit-result.fit-result--gift {
     url('/branding/line-bottom.svg?v=20260902-workfile'),
     url('/branding/line-left.svg?v=20260902-workfile'),
     url('/branding/line-right.svg?v=20260902-workfile') !important;
-  background-position: left top, left bottom, left top, right top !important;
-  background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100% !important;
+  background-position: 9px 0, 9px 100%, 0 9px, 100% 9px !important;
+  background-size:
+    calc(100% - 18px) 18px,
+    calc(100% - 18px) 18px,
+    18px calc(100% - 18px),
+    18px calc(100% - 18px) !important;
   background-repeat: no-repeat !important;
 }
 
