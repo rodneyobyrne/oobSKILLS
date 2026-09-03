@@ -9,11 +9,17 @@
   if (!cards.length) return;
 
   /* Build a visual-only reveal from the already-crawlable supporting paragraph.
-     This avoids duplicating the public content in source HTML. */
+     The reveal belongs only to the middle text panel: the illustration above
+     and the useful-first-move CTA strip below remain visible at all times. */
   for (const card of cards) {
-    const front = card.querySelector('.review-path-card__front');
+    const panel = card.querySelector('.review-path-card__panel');
     const source = card.querySelector('.review-path-card__panel > p:not(.eyebrow):not(.review-path-card__hint)');
-    if (!front || !source || front.querySelector('.review-path-card__reveal')) continue;
+    if (!panel || !source || panel.querySelector('.review-path-card__reveal')) continue;
+
+    /* Make the text panel the positioning/clipping context for its reveal. */
+    panel.style.position = 'relative';
+    panel.style.overflow = 'hidden';
+    panel.style.isolation = 'isolate';
 
     const reveal = document.createElement('div');
     reveal.className = 'review-path-card__reveal';
@@ -22,7 +28,7 @@
     const message = document.createElement('p');
     message.textContent = source.textContent.trim();
     reveal.append(message);
-    front.append(reveal);
+    panel.append(reveal);
   }
 
   const fineHover = window.matchMedia('(hover: hover) and (pointer: fine)');
