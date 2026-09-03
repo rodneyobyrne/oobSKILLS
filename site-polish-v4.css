@@ -78,64 +78,41 @@ body:not(.home-ui-v4) .review-option__art {
   transform: scaleX(1);
 }
 
-/* AI Fit Check: the result remains the result. The broader oobCREATIVE
-   invitation sits in the persistent right rail beneath the limitation note. */
+/* AI Fit Check: keep the generated next-step plan out of the result and place
+   the human invitation inside the existing sticky decision note. No wrapper,
+   second box or sticky-position override is introduced here. */
 .fit-result[data-fit-result] .fit-result-plan {
   display: none !important;
 }
 
-.fit-check-section .fit-side-rail {
-  position: sticky;
-  top: 118px;
-  display: grid;
-  gap: 1.1rem;
-  align-self: start;
-}
-
-.fit-check-section .fit-side-rail .decision-note {
-  position: static;
-  top: auto;
-}
-
-.fit-human-cta {
-  padding: clamp(1.3rem, 2.6vw, 1.8rem);
-  background: var(--paper-soft, #f7f7f5);
-  border-top: 4px solid var(--ballpoint, #244aa5);
-}
-
-.fit-human-cta .meta {
-  margin-bottom: .65rem;
+.fit-check-section .decision-note .fit-human-eyebrow {
+  margin-top: 1.4rem;
+  padding-top: 1.3rem;
+  border-top: 1px solid #b7b7b1;
   color: var(--ballpoint, #244aa5) !important;
 }
 
-.fit-human-cta h3 {
+.fit-check-section .decision-note .fit-human-heading {
   max-width: 13ch;
-  margin-bottom: .9rem;
-  font-size: clamp(1.6rem, 2.25vw, 2rem);
+  margin-bottom: .8rem;
+  font-size: clamp(1.45rem, 2vw, 1.8rem);
   text-wrap: balance;
 }
 
-.fit-human-cta p {
-  color: var(--soft, #444) !important;
+.fit-check-section .decision-note .fit-human-philosophy {
+  margin-bottom: .85rem;
 }
 
-.fit-human-cta__invite {
+.fit-check-section .decision-note .fit-human-invite {
   margin-bottom: 1rem;
   color: var(--ink, #111) !important;
   font-weight: 700;
 }
 
-.fit-human-cta .button {
+.fit-check-section .decision-note .fit-human-link {
   width: 100%;
   justify-content: center;
   text-align: center;
-}
-
-@media (max-width: 980px) {
-  .fit-check-section .fit-side-rail {
-    position: static;
-    top: auto;
-  }
 }
 
 /* Homepage pathway reveal trial.
