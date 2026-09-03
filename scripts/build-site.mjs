@@ -37,6 +37,7 @@ const publicFiles = [
 ];
 
 const publicDirectories = [
+  'about',
   'assessments',
   'audience-review',
   'branding',
@@ -58,30 +59,22 @@ const desktopNavigation = `<nav class="desktop-nav" aria-label="Primary navigati
   <details class="nav-group nav-group--reviews">
     <summary>Reviews</summary>
     <div class="nav-group__menu">
-      <a href="/assessments/customer-flow-review/">Customer Flow Health Review</a>
-      <a href="/audience-review/">Audience Review</a>
-      <a href="/tools/founder-bottleneck-review/">Founder Bottleneck Review</a>
-      <a href="/tools/workflow-systems-review/">Workflow &amp; Systems Review</a>
-      <a href="/tools/website-message-clarity-review/">Website Message Clarity Review</a>
-      <a href="/tools/customer-contact-workflow-review/">Customer Contact Workflow Review</a>
-      <a href="/tools/digital-project-recovery-review/">Digital Project Recovery Review</a>
-      <a href="/assessments/idea-to-test-review/">Idea-to-Test Review</a>
+      <a href="/start-here/">Find the Right Review</a>
       <a class="nav-menu-all" href="/assessments/">All Reviews</a>
     </div>
   </details>
   <details class="nav-group nav-group--ai">
-    <summary>Tools for AI</summary>
+    <summary>Practical AI</summary>
     <div class="nav-group__menu">
-      <a href="/assessments/ai-workday-review/">Review Your Workday for AI</a>
-      <a href="/tools/ai-pilot-starter/">Start an AI Pilot</a>
-      <a href="/workfiles/ai-workday-map/">Map Your AI Workflow</a>
-      <a href="/tools/ai-fit-check/">AI Fit Check</a>
-      <a href="/tools/ai-tool-match/">AI Tool Match</a>
-      <a href="/tools/human-review-checklist/">Human Review Checklist</a>
+      <a href="/assessments/ai-workday-review/">01 Find a Use</a>
+      <a href="/tools/ai-pilot-starter/">02 Test It</a>
+      <a href="/workfiles/ai-workday-map/">03 Put It Into Work</a>
+      <a class="nav-menu-all" href="/practical-ai/">Quick AI Checks</a>
     </div>
   </details>
+  <a href="/services/">Services</a>
   <a href="/free-tools/">Resources</a>
-  <a href="https://oobcreative.com/">About</a>
+  <a href="/about/">About</a>
   <a class="nav-cta" href="mailto:hello@oobcreative.com?subject=oobSKILLS%20conversation">Talk to oobCREATIVE</a>
 </nav>`;
 
@@ -93,33 +86,52 @@ const mobileNavigation = `<details class="mobile-nav">
     <details class="nav-group nav-group--reviews">
       <summary>Reviews</summary>
       <div class="nav-group__menu">
-        <a href="/assessments/customer-flow-review/">Customer Flow Health Review</a>
-        <a href="/audience-review/">Audience Review</a>
-        <a href="/tools/founder-bottleneck-review/">Founder Bottleneck Review</a>
-        <a href="/tools/workflow-systems-review/">Workflow &amp; Systems Review</a>
-        <a href="/tools/website-message-clarity-review/">Website Message Clarity Review</a>
-        <a href="/tools/customer-contact-workflow-review/">Customer Contact Workflow Review</a>
-        <a href="/tools/digital-project-recovery-review/">Digital Project Recovery Review</a>
-        <a href="/assessments/idea-to-test-review/">Idea-to-Test Review</a>
+        <a href="/start-here/">Find the Right Review</a>
         <a class="nav-menu-all" href="/assessments/">All Reviews</a>
       </div>
     </details>
     <details class="nav-group nav-group--ai">
-      <summary>Tools for AI</summary>
+      <summary>Practical AI</summary>
       <div class="nav-group__menu">
-        <a href="/assessments/ai-workday-review/">Review Your Workday for AI</a>
-        <a href="/tools/ai-pilot-starter/">Start an AI Pilot</a>
-        <a href="/workfiles/ai-workday-map/">Map Your AI Workflow</a>
-        <a href="/tools/ai-fit-check/">AI Fit Check</a>
-        <a href="/tools/ai-tool-match/">AI Tool Match</a>
-        <a href="/tools/human-review-checklist/">Human Review Checklist</a>
+        <a href="/assessments/ai-workday-review/">01 Find a Use</a>
+        <a href="/tools/ai-pilot-starter/">02 Test It</a>
+        <a href="/workfiles/ai-workday-map/">03 Put It Into Work</a>
+        <a class="nav-menu-all" href="/practical-ai/">Quick AI Checks</a>
       </div>
     </details>
+    <a href="/services/">Services</a>
     <a href="/free-tools/">Resources</a>
-    <a href="https://oobcreative.com/">About</a>
+    <a href="/about/">About</a>
     <a class="nav-cta" href="mailto:hello@oobcreative.com?subject=oobSKILLS%20conversation">Talk to oobCREATIVE</a>
   </nav>
 </details>`;
+
+const siteFooter = `<footer>
+  <div class="site-shell footer-main">
+    <div class="footer-brand">
+      <img class="footer-logo" src="/branding/logo_horiz-hex111111_background.png" alt="oobCREATIVE" width="270" height="68">
+      <p>Go deeper, not louder.</p>
+      <p class="footer-description">Practical diagnostics and implementation for the places where communication, workflow, systems and AI meet.</p>
+    </div>
+    <div class="footer-links">
+      <div>
+        <p class="footer-label">Explore</p>
+        <a href="/start-here/">Start Here</a>
+        <a href="/assessments/">Reviews</a>
+        <a href="/practical-ai/">Practical AI</a>
+        <a href="/services/">Services</a>
+        <a href="/free-tools/">Resources</a>
+      </div>
+      <div>
+        <p class="footer-label">Connect</p>
+        <a href="/about/">About</a>
+        <a href="mailto:hello@oobcreative.com">hello@oobcreative.com</a>
+        <a href="/privacy-policy/">Privacy Policy</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bar"><div class="site-shell"><span>© 2018-2026 oobCREATIVE. All rights reserved.</span><span>Roaring Fork Valley, Colorado</span><a href="/privacy-policy/">Privacy Policy</a></div></div>
+</footer>`;
 
 const contextualLinkBlocks = new Map([
   [
@@ -232,6 +244,13 @@ function replacePrimaryNavigation(html) {
   return next;
 }
 
+function replaceFooter(html) {
+  if (/<footer\b[\s\S]*?<\/footer>/i.test(html)) {
+    return html.replace(/<footer\b[\s\S]*?<\/footer>/i, siteFooter);
+  }
+  return html;
+}
+
 function injectContextualLinks(html, outputFile) {
   const block = contextualLinkBlocks.get(outputFile);
   if (!block || html.includes('data-related-links="true"') || !/<\/main>/i.test(html)) return html;
@@ -252,7 +271,8 @@ for (const absolutePath of walk(outputRoot)) {
   const html = readFileSync(absolutePath, 'utf8');
   const withContextualLinks = injectContextualLinks(html, outputFile);
   const withCanonicalNavigation = replacePrimaryNavigation(withContextualLinks);
-  const withExperience = annotateExperience(withCanonicalNavigation, outputFile);
+  const withFooter = replaceFooter(withCanonicalNavigation);
+  const withExperience = annotateExperience(withFooter, outputFile);
   writeFileSync(absolutePath, injectSiteAssets(versionLocalAssets(withExperience), outputFile));
 }
 
