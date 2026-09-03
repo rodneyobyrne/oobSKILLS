@@ -85,6 +85,19 @@ body:not(.home-ui-v4) .review-option__art {
   display: none !important;
 }
 
+/* Preserve the original loose gray workfile outline around the complete result.
+   The obsolete blue SVG pseudo-outline remains disabled in content-pages.css. */
+body[data-oob-experience] .fit-result.fit-result--gift {
+  background-image:
+    url('/branding/line-top.svg?v=20260902-workfile'),
+    url('/branding/line-bottom.svg?v=20260902-workfile'),
+    url('/branding/line-left.svg?v=20260902-workfile'),
+    url('/branding/line-right.svg?v=20260902-workfile') !important;
+  background-position: left top, left bottom, left top, right top !important;
+  background-size: 100% 18px, 100% 18px, 18px 100%, 18px 100% !important;
+  background-repeat: no-repeat !important;
+}
+
 .fit-check-section .decision-note .fit-human-eyebrow {
   margin-top: 1.4rem;
   padding-top: 1.3rem;
