@@ -113,17 +113,22 @@ body:not(.home-ui-v4) .review-option__art {
   letter-spacing: -.02em;
 }
 
-/* When the middle panel becomes ink blue, the separator above the white CTA
-   strip also turns blue so the two states meet as one intentional edge. */
-.home-ui-v4 .review-path-card:focus-within .review-path-card__back::before,
-.home-ui-v4 .review-path-card.is-scroll-active .review-path-card__back::before {
-  background-image: url('/branding/line-top-blue.svg?v=20260902-clean-corners');
+/* The blue panel now meets the CTA strip directly. There is no secondary
+   separator line; the tighter strip keeps the next action visually connected. */
+.home-ui-v4 .review-path-card__back {
+  gap: .55rem;
+  padding-top: .7rem;
+  padding-bottom: 1.15rem;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .home-ui-v4 .review-path-card:hover .review-path-card__back::before {
-    background-image: url('/branding/line-top-blue.svg?v=20260902-clean-corners');
-  }
+.home-ui-v4 .review-path-card__back::before {
+  content: none !important;
+  display: none !important;
+  background: none !important;
+}
+
+.home-ui-v4 .review-path-card__back .eyebrow {
+  margin: 0 0 .35rem;
 }
 
 @media (max-width: 980px) {
@@ -151,6 +156,12 @@ body:not(.home-ui-v4) .review-option__art {
 
   .home-ui-v4 .review-path-card__reveal {
     padding: 1.5rem 1.65rem 2rem;
+  }
+
+  .home-ui-v4 .review-path-card__back {
+    gap: .5rem;
+    padding-top: .65rem;
+    padding-bottom: 1rem;
   }
 }
 
