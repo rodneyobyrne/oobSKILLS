@@ -70,16 +70,24 @@
 .breadcrumbs ol { display: flex; flex-wrap: wrap; gap: .45rem; margin: 0; padding: 0; list-style: none; }
 .breadcrumbs li + li::before { content: "/"; margin-right: .45rem; color: var(--muted); }
 .print-note { color: var(--soft); font-size: .9rem; }
-.fit-form fieldset { margin: 0; padding: 1.5rem 0; border: 0; border-top: 1px solid var(--ink); }
+.fit-check-section { padding-top: clamp(2.25rem, 4vw, 3.5rem); }
+.fit-form fieldset { margin: 0; padding: 1.15rem 0; border: 0; border-top: 1px solid var(--ink); }
 .fit-form fieldset:last-of-type { border-bottom: 1px solid var(--ink); }
-.fit-form legend { width: 100%; margin-bottom: 1rem; padding: 0; font-size: clamp(1.1rem, 1.8vw, 1.35rem); font-weight: 700; line-height: 1.3; }
+.fit-form legend { width: 100%; margin-bottom: .75rem; padding: 0; font-size: clamp(1.05rem, 1.5vw, 1.22rem); font-weight: 700; line-height: 1.3; }
 .fit-task-field { display: grid; gap: .55rem; margin-bottom: 1.25rem; font-weight: 800; }
 .fit-task-field span { color: var(--muted); font-weight: 700; }
 .fit-task-field input, .fit-task-field select { width: 100%; min-height: 52px; padding: .85rem 1rem; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); }
 .fit-task-field input:focus, .fit-task-field select:focus { outline: 3px solid var(--ballpoint); outline-offset: 2px; }
 .fit-task-field input[aria-invalid="true"], .fit-task-field select[aria-invalid="true"] { background: #fff7f7; box-shadow: inset 5px 0 0 #8d2f37; }
+.fit-task-choices { margin-bottom: 1.1rem !important; padding: 0 0 1rem !important; border-top: 0 !important; }
+.fit-field-help { max-width: 58ch; margin: -.35rem 0 .75rem; color: var(--soft); font-size: .95rem; }
+.fit-check-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; }
+.fit-check-grid label { display: flex; align-items: flex-start; gap: .55rem; min-height: 0; padding: .75rem .85rem; border: 1px solid var(--line); background: var(--paper); font-weight: 800; line-height: 1.25; cursor: pointer; }
+.fit-check-grid label:has(input:checked) { border-color: var(--ballpoint); background: var(--paper-blue); box-shadow: inset 4px 0 0 var(--ballpoint); }
+.fit-check-grid input { margin-top: .15rem; accent-color: var(--ballpoint); }
+.fit-task-choices[aria-invalid="true"] .fit-check-grid label { background: #fff7f7; }
 .fit-options { display: flex; flex-wrap: wrap; gap: .75rem; }
-.fit-options label { display: inline-flex; align-items: center; gap: .55rem; min-height: 44px; padding: .65rem .9rem; border: 1px solid var(--line); background: var(--paper); cursor: pointer; }
+.fit-options label { display: inline-flex; align-items: center; gap: .55rem; min-height: 40px; padding: .5rem .75rem; border: 1px solid var(--line); background: var(--paper); cursor: pointer; }
 .fit-options label:has(input:checked) { border-color: var(--ballpoint); background: var(--paper-blue); box-shadow: inset 0 -3px 0 var(--ballpoint); }
 .fit-options input { accent-color: var(--ballpoint); }
 .fit-result { margin-top: 2rem; padding: clamp(1.4rem, 3vw, 2rem); border: 1px solid var(--ballpoint); background: var(--paper-blue); }
@@ -93,7 +101,7 @@
 .fit-result-ribbon [data-fit-score] { margin: 0; padding: .45rem .65rem; border: 1px solid var(--ballpoint); background: var(--paper); color: var(--ballpoint); font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .fit-result-summary { max-width: 66ch; color: var(--ink); font-size: clamp(1.08rem, 1.5vw, 1.24rem); line-height: 1.55; }
 .fit-dimensions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin: 1rem 0; border: 1px solid var(--ink); background: var(--ink); }
-.fit-dimension { min-height: 78px; padding: .7rem .8rem; background: var(--paper); }
+.fit-dimension { min-height: 66px; padding: .55rem .65rem; background: var(--paper); }
 .fit-dimension p { margin: 0 0 .3rem; color: var(--soft); font-size: .68rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
 .fit-dimension strong { display: block; font-size: clamp(.95rem, 1.35vw, 1.08rem); line-height: 1.18; }
 .fit-dimension[data-state="strong"] { box-shadow: inset 0 -5px 0 var(--ballpoint); }
@@ -141,6 +149,7 @@
   .content-table tr + tr { margin-top: 1rem; }
   .fit-dimensions { grid-template-columns: 1fr; }
   .fit-dimension { min-height: 0; }
+  .fit-check-grid { grid-template-columns: 1fr; }
   .fit-save-actions { align-items: stretch; flex-direction: column; }
   .fit-save-actions .button, .fit-save-actions .text-link { width: 100%; margin-left: 0; text-align: center; }
 }

@@ -23,11 +23,16 @@ function createPage() {
 }
 
 function answer(window, values) {
-  window.document.querySelector('[name="task"]').value = values.task || 'respond to routine missed calls';
+  const tasks = values.tasks || ['customer-response'];
+  for (const task of tasks) {
+    const input = window.document.querySelector(`input[name="task"][value="${task}"]`);
+    assert.ok(input, `missing task=${task}`);
+    input.checked = true;
+  }
   window.document.querySelector('[name="jobType"]').value = values.jobType || 'customer-contact';
   if (values.contextUrl) window.document.querySelector('[name="contextUrl"]').value = values.contextUrl;
   for (const [name, value] of Object.entries(values)) {
-    if (['task', 'jobType', 'contextUrl'].includes(name)) continue;
+    if (['tasks', 'jobType', 'contextUrl'].includes(name)) continue;
     const input = window.document.querySelector(`input[name="${name}"][value="${value}"]`);
     assert.ok(input, `missing ${name}=${value}`);
     input.checked = true;
@@ -47,6 +52,8 @@ function result(window) {
     title: window.document.querySelector('[data-fit-title]').textContent,
     next: window.document.querySelector('[data-fit-next-link]').getAttribute('href'),
     context: window.document.querySelector('[data-fit-context-title]').textContent,
+    copy: window.document.querySelector('[data-fit-copy]').textContent,
+    analysis: window.document.querySelector('[data-fit-analysis]').textContent,
     role: window.document.querySelector('[data-fit-role]').textContent,
   };
 }
@@ -55,6 +62,7 @@ function result(window) {
   const { window, errors } = createPage();
   answer(window, {
     jobType: 'customer-contact',
+    tasks: ['customer-response'],
     repeated: 'yes',
     defined: 'yes',
     sources: 'yes',
@@ -74,7 +82,7 @@ function result(window) {
 {
   const { window, errors } = createPage();
   answer(window, {
-    task: 'boat building',
+    tasks: ['chatgpt', 'workflow-automation'],
     jobType: 'hands-on',
     contextUrl: 'https://example.com/services/boat-building/',
     repeated: 'yes',
@@ -101,6 +109,7 @@ function result(window) {
   const { window, errors } = createPage();
   answer(window, {
     jobType: 'decision-support',
+    tasks: ['chatgpt'],
     repeated: 'no',
     defined: 'no',
     sources: 'no',
@@ -114,7 +123,20 @@ function result(window) {
   const allNo = result(window);
   assert.equal(allNo.score, 'Define first');
   assert.match(allNo.title, /enough shape/);
+  assert.match(allNo.copy, /ChatGPT is a capable tool/);
+  assert.match(allNo.analysis, /ChatGPT is a flexible general-purpose AI assistant/);
   assert.equal(allNo.next, '/tools/workflow-systems-review/');
+  assert.deepEqual(errors, []);
+  window.close();
+}
+
+{
+  const { window, errors } = createPage();
+  window.document.querySelector('[name="jobType"]').value = 'messaging';
+  submit(window);
+  const validation = window.document.querySelector('[data-fit-validation]');
+  assert.equal(validation.hidden, false);
+  assert.equal(window.document.querySelector('[data-fit-task-choices]').getAttribute('aria-invalid'), 'true');
   assert.deepEqual(errors, []);
   window.close();
 }
