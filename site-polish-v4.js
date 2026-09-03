@@ -5,30 +5,37 @@
     document.querySelector('.content-hero__inner')?.classList.remove('has-ai-art');
   });
 
-  /* AI Fit Check: keep the generated result focused on the recommendation itself.
-     The broader human invitation belongs in the persistent right rail, below the
-     practical limitation note, rather than in the result output. */
+  /* AI Fit Check: preserve the existing sticky decision note exactly as-is and
+     add the human invitation inside that same content block. */
   const fitForm = document.querySelector('[data-fit-form]');
   if (fitForm) {
-    document.querySelector('.fit-result-plan')?.remove();
-
     const decisionNote = document.querySelector('.fit-check-section .decision-note');
-    if (decisionNote && !document.querySelector('.fit-side-rail')) {
-      const rail = document.createElement('div');
-      rail.className = 'fit-side-rail';
-      decisionNote.replaceWith(rail);
-      rail.append(decisionNote);
+    if (decisionNote && !decisionNote.querySelector('[data-fit-human-invite]')) {
+      const eyebrow = document.createElement('p');
+      eyebrow.className = 'meta fit-human-eyebrow';
+      eyebrow.dataset.fitHumanInvite = 'true';
+      eyebrow.textContent = 'Talk it through';
 
-      const cta = document.createElement('section');
-      cta.className = 'fit-human-cta';
-      cta.setAttribute('aria-labelledby', 'fit-human-cta-title');
-      cta.innerHTML = `
-        <p class="meta">Talk it through</p>
-        <h3 id="fit-human-cta-title">Sit with a real human.</h3>
-        <p>oobCREATIVE helps people clarify what they do, communicate it clearly, and build practical systems that make the work easier to carry forward.</p>
-        <p class="fit-human-cta__invite">Bring the question you're working through. We’ll sit with it together for 30 minutes—free.</p>
-        <a class="button button--blue" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3xFuWW4Hc02uVylPRSR0Yy2VRTdB0KiHxafLVqOWQs5zrRdHDtEE0ZWqF6b9m4niDk0QLlI9gJ?gv=true" target="_blank" rel="noopener">Schedule a free 30-minute conversation</a>`;
-      rail.append(cta);
+      const heading = document.createElement('h3');
+      heading.className = 'fit-human-heading';
+      heading.textContent = 'Sit with a real human.';
+
+      const philosophy = document.createElement('p');
+      philosophy.className = 'fit-human-philosophy';
+      philosophy.textContent = 'oobCREATIVE helps people clarify what they do, communicate it clearly, and build practical systems that make the work easier to carry forward.';
+
+      const invite = document.createElement('p');
+      invite.className = 'fit-human-invite';
+      invite.textContent = 'Bring the question you’re working through. We’ll sit with it together for 30 minutes—free.';
+
+      const link = document.createElement('a');
+      link.className = 'button button--blue fit-human-link';
+      link.href = 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ3xFuWW4Hc02uVylPRSR0Yy2VRTdB0KiHxafLVqOWQs5zrRdHDtEE0ZWqF6b9m4niDk0QLlI9gJ?gv=true';
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.textContent = 'Schedule a free 30-minute conversation';
+
+      decisionNote.append(eyebrow, heading, philosophy, invite, link);
     }
   }
 
