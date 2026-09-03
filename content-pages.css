@@ -99,6 +99,7 @@
 .fit-result h2 { max-width: 22ch; }
 .fit-result--gift { position: relative; overflow: visible; padding: 0; background: transparent; box-shadow: none; }
 .fit-result--gift::before { content: none; }
+body[data-oob-experience] .fit-result.fit-result--gift { background-image: none !important; }
 .fit-result-inner { position: relative; z-index: 1; padding: clamp(1.35rem, 3.4vw, 2.35rem); border: 0; background: #c4d9d0; color: var(--ink); }
 .fit-result-inner .meta { color: #405650; }
 .fit-result-ribbon { display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
