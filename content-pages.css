@@ -93,12 +93,14 @@
 .fit-form fieldset[aria-invalid="true"] { padding-inline: .55rem; background: #fffafa; box-shadow: inset 3px 0 0 #8d2f37; }
 .fit-form fieldset[aria-invalid="true"] .fit-options { padding-left: .2rem; }
 .fit-form fieldset[aria-invalid="true"] .fit-options label { background: var(--paper); }
-.fit-result { margin-top: 2rem; padding: clamp(1.4rem, 3vw, 2rem); border: 1px solid var(--ballpoint); background: var(--paper-blue); }
+.fit-result { margin-top: 2rem; padding: 0; border: 0; background: transparent; }
 .fit-result[hidden] { display: none; }
 .fit-result:focus { outline: none; }
 .fit-result h2 { max-width: 22ch; }
-.fit-result--gift { position: relative; overflow: hidden; padding: clamp(1.5rem, 4vw, 2.75rem); border: 0; background: linear-gradient(180deg, #fff 0%, var(--paper-blue) 100%); box-shadow: 0 18px 45px rgba(17,17,17,.09); }
-.fit-result--gift::before { content: ""; position: absolute; inset: .25rem; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath pathLength='100' d='M3 5 C15 2 29 4 42 3 C58 5 74 2 96 5 C98 22 96 37 97 52 C96 68 98 82 95 96 C77 97 63 95 49 97 C34 95 18 98 4 95 C2 79 4 64 3 50 C4 35 2 19 3 5 Z' fill='none' stroke='%23244aa5' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round' stroke-dasharray='100' stroke-dashoffset='100' vector-effect='non-scaling-stroke'%3E%3Canimate attributeName='stroke-dashoffset' from='100' to='0' dur='.62s' calcMode='spline' keySplines='.2 .8 .2 1' fill='freeze'/%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-size: 100% 100%; }
+.fit-result--gift { position: relative; overflow: hidden; padding: clamp(1.15rem, 2.4vw, 1.65rem); background: #fff; box-shadow: 0 18px 45px rgba(17,17,17,.09); }
+.fit-result--gift::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath pathLength='100' d='M1.5 3.5 C15 2 29 4 42 3 C58 5 74 2 98.5 3.5 C99 22 97 37 98 52 C97 68 99 82 98 96.5 C77 98 63 96 49 97 C34 95 18 98 2 96.5 C1 79 3 64 2 50 C3 35 1 19 1.5 3.5 Z' fill='none' stroke='%23244aa5' stroke-width='1.05' stroke-linecap='round' stroke-linejoin='round' stroke-dasharray='100' stroke-dashoffset='100' vector-effect='non-scaling-stroke'%3E%3Canimate attributeName='stroke-dashoffset' from='100' to='0' dur='.68s' calcMode='spline' keySplines='.2 .8 .2 1' fill='freeze'/%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-size: 100% 100%; }
+.fit-result-inner { position: relative; z-index: 1; padding: clamp(1.35rem, 3.4vw, 2.35rem); border: 2px solid var(--ink); background: #c4d9d0; color: var(--ink); }
+.fit-result-inner .meta { color: #405650; }
 .fit-result-ribbon { display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
 .fit-result-ribbon .meta { margin: 0; }
 .fit-result-ribbon [data-fit-score] { margin: 0; padding: .45rem .65rem; border: 1px solid var(--ballpoint); background: var(--paper); color: var(--ballpoint); font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
@@ -157,7 +159,7 @@
   .fit-save-actions .button, .fit-save-actions .text-link { width: 100%; margin-left: 0; text-align: center; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .fit-result--gift::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M3 5 C15 2 29 4 42 3 C58 5 74 2 96 5 C98 22 96 37 97 52 C96 68 98 82 95 96 C77 97 63 95 49 97 C34 95 18 98 4 95 C2 79 4 64 3 50 C4 35 2 19 3 5 Z' fill='none' stroke='%23244aa5' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); }
+  .fit-result--gift::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M1.5 3.5 C15 2 29 4 42 3 C58 5 74 2 98.5 3.5 C99 22 97 37 98 52 C97 68 99 82 98 96.5 C77 98 63 96 49 97 C34 95 18 98 2 96.5 C1 79 3 64 2 50 C3 35 1 19 1.5 3.5 Z' fill='none' stroke='%23244aa5' stroke-width='1.05' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); }
 }
 @media print {
   .site-header, footer, .content-actions, .final-cta, .breadcrumbs, .content-hero, .decision-note, .fit-form, .fit-save-actions, .status { display: none !important; }
@@ -169,6 +171,7 @@
   .fit-result[hidden] { display: none !important; }
   .fit-result { margin: 0; padding: 0; border: 0; background: #fff; box-shadow: none; }
   .fit-result::before { display: none; }
+  .fit-result-inner { padding: 0; border: 0; background: #fff; color: #000; }
   .fit-result h2 { max-width: none; }
   .fit-result .result-card, .fit-result-plan { break-inside: avoid; background: #fff; border-color: #000; }
   .fit-dimensions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
