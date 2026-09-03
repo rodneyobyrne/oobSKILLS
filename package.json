@@ -8,7 +8,7 @@
     "check:site": "node scripts/check-public-site.mjs _site",
     "check:links": "node scripts/check-internal-links.mjs _site",
     "check:secrets": "node scripts/scan-secrets.mjs",
-    "test:dom": "node tests/test-human-review.cjs && node tests/test-idea-to-test.cjs && node tests/test-idea-to-test-dom.cjs && node tests/test-customer-flow.cjs && node tests/test-audience-review.cjs && node tests/test-local-fit-request.cjs && node tests/test-ai-receptionist-page.cjs && node tests/test-new-review-tools.cjs && node tests/test-homepage-search-copy.cjs && node tests/test-results-experience.cjs",
+    "test:dom": "node tests/test-human-review.cjs && node tests/test-idea-to-test.cjs && node tests/test-idea-to-test-dom.cjs && node tests/test-customer-flow.cjs && node tests/test-audience-review.cjs && node tests/test-local-fit-request.cjs && node tests/test-ai-receptionist-page.cjs && node tests/test-ai-fit-check.cjs && node tests/test-new-review-tools.cjs && node tests/test-homepage-search-copy.cjs && node tests/test-results-experience.cjs",
     "install:chromium": "node scripts/install-playwright-chromium.mjs",
     "test:browser:journeys": "node tests/test-homepage-browser.cjs && node tests/test-idea-to-test-browser.cjs && node tests/test-customer-flow-browser.cjs && node tests/test-workday-browser.cjs && node tests/test-audience-review-browser.cjs && node tests/test-ai-receptionist-browser.cjs",
     "test:browser": "npm run install:chromium && npm run test:browser:journeys",
