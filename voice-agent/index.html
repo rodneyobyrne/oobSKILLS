@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A practical AI voice agent for small businesses that answers approved customer questions, captures what callers need and delivers the conversation back to you.">
+  <meta name="description" content="A practical AI voice agent for small businesses that answers approved customer questions, captures what callers need and delivers the conversation back to you. Plans start at $495 setup and $149 per month.">
   <link rel="canonical" href="https://skills.oobcreative.com/voice-agent/">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Small Business AI Voice Agent | oobCREATIVE">
@@ -48,15 +48,16 @@
     .hero__image img{width:100%;height:100%;object-fit:cover;object-position:center}
     .hero__copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(2rem,4.5vw,4.8rem);max-width:780px}
     .hero h1{margin:0 0 1.4rem;font-size:clamp(2.8rem,4.5vw,4.8rem);line-height:.98;letter-spacing:.015em;text-transform:uppercase}
-    .hero__lead{max-width:760px;margin:0 0 1.5rem;font-size:clamp(1.3rem,2vw,2rem);line-height:1.36}
+    .hero__lead{max-width:760px;margin:0 0 1.35rem;font-size:clamp(1.3rem,2vw,2rem);line-height:1.36}
     .hero__lead strong{font-weight:900}
-    .hero__actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.8rem}
+    .hero__actions{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.65rem}
     .phone-number{font-size:1.1rem;font-weight:900;text-decoration:none}
     .phone-number:hover,.phone-number:focus-visible{color:var(--blue)}
     .hero__note{max-width:640px;margin:0;color:var(--muted);font-size:1rem}
+    .hero__price{margin:.8rem 0 0;font-size:.92rem;font-weight:900;color:var(--blue-dark)}
 
-    .plans{padding:clamp(3.2rem,5vw,5rem) 0;background:var(--blue-soft)}
-    .plans__head{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end;margin-bottom:2rem}
+    .plans{padding:clamp(3rem,5vw,4.7rem) 0;background:var(--blue-soft)}
+    .plans__head{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end;margin-bottom:1.8rem}
     .plans h2{max-width:850px;margin:0;font-size:clamp(2.3rem,4vw,4.25rem);line-height:.96;letter-spacing:-.045em}
     .plans__head p{max-width:430px;margin:0;color:#303030;font-size:1.05rem}
     .plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
@@ -64,21 +65,38 @@
     .plan--connected{background:#eef2f8;border-color:var(--blue)}
     .plan--partner{background:var(--ink);color:#fff}
     .plan__label{margin:0 0 .35rem;font-size:.75rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase}
-    .plan h3{margin:0 0 .85rem;font-size:clamp(1.75rem,2.4vw,2.65rem);line-height:.98;letter-spacing:-.035em}
-    .plan__price{margin:0 0 1rem;font-size:1.05rem;font-weight:900}
-    .plan__price span{font-weight:400;color:var(--muted)}
-    .plan--partner .plan__price span{color:#cfcfcf}
-    .plan p.plan__summary{margin:0 0 1rem;color:#333}
+    .plan h3{margin:0 0 .5rem;font-size:clamp(1.75rem,2.4vw,2.65rem);line-height:.98;letter-spacing:-.035em}
+    .price-lockup{margin:0 0 .9rem;padding-bottom:.9rem;border-bottom:1px solid var(--line)}
+    .plan--partner .price-lockup{border-color:#444}
+    .setup-price{display:block;font-size:1rem;font-weight:900}
+    .monthly-price{display:block;margin-top:.1rem;font-size:clamp(2rem,3vw,3rem);font-weight:900;line-height:1}
+    .monthly-price span{font-size:1rem;font-weight:700;color:var(--muted)}
+    .plan--partner .monthly-price span{color:#cfcfcf}
+    .plan p.plan__summary{margin:0 0 .85rem;color:#333}
     .plan--partner p.plan__summary{color:#e2e2e2}
-    .plan ul{margin:0 0 1.5rem;padding:0;list-style:none}
-    .plan li{position:relative;padding:.42rem 0 .42rem 1.35rem;border-bottom:1px solid var(--line)}
+    .usage{display:inline-block;align-self:flex-start;margin:0 0 .85rem;padding:.35rem .55rem;background:#edf1f9;font-size:.84rem;font-weight:900}
+    .plan--connected .usage{background:#fff}
+    .plan--partner .usage{background:#272727;color:#fff}
+    .plan ul{margin:0 0 1.25rem;padding:0;list-style:none}
+    .plan li{position:relative;padding:.4rem 0 .4rem 1.35rem;border-bottom:1px solid var(--line)}
     .plan li::before{content:"✓";position:absolute;left:0;font-weight:900}
     .plan--partner li{border-color:#3f3f3f}
     .plan__cta{margin-top:auto;padding-top:.4rem}
-    .partner-line{margin:1rem 0 1.2rem;font-size:1.35rem;font-weight:900;line-height:1.08}
+    .partner-line{margin:.9rem 0 1.1rem;font-size:1.35rem;font-weight:900;line-height:1.08}
     .partner-line em{font-style:normal;text-decoration:underline;text-decoration-color:var(--blue-soft);text-decoration-thickness:4px;text-underline-offset:4px}
+    .usage-note{margin:1rem 0 0;color:#303030;font-size:.9rem}
 
-    .handoff{padding:clamp(3.5rem,6vw,6rem) 0;background:#fff}
+    .launch{padding:clamp(2.7rem,4.5vw,4rem) 0;background:#fff}
+    .launch__head{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(2rem,6vw,6rem);align-items:start;margin-bottom:1.5rem}
+    .launch h2{max-width:560px;margin:0;font-size:clamp(2.15rem,3.5vw,3.7rem);line-height:.98;letter-spacing:-.04em}
+    .launch__head p{max-width:650px;margin:0;color:#3b3b3b;font-size:1.05rem}
+    .guardrails{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+    .guardrail{padding:1.2rem;background:var(--soft)}
+    .guardrail strong{display:block;margin-bottom:.35rem;font-size:1rem}
+    .guardrail span{display:block;color:#4a4a4a;font-size:.9rem}
+    .fineprint{margin:1rem 0 0;color:var(--muted);font-size:.86rem}
+
+    .handoff{padding:clamp(3.2rem,5vw,5rem) 0;background:#fff;border-top:1px solid var(--line)}
     .handoff__grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(2rem,6vw,6rem);align-items:start}
     .handoff h2{max-width:560px;margin:0;font-size:clamp(2.3rem,4vw,4rem);line-height:.98;letter-spacing:-.045em}
     .handoff__steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
@@ -103,9 +121,10 @@
       .hero__grid{grid-template-columns:1fr;min-height:0}
       .hero__image{height:420px;order:1}
       .hero__copy{order:2;max-width:none;padding:clamp(2rem,6vw,3.5rem)}
-      .plans__head,.handoff__grid{grid-template-columns:1fr}
+      .plans__head,.launch__head,.handoff__grid{grid-template-columns:1fr}
       .plan-grid{grid-template-columns:1fr}
       .plan{min-height:0}
+      .guardrails{grid-template-columns:1fr 1fr}
       .handoff__steps{grid-template-columns:1fr 1fr 1fr}
       .proof__grid{grid-template-columns:140px 1fr 170px}
     }
@@ -117,7 +136,7 @@
       .hero h1{font-size:clamp(2.5rem,12vw,3.7rem)}
       .hero__lead{font-size:1.25rem}
       .hero__actions{align-items:flex-start;flex-direction:column}
-      .handoff__steps{grid-template-columns:1fr}
+      .guardrails,.handoff__steps{grid-template-columns:1fr}
       .proof__grid{grid-template-columns:1fr}
       .proof__copy{text-align:center}
       .proof__actions{justify-content:center}
@@ -151,6 +170,7 @@
             <a class="phone-number" href="tel:9704048398">970-404-8398</a>
           </div>
           <p class="hero__note">Try it yourself. Ask about oobCREATIVE, schedule a time with a real human, or switch to Spanish.</p>
+          <p class="hero__price">Plans start at $495 setup + $149/month · 250 minutes included</p>
         </div>
       </div>
     </section>
@@ -159,23 +179,30 @@
       <div class="shell">
         <div class="plans__head">
           <div>
-            <p class="eyebrow">Choose the amount of help you need</p>
+            <p class="eyebrow">Simple pricing</p>
             <h2>Start with the phone. Connect more only when it helps.</h2>
           </div>
-          <p>Each level includes setup plus ongoing monthly service. We can start with useful customer conversations, add scheduling, or work with you on a larger communications problem.</p>
+          <p>Setup includes configuration, approved business knowledge, test calls and launch tuning. Monthly service covers the live agent, included usage and routine answer updates.</p>
         </div>
 
         <div class="plan-grid">
           <article class="plan">
             <p class="plan__label">Base</p>
             <h3>Answer + Deliver</h3>
-            <p class="plan__price">Setup + monthly service</p>
-            <p class="plan__summary">For the business that needs more than voicemail without rebuilding everything else.</p>
+            <div class="price-lockup">
+              <span class="setup-price">$495 setup</span>
+              <span class="monthly-price">$149 <span>/ month</span></span>
+            </div>
+            <span class="usage">250 minutes included / month</span>
+            <p class="plan__summary">For a business that needs more than voicemail without rebuilding everything else.</p>
             <ul>
+              <li>24/7 AI call answering</li>
+              <li>One AI voice line</li>
               <li>Answers questions you approve</li>
-              <li>Captures caller needs and details</li>
-              <li>Delivers call information back to you</li>
+              <li>Captures caller needs and contact details</li>
+              <li>Call summary delivered back to you</li>
               <li>English and Spanish conversations</li>
+              <li>Routine answer updates and small tuning changes</li>
             </ul>
             <div class="plan__cta"><a class="button" href="tel:9704048398">Start with Base</a></div>
           </article>
@@ -183,25 +210,36 @@
           <article class="plan plan--connected">
             <p class="plan__label">Connected</p>
             <h3>Answer + Schedule</h3>
-            <p class="plan__price">Setup + monthly service</p>
+            <div class="price-lockup">
+              <span class="setup-price">$795 setup</span>
+              <span class="monthly-price">$299 <span>/ month</span></span>
+            </div>
+            <span class="usage">500 minutes included / month</span>
             <p class="plan__summary">For businesses ready to let the conversation move directly into the next practical step.</p>
             <ul>
               <li>Everything in Base</li>
-              <li>Calendar or scheduling connection</li>
-              <li>Booking based on your availability</li>
-              <li>Clear notifications and handoffs</li>
+              <li>One calendar or scheduling connection</li>
+              <li>Booking based on your approved availability</li>
+              <li>Clearer routing for different caller needs</li>
+              <li>Notifications and human handoffs</li>
+              <li>Workflow testing before launch</li>
             </ul>
-            <div class="plan__cta"><a class="button button--blue" href="tel:9704048398">Talk About Connected</a></div>
+            <div class="plan__cta"><a class="button button--blue" href="tel:9704048398">Choose Connected</a></div>
           </article>
 
           <article class="plan plan--partner">
             <p class="plan__label">Partner</p>
             <h3>Bring It On.</h3>
-            <p class="plan__price">Custom setup + monthly partnership</p>
+            <div class="price-lockup">
+              <span class="setup-price">Starting at $1,500 setup</span>
+              <span class="monthly-price">$600+ <span>/ month</span></span>
+            </div>
+            <span class="usage">Usage + integrations scoped to the problem</span>
             <p class="plan__summary">For the problem that does not fit neatly into a package.</p>
             <ul>
               <li>Voice, scheduling and customer-contact systems</li>
-              <li>Connections with tools you already use</li>
+              <li>CRM, workflow or tool connections when useful</li>
+              <li>Multi-step or higher-volume call handling</li>
               <li>Communication and workflow problem-solving</li>
               <li>Ongoing refinement as the business changes</li>
             </ul>
@@ -209,6 +247,27 @@
             <div class="plan__cta"><a class="button button--paper" href="tel:9704048398">Start the Conversation</a></div>
           </article>
         </div>
+
+        <p class="usage-note"><strong>Additional usage:</strong> $0.25/minute beyond the included monthly allowance. Larger integrations, new workflows and substantial scope changes are quoted before work begins.</p>
+      </div>
+    </section>
+
+    <section class="launch">
+      <div class="shell">
+        <div class="launch__head">
+          <div>
+            <p class="eyebrow">Built to reduce risk</p>
+            <h2>Know what the agent will do before customers rely on it.</h2>
+          </div>
+          <p>AI answering is useful when the job is clear. We configure the agent around approved information, test the conversations before launch and keep a visible handoff to a real person.</p>
+        </div>
+        <div class="guardrails">
+          <div class="guardrail"><strong>Test before launch.</strong><span>Setup includes test calls and tuning so you can hear how the agent handles the conversations you expect.</span></div>
+          <div class="guardrail"><strong>Keep what already works.</strong><span>In many cases the agent can be added through call forwarding rather than replacing your existing phone system.</span></div>
+          <div class="guardrail"><strong>Approved information only.</strong><span>The agent stays inside the business knowledge and responsibilities you define. Sensitive or unusual situations can be handed to a person.</span></div>
+          <div class="guardrail"><strong>24/7 agent availability.</strong><span>The AI line can answer around the clock. That does not mean oobCREATIVE human support is staffed 24/7.</span></div>
+        </div>
+        <p class="fineprint">Standard AI and telephony usage is included up to the plan allowance. Paid third-party apps, unusual carrier charges or custom integrations are separate when required and are discussed before they are added. Call recording or full transcription can be configured where appropriate; recording and consent requirements vary by location and business use.</p>
       </div>
     </section>
 
