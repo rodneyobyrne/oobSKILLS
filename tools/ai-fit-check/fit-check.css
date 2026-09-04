@@ -1,0 +1,65 @@
+/* AI Fit Check: actionable brief additions. Loaded after content-pages.css. */
+.fit-field-help--url { display: block; margin-top: .35rem; color: var(--soft); font-size: .9rem; font-weight: 500; line-height: 1.45; }
+.fit-research-status { min-height: 1.4rem; margin: -.35rem 0 .15rem; color: var(--soft); font-size: .9rem; }
+.fit-role-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin-top: 1rem; border: 1px solid var(--ink); background: var(--ink); }
+.fit-role-card { padding: clamp(1rem, 2vw, 1.3rem); background: rgba(255,255,255,.9); }
+.fit-role-card .meta { margin: 0 0 .45rem; }
+.fit-role-card h3 { max-width: none; margin: 0 0 .55rem; font-size: clamp(1.2rem, 1.8vw, 1.5rem); }
+.fit-role-card p:last-child { margin-bottom: 0; color: var(--soft); }
+.fit-watch-panel { margin-top: 1rem; padding: .9rem 1rem; border-left: 5px solid var(--ballpoint); background: rgba(255,255,255,.72); }
+.fit-watch-panel .meta { margin: 0 0 .35rem; }
+.fit-watch-panel p:last-child { margin: 0; }
+.fit-factor-section { margin-top: 1.5rem; }
+.fit-factor-section > h3, .fit-research-panel > h3, .fit-blockers > h3 { max-width: none; margin-top: .15rem; }
+.fit-factor-list { display: grid; gap: 1px; border: 1px solid var(--ink); background: var(--ink); }
+.fit-factor-row { display: grid; grid-template-columns: minmax(150px,.65fr) minmax(0,1.35fr) auto; gap: 1rem; align-items: center; padding: .9rem 1rem; background: rgba(255,255,255,.92); }
+.fit-factor-row h4 { margin: 0; font-size: 1rem; }
+.fit-factor-row p { margin: .2rem 0 0; color: var(--soft); line-height: 1.4; }
+.fit-factor-row .fit-factor-meaning { margin: 0; color: var(--ink); }
+.fit-factor-state { min-width: 4.6rem; padding: .35rem .45rem; border: 1px solid currentColor; background: var(--paper); text-align: center; font-size: .68rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+.fit-factor-row[data-state="strong"] .fit-factor-state { color: var(--ballpoint); }
+.fit-factor-row[data-state="mixed"] .fit-factor-state { color: #765612; }
+.fit-factor-row[data-state="weak"] .fit-factor-state { color: var(--signal); }
+.fit-research-panel { margin-top: 1.5rem; padding: 1rem 1.1rem; border: 1px solid var(--ink); border-left: 5px solid var(--ballpoint); background: rgba(255,255,255,.86); }
+.fit-research-evidence { display: grid; gap: .75rem; margin-top: 1rem; }
+.fit-research-row { padding-top: .75rem; border-top: 1px solid var(--line); }
+.fit-research-row h4 { margin: 0 0 .35rem; }
+.fit-research-row p { margin: 0; color: var(--soft); }
+.fit-research-boundary { margin: 1rem 0 0; padding-top: .8rem; border-top: 1px solid var(--line); color: var(--soft); font-size: .9rem; }
+.fit-blockers { margin-top: 1.5rem; padding: 1rem 1.1rem; border: 2px solid var(--signal); background: var(--paper); }
+.fit-blocker-list { display: grid; gap: .7rem; margin-top: 1rem; }
+.fit-blocker-card { padding: .8rem .9rem; border-left: 5px solid var(--signal); background: var(--paper-soft); }
+.fit-blocker-card h4 { margin: 0 0 .3rem; }
+.fit-blocker-card p { margin: 0; color: var(--soft); }
+.fit-result-followup { gap: 0; }
+.fit-result-plan { order: 1; margin-top: 1rem; padding: clamp(1.1rem, 2.5vw, 1.5rem); border: 1px solid var(--ink); border-left: 5px solid var(--signal); background: var(--paper); }
+.fit-result-plan > .meta { margin: 0 0 .35rem; }
+.fit-result-plan > h3 { margin: 0 0 .55rem; font-size: clamp(1.5rem,2.4vw,2rem); }
+.fit-result-plan > p:not(.meta) { max-width: 66ch; }
+.fit-plan-steps { display: grid; gap: .85rem; margin: 1.2rem 0 1.4rem !important; padding: 0 !important; list-style: none; }
+.fit-plan-step { display: grid; grid-template-columns: 2.2rem minmax(0,1fr); gap: .85rem; padding: 1rem; border: 1px solid var(--ink); background: var(--paper-soft); }
+.fit-plan-number { display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border: 1px solid var(--ink); background: var(--paper); font-weight: 900; line-height: 1; }
+.fit-plan-step h4 { margin: 0 0 .35rem; font-size: clamp(1.05rem,1.5vw,1.2rem); }
+.fit-plan-step p { margin: .3rem 0 0; color: var(--soft); }
+.fit-plan-step .fit-done-when { margin-top: .7rem; padding-top: .65rem; border-top: 1px solid var(--line); color: var(--ink); }
+.fit-save-actions { order: 2; margin-top: 1rem; }
+.fit-result-followup .status { order: 3; }
+
+@media (max-width: 720px) {
+  .fit-role-grid { grid-template-columns: 1fr; }
+  .fit-factor-row { grid-template-columns: 1fr; gap: .55rem; }
+  .fit-factor-state { justify-self: start; }
+  .fit-plan-step { grid-template-columns: 2rem minmax(0,1fr); padding: .85rem; }
+  .fit-plan-number { width: 2rem; height: 2rem; }
+}
+
+@media print {
+  /* The actionable plan is part of the deliverable, even though save/copy controls are not. */
+  .fit-result-followup { display: block !important; margin-top: 1rem !important; }
+  .fit-result-plan { display: block !important; margin-top: 1rem !important; border: 1px solid #000 !important; border-left: 5px solid #000 !important; background: #fff !important; }
+  .fit-save-actions, .fit-result-followup .status, .fit-result-plan .button { display: none !important; }
+  .fit-role-grid, .fit-factor-list { background: #000; }
+  .fit-role-card, .fit-factor-row, .fit-research-panel, .fit-blockers, .fit-blocker-card, .fit-plan-step { break-inside: avoid; background: #fff !important; border-color: #000 !important; }
+  .fit-watch-panel { break-inside: avoid; background: #fff !important; border-color: #000 !important; }
+  .fit-factor-state, .fit-plan-number { color: #000 !important; border-color: #000 !important; }
+}

@@ -1,543 +1,177 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Check whether a task is suitable for AI, needs human review, should remain human or is not ready to automate.">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Check whether AI should help with a real business responsibility or workflow and leave with an actionable AI Task Fit Brief.">
   <link rel="canonical" href="https://skills.oobcreative.com/tools/ai-fit-check/">
-  <meta property="og:type" content="website"><meta property="og:title" content="Free AI Use-Case Assessment for Small Businesses"><meta property="og:description" content="Evaluate one task for repetition, judgment, privacy, consequence, review capacity and ownership."><meta property="og:url" content="https://skills.oobcreative.com/tools/ai-fit-check/">
-  <title>Free AI Use-Case Assessment for Small Businesses</title>
-  <link rel="icon" href="/branding/Mark-black.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/content-pages.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"AI Fit Check","description":"A free self-guided assessment for deciding whether AI should help with a small-business task.","url":"https://skills.oobcreative.com/tools/ai-fit-check/","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"provider":{"@type":"Organization","name":"oobCREATIVE","url":"https://oobcreative.com"}}</script>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Free AI Fit Check for Small Businesses">
+  <meta property="og:description" content="Evaluate one real responsibility or workflow for AI fit, human review, risk, ownership and a practical next move.">
+  <meta property="og:url" content="https://skills.oobcreative.com/tools/ai-fit-check/">
+  <title>Free AI Fit Check for Small Businesses | oobCREATIVE</title>
+  <link rel="icon" href="/branding/Mark-black.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/content-pages.css">
+  <link rel="stylesheet" href="/tools/ai-fit-check/fit-check.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"AI Fit Check","description":"A free self-guided decision tool that produces an actionable AI Task Fit Brief for a real business responsibility or workflow.","url":"https://skills.oobcreative.com/tools/ai-fit-check/","applicationCategory":"BusinessApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"provider":{"@type":"Organization","name":"oobCREATIVE","url":"https://oobcreative.com"}}</script>
 </head>
 <body class="content-page">
   <a class="skip-link" href="#main-content">Skip to content</a>
-  <header class="site-header"><div class="site-shell header-inner"><a class="mark" href="/" aria-label="oobCREATIVE home"><img src="/branding/Mark.svg" alt="" width="64" height="44"></a><nav class="desktop-nav" aria-label="Primary navigation"><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a><a class="nav-cta" href="/tools/human-review-checklist/">Human Review</a></nav><details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a><a class="nav-cta" href="/tools/human-review-checklist/">Human Review</a></nav></details></div></header>
+  <header class="site-header">
+    <div class="site-shell header-inner">
+      <a class="mark" href="/" aria-label="oobCREATIVE home"><img src="/branding/Mark.svg" alt="" width="64" height="44"></a>
+      <nav class="desktop-nav" aria-label="Primary navigation"><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a><a class="nav-cta" href="/tools/human-review-checklist/">Human Review</a></nav>
+      <details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a><a class="nav-cta" href="/tools/human-review-checklist/">Human Review</a></nav></details>
+    </div>
+  </header>
+
   <main id="main-content">
     <div class="site-shell breadcrumbs"><nav aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/free-tools/">Free Tools</a></li><li aria-current="page">AI Fit Check</li></ol></nav></div>
-    <section class="content-hero content-hero--blue"><div class="site-shell content-hero__inner"><div><p class="eyebrow">Free decision tool</p><h1>Should AI help with <span class="ink-blue">this task?</span></h1><p class="lead">Choose one real task—not your whole job or business. This check helps you decide whether to test AI assistance, narrow the task or stop until important conditions are clearer.</p></div><div class="content-hero__visual"><img class="content-hero__scene" src="/images/ai-relationship/choose-the-right-path.webp" alt="A business owner and AI assistant compare different paths before deciding whether AI fits the task." width="1122" height="1402" decoding="async" fetchpriority="high"><aside class="content-hero__aside"><p class="meta">Private by design</p><p>Your answers remain in this browser. This page does not send or save them. Do not enter private, client, patient or employee information.</p></aside></div></div></section>
+
+    <section class="content-hero content-hero--blue">
+      <div class="site-shell content-hero__inner">
+        <div>
+          <p class="eyebrow">Free decision tool</p>
+          <h1>Should AI help with <span class="ink-blue">this task?</span></h1>
+          <p class="lead">Think about one real responsibility or workflow—not your whole job or business. This check helps you decide whether AI should assist with any part of it, where human review matters, and what to do next.</p>
+        </div>
+        <div class="content-hero__visual">
+          <img class="content-hero__scene" src="/images/ai-relationship/choose-the-right-path.webp" alt="A business owner and AI assistant compare different paths before deciding whether AI fits the work." width="1122" height="1402" decoding="async" fetchpriority="high">
+          <aside class="content-hero__aside">
+            <p class="meta">Private by design</p>
+            <p>Your assessment answers stay in this browser and are not saved. If you add a public URL, that URL is sent to the third-party Jina Reader service so the public page can be reviewed; your assessment answers are not sent. Do not enter private, login-protected, client, patient or employee information.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
     <div class="rough-rule" aria-hidden="true"></div>
-    <section class="fit-check-section"><div class="site-shell product-layout"><div><form class="fit-form" data-fit-form novalidate>
-      <fieldset class="fit-task-choices" data-fit-task-choices><legend>What task are you checking?</legend><p class="fit-field-help">Choose the closest uses you are considering. Pick more than one if the work blends categories.</p><div class="fit-check-grid"><label><input required type="checkbox" name="task" value="chatgpt"> ChatGPT or a general AI assistant</label><label><input type="checkbox" name="task" value="customer-response"> Customer messages, missed calls or follow-up</label><label><input type="checkbox" name="task" value="content-drafting"> Website, marketing, proposal or content drafts</label><label><input type="checkbox" name="task" value="admin-summary"> Notes, summaries, forms or admin paperwork</label><label><input type="checkbox" name="task" value="research-planning"> Research, planning or decision support</label><label><input type="checkbox" name="task" value="workflow-automation"> Workflow, CRM, routing or automation support</label></div></fieldset>
-      <label class="fit-task-field" for="fit-job-type">What kind of work is this?<select id="fit-job-type" name="jobType" required><option value="">Choose the closest type</option><option value="hands-on">Hands-on service, repair, production or craft work</option><option value="customer-contact">Customer contact, intake, scheduling or follow-up</option><option value="admin">Administrative, billing, paperwork or data entry</option><option value="messaging">Website, marketing, content or proposal writing</option><option value="systems">Software, CRM, systems, integration or automation</option><option value="decision-support">Research, analysis, planning or internal decision support</option></select></label>
-      <label class="fit-task-field" for="fit-context-url">Relevant URL <span>(optional)</span><input id="fit-context-url" name="contextUrl" type="url" placeholder="A website page, form, booking link, software record or public reference"></label>
-      <fieldset><legend>1. Does this task happen repeatedly?</legend><div class="fit-options"><label><input required type="radio" name="repeated" value="yes"> Yes</label><label><input type="radio" name="repeated" value="sometimes"> Sometimes</label><label><input type="radio" name="repeated" value="no"> No</label></div></fieldset>
-      <fieldset><legend>2. Can you describe where the task begins and what a complete result looks like?</legend><div class="fit-options"><label><input required type="radio" name="defined" value="yes"> Yes</label><label><input type="radio" name="defined" value="partly"> Partly</label><label><input type="radio" name="defined" value="no"> No</label></div></fieldset>
-      <fieldset><legend>3. Do you have reliable source information the AI is permitted to use?</legend><div class="fit-options"><label><input required type="radio" name="sources" value="yes"> Yes</label><label><input type="radio" name="sources" value="unsure"> Unsure</label><label><input type="radio" name="sources" value="no"> No</label></div></fieldset>
-      <fieldset><legend>4. Would the task require private, regulated or sensitive personal information?</legend><div class="fit-options"><label><input required type="radio" name="sensitive" value="yes"> Yes</label><label><input type="radio" name="sensitive" value="unsure"> Unsure</label><label><input type="radio" name="sensitive" value="no"> No</label></div></fieldset>
-      <fieldset><legend>5. Could a wrong result materially affect someone's health, safety, rights, employment, eligibility, money or trust?</legend><div class="fit-options"><label><input required type="radio" name="consequence" value="yes"> Yes</label><label><input type="radio" name="consequence" value="possibly"> Possibly</label><label><input type="radio" name="consequence" value="no"> No</label></div></fieldset>
-      <fieldset><legend>6. Is a capable person available to review the result before anyone relies on it?</legend><div class="fit-options"><label><input required type="radio" name="reviewer" value="yes"> Yes</label><label><input type="radio" name="reviewer" value="sometimes"> Sometimes</label><label><input type="radio" name="reviewer" value="no"> No</label></div></fieldset>
-      <fieldset><legend>7. Is one person clearly accountable for the final decision or published result?</legend><div class="fit-options"><label><input required type="radio" name="owner" value="yes"> Yes</label><label><input type="radio" name="owner" value="unclear"> Unclear</label><label><input type="radio" name="owner" value="no"> No</label></div></fieldset>
-      <fieldset><legend>8. Can you test this on a small scale and stop without causing harm or disrupting essential work?</legend><div class="fit-options"><label><input required type="radio" name="reversible" value="yes"> Yes</label><label><input type="radio" name="reversible" value="partly"> Partly</label><label><input type="radio" name="reversible" value="no"> No</label></div></fieldset>
-      <div class="fit-validation" id="fit-validation" data-fit-validation role="alert" tabindex="-1" hidden><strong data-fit-missing-title>The check is not complete yet.</strong><p data-fit-missing-copy>Answer every question before asking for a recommendation.</p></div>
-      <div class="content-actions"><button class="button button--blue" type="submit">Get my free result</button><button class="text-link" type="reset">Clear answers</button></div>
-    </form><section class="fit-result fit-result--gift" data-fit-result hidden tabindex="-1" aria-live="polite"><div class="fit-result-inner"><div class="fit-result-ribbon"><p class="meta" data-fit-kicker></p><p data-fit-score></p></div><h2 data-fit-title></h2><p class="fit-result-summary" data-fit-copy></p><div class="fit-dimensions" data-fit-dimensions aria-label="Result dimensions"></div><div class="fit-reward-panel"><p class="meta">Your useful takeaway</p><h3 data-fit-profile></h3><p data-fit-why></p></div><div class="fit-context-panel"><p class="meta">For work like this</p><h3 data-fit-context-title></h3><p data-fit-context-copy></p></div><div class="result-grid fit-analysis-grid"><article class="result-card"><h3>What your answers suggest</h3><ul data-fit-analysis></ul></article><article class="result-card"><h3>Best role for AI right now</h3><p data-fit-role></p><h3>Likely hesitation to resolve</h3><p data-fit-hesitation></p></article></div></div><div class="fit-result-followup"><div class="fit-result-plan"><h3 data-fit-next-title>Your next useful step</h3><p data-fit-next-copy></p><ol data-fit-plan></ol><a class="button button--paper" data-fit-next-link href="/tools/human-review-checklist/">Continue</a></div><div class="result-actions fit-save-actions" aria-label="Result actions"><button class="button button--blue" data-fit-print type="button">Save free result as PDF</button><button class="fit-copy-action" data-fit-copy-result type="button"><span aria-hidden="true"></span>Copy</button><a class="text-link" data-fit-support-link href="/tools/human-review-checklist/">Open recommended free tool <span aria-hidden="true">→</span></a></div><p class="status" data-fit-status role="status" aria-live="polite"></p></div></section></div><aside class="decision-note"><p class="meta">What this free tool cannot decide</p><h2>A promising task is not permission to use every tool.</h2><p>Vendor terms, security controls, legal obligations, organizational policy and the actual data involved still matter. This is a practical starting check, not legal, security or compliance advice.</p></aside></div></section>
+
+    <section class="fit-check-section">
+      <div class="site-shell product-layout">
+        <div>
+          <form class="fit-form" data-fit-form novalidate>
+            <fieldset class="fit-task-choices" data-fit-task-choices>
+              <legend>How are you considering using AI in this work?</legend>
+              <p class="fit-field-help">Choose all that apply. Real work often involves more than one kind of AI support.</p>
+              <div class="fit-check-grid">
+                <label><input required type="checkbox" name="task" value="chatgpt"> ChatGPT or a general AI assistant</label>
+                <label><input type="checkbox" name="task" value="customer-response"> Customer messages, missed calls or follow-up</label>
+                <label><input type="checkbox" name="task" value="content-drafting"> Website, marketing, proposal or content drafts</label>
+                <label><input type="checkbox" name="task" value="admin-summary"> Notes, summaries, forms or admin paperwork</label>
+                <label><input type="checkbox" name="task" value="research-planning"> Research, planning or decision support</label>
+                <label><input type="checkbox" name="task" value="workflow-automation"> Workflow, CRM, routing or automation support</label>
+              </div>
+            </fieldset>
+
+            <label class="fit-task-field" for="fit-job-type">What kind of work is this?
+              <select id="fit-job-type" name="jobType" required>
+                <option value="">Choose the closest type</option>
+                <option value="hands-on">Hands-on service, repair, production or craft work</option>
+                <option value="customer-contact">Customer contact, intake, scheduling or follow-up</option>
+                <option value="admin">Administrative, billing, paperwork or data entry</option>
+                <option value="messaging">Website, marketing, content or proposal writing</option>
+                <option value="systems">Software, CRM, systems, integration or automation</option>
+                <option value="decision-support">Research, analysis, planning or internal decision support</option>
+              </select>
+            </label>
+
+            <label class="fit-task-field" for="fit-context-url">Public page related to this work <span>(optional)</span>
+              <input id="fit-context-url" name="contextUrl" type="url" inputmode="url" autocomplete="url" placeholder="A public website page, form, booking link or reference">
+              <span class="fit-field-help fit-field-help--url">Add a public website page, form, booking page or reference. We’ll review the page content and use what we find to make your result more specific. Don’t enter private or login-protected links.</span>
+            </label>
+            <p class="fit-research-status" data-fit-research-status role="status" aria-live="polite"></p>
+
+            <fieldset><legend>1. Does this task happen repeatedly?</legend><div class="fit-options"><label><input required type="radio" name="repeated" value="yes"> Yes</label><label><input type="radio" name="repeated" value="sometimes"> Sometimes</label><label><input type="radio" name="repeated" value="no"> No</label></div></fieldset>
+            <fieldset><legend>2. Can you describe where the task begins and what a complete result looks like?</legend><div class="fit-options"><label><input required type="radio" name="defined" value="yes"> Yes</label><label><input type="radio" name="defined" value="partly"> Partly</label><label><input type="radio" name="defined" value="no"> No</label></div></fieldset>
+            <fieldset><legend>3. Do you have reliable source information the AI is permitted to use?</legend><div class="fit-options"><label><input required type="radio" name="sources" value="yes"> Yes</label><label><input type="radio" name="sources" value="unsure"> Unsure</label><label><input type="radio" name="sources" value="no"> No</label></div></fieldset>
+            <fieldset><legend>4. Would the task require private, regulated or sensitive personal information?</legend><div class="fit-options"><label><input required type="radio" name="sensitive" value="yes"> Yes</label><label><input type="radio" name="sensitive" value="unsure"> Unsure</label><label><input type="radio" name="sensitive" value="no"> No</label></div></fieldset>
+            <fieldset><legend>5. Could a wrong result materially affect someone's health, safety, rights, employment, eligibility, money or trust?</legend><div class="fit-options"><label><input required type="radio" name="consequence" value="yes"> Yes</label><label><input type="radio" name="consequence" value="possibly"> Possibly</label><label><input type="radio" name="consequence" value="no"> No</label></div></fieldset>
+            <fieldset><legend>6. Is a capable person available to review the result before anyone relies on it?</legend><div class="fit-options"><label><input required type="radio" name="reviewer" value="yes"> Yes</label><label><input type="radio" name="reviewer" value="sometimes"> Sometimes</label><label><input type="radio" name="reviewer" value="no"> No</label></div></fieldset>
+            <fieldset><legend>7. Is one person clearly accountable for the final decision or published result?</legend><div class="fit-options"><label><input required type="radio" name="owner" value="yes"> Yes</label><label><input type="radio" name="owner" value="unclear"> Unclear</label><label><input type="radio" name="owner" value="no"> No</label></div></fieldset>
+            <fieldset><legend>8. Can you test this on a small scale and stop without causing harm or disrupting essential work?</legend><div class="fit-options"><label><input required type="radio" name="reversible" value="yes"> Yes</label><label><input type="radio" name="reversible" value="partly"> Partly</label><label><input type="radio" name="reversible" value="no"> No</label></div></fieldset>
+
+            <div class="fit-validation" id="fit-validation" data-fit-validation role="alert" tabindex="-1" hidden><strong data-fit-missing-title>The check is not complete yet.</strong><p data-fit-missing-copy>Answer every question before asking for a recommendation.</p></div>
+            <div class="content-actions"><button class="button button--blue" data-fit-submit type="submit">Build my AI Task Fit Brief</button><button class="text-link" type="reset">Clear answers</button></div>
+          </form>
+
+          <section class="fit-result fit-result--gift" data-fit-result hidden tabindex="-1" aria-live="polite">
+            <div class="fit-result-inner">
+              <div class="fit-result-ribbon"><p class="meta" data-fit-kicker></p><p data-fit-score></p></div>
+              <h2 data-fit-title></h2>
+              <p class="fit-result-summary" data-fit-copy></p>
+              <div class="fit-dimensions" data-fit-dimensions aria-label="Result dimensions"></div>
+
+              <div class="fit-reward-panel">
+                <p class="meta">Your AI Task Fit Brief</p>
+                <h3 data-fit-profile></h3>
+                <p data-fit-why></p>
+              </div>
+
+              <div class="fit-role-grid">
+                <article class="fit-role-card"><p class="meta">Best role for AI right now</p><h3>Use AI here.</h3><p data-fit-role></p></article>
+                <article class="fit-role-card"><p class="meta">Keep human responsibility here</p><h3>Keep a person accountable.</h3><p data-fit-human></p></article>
+              </div>
+
+              <div class="fit-watch-panel"><p class="meta">What to watch</p><p data-fit-watch></p></div>
+
+              <section class="fit-factor-section" aria-labelledby="fit-factor-heading">
+                <p class="meta">Why you got this result</p>
+                <h3 id="fit-factor-heading">Four conditions drive the decision.</h3>
+                <div class="fit-factor-list" data-fit-factors></div>
+              </section>
+
+              <section class="fit-research-panel" data-fit-research hidden aria-labelledby="fit-research-heading">
+                <p class="meta">Public page evidence</p>
+                <h3 id="fit-research-heading" data-fit-research-title></h3>
+                <div class="fit-research-evidence" data-fit-research-evidence></div>
+                <p class="fit-research-boundary" data-fit-research-boundary></p>
+              </section>
+
+              <section class="fit-blockers" data-fit-blockers hidden aria-labelledby="fit-blockers-heading">
+                <p class="meta">Resolve before testing</p>
+                <h3 id="fit-blockers-heading">Clear these conditions before live use.</h3>
+                <div class="fit-blocker-list" data-fit-blocker-list></div>
+              </section>
+            </div>
+
+            <div class="fit-result-followup">
+              <div class="fit-result-plan">
+                <p class="meta">Your next move</p>
+                <h3 data-fit-next-title>Do the next useful thing.</h3>
+                <p data-fit-next-copy></p>
+                <ol class="fit-plan-steps" data-fit-plan></ol>
+                <a class="button button--paper" data-fit-next-link href="/tools/human-review-checklist/">Continue</a>
+              </div>
+              <div class="result-actions fit-save-actions" aria-label="Result actions">
+                <button class="button button--blue" data-fit-print type="button">Save free result as PDF</button>
+                <button class="fit-copy-action" data-fit-copy-result type="button"><span aria-hidden="true"></span>Copy</button>
+                <a class="text-link" data-fit-support-link href="/tools/human-review-checklist/">Open recommended free tool <span aria-hidden="true">→</span></a>
+              </div>
+              <p class="status" data-fit-status role="status" aria-live="polite"></p>
+            </div>
+          </section>
+        </div>
+
+        <aside class="decision-note">
+          <p class="meta">What this free tool cannot decide</p>
+          <h2>A promising task is not permission to use every tool.</h2>
+          <p>Vendor terms, security controls, legal obligations, organizational policy and the actual data involved still matter. Public-page research can add context, but it cannot establish permission to use private information. This is a practical starting check, not legal, security or compliance advice.</p>
+        </aside>
+      </div>
+    </section>
   </main>
-  <footer><div class="site-shell footer-main"><div class="footer-brand"><img class="footer-logo" src="/branding/logo_horiz-hex111111_background.png" alt="oobCREATIVE" width="270" height="68"><p>Go deeper, not louder.</p><p class="footer-description">oobCREATIVE turns good ideas and meaningful work into clear communication and workable systems.</p></div><div class="footer-links"><div><p class="footer-label">Explore</p><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a></div><div><p class="footer-label">Connect</p><a href="/audience-review/">Audience Review</a><a href="mailto:hello@oobcreative.com">hello@oobcreative.com</a></div></div></div><div class="footer-bar"><div class="site-shell"><span>© 2018–2026 oobCREATIVE. All rights reserved.</span><span>Roaring Fork Valley, Colorado</span><a href="/privacy-policy/">Privacy Policy</a></div></div></footer>
-  <script>
-    const form = document.querySelector('[data-fit-form]');
-    const result = document.querySelector('[data-fit-result]');
-    const kicker = document.querySelector('[data-fit-kicker]');
-    const title = document.querySelector('[data-fit-title]');
-    const copy = document.querySelector('[data-fit-copy]');
-    const validation = document.querySelector('[data-fit-validation]');
-    const missingTitle = document.querySelector('[data-fit-missing-title]');
-    const missingCopy = document.querySelector('[data-fit-missing-copy]');
-    const nextTitle = document.querySelector('[data-fit-next-title]');
-    const nextCopy = document.querySelector('[data-fit-next-copy]');
-    const nextLink = document.querySelector('[data-fit-next-link]');
-    const score = document.querySelector('[data-fit-score]');
-    const dimensions = document.querySelector('[data-fit-dimensions]');
-    const contextTitle = document.querySelector('[data-fit-context-title]');
-    const contextCopy = document.querySelector('[data-fit-context-copy]');
-    const profile = document.querySelector('[data-fit-profile]');
-    const why = document.querySelector('[data-fit-why]');
-    const analysisList = document.querySelector('[data-fit-analysis]');
-    const role = document.querySelector('[data-fit-role]');
-    const hesitation = document.querySelector('[data-fit-hesitation]');
-    const planList = document.querySelector('[data-fit-plan]');
-    const printButton = document.querySelector('[data-fit-print]');
-    const copyButton = document.querySelector('[data-fit-copy-result]');
-    const supportLink = document.querySelector('[data-fit-support-link]');
-    const status = document.querySelector('[data-fit-status]');
-    const taskChoices = form.querySelector('[data-fit-task-choices]');
-    const questionGroups = Array.from(form.querySelectorAll('fieldset:not(.fit-task-choices)'));
-    const reduceMotion = window.matchMedia
-      ? window.matchMedia('(prefers-reduced-motion: reduce)')
-      : { matches: false };
 
-    function addDescription(element, id) {
-      const ids = new Set((element.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean));
-      ids.add(id);
-      element.setAttribute('aria-describedby', Array.from(ids).join(' '));
-    }
+  <footer>
+    <div class="site-shell footer-main">
+      <div class="footer-brand"><img class="footer-logo" src="/branding/logo_horiz-hex111111_background.png" alt="oobCREATIVE" width="270" height="68"><p>Go deeper, not louder.</p><p class="footer-description">oobCREATIVE turns good ideas and meaningful work into clear communication and workable systems.</p></div>
+      <div class="footer-links"><div><p class="footer-label">Explore</p><a href="/start-here/">Start Here</a><a href="/free-tools/">Free Tools</a><a href="/assessments/">Assessments</a><a href="/practical-ai/">Practical AI</a><a href="/services/">Services</a></div><div><p class="footer-label">Connect</p><a href="/audience-review/">Audience Review</a><a href="mailto:hello@oobcreative.com">hello@oobcreative.com</a></div></div>
+    </div>
+    <div class="footer-bar"><div class="site-shell"><span>© 2018–2026 oobCREATIVE. All rights reserved.</span><span>Roaring Fork Valley, Colorado</span><a href="/privacy-policy/">Privacy Policy</a></div></div>
+  </footer>
 
-    function removeDescription(element, id) {
-      const ids = (element.getAttribute('aria-describedby') || '').split(/\s+/).filter((item) => item && item !== id);
-      if (ids.length) element.setAttribute('aria-describedby', ids.join(' '));
-      else element.removeAttribute('aria-describedby');
-    }
-
-    function clearValidation() {
-      taskChoices.removeAttribute('aria-invalid');
-      taskChoices.querySelectorAll('input').forEach((input) => {
-        input.removeAttribute('aria-invalid');
-        removeDescription(input, validation.id);
-      });
-      questionGroups.forEach((group) => {
-        group.removeAttribute('aria-invalid');
-        group.querySelectorAll('input').forEach((input) => {
-          input.removeAttribute('aria-invalid');
-          removeDescription(input, validation.id);
-        });
-      });
-      validation.hidden = true;
-    }
-
-    function sentenceFromTask(tasks) {
-      if (!tasks.length) return 'this task';
-      if (tasks.length === 1) return taskProfiles[tasks[0]]?.label || 'this task';
-      const labels = tasks.map((task) => taskProfiles[task]?.label || task);
-      return `${labels.slice(0, -1).join(', ')} and ${labels[labels.length - 1]}`;
-    }
-
-    function listItems(items) {
-      return items.map((item) => `<li>${item}</li>`).join('');
-    }
-
-    function dimensionCard(label, state, detail) {
-      return `<article class="fit-dimension" data-state="${state}"><p>${label}</p><strong>${detail}</strong></article>`;
-    }
-
-    const taskProfiles = {
-      chatgpt: {
-        label: 'ChatGPT or a general AI assistant',
-        noun: 'ChatGPT',
-        analysis: 'ChatGPT is a flexible general-purpose AI assistant. That makes it useful for drafts, summaries, questions, outlines and first-pass thinking, but it also means the fit depends heavily on how clearly the work is bounded.',
-        readiness: 'With ChatGPT, knowing what you do not want the tool to take over is sometimes just as important as knowing what you want it to help with.',
-        role: 'For this result, ChatGPT should be treated as a helper for preparation, drafting, summarizing or pressure-testing, not as the owner of the work.',
-        avoid: 'Avoid spending time and money trying to make AI easier before your company workflow has named sources, review, ownership and a safe stopping point.',
-        proof: 'The proof to look for is not that ChatGPT can produce text. The proof is that the result is easier to review, safer to use and clearer for the person responsible for the final decision.'
-      },
-      'customer-response': {
-        label: 'customer messages, missed calls or follow-up',
-        noun: 'customer communication',
-        analysis: 'Customer communication work usually fails when purpose, urgency or next action is not captured cleanly.',
-        readiness: 'Other businesses using AI here often learn that the valuable part is better intake and handoff, not replacing the human relationship.',
-        role: 'AI can help collect details, draft a response or route the request when escalation rules are clear.',
-        avoid: 'Avoid letting an automated response handle exceptions, complaints, promises or relationship-sensitive moments without human review.',
-        proof: 'The proof to look for is fewer missed requests, faster useful responses and cleaner handoffs to the right person.'
-      },
-      'content-drafting': {
-        label: 'website, marketing, proposal or content drafts',
-        noun: 'content drafting',
-        analysis: 'Content work benefits from AI only when the audience, claim, offer and proof are already clear.',
-        readiness: 'Other teams like yours often need AI to organize source material and draft options, while people protect accuracy, tone and judgment.',
-        role: 'AI can prepare drafts, outlines and alternatives, but a person should own the claim, evidence and final language.',
-        avoid: 'Avoid publishing polished language that has not been checked against the real audience, offer and proof.',
-        proof: 'The proof to look for is clearer first drafts, less blank-page time and fewer rounds of rewriting.'
-      },
-      'admin-summary': {
-        label: 'notes, summaries, forms or admin paperwork',
-        noun: 'administrative work',
-        analysis: 'Administrative work is often a good fit when the same information is repeatedly captured, checked, summarized or reformatted.',
-        readiness: 'Other small teams often find the best AI use is reducing duplicate handling while preserving the system of record.',
-        role: 'AI can summarize, classify, prepare or reformat information if the source is approved and the output is reviewed.',
-        avoid: 'Avoid letting AI quietly move uncertain information into records that people will treat as true later.',
-        proof: 'The proof to look for is fewer manual steps, faster preparation and fewer corrections.'
-      },
-      'research-planning': {
-        label: 'research, planning or decision support',
-        noun: 'decision support',
-        analysis: 'Research and planning can benefit from AI when sources, assumptions and decision boundaries are explicit.',
-        readiness: 'Other people using AI for this kind of work often need help seeing the question more clearly before asking for a recommendation.',
-        role: 'AI can compare, summarize, outline and pressure-test information while a person owns the interpretation.',
-        avoid: 'Avoid accepting a confident answer before deciding what evidence would actually change the decision.',
-        proof: 'The proof to look for is a clearer question, visible assumptions and a better next decision.'
-      },
-      'workflow-automation': {
-        label: 'workflow, CRM, routing or automation support',
-        noun: 'workflow automation',
-        analysis: 'Workflow automation depends on ownership and handoff quality. AI can only help reliably when the process already has a visible path.',
-        readiness: 'Other businesses like yours often discover the tool is not the first problem. The first problem is knowing where work starts, who owns it and what happens when it fails.',
-        role: 'AI can support routing, classification, summarizing or checking inside a mapped workflow.',
-        avoid: 'Avoid adding AI to a workflow nobody can pause, review or repair.',
-        proof: 'The proof to look for is fewer handoff gaps, less duplicate entry and a clearer owner for the final state.'
-      }
-    };
-
-    function urlContext(value) {
-      if (!value) return null;
-      try {
-        const normalized = /^https?:\/\//i.test(value) ? value : `https://${value}`;
-        const url = new URL(normalized);
-        const path = url.pathname.replace(/[-_/]+/g, ' ').trim();
-        return {
-          host: url.hostname.replace(/^www\./, ''),
-          path,
-          text: path ? `${url.hostname.replace(/^www\./, '')} / ${path}` : url.hostname.replace(/^www\./, '')
-        };
-      } catch (error) {
-        return null;
-      }
-    }
-
-    function selectedTaskContext(tasks) {
-      const selected = tasks.map((task) => taskProfiles[task]).filter(Boolean);
-      const primary = selected[0] || taskProfiles.chatgpt;
-      const hasChatGPT = tasks.includes('chatgpt');
-      const blended = selected.length > 1
-        ? ` Because you selected ${sentenceFromTask(tasks)}, the better question is not whether one tool is impressive. It is which part of the work can be safely supported.`
-        : '';
-      return {
-        label: sentenceFromTask(tasks),
-        primary,
-        hasChatGPT,
-        analysis: selected.map((item) => item.analysis),
-        readiness: selected.map((item) => item.readiness),
-        role: selected.map((item) => item.role),
-        avoid: selected.map((item) => item.avoid),
-        proof: selected.map((item) => item.proof),
-        blended
-      };
-    }
-
-    function classifyTask(tasks, jobType, contextUrl) {
-      const reference = urlContext(contextUrl);
-      const taskSignal = selectedTaskContext(tasks);
-      const referenceText = reference ? ` The URL you provided gives this result a reference point: ${reference.text}.` : '';
-      const taskName = taskSignal.label;
-      const generalToolFrame = taskSignal.hasChatGPT
-        ? ` ChatGPT is a strong general-purpose AI tool, so the deciding factor is not whether ChatGPT is capable. The deciding factor is whether your work is ready for AI help.`
-        : '';
-      if (jobType === 'hands-on') {
-        return {
-          taskSignal,
-          title: 'Hands-on production work with repeatable support needs.',
-          copy: `People checking AI for ${taskName} inside hands-on work usually are not trying to replace the craft. The useful pattern is often around the work: planning, specs, checklists, estimates, materials, documentation, customer updates or quality review.${generalToolFrame}${taskSignal.blended}${referenceText}`,
-          analysis: 'This looks like hands-on production or skilled work, where AI is usually more useful around the task than inside the judgment or craft itself.',
-          guidance: 'Separate the physical or expert work from the surrounding information work before choosing an AI tool.',
-          hesitation: 'The likely concern is that AI will flatten the judgment, craft standards or accountability that make the work valuable. A useful test should prove it improves the surrounding information without pretending to do the skilled work.',
-          role: 'In this context, AI is best treated as shop support: prepare, organize, document or check information while people remain responsible for the actual work.',
-          firstStep: 'List the information that supports the work, such as specs, materials, customer notes, process steps or quality checks.'
-        };
-      }
-      if (jobType === 'customer-contact') {
-        return {
-          taskSignal,
-          title: 'Customer communication work where timing and handoff matter.',
-          copy: `People checking AI for ${taskName} in customer communication are often trying to reduce missed responses without making the business feel less human. The pattern to watch is not just speed; it is whether the right information reaches the right person.${generalToolFrame}${taskSignal.blended}${referenceText}`,
-          analysis: 'This looks like customer contact work, where AI may help capture, route or draft responses if escalation is clear.',
-          guidance: 'Name which customer situations require a person before testing any automated response.',
-          hesitation: 'The usual hesitation is whether customers will feel handled instead of helped. The result to prove is a clearer response and cleaner handoff, not just faster automation.',
-          role: 'AI can help gather context, prepare replies or route requests, but a person should own exceptions and relationship-sensitive moments.',
-          firstStep: 'Group the most common contact reasons and decide which ones can be handled, drafted or routed safely.'
-        };
-      }
-      if (jobType === 'admin') {
-        return {
-          taskSignal,
-          title: 'Administrative workflow where repetition may be the opportunity.',
-          copy: `People checking AI for ${taskName} in administrative work are usually looking for fewer manual steps and less duplicate entry. The good opportunity is a narrow one: make information easier to move, check or prepare.${generalToolFrame}${taskSignal.blended}${referenceText}`,
-          analysis: 'This looks like admin or operations work, where repeated information handling may be a practical AI-assisted step.',
-          guidance: 'Confirm the source of truth before letting AI summarize, move or prepare records.',
-          hesitation: 'The risk is quiet mess-making: the tool may feel helpful while moving bad information faster. The proof should be fewer manual steps and fewer corrections.',
-          role: 'AI can support preparation and checking, but the system of record and final approval should stay explicit.',
-          firstStep: 'Identify where the same information is entered, checked or reformatted more than once.'
-        };
-      }
-      if (jobType === 'messaging') {
-        return {
-          taskSignal,
-          title: 'Communication work where clarity matters more than volume.',
-          copy: `People checking AI for ${taskName} often need help producing a first draft, but the valuable part is preserving audience judgment. AI can speed up language only after the message and proof are clear.${generalToolFrame}${taskSignal.blended}${referenceText}`,
-          analysis: 'This looks like messaging or content work, where AI can help draft or reorganize but should not invent the business case.',
-          guidance: 'Define the audience, claim and evidence before using AI to write public-facing language.',
-          hesitation: 'The likely concern is generic output that sounds polished but does not sound like the business. Source material, proof and final human editing matter more than volume.',
-          role: 'AI can draft variants or organize source material while a person remains responsible for accuracy, tone and claims.',
-          firstStep: 'Write the audience, purpose and evidence the content must respect.'
-        };
-      }
-      if (jobType === 'systems') {
-        return {
-          taskSignal,
-          title: 'Systems work where ownership matters as much as automation.',
-          copy: `People checking AI for ${taskName} inside systems work often have a real workflow problem underneath the tool question. The important pattern is where information changes hands, who owns it and what happens when the automation fails.${generalToolFrame}${taskSignal.blended}${referenceText}`,
-          analysis: 'This looks like systems or integration work, where AI should support a mapped workflow rather than define it.',
-          guidance: 'Map the handoff, owner and fallback path before adding an AI-assisted step.',
-          hesitation: 'The danger is adding intelligence to a workflow nobody owns. The work should show who sees the output, who fixes errors and what happens when the system is wrong.',
-          role: 'AI can assist inside a defined system, but logs, ownership and failure handling need to be visible.',
-          firstStep: 'Map the trigger, handoff, system of record and person responsible for the final state.'
-        };
-      }
-      return {
-        taskSignal,
-        title: 'Decision-support work where sources and review determine the fit.',
-        copy: `People checking AI for ${taskName} are usually trying to make information easier to understand or compare. The value depends on source quality, review and whether a person stays responsible for the final judgment.${generalToolFrame}${taskSignal.blended}${referenceText}`,
-        analysis: 'This looks like planning, research or decision-support work, where AI may help organize information but should not become the decision-maker.',
-        guidance: 'Define the source set and review standard before asking AI to summarize or recommend.',
-        hesitation: 'The common concern is misplaced confidence. AI can make information easier to inspect, but a person still has to decide what counts as reliable and what action follows.',
-        role: 'AI can help gather, compare, outline or pressure-test information while a person owns the interpretation and decision.',
-        firstStep: 'Name the source material, the decision it supports and the person responsible for interpreting the result.'
-      };
-    }
-
-    function resultText() {
-      const items = Array.from(analysisList.querySelectorAll('li')).map((item) => `- ${item.textContent}`);
-      const plan = Array.from(planList.querySelectorAll('li')).map((item) => `- ${item.textContent}`);
-      return [
-        'AI Fit Check Result',
-        '',
-        `${kicker.textContent}: ${title.textContent}`,
-        '',
-        copy.textContent,
-        '',
-        `Useful takeaway: ${profile.textContent}`,
-        why.textContent,
-        '',
-        'What your answers suggest',
-        ...items,
-        '',
-        `Best role for AI right now: ${role.textContent}`,
-        '',
-        `Likely hesitation to resolve: ${hesitation.textContent}`,
-        '',
-        'A practical next move',
-        ...plan,
-        '',
-        `${nextTitle.textContent}: ${nextCopy.textContent}`
-      ].join('\n');
-    }
-
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const formData = new FormData(form);
-      const answers = Object.fromEntries(formData);
-      const selectedTasks = formData.getAll('task');
-      const jobTypeInput = form.querySelector('[name="jobType"]');
-      const missing = questionGroups.filter((group) => !group.querySelector('input:checked'));
-      clearValidation();
-      jobTypeInput.removeAttribute('aria-invalid');
-      removeDescription(jobTypeInput, validation.id);
-      if (!selectedTasks.length) {
-        missing.push(taskChoices);
-        taskChoices.setAttribute('aria-invalid', 'true');
-        taskChoices.querySelectorAll('input').forEach((input) => {
-          input.setAttribute('aria-invalid', 'true');
-          addDescription(input, validation.id);
-        });
-      }
-      if (!jobTypeInput.value) {
-        missing.push(jobTypeInput);
-        jobTypeInput.setAttribute('aria-invalid', 'true');
-        addDescription(jobTypeInput, validation.id);
-      }
-      if (missing.length) {
-        result.hidden = true;
-        missing.filter((item) => item.tagName === 'FIELDSET' && item !== taskChoices).forEach((group) => {
-          group.setAttribute('aria-invalid', 'true');
-          const firstInput = group.querySelector('input');
-          firstInput.setAttribute('aria-invalid', 'true');
-          addDescription(firstInput, validation.id);
-        });
-        missingTitle.textContent = `${missing.length} ${missing.length === 1 ? 'answer is' : 'answers are'} still needed.`;
-        missingCopy.textContent = 'Complete the highlighted questions, then review this possible use again.';
-        validation.hidden = false;
-        validation.focus({ preventScroll: true });
-        validation.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'center' });
-        return;
-      }
-      const task = sentenceFromTask(selectedTasks);
-      const taskContext = classifyTask(selectedTasks, answers.jobType, answers.contextUrl);
-      const strong = answers.repeated === 'yes' && answers.defined === 'yes' && answers.sources === 'yes' && answers.sensitive === 'no' && answers.consequence === 'no' && answers.reviewer === 'yes' && answers.owner === 'yes' && answers.reversible === 'yes';
-      const highRiskStructured = answers.defined === 'yes' && answers.sources === 'yes' && answers.reviewer === 'yes' && answers.owner === 'yes' && answers.reversible === 'yes' && (answers.sensitive !== 'no' || answers.consequence !== 'no');
-      const noFoundation = answers.repeated === 'no' && answers.defined === 'no' && answers.sources === 'no';
-      const missingGovernance = answers.reviewer === 'no' || answers.owner === 'no' || answers.reversible === 'no';
-      const foundationScore = [answers.repeated, answers.defined, answers.sources].filter((value) => value === 'yes').length;
-      const riskScore = [answers.sensitive, answers.consequence].filter((value) => value === 'no').length;
-      const governanceScore = [answers.reviewer, answers.owner].filter((value) => value === 'yes').length;
-      const testScore = answers.reversible === 'yes' ? 1 : 0;
-      const foundationState = foundationScore >= 2 ? 'strong' : foundationScore === 1 ? 'mixed' : 'weak';
-      const riskState = riskScore === 2 ? 'strong' : riskScore === 1 ? 'mixed' : 'weak';
-      const governanceState = governanceScore === 2 ? 'strong' : governanceScore === 1 ? 'mixed' : 'weak';
-      const testState = testScore === 1 ? 'strong' : answers.reversible === 'partly' ? 'mixed' : 'weak';
-      const analysis = [];
-      const plan = [];
-
-      if (answers.repeated === 'yes') analysis.push('The task happens often enough that improving it could return real time, consistency or responsiveness.');
-      else if (answers.repeated === 'sometimes') analysis.push('The task may be worth testing only if the same pattern repeats across several situations.');
-      else analysis.push('This may be too occasional for an AI workflow. Capture an example first and see whether it repeats.');
-
-      if (answers.defined === 'yes') analysis.push('You can describe the beginning and finished result, which gives a pilot a usable boundary.');
-      else analysis.push('The starting point and finished result need sharper edges before AI can be judged fairly.');
-
-      if (answers.sources === 'yes') analysis.push('Approved source information exists, so the work can be grounded in something better than guesswork.');
-      else analysis.push('Name the approved source material first. AI should not fill missing business knowledge with confident guesses.');
-
-      if (answers.sensitive !== 'no') analysis.push('The information risk is not clean enough for a casual first test. Confirm what data is permitted and where it may be processed.');
-      if (answers.consequence !== 'no') analysis.push('Because a wrong result could matter, the first use should support preparation or review rather than make the decision.');
-      if (answers.reviewer !== 'yes') analysis.push('A capable reviewer needs to be available before anyone relies on the output.');
-      if (answers.owner !== 'yes') analysis.push('One person or role should own the final decision, even when AI helps with preparation.');
-      if (answers.reversible !== 'yes') analysis.push('Choose a smaller test that can be paused without disrupting essential work.');
-      taskContext.taskSignal.analysis.forEach((item) => analysis.push(item));
-      taskContext.taskSignal.readiness.forEach((item) => analysis.push(item));
-      taskContext.taskSignal.proof.forEach((item) => analysis.push(item));
-      analysis.push(taskContext.analysis);
-
-      if (strong) {
-        kicker.textContent = 'Promising bounded use';
-        title.textContent = 'This may be a reasonable task to test with AI assistance.';
-        score.textContent = 'Ready to test';
-        copy.textContent = taskContext.taskSignal.hasChatGPT
-          ? `ChatGPT may be a strong fit here because your answers show the work has enough shape: repeated use, clear boundaries, approved sources, review capacity and a reversible test. The reward is focus. You do not need to make AI easier in general; you can test one bounded use and measure whether it makes your work easier to review, faster to complete or clearer to hand off.`
-          : `For ${task}, your answers point to a useful first AI pilot: repeated work, clear boundaries, approved sources, review capacity and a reversible test. The next move is not a subscription hunt. It is a small test with a named owner and a simple measure.`;
-        profile.textContent = 'You found a task that is specific enough to test.';
-        why.textContent = 'The useful part of this result is that the task has boundaries. You can compare the current process with a small AI-assisted version instead of debating AI in the abstract.';
-        role.textContent = `AI can prepare or draft a first pass inside a limited pilot while a named person reviews the result before use. ${taskContext.role}`;
-        plan.push(taskContext.firstStep);
-        plan.push(taskContext.guidance);
-        plan.push('Write one example of an acceptable result before testing a tool.');
-        plan.push('Choose the smallest set of approved inputs the AI may use.');
-        plan.push('Run the test long enough to compare time, quality and review burden.');
-        nextTitle.textContent = 'Turn the decision into a bounded pilot.';
-        nextCopy.textContent = 'Use the First AI Pilot Brief to record the permitted inputs, human owner, review standard, measure and stopping condition.';
-        nextLink.textContent = 'Build the free pilot brief';
-        nextLink.href = '/tools/ai-pilot-starter/';
-      } else if (highRiskStructured) {
-        kicker.textContent = 'Use only with safeguards';
-        title.textContent = 'This task has structure, but the risk changes the kind of AI use.';
-        score.textContent = 'Support only';
-        copy.textContent = taskContext.taskSignal.hasChatGPT
-          ? `ChatGPT can be useful in many different ways, but your answers show this use carries sensitive information or meaningful consequences. That does not mean abandon AI. It means use ChatGPT only as support for preparation, organization or review while a person owns the final decision. Knowing where AI should not act alone is a useful result.`
-          : `For ${task}, the work is defined enough to examine, and you have review and ownership in place. The concern is consequence or sensitive information. AI should assist a person with preparation, organization or review. It should not make the final call or communicate unchecked.`;
-        profile.textContent = 'You found a real workflow, but it needs a tighter guardrail.';
-        why.textContent = 'This is not a simple yes-or-no situation. The task has enough shape to improve, but the cost of a wrong or exposed result means the human review rule becomes the center of the design.';
-        role.textContent = `AI should support preparation, comparison or organization. A person should decide, approve and communicate the final result. ${taskContext.role}`;
-        plan.push(taskContext.firstStep);
-        plan.push(taskContext.guidance);
-        plan.push('Write down exactly which information is permitted and which is off-limits.');
-        plan.push('Define what the reviewer must check before the result can be used.');
-        plan.push('Pick a version of the task where AI never sends, decides or publishes on its own.');
-        nextTitle.textContent = 'Write the review rule before the pilot.';
-        nextCopy.textContent = 'Use the Human Review Checklist to define what a person must verify, when the work stops and which information is permitted.';
-        nextLink.textContent = 'Create the free review checklist';
-        nextLink.href = '/tools/human-review-checklist/';
-      } else if (noFoundation) {
-        kicker.textContent = 'Not ready as a use case';
-        title.textContent = 'This does not yet have enough shape for an AI test.';
-        score.textContent = 'Define first';
-        copy.textContent = taskContext.taskSignal.hasChatGPT
-          ? `ChatGPT is a capable tool, but your answers show the work around it is not defined enough yet: the task does not repeat clearly, the finish line is not visible or the source material is not reliable. That is still a useful result. You can stop comparing AI tools and first define what the work is supposed to produce.`
-          : `For ${task}, the answers do not show a repeated task, a clear finish line or reliable source material. That is useful information: the first improvement is to define the work, not to test software.`;
-        profile.textContent = 'You surfaced a workflow definition problem.';
-        why.textContent = 'That may feel less exciting than an AI recommendation, but it is the practical win. Once the beginning, source material and finished result are visible, the technology choice gets much easier.';
-        role.textContent = `AI is not the next move yet. First use a person-led workflow map to make the task visible. ${taskContext.role}`;
-        plan.push(taskContext.firstStep);
-        plan.push(taskContext.guidance);
-        plan.push('Write one recent example of the task from beginning to end.');
-        plan.push('Name the source information a good result depends on.');
-        plan.push('Decide what a finished result should include before testing any tool.');
-        nextTitle.textContent = 'Turn the work into a clearer workflow.';
-        nextCopy.textContent = 'Map where the work starts, what information it uses, who receives the result and what a good outcome looks like.';
-        nextLink.textContent = 'Use the free Workflow & Systems Review';
-        nextLink.href = '/tools/workflow-systems-review/';
-      } else if (missingGovernance) {
-        kicker.textContent = 'Pause before testing';
-        title.textContent = 'Important conditions need to be clearer first.';
-        score.textContent = 'Prepare first';
-        copy.textContent = taskContext.taskSignal.hasChatGPT
-          ? `ChatGPT is a great general-purpose AI tool and it can help many different people in many different ways, but your answers show that the safeguard around your work is more important than trying to make AI easier right now. Knowing what you do not want AI to take over is sometimes just as important. You can avoid spending time and money on AI tools that your company workflow is not ready to hand off.`
-          : `For ${task}, AI may still have a role, but your answers show that the safeguard around the work is more important than choosing software right now. That is useful to know. You can avoid buying a tool for a task that is not ready to be handed to one.`;
-        profile.textContent = 'You found the missing operating decision.';
-        why.textContent = 'The issue is not whether AI is clever enough. The issue is whether someone can review, own and stop the work when needed. Fixing that condition makes every later tool decision cleaner.';
-        role.textContent = `AI should stay out of the live workflow until ownership, review and stopping conditions are named. ${taskContext.role}`;
-        plan.push(taskContext.firstStep);
-        plan.push(taskContext.guidance);
-        plan.push('Name the person or role responsible for the final result.');
-        plan.push('Decide who can review the output before anyone relies on it.');
-        plan.push('Choose a smaller version of the task that can be stopped safely.');
-        nextTitle.textContent = 'Make the human safeguard explicit.';
-        nextCopy.textContent = 'Use the Human Review Checklist to name the missing source, owner, reviewer or stopping condition before anyone relies on AI-assisted work.';
-        nextLink.textContent = 'Use the free Human Review Checklist';
-        nextLink.href = '/tools/human-review-checklist/';
-      } else {
-        kicker.textContent = 'Narrow the task';
-        title.textContent = 'There may be a useful AI-supported step inside this work.';
-        score.textContent = 'Shape the use';
-        copy.textContent = taskContext.taskSignal.hasChatGPT
-          ? `ChatGPT can probably help somewhere, but your answers suggest the full responsibility is too broad for a clean AI test. That is not a dead end. It means the useful opportunity is likely inside the work: preparation, sorting, drafting, checking or making information easier for a person to use.`
-          : `For ${task}, the full responsibility is probably too broad for a clean AI test. That is not a dead end. It means the opportunity is likely inside the work: preparation, sorting, drafting, checking or making information easier for a person to use.`;
-        profile.textContent = 'You found a smaller support task inside the larger work.';
-        why.textContent = 'The best first AI use is often not the visible responsibility. It is the repeatable support step around it, where better preparation helps a person move faster and make a better decision.';
-        role.textContent = `AI can assist with a bounded support step after the source material, reviewer and stopping condition are clearer. ${taskContext.role}`;
-        plan.push(taskContext.firstStep);
-        plan.push(taskContext.guidance);
-        plan.push('Separate the final human responsibility from the support work around it.');
-        plan.push('Choose one low-consequence step that repeats often enough to compare.');
-        plan.push('Write the rule for when the AI-assisted step must be reviewed or stopped.');
-        nextTitle.textContent = 'Map the work before choosing the tool.';
-        nextCopy.textContent = 'The AI Workday Review can help separate one bounded support task from the judgment and responsibility that should remain human.';
-        nextLink.textContent = 'Start the free AI Workday Review';
-        nextLink.href = '/assessments/ai-workday-review/';
-      }
-      if (!analysis.length) analysis.push('The useful finding is that the task is not yet defined enough to evaluate as an AI use case. That gives you a better first move than comparing tools.');
-      dimensions.innerHTML = [
-        dimensionCard('Task shape', foundationState, foundationState === 'strong' ? 'Clear enough to examine' : foundationState === 'mixed' ? 'Partly visible' : 'Needs definition'),
-        dimensionCard('Risk level', riskState, riskState === 'strong' ? 'Low consequence' : riskState === 'mixed' ? 'Needs caution' : 'High attention'),
-        dimensionCard('Human ownership', governanceState, governanceState === 'strong' ? 'Named and reviewable' : governanceState === 'mixed' ? 'Partly named' : 'Not reliable yet'),
-        dimensionCard('Pilot safety', testState, testState === 'strong' ? 'Reversible test' : testState === 'mixed' ? 'Narrow first' : 'Too hard to stop')
-      ].join('');
-      contextTitle.textContent = taskContext.title;
-      contextCopy.textContent = taskContext.copy;
-      analysisList.innerHTML = listItems(analysis);
-      hesitation.textContent = taskContext.hesitation;
-      planList.innerHTML = listItems(plan);
-      supportLink.href = nextLink.href;
-      status.textContent = '';
-      result.hidden = false;
-      result.focus({ preventScroll: true });
-      result.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'start' });
-    });
-    form.addEventListener('change', (event) => {
-      const group = event.target.closest('fieldset');
-      if (event.target.matches('[name="task"]')) {
-        taskChoices.removeAttribute('aria-invalid');
-        taskChoices.querySelectorAll('input').forEach((input) => {
-          input.removeAttribute('aria-invalid');
-          removeDescription(input, validation.id);
-        });
-      }
-      if (event.target.matches('[name="jobType"]')) {
-        event.target.removeAttribute('aria-invalid');
-        removeDescription(event.target, validation.id);
-      }
-      if (group) {
-        group.removeAttribute('aria-invalid');
-        group.querySelectorAll('input').forEach((input) => {
-          input.removeAttribute('aria-invalid');
-          removeDescription(input, validation.id);
-        });
-      }
-      if (!questionGroups.some((item) => item.getAttribute('aria-invalid') === 'true')) validation.hidden = true;
-      if (!result.hidden) result.hidden = true;
-    });
-    printButton.addEventListener('click', () => window.print());
-    copyButton.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(resultText());
-        status.textContent = 'Result copied.';
-      } catch (error) {
-        status.textContent = 'Copy was not available in this browser. Use Save free result as PDF instead.';
-      }
-    });
-    form.addEventListener('reset', () => {
-      window.setTimeout(() => {
-        clearValidation();
-        result.hidden = true;
-        const firstInput = form.querySelector('input');
-        firstInput.scrollIntoView({ behavior: reduceMotion.matches ? 'auto' : 'smooth', block: 'center' });
-        firstInput.focus({ preventScroll: true });
-      }, 0);
-    });
-  </script>
+  <script src="/tools/ai-fit-check/fit-check-engine.js"></script>
+  <script src="/tools/ai-fit-check/fit-check.js"></script>
 </body>
 </html>
