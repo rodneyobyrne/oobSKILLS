@@ -126,14 +126,31 @@ assert.match(html, /Choose all that apply\. Real work often involves more than o
 assert.equal((html.match(/name="task"/g) || []).length, 6, 'existing multi-select choices must stay intact');
 assert.match(html, /Public page related to this work/);
 assert.match(html, /Jina Reader/);
-assert.match(html, /your assessment answers are not sent/i);
-assert.match(html, /Build my AI Task Fit Brief/);
+assert.match(html, /Your assessment answers stay in this browser/);
+assert.match(html, /8 quick questions/);
+assert.match(html, /about 3 minutes/);
+assert.match(html, /You’ll leave with a clear AI fit result/);
+assert.match(html, /name="workLabel"/);
+assert.match(html, /Task shape · Questions 1–3 of 8/);
+assert.match(html, /Risk · Questions 4–5 of 8/);
+assert.match(html, /Human control · Questions 6–8 of 8/);
+assert.match(html, /class="fit-start-summary"/);
+assert.match(html, /class="fit-question-group"/);
+assert.match(html, /Could a wrong result seriously affect someone’s health, safety, rights, job, money or trust\?/);
+assert.match(html, /Can you test this safely on a small scale and stop if needed\?/);
+assert.match(html, /Want a more specific result\? Add a public page related to this task\./);
+assert.ok(html.indexOf('name="contextUrl"') > html.indexOf('name="reversible"'), 'public URL enhancement should appear after the eight core questions');
+assert.match(html, /Get my AI fit result/);
 for (const hook of ['data-fit-human', 'data-fit-factors', 'data-fit-research', 'data-fit-blockers', 'data-fit-plan']) {
   assert.match(html, new RegExp(hook));
 }
 assert.match(controller, /https:\/\/r\.jina\.ai\//);
 assert.match(controller, /Only this public URL will be sent for page review/);
+assert.match(controller, /brief\.workLabel=a\.workLabel/);
+assert.match(controller, /Work checked:/);
 assert.match(controller, /AI Task Fit Brief copied/);
+assert.match(css, /\.fit-start-summary/);
+assert.match(css, /\.fit-question-group/);
 assert.match(css, /\.fit-factor-row/);
 assert.match(css, /\.fit-done-when/);
 assert.match(css, /\.fit-result-followup \{ display: block !important;/, 'print CSS must include the action plan');
