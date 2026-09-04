@@ -1,144 +1,141 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { JSDOM, VirtualConsole } = require('jsdom');
 
 const root = path.resolve(__dirname, '..');
+const engine = require(path.join(root, 'tools/ai-fit-check/fit-check-engine.js'));
 const html = fs.readFileSync(path.join(root, 'tools/ai-fit-check/index.html'), 'utf8');
+const controller = fs.readFileSync(path.join(root, 'tools/ai-fit-check/fit-check.js'), 'utf8');
+const css = fs.readFileSync(path.join(root, 'tools/ai-fit-check/fit-check.css'), 'utf8');
 
-function createPage() {
-  const errors = [];
-  const virtualConsole = new VirtualConsole();
-  virtualConsole.on('jsdomError', (error) => errors.push(error.message));
-  virtualConsole.on('error', (message) => errors.push(String(message)));
-  const dom = new JSDOM(html, {
-    url: 'https://skills.oobcreative.com/tools/ai-fit-check/',
-    runScripts: 'dangerously',
-    pretendToBeVisual: true,
-    virtualConsole,
-  });
-  dom.window.HTMLElement.prototype.scrollIntoView = () => {};
-  dom.window.navigator.clipboard = { writeText: async () => {} };
-  return { window: dom.window, errors };
-}
-
-function answer(window, values) {
-  const tasks = values.tasks || ['customer-response'];
-  for (const task of tasks) {
-    const input = window.document.querySelector(`input[name="task"][value="${task}"]`);
-    assert.ok(input, `missing task=${task}`);
-    input.checked = true;
+function assertActionable(brief, expectedScore, expectedNext) {
+  assert.equal(brief.score, expectedScore);
+  assert.equal(brief.next.href, expectedNext);
+  for (const value of [brief.title, brief.summary, brief.role, brief.humanResponsibility, brief.watch, brief.next.title, brief.next.copy, brief.next.label]) {
+    assert.ok(value && value.trim().length > 12, `expected useful copy for ${expectedScore}`);
   }
-  window.document.querySelector('[name="jobType"]').value = values.jobType || 'customer-contact';
-  if (values.contextUrl) window.document.querySelector('[name="contextUrl"]').value = values.contextUrl;
-  for (const [name, value] of Object.entries(values)) {
-    if (['tasks', 'jobType', 'contextUrl'].includes(name)) continue;
-    const input = window.document.querySelector(`input[name="${name}"][value="${value}"]`);
-    assert.ok(input, `missing ${name}=${value}`);
-    input.checked = true;
+  assert.equal(brief.factors.length, 4, 'brief should explain four decision factors');
+  for (const factor of brief.factors) {
+    assert.ok(['strong', 'mixed', 'weak'].includes(factor.state));
+    assert.ok(factor.label && factor.detail && factor.meaning);
   }
-}
-
-function submit(window) {
-  window.document.querySelector('[data-fit-form]').dispatchEvent(
-    new window.Event('submit', { bubbles: true, cancelable: true }),
-  );
-}
-
-function result(window) {
-  return {
-    kicker: window.document.querySelector('[data-fit-kicker]').textContent,
-    score: window.document.querySelector('[data-fit-score]').textContent,
-    title: window.document.querySelector('[data-fit-title]').textContent,
-    next: window.document.querySelector('[data-fit-next-link]').getAttribute('href'),
-    context: window.document.querySelector('[data-fit-context-title]').textContent,
-    copy: window.document.querySelector('[data-fit-copy]').textContent,
-    analysis: window.document.querySelector('[data-fit-analysis]').textContent,
-    role: window.document.querySelector('[data-fit-role]').textContent,
-  };
-}
-
-{
-  const { window, errors } = createPage();
-  answer(window, {
-    jobType: 'customer-contact',
-    tasks: ['customer-response'],
-    repeated: 'yes',
-    defined: 'yes',
-    sources: 'yes',
-    sensitive: 'no',
-    consequence: 'no',
-    reviewer: 'yes',
-    owner: 'yes',
-    reversible: 'yes',
+  assert.equal(brief.plan.length, 3, 'every brief should end with three bounded actions');
+  brief.plan.forEach((step, index) => {
+    assert.equal(step.number, index + 1);
+    assert.ok(step.action.length > 8, 'action needs a clear verb-led label');
+    assert.ok(step.instruction.length > 20, 'action needs enough instruction to do it');
+    assert.ok(step.doneWhen.length > 20, 'action needs a completion condition');
   });
-  submit(window);
-  assert.equal(result(window).score, 'Ready to test');
-  assert.equal(result(window).next, '/tools/ai-pilot-starter/');
-  assert.deepEqual(errors, []);
-  window.close();
 }
 
-{
-  const { window, errors } = createPage();
-  answer(window, {
-    tasks: ['chatgpt', 'workflow-automation'],
-    jobType: 'hands-on',
-    contextUrl: 'https://example.com/services/boat-building/',
-    repeated: 'yes',
-    defined: 'yes',
-    sources: 'yes',
-    sensitive: 'yes',
-    consequence: 'yes',
-    reviewer: 'yes',
-    owner: 'yes',
-    reversible: 'yes',
-  });
-  submit(window);
-  const allYes = result(window);
-  assert.equal(allYes.score, 'Support only');
-  assert.match(allYes.title, /risk changes/);
-  assert.match(allYes.context, /Hands-on production/);
-  assert.match(allYes.role, /shop support/);
-  assert.equal(allYes.next, '/tools/human-review-checklist/');
-  assert.deepEqual(errors, []);
-  window.close();
+const ready = engine.evaluate({
+  tasks: ['customer-response', 'admin-summary'],
+  jobType: 'customer-contact',
+  answers: {
+    repeated: 'yes', defined: 'yes', sources: 'yes', sensitive: 'no', consequence: 'no',
+    reviewer: 'yes', owner: 'yes', reversible: 'yes'
+  }
+});
+assertActionable(ready, 'Ready to test', '/tools/ai-pilot-starter/');
+assert.match(ready.role, /customer|route|request|review/i);
+assert.equal(ready.blockers.length, 0);
+
+const sensitiveIntake = engine.evaluate({
+  tasks: ['customer-response', 'admin-summary'],
+  jobType: 'customer-contact',
+  answers: {
+    repeated: 'yes', defined: 'yes', sources: 'yes', sensitive: 'yes', consequence: 'yes',
+    reviewer: 'yes', owner: 'yes', reversible: 'yes'
+  }
+});
+assertActionable(sensitiveIntake, 'Support only', '/tools/human-review-checklist/');
+assert.ok(sensitiveIntake.blockers.some((item) => /data boundary/i.test(item.title)));
+assert.ok(sensitiveIntake.blockers.some((item) => /consequential|decision/i.test(item.title)));
+assert.match(sensitiveIntake.plan[0].doneWhen, /permitted\/prohibited/i);
+
+const vagueResearch = engine.evaluate({
+  tasks: ['chatgpt', 'research-planning'],
+  jobType: 'decision-support',
+  answers: {
+    repeated: 'no', defined: 'no', sources: 'no', sensitive: 'no', consequence: 'no',
+    reviewer: 'yes', owner: 'yes', reversible: 'yes'
+  }
+});
+assertActionable(vagueResearch, 'Define first', '/tools/workflow-systems-review/');
+assert.match(vagueResearch.plan[1].action, /source|finish/i);
+
+const unownedRouting = engine.evaluate({
+  tasks: ['workflow-automation', 'customer-response'],
+  jobType: 'systems',
+  answers: {
+    repeated: 'yes', defined: 'yes', sources: 'yes', sensitive: 'no', consequence: 'no',
+    reviewer: 'no', owner: 'unclear', reversible: 'no'
+  }
+});
+assertActionable(unownedRouting, 'Prepare first', '/tools/human-review-checklist/');
+assert.ok(unownedRouting.blockers.some((item) => /reviewer/i.test(item.title)));
+assert.ok(unownedRouting.blockers.some((item) => /easier to stop/i.test(item.title)));
+
+const mixedMessaging = engine.evaluate({
+  tasks: ['chatgpt', 'content-drafting', 'research-planning'],
+  jobType: 'messaging',
+  answers: {
+    repeated: 'sometimes', defined: 'partly', sources: 'yes', sensitive: 'no', consequence: 'possibly',
+    reviewer: 'yes', owner: 'yes', reversible: 'partly'
+  }
+});
+assertActionable(mixedMessaging, 'Shape the use', '/assessments/ai-workday-review/');
+assert.match(mixedMessaging.plan[0].action, /split|smaller/i);
+
+const samplePublicPage = `
+Title: Mountain Service Co. | Repair and Scheduling
+URL Source: https://example.com/service/
+# Repair service and scheduling
+We provide repair and maintenance services for local customers.
+Book an appointment or request a service visit using our online form.
+Contact our team for scheduling, estimates and follow-up.
+`;
+const research = engine.analyzePublicPage(samplePublicPage, 'https://example.com/service/', {
+  tasks: ['customer-response'], jobType: 'customer-contact'
+});
+assert.ok(research);
+assert.match(research.title, /Mountain Service Co/);
+assert.ok(research.evidence.some((item) => /customer action/i.test(item.title)));
+assert.match(research.actionHint, /booking|request|contact/i);
+assert.match(research.boundary, /cannot confirm/i);
+
+const readyWithResearch = engine.evaluate({
+  tasks: ['customer-response'],
+  jobType: 'customer-contact',
+  research,
+  answers: {
+    repeated: 'yes', defined: 'yes', sources: 'yes', sensitive: 'no', consequence: 'no',
+    reviewer: 'yes', owner: 'yes', reversible: 'yes'
+  }
+});
+assert.equal(readyWithResearch.score, ready.score, 'public page evidence must not override fit scoring');
+assert.match(readyWithResearch.plan[0].instruction, /booking|request|contact/i, 'public evidence should sharpen the action plan');
+
+assert.equal(engine.normalizePublicUrl('example.com/page#section'), 'https://example.com/page');
+for (const unsafe of ['http://localhost/test', 'http://127.0.0.1/', 'http://10.0.0.4/', 'http://192.168.1.2/', 'http://172.16.0.1/', 'http://169.254.1.1/', 'http://user:pass@example.com/']) {
+  assert.equal(engine.normalizePublicUrl(unsafe), null, `must reject non-public URL: ${unsafe}`);
 }
 
-{
-  const { window, errors } = createPage();
-  answer(window, {
-    jobType: 'decision-support',
-    tasks: ['chatgpt'],
-    repeated: 'no',
-    defined: 'no',
-    sources: 'no',
-    sensitive: 'no',
-    consequence: 'no',
-    reviewer: 'no',
-    owner: 'no',
-    reversible: 'no',
-  });
-  submit(window);
-  const allNo = result(window);
-  assert.equal(allNo.score, 'Define first');
-  assert.match(allNo.title, /enough shape/);
-  assert.match(allNo.copy, /ChatGPT is a capable tool/);
-  assert.match(allNo.analysis, /ChatGPT is a flexible general-purpose AI assistant/);
-  assert.equal(allNo.next, '/tools/workflow-systems-review/');
-  assert.deepEqual(errors, []);
-  window.close();
+assert.match(html, /How are you considering using AI in this work\?/);
+assert.match(html, /Choose all that apply\. Real work often involves more than one kind of AI support\./);
+assert.equal((html.match(/name="task"/g) || []).length, 6, 'existing multi-select choices must stay intact');
+assert.match(html, /Public page related to this work/);
+assert.match(html, /Jina Reader/);
+assert.match(html, /your assessment answers are not sent/i);
+assert.match(html, /Build my AI Task Fit Brief/);
+for (const hook of ['data-fit-human', 'data-fit-factors', 'data-fit-research', 'data-fit-blockers', 'data-fit-plan']) {
+  assert.match(html, new RegExp(hook));
 }
+assert.match(controller, /https:\/\/r\.jina\.ai\//);
+assert.match(controller, /Only this public URL will be sent for page review/);
+assert.match(controller, /AI Task Fit Brief copied/);
+assert.match(css, /\.fit-factor-row/);
+assert.match(css, /\.fit-done-when/);
+assert.match(css, /\.fit-result-followup \{ display: block !important;/, 'print CSS must include the action plan');
 
-{
-  const { window, errors } = createPage();
-  window.document.querySelector('[name="jobType"]').value = 'messaging';
-  submit(window);
-  const validation = window.document.querySelector('[data-fit-validation]');
-  assert.equal(validation.hidden, false);
-  assert.equal(window.document.querySelector('[data-fit-task-choices]').getAttribute('aria-invalid'), 'true');
-  assert.deepEqual(errors, []);
-  window.close();
-}
-
-console.log('AI Fit Check DOM tests passed.');
+console.log('AI Fit Check actionable-brief scenario tests passed.');
