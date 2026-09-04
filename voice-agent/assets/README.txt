@@ -1,0 +1,1 @@
+Voice-agent page image assets are currently served from the existing AI receptionist asset directory. This placeholder keeps the standalone conversion-page asset directory explicit without duplicating binary media.
