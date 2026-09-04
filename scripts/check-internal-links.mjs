@@ -9,6 +9,7 @@ const repositoryRoot = resolve(scriptDirectory, '..');
 const siteRoot = process.argv[2] ? resolve(process.cwd(), process.argv[2]) : join(repositoryRoot, '_site');
 const siteOrigin = 'https://skills.oobcreative.com';
 const ignoredDirectories = new Set(['.git', 'node_modules', 'scripts', 'tests', 'tmp']);
+const standaloneLandingPages = new Set(['voice-agent/index.html']);
 
 const problems = [];
 const pages = new Map();
@@ -81,6 +82,11 @@ for (const page of pages.values()) {
   const mainMatch = page.html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i);
   if (!mainMatch) continue;
 
+  if (standaloneLandingPages.has(page.file)) {
+    contextualLinks.set(page.file, new Set());
+    continue;
+  }
+
   const content = stripNavigation(mainMatch[1]);
   const targets = new Set();
   for (const match of content.matchAll(/<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>/gi)) {
@@ -101,7 +107,7 @@ for (const [source, targets] of contextualLinks.entries()) {
 }
 
 for (const page of pages.values()) {
-  if (page.isRedirect || page.isNoIndex || page.file === 'index.html') continue;
+  if (page.isRedirect || page.isNoIndex || page.file === 'index.html' || standaloneLandingPages.has(page.file)) continue;
   const sources = inbound.get(page.file) || new Set();
   const indexableSources = [...sources].filter((source) => {
     const sourcePage = pages.get(source);
@@ -117,7 +123,7 @@ for (const page of [...pages.values()].sort((a, b) => a.file.localeCompare(b.fil
   if (page.isRedirect) continue;
   const outgoing = contextualLinks.get(page.file)?.size || 0;
   const incoming = inbound.get(page.file)?.size || 0;
-  const flags = [page.isNoIndex ? 'noindex' : 'indexable'].join(', ');
+  const flags = [page.isNoIndex ? 'noindex' : 'indexable', standaloneLandingPages.has(page.file) ? 'standalone-landing' : null].filter(Boolean).join(', ');
   console.log(`- ${page.file}: ${outgoing} contextual outbound, ${incoming} contextual inbound (${flags})`);
 }
 
