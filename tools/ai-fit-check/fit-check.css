@@ -63,3 +63,37 @@
   .fit-watch-panel { break-inside: avoid; background: #fff !important; border-color: #000 !important; }
   .fit-factor-state, .fit-plan-number { color: #000 !important; border-color: #000 !important; }
 }
+
+/* Fit Check orientation and grouped-question usability. */
+.fit-start-summary { margin: 0 0 1.5rem; padding: clamp(1.1rem,2.4vw,1.45rem); border: 1px solid var(--ink); background: var(--paper); }
+.fit-start-summary h2 { max-width: 24ch; margin: .35rem 0 .55rem; }
+.fit-start-summary > p:last-of-type { max-width: 66ch; color: var(--soft); }
+.fit-effort { margin: 0; color: var(--ballpoint); font-size: .78rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.fit-output-preview { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 1px; margin-top: 1rem; border: 1px solid var(--ink); background: var(--ink); }
+.fit-output-preview article { min-height: 112px; padding: .8rem .85rem; background: var(--paper-soft); }
+.fit-output-preview strong, .fit-output-preview span { display: block; }
+.fit-output-preview strong { margin-bottom: .4rem; }
+.fit-output-preview span { color: var(--soft); font-size: .9rem; line-height: 1.4; }
+.fit-about-work, .fit-question-group, .fit-url-enhancement { margin-top: 1.35rem; padding: clamp(1rem,2.4vw,1.35rem); border: 1px solid var(--ink); background: var(--paper); }
+.fit-about-work > .meta, .fit-group-heading > .meta, .fit-url-enhancement > .meta { margin: 0 0 .3rem; color: var(--ballpoint); }
+.fit-about-work > h2, .fit-group-heading > h2, .fit-url-enhancement > h2 { max-width: 28ch; margin: 0 0 .5rem; font-size: clamp(1.35rem,2.3vw,1.85rem); }
+.fit-group-heading { margin-bottom: 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--line); }
+.fit-group-heading > p:last-child, .fit-url-enhancement > p:not(.meta) { max-width: 66ch; margin-bottom: 0; color: var(--soft); }
+.fit-about-work .fit-task-field + .fit-task-choices, .fit-about-work .fit-task-choices + .fit-task-field { margin-top: 1rem; }
+.fit-question-group fieldset { margin: 0; }
+.fit-question-group fieldset + fieldset { margin-top: .85rem; }
+.fit-question-help { margin: -.2rem 0 .65rem; color: var(--soft); font-size: .92rem; line-height: 1.45; }
+.fit-url-enhancement .fit-task-field { margin-top: 1rem; }
+.fit-work-checked { margin: -.2rem 0 .8rem; padding: .55rem .7rem; border-left: 4px solid var(--ballpoint); background: rgba(255,255,255,.66); }
+.fit-work-checked strong { margin-right: .25rem; }
+.fit-form input[aria-invalid="true"], .fit-form select[aria-invalid="true"] { outline: 3px solid var(--signal); outline-offset: 2px; }
+
+@media (max-width: 980px) {
+  .fit-output-preview { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .fit-output-preview article:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 620px) {
+  .fit-output-preview { grid-template-columns: 1fr; }
+  .fit-output-preview article, .fit-output-preview article:last-child { grid-column: auto; min-height: 0; }
+  .fit-about-work, .fit-question-group, .fit-url-enhancement { padding: .9rem; }
+}
