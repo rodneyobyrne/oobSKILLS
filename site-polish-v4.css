@@ -65,6 +65,59 @@ body:not(.home-ui-v4) .review-option__art {
   }
 }
 
+/* Shared content hero mobile repair.
+   Once a content hero collapses to one column, the illustration and aside must
+   become a vertical stack. The base component previously left the visual as a
+   horizontal flex row, causing the full-width aside to sit beside the image and
+   overflow/clamp on narrow screens. */
+@media (max-width: 980px) {
+  body:not(.home-ui-v4) .content-hero__visual {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding-bottom: 0;
+    overflow: visible;
+  }
+
+  body:not(.home-ui-v4) .content-hero__scene {
+    flex: 0 0 auto;
+    width: min(100%, 560px);
+    margin-inline: auto;
+  }
+
+  body:not(.home-ui-v4) .content-hero__aside {
+    position: static;
+    right: auto;
+    bottom: auto;
+    align-self: stretch;
+    width: 100%;
+    max-width: none;
+    margin: 1rem 0 0;
+  }
+}
+
+@media (max-width: 720px) {
+  body:not(.home-ui-v4) .content-hero {
+    padding-top: clamp(3.75rem, 12vw, 4.75rem);
+    padding-bottom: clamp(2.5rem, 8vw, 3.5rem);
+  }
+
+  body:not(.home-ui-v4) .content-hero__inner {
+    gap: 1.5rem;
+  }
+
+  body:not(.home-ui-v4) .content-hero h1 {
+    max-width: none;
+    font-size: clamp(2.9rem, 13vw, 3.8rem);
+  }
+
+  body:not(.home-ui-v4) .content-hero__aside {
+    margin-top: .9rem;
+    padding: 1rem;
+    box-shadow: 5px 5px 0 rgba(17,17,17,.08);
+  }
+}
+
 /* Sitewide text-link interaction: the underline is an action cue, so it draws
    from left to right in ballpoint blue instead of sitting under the link. */
 .text-link::after {
