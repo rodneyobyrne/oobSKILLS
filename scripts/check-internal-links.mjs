@@ -9,7 +9,7 @@ const repositoryRoot = resolve(scriptDirectory, '..');
 const siteRoot = process.argv[2] ? resolve(process.cwd(), process.argv[2]) : join(repositoryRoot, '_site');
 const siteOrigin = 'https://skills.oobcreative.com';
 const ignoredDirectories = new Set(['.git', 'node_modules', 'scripts', 'tests', 'tmp']);
-const standaloneLandingPages = new Set(['voice-agent/index.html']);
+const isStandaloneLandingPage = (file) => file === 'voice-agent/index.html' || /^voice-agent\/[^/]+\/index\.html$/.test(file);
 
 const problems = [];
 const pages = new Map();
@@ -82,7 +82,7 @@ for (const page of pages.values()) {
   const mainMatch = page.html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i);
   if (!mainMatch) continue;
 
-  if (standaloneLandingPages.has(page.file)) {
+  if (isStandaloneLandingPage(page.file)) {
     contextualLinks.set(page.file, new Set());
     continue;
   }
@@ -107,7 +107,7 @@ for (const [source, targets] of contextualLinks.entries()) {
 }
 
 for (const page of pages.values()) {
-  if (page.isRedirect || page.isNoIndex || page.file === 'index.html' || standaloneLandingPages.has(page.file)) continue;
+  if (page.isRedirect || page.isNoIndex || page.file === 'index.html' || isStandaloneLandingPage(page.file)) continue;
   const sources = inbound.get(page.file) || new Set();
   const indexableSources = [...sources].filter((source) => {
     const sourcePage = pages.get(source);
@@ -123,7 +123,7 @@ for (const page of [...pages.values()].sort((a, b) => a.file.localeCompare(b.fil
   if (page.isRedirect) continue;
   const outgoing = contextualLinks.get(page.file)?.size || 0;
   const incoming = inbound.get(page.file)?.size || 0;
-  const flags = [page.isNoIndex ? 'noindex' : 'indexable', standaloneLandingPages.has(page.file) ? 'standalone-landing' : null].filter(Boolean).join(', ');
+  const flags = [page.isNoIndex ? 'noindex' : 'indexable', isStandaloneLandingPage(page.file) ? 'standalone-landing' : null].filter(Boolean).join(', ');
   console.log(`- ${page.file}: ${outgoing} contextual outbound, ${incoming} contextual inbound (${flags})`);
 }
 
