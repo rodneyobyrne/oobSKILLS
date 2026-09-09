@@ -24,7 +24,10 @@ for (const [slug, context, conversion] of pages) {
   assert.ok(document.querySelector('meta[name="description"]').content.length > 100, `${slug} has substantive metadata`);
   assert.equal(document.querySelectorAll('.industry-tool-card').length, 5, `${slug} has five curated tools`);
   assert.equal(document.querySelectorAll(`a[href*="industry=${context}"]`).length, 5, `${slug} launches five context-aware tools`);
-  assert.ok(document.querySelector(`img[src="/images/industry-placeholders/${context}.svg"]`), `${slug} has a replaceable hero image`);
+  assert.ok(document.querySelector(`img[src="/images/industry-heroes/${context}.webp"]`), `${slug} has its industry hero image`);
+  const heroPath = path.join(root, 'images', 'industry-heroes', `${context}.webp`);
+  assert.ok(fs.existsSync(heroPath), `${slug} hero asset exists`);
+  assert.ok(fs.statSync(heroPath).size > 25000, `${slug} hero asset is substantive`);
   assert.ok(document.body.textContent.length > 2400, `${slug} has substantive visible content`);
   const source = fs.readFileSync(file, 'utf8');
   assert.match(source, /CollectionPage/);
