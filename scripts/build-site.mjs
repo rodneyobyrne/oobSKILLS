@@ -18,6 +18,8 @@ const publicFiles = [
   'doodle-system.css',
   'hero-animation.css',
   'hero-animation.js',
+  'industry-tool-context.js',
+  'industry-tools.css',
   'home-ai-cards-v3.css',
   'home-ui-v4.css',
   'home-ui-v4.js',
@@ -162,6 +164,16 @@ const contextualLinkBlocks = new Map([
     </section>`,
   ],
   [
+    'tools/ai-pilot-starter/index.html',
+    `<section class="content-section--soft" data-related-links="true">
+      <div class="site-shell section-heading-row">
+        <div><p class="eyebrow">After the test</p><h2>Put what works into a workflow people can repeat.</h2></div>
+        <p class="section-side-note">A successful experiment still needs a clear trigger, approved information, human review and a place in the regular work.</p>
+      </div>
+      <div class="site-shell"><a class="text-link" href="/workfiles/ai-workday-map/">Map the AI-supported workflow <span aria-hidden="true">→</span></a></div>
+    </section>`,
+  ],
+  [
     'privacy-policy/index.html',
     `<section class="content-section--soft" data-related-links="true">
       <div class="site-shell section-heading-row">
@@ -172,6 +184,34 @@ const contextualLinkBlocks = new Map([
     </section>`,
   ],
 ]);
+
+const industryLinks = [
+  ['plumbers', 'Plumbers'],
+  ['construction', 'Construction'],
+  ['home-services', 'Home Services'],
+  ['property-management', 'Property Management'],
+  ['legal', 'Law Firms'],
+  ['healthcare', 'Healthcare Practices'],
+  ['financial-services', 'Financial Services'],
+];
+
+function industryDiscoveryBlock(outputFile) {
+  if (outputFile !== 'index.html' && outputFile !== 'free-tools/index.html') return '';
+  const links = (outputFile === 'index.html' ? industryLinks.slice(0, 3) : industryLinks)
+    .map(([slug, label]) => `<a href="/tools/${slug}/"><span>Free tool pack</span>${label} <span aria-hidden="true">→</span></a>`)
+    .join('');
+  const footerLink = outputFile === 'index.html'
+    ? `<p class="content-actions"><a class="text-link" href="/free-tools/#industry-tool-packs">See every industry tool pack <span aria-hidden="true">→</span></a></p>`
+    : '';
+  return `<section id="industry-tool-packs" class="content-section--soft" data-industry-discovery="true">
+    <div class="site-shell section-heading-row">
+      <div><p class="eyebrow">Tools for the work you actually do</p><h2>Your business changes how the problem shows up.</h2></div>
+      <p class="section-side-note">A missed call, unclear handoff or AI risk carries different consequences depending on the work. Start with a small set of free tools framed around situations you recognize.</p>
+    </div>
+    <div class="site-shell industry-discovery-grid">${links}</div>
+    <div class="site-shell">${footerLink}</div>
+  </section>`;
+}
 
 function requireSource(pathFromRoot) {
   const absolutePath = join(sourceRoot, pathFromRoot);
@@ -220,6 +260,12 @@ function injectSiteAssets(html, outputFile) {
   if (experience && !next.includes('/assessment-tools-v2.css')) {
     next = next.replace('</head>', `    <link rel="stylesheet" href="/assessment-tools-v2.css?v=${releaseVersion}">\n  </head>`);
   }
+  if ((experience === 'tool' || /^tools\/(?:plumbers|construction|home-services|property-management|legal|healthcare|financial-services)\/index\.html$/.test(outputFile)) && !next.includes('/industry-tools.css')) {
+    next = next.replace('</head>', `    <link rel="stylesheet" href="/industry-tools.css?v=${releaseVersion}">\n  </head>`);
+  }
+  if (experience === 'tool' && !/^tools\/(?:plumbers|construction|home-services|property-management|legal|healthcare|financial-services)\/index\.html$/.test(outputFile) && !next.includes('/industry-tool-context.js')) {
+    next = next.replace('</head>', `    <script defer src="/industry-tool-context.js?v=${releaseVersion}"></script>\n  </head>`);
+  }
   if (!next.includes('/site-layout-v2.css')) {
     next = next.replace('</head>', `    <link rel="stylesheet" href="/site-layout-v2.css?v=${releaseVersion}">\n  </head>`);
   }
@@ -252,9 +298,16 @@ function replaceFooter(html) {
 }
 
 function injectContextualLinks(html, outputFile) {
-  const block = contextualLinkBlocks.get(outputFile);
-  if (!block || html.includes('data-related-links="true"') || !/<\/main>/i.test(html)) return html;
-  return html.replace(/<\/main>/i, `${block}\n  </main>`);
+  const related = contextualLinkBlocks.get(outputFile);
+  const discovery = industryDiscoveryBlock(outputFile);
+  let next = html;
+  if (related && !next.includes('data-related-links="true"') && /<\/main>/i.test(next)) {
+    next = next.replace(/<\/main>/i, `${related}\n  </main>`);
+  }
+  if (discovery && !next.includes('data-industry-discovery="true"') && /<\/main>/i.test(next)) {
+    next = next.replace(/<\/main>/i, `${discovery}\n  </main>`);
+  }
+  return next;
 }
 
 rmSync(outputRoot, { recursive: true, force: true });
