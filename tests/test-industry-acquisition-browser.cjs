@@ -82,7 +82,7 @@ async function submitFit(page, answers) {
       await page.locator('[name="workLabel"]').fill('Client-facing AI-assisted response');
       await page.locator('[name="workType"]').selectOption({ index: 1 });
       for (const name of ['sources', 'facts', 'evidence', 'limits', 'dignity', 'fairness', 'voice', 'owner', 'disclosure', 'correctable']) {
-        await page.locator(`[name="${name}"][value="${name === 'owner' ? 'unsure' : 'yes'}"]`).check();
+        await page.locator(`[name="${name}"][value="${name === 'owner' ? 'unsure' : 'yes'}"]`).check({ force: true });
       }
       await page.locator('button[type="submit"]').click();
       await page.locator('.industry-result-next').waitFor();
