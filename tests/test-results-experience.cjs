@@ -16,10 +16,12 @@ assert.doesNotMatch(testPlan, />First AI Pilot Brief</, 'AI pilot resource shoul
 assert.match(testPlan, /Test AI on one real task before investing in a bigger system\./, 'AI pilot resource should explain the job in plain language');
 
 const freeTools = read('free-tools/index.html');
-assert.match(freeTools, /<h3>Review Your Workday for AI<\/h3>/, 'resources directory should expose the first AI path step');
-assert.match(freeTools, /<h3>Start an AI Pilot<\/h3>/, 'resources directory should use the canonical pilot name');
-assert.match(freeTools, /<h3>Map Your AI Workflow<\/h3>/, 'resources directory should expose the implementation step');
-assert.match(freeTools, /href="\/workfiles\/ai-workday-map\/"/, 'resources directory should link to the real workflow mapping tool');
+assert.equal((freeTools.match(/class="content-card"/g) || []).length, 8, 'resources directory should merchandise eight broadly useful tools');
+assert.match(freeTools, /<h3>AI Fit Check<\/h3>/, 'resources directory should expose the broad AI fit decision');
+assert.match(freeTools, /<h3>14-Day AI Test Plan<\/h3>/, 'resources directory should use the plain-language test-plan name');
+assert.match(freeTools, /<h3>Digital Project Recovery Review<\/h3>/, 'resources directory should retain project recovery');
+assert.doesNotMatch(freeTools, /<h3>Customer Contact Workflow Review<\/h3>/, 'situational workflow engines should be merchandised through industry packs');
+assert.match(read('scripts/build-site.mjs'), /href="\/workfiles\/ai-workday-map\/"/, 'the 14-day test should hand off to the real workflow mapping tool');
 
 const workflowMap = read('workfiles/ai-workday-map/index.html');
 assert.match(workflowMap, /<title>Map Your AI Workflow \| oobCREATIVE<\/title>/, 'workflow map should be a real standalone tool');
