@@ -21,6 +21,7 @@ const tool = (engine, name, situation, benefit, now) => ({ engine, name, situati
 const industries = [
   {
     slug: 'plumbers', context: 'plumbing', name: 'Plumbers', title: 'Free AI Tools for Plumbers | oobCREATIVE',
+    heroAlt: 'Plumber repairing a kitchen sink while an illustrated AI assistant helps with intake',
     description: 'Five free AI and workflow tools for plumbing businesses to review missed calls, booking, dispatch handoffs, owner bottlenecks and responsible AI fit.',
     eyebrow: 'Free tools for plumbing businesses', h1: 'AI tools for plumbers should start with the calls and handoffs that shape the workday.',
     lead: 'Use five practical tools selected around service calls, scheduling, dispatch and the information that must move between the office and the field. No account or email is required.',
@@ -45,6 +46,7 @@ const industries = [
   },
   {
     slug: 'construction', context: 'construction', name: 'Construction', title: 'Free AI Tools for Construction Companies | oobCREATIVE',
+    heroAlt: 'Construction lead reviewing plans on a jobsite with an illustrated AI assistant',
     description: 'Five free AI and workflow tools for contractors and construction companies covering lead response, estimate follow-up, field-to-office work and owner knowledge.',
     eyebrow: 'Free tools for contractors', h1: 'AI tools for construction should respect work that happens beyond the office.',
     lead: 'Review lead response, estimate follow-up, field-to-office information and owner-dependent decisions with five free tools built around recognizable construction work.',
@@ -69,6 +71,7 @@ const industries = [
   },
   {
     slug: 'home-services', context: 'home-services', name: 'Home Services', title: 'Free AI Tools for Home Service Businesses | oobCREATIVE',
+    heroAlt: 'HVAC technician servicing an outdoor unit with an illustrated AI assistant',
     description: 'Five free AI and workflow tools for HVAC, electrical, plumbing and other home-service businesses managing calls, booking, dispatch and customer expectations.',
     eyebrow: 'Free tools for home-service teams', h1: 'AI tools for home services should make the next handoff easier, not make the customer work harder.',
     lead: 'Use five free tools to review call coverage, booking, dispatch, customer communication and the human limits around automation.',
@@ -93,6 +96,7 @@ const industries = [
   },
   {
     slug: 'property-management', context: 'property-management', name: 'Property Management', title: 'Free AI Tools for Property Managers | oobCREATIVE',
+    heroAlt: 'Property manager coordinating a kitchen repair with a plumber and illustrated AI assistant',
     description: 'Five free AI and workflow tools for property managers handling leasing inquiries, maintenance requests, routing, scheduling and resident communication.',
     eyebrow: 'Free tools for property managers', h1: 'AI tools for property management should separate the request before they accelerate it.',
     lead: 'Review leasing, maintenance, resident and vendor handoffs with five free tools that keep urgency, privacy and property decisions visible.',
@@ -117,6 +121,7 @@ const industries = [
   },
   {
     slug: 'legal', context: 'legal', name: 'Law Firms', title: 'Free AI Tools for Law Firms | oobCREATIVE',
+    heroAlt: 'Attorney reviewing client documents with an illustrated AI assistant handling a call',
     description: 'Five free AI and workflow tools for law firms reviewing new-client intake, scheduling, administrative handoffs and responsible use of AI.',
     eyebrow: 'Free tools for law firms', h1: 'AI tools for law firms should make responsibility clearer before they make work faster.',
     lead: 'Use five free tools to examine intake, routing, administrative work and human review without treating professional judgment as an automation task.',
@@ -141,6 +146,7 @@ const industries = [
   },
   {
     slug: 'healthcare', context: 'healthcare', name: 'Healthcare Practices', title: 'Free AI Tools for Healthcare Practices | oobCREATIVE',
+    heroAlt: 'Doctor speaking with a patient while an illustrated AI assistant supports the front desk',
     description: 'Five free AI and workflow tools for healthcare practices reviewing scheduling, administrative communication, privacy, human review and responsible AI fit.',
     eyebrow: 'Free tools for healthcare practices', h1: 'AI tools for healthcare should protect the boundary between office help and clinical care.',
     lead: 'Use five free tools to review appointment requests, administrative communication and AI responsibilities while keeping clinical judgment and protected information within approved processes.',
@@ -165,6 +171,7 @@ const industries = [
   },
   {
     slug: 'financial-services', context: 'financial-services', name: 'Financial Services', title: 'Free AI Tools for Financial Service Firms | oobCREATIVE',
+    heroAlt: 'Financial professional meeting with a client beside an illustrated AI assistant',
     description: 'Five free AI and workflow tools for financial service firms reviewing client inquiry, scheduling, administrative follow-up and responsible AI use.',
     eyebrow: 'Free tools for financial-service firms', h1: 'AI tools for financial services should preserve the person who owns the answer.',
     lead: 'Use five free tools to examine client contact, administrative work and AI review without handing consequential financial communication to an unowned system.',
@@ -204,7 +211,7 @@ function renderPage(industry) {
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="${esc(industry.description)}"><link rel="canonical" href="${canonical}"><title>${esc(industry.title)}</title><meta property="og:title" content="${esc(industry.title)}"><meta property="og:description" content="${esc(industry.description)}"><meta property="og:url" content="${canonical}"><meta property="og:type" content="website"><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/content-pages.css"><link rel="stylesheet" href="/industry-tools.css"><script type="application/ld+json">${schema}</script></head>
 <body class="content-page industry-page"><a class="skip-link" href="#main-content">Skip to content</a><header class="site-header"><div class="site-shell header-inner"><a class="mark" href="/" aria-label="oobCREATIVE home"><img src="/branding/Mark.svg" alt="" width="64" height="44"></a><nav class="desktop-nav" aria-label="Primary navigation"><a href="/free-tools/">Resources</a><a href="/about/">About</a></nav><details class="mobile-nav"><summary aria-label="Open navigation"><span></span><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="/free-tools/">Resources</a><a href="/about/">About</a></nav></details></div></header>
 <main id="main-content"><div class="site-shell breadcrumbs"><nav aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/free-tools/">Resources</a></li><li aria-current="page">${esc(industry.name)}</li></ol></nav></div>
-<section class="industry-hero"><div class="site-shell industry-hero__inner"><div><p class="eyebrow">${esc(industry.eyebrow)}</p><h1>${esc(industry.h1)}</h1><p class="lead">${esc(industry.lead)}</p><a class="button button--blue" href="#tool-pack">See the five-tool pack</a></div><figure class="industry-hero__image"><img src="/images/industry-placeholders/${industry.context}.svg" alt="Reserved hero image space for ${esc(industry.name)} photography" width="800" height="620"><figcaption>Photography replacement point: ${esc(industry.context)} hero</figcaption></figure></div></section>
+<section class="industry-hero"><div class="site-shell industry-hero__inner"><div><p class="eyebrow">${esc(industry.eyebrow)}</p><h1>${esc(industry.h1)}</h1><p class="lead">${esc(industry.lead)}</p><a class="button button--blue" href="#tool-pack">See the five-tool pack</a></div><figure class="industry-hero__image"><img src="/images/industry-heroes/${industry.context}.webp" alt="${esc(industry.heroAlt)}" width="800" height="620"></figure></div></section>
 <section class="industry-recognition"><div class="site-shell industry-recognition__intro"><p class="eyebrow">Start with the actual work</p><h2>The useful opportunity is usually hiding in a handoff.</h2><p>${esc(industry.recognition)}</p></div><div class="site-shell industry-realities">${realities}</div></section>
 <section id="tool-pack" class="industry-pack content-section--blue"><div class="site-shell section-heading-row"><div><p class="eyebrow">Curated free tool pack</p><h2>Five useful places to look before buying more software.</h2></div><p class="section-side-note">Each tool runs in your browser. Use the result even if you never contact oobCREATIVE.</p></div><div class="site-shell industry-tool-list">${cards}</div></section>
 <section class="industry-boundary"><div class="site-shell industry-boundary__inner"><div><p class="eyebrow">Keep humans human</p><h2>${esc(industry.boundaryTitle)}</h2><p>${esc(industry.boundaryCopy)}</p></div><ul>${boundaries}</ul></div></section>
@@ -212,17 +219,10 @@ function renderPage(industry) {
 </main><footer><div class="site-shell footer-main"><p><a href="/free-tools/">Free resources</a></p></div></footer></body></html>`;
 }
 
-function placeholderSvg(industry) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="620" viewBox="0 0 800 620" role="img" aria-labelledby="title desc"><title id="title">${esc(industry.name)} hero photography placeholder</title><desc id="desc">A clearly labeled image space to be replaced with approved ${esc(industry.name)} photography.</desc><rect width="800" height="620" fill="#e8edf7"/><path d="M0 470 160 310l126 98 155-185 359 305v92H0z" fill="#c5cfe1"/><rect x="40" y="40" width="720" height="540" fill="none" stroke="#244aa5" stroke-width="4" stroke-dasharray="15 12"/><text x="400" y="260" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" fill="#244aa5" letter-spacing="2">INDUSTRY HERO PHOTOGRAPHY</text><text x="400" y="305" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="46" font-weight="700" fill="#111111">${esc(industry.name)}</text><text x="400" y="350" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#444444">Replace this file; keep the filename and 40:31 ratio.</text></svg>`;
-}
-
 for (const industry of industries) {
   const pageDir = join(root, 'tools', industry.slug);
-  const imageDir = join(root, 'images', 'industry-placeholders');
   mkdirSync(pageDir, { recursive: true });
-  mkdirSync(imageDir, { recursive: true });
   writeFileSync(join(pageDir, 'index.html'), renderPage(industry));
-  writeFileSync(join(imageDir, `${industry.context}.svg`), placeholderSvg(industry));
 }
 
-console.log(`Generated ${industries.length} industry acquisition pages and hero placeholders.`);
+console.log(`Generated ${industries.length} industry acquisition pages.`);
