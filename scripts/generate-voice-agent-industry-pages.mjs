@@ -365,7 +365,7 @@ function renderPage(industry) {
               <li>English and Spanish conversations</li>
               <li>Routine answer updates and tuning</li>
             </ul>
-            <a class="button plan__cta" href="tel:${phoneHref}">Start with Base</a>
+            <a class="button plan__cta" href="/voice-agent/start/base/">Start with Base</a>
           </article>
           <article class="plan plan--connected">
             <p class="plan__label">Connected</p>
@@ -381,7 +381,7 @@ function renderPage(industry) {
               <li>Notifications and human handoffs</li>
               <li>Workflow testing before launch</li>
             </ul>
-            <a class="button button--blue plan__cta" href="tel:${phoneHref}">Choose Connected</a>
+            <a class="button button--blue plan__cta" href="/voice-agent/start/connected/">Choose Connected</a>
           </article>
           <article class="plan plan--partner">
             <p class="plan__label">Partner</p>
@@ -396,7 +396,7 @@ function renderPage(industry) {
               <li>Communication and workflow problem-solving</li>
               <li>Ongoing refinement as the business changes</li>
             </ul>
-            <a class="button button--paper plan__cta" href="tel:${phoneHref}">Start the conversation</a>
+            <a class="button button--paper plan__cta" href="/voice-agent/start/partner/">Start the conversation</a>
           </article>
         </div>
         <p class="fineprint"><strong>Additional usage:</strong> $0.25/minute beyond the included allowance. Paid third-party apps, unusual carrier charges, deeper research, new workflows and substantial scope changes are discussed and quoted before they are added.</p>

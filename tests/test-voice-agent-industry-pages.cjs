@@ -30,6 +30,9 @@ for (const [slug, language] of industries) {
   assert.equal(document.querySelectorAll('.situation-card').length, 4, `${slug} has four call situations`);
   assert.equal(document.querySelectorAll('.faq details').length, 3, `${slug} has three FAQs`);
   assert.equal(document.querySelectorAll('.plan').length, 3, `${slug} has three plans`);
+  assert.ok(document.querySelector('a[href="/voice-agent/start/base/"]'), `${slug} routes Base into purchase review`);
+  assert.ok(document.querySelector('a[href="/voice-agent/start/connected/"]'), `${slug} routes Connected into purchase review`);
+  assert.ok(document.querySelector('a[href="/voice-agent/start/partner/"]'), `${slug} routes Partner into scope review`);
   assert.ok(document.querySelectorAll(`a[href="tel:9704048398"]`).length >= 3, `${slug} includes live call actions`);
   assert.equal(document.querySelectorAll('.visual-slot img').length, 0, `${slug} image slots do not imply completed artwork`);
   assert.doesNotMatch(body, /revolution|transform your business|replace your staff/i, `${slug} avoids unsupported AI claims`);
