@@ -19,12 +19,24 @@ const { startStaticServer } = require('./static-server.cjs');
       page.on('console', (message) => {
         if (message.type() === 'error') consoleErrors.push(message.text());
       });
-      page.on('requestfailed', (request) => failedRequests.push(request.url()));
+      page.on('requestfailed', (request) => {
+        const isExpectedMediaCancel = request.url().endsWith('.mp3') && request.failure()?.errorText === 'net::ERR_ABORTED';
+        if (!isExpectedMediaCancel) failedRequests.push(request.url());
+      });
 
       await page.goto(`${server.origin}/voice-agent/`, { waitUntil: 'networkidle' });
       assert.equal(await page.locator('.voice-card').count(), 11, `All samples render at ${viewport.width}px`);
       assert.equal(await page.locator('.voice-play').count(), 11, `All play controls render at ${viewport.width}px`);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1), false, `No horizontal overflow at ${viewport.width}px`);
+
+      if (viewport.width === 320) {
+        const sources = await page.locator('.voice-card audio').evaluateAll((players) => players.map((player) => player.src));
+        for (const source of sources) {
+          const response = await page.request.get(source);
+          assert.equal(response.ok(), true, `${source} returns successfully`);
+          assert.match(response.headers()['content-type'], /^audio\/mpeg\b/, `${source} is served as MP3 audio`);
+        }
+      }
 
       await page.locator('.voice-play').first().focus();
       assert.equal(await page.locator('.voice-play').first().evaluate((button) => button.matches(':focus')), true, 'Play control receives keyboard focus');
