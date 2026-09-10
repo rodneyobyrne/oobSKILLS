@@ -32,11 +32,12 @@ const { startStaticServer } = require('./static-server.cjs');
       const firstButton = page.locator('.voice-play').nth(0);
       const secondButton = page.locator('.voice-play').nth(1);
       await firstButton.click();
-      await page.waitForFunction(() => !document.querySelector('#voice-01').paused);
+      await page.waitForFunction(() => document.querySelector('.voice-play').getAttribute('aria-pressed') === 'true');
       assert.equal(await firstButton.getAttribute('aria-pressed'), 'true', 'First sample exposes its playing state');
+      assert.equal(await page.locator('#voice-01').evaluate((audio) => !audio.paused), true, 'First sample is audibly playing');
 
       await secondButton.click();
-      await page.waitForFunction(() => !document.querySelector('#voice-02').paused);
+      await page.waitForFunction(() => document.querySelectorAll('.voice-play')[1].getAttribute('aria-pressed') === 'true');
       assert.equal(await page.locator('#voice-01').evaluate((audio) => audio.paused && audio.currentTime === 0), true, 'Starting a new sample stops and resets the previous sample');
       assert.equal(await secondButton.getAttribute('aria-pressed'), 'true', 'Second sample exposes its playing state');
       await secondButton.click();
