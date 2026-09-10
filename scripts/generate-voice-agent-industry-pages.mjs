@@ -299,7 +299,7 @@ function renderPage(industry) {
             <a class="button button--blue" href="tel:${phoneHref}">Call the AI voice agent</a>
             <a class="phone-number" href="tel:${phoneHref}">${phoneDisplay}</a>
           </div>
-          <p class="hero__note">Try the live oobCREATIVE agent. Ask how it would handle a call for ${escapeHtml(industry.audience)}, request a human conversation or switch to Spanish.</p>
+          <p class="hero__note">Try the live oobCREATIVE agent. Ask how it would handle a call for ${escapeHtml(industry.audience)}, request time with Rodney or another human on his team, or switch to Spanish.</p>
           <p class="hero__price">Plans start at $495 setup + $149/month · 250 minutes included</p>
         </div>
       </div>
@@ -437,7 +437,7 @@ function renderPage(industry) {
         <div class="proof__copy">
           <p class="eyebrow">Call it before you buy it</p>
           <h2>Hear how the agent handles a conversation.</h2>
-          <p>Ask it about oobCREATIVE, describe a call from your business or have it schedule time for you to talk with a real human.</p>
+          <p>Ask it about oobCREATIVE, describe a call from your business or have it schedule time for you to talk with Rodney or another human on his team.</p>
           <div class="proof__actions">
             <a class="button button--blue" href="tel:${phoneHref}">Call ${phoneDisplay}</a>
             <span>También habla español bastante bien.</span>

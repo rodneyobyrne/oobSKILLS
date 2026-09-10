@@ -33,6 +33,7 @@ for (const [slug, language] of industries) {
   assert.ok(document.querySelectorAll(`a[href="tel:9704048398"]`).length >= 3, `${slug} includes live call actions`);
   assert.equal(document.querySelectorAll('.visual-slot img').length, 0, `${slug} image slots do not imply completed artwork`);
   assert.doesNotMatch(body, /revolution|transform your business|replace your staff/i, `${slug} avoids unsupported AI claims`);
+  assert.match(body, /Rodney or another human on his team/i, slug + ' keeps the human-team expectation visible');
 }
 
 console.log('Voice-agent industry page tests passed.');
