@@ -9,11 +9,11 @@ const dom = new JSDOM(html, { url: 'https://skills.oobcreative.com/voice-agent/'
 const { document } = dom.window;
 
 const expected = [
-  ['Aaron', '01-basic-promise-aaron.mp3'],
+  ['Mark', '01-basic-promise-mark.mp3'],
   ['Pittsburgh', '02-not-voicemail-pittsburgh.mp3'],
-  ['Scott', '03-keep-your-number-scott.mp3'],
-  ['Eryn', '04-built-around-your-business-eryn-warm.mp3'],
-  ['Eryn', '05-connected-work-eryn-natural.mp3'],
+  ['Scott', '03-keep-your-number-scott-w.mp3'],
+  ['Eryn', '04-built-around-your-business-eryn-a.mp3'],
+  ['Eryn', '05-connected-work-eryn-b.mp3'],
   ['Matilda', '06-human-responsibility-matilda.mp3'],
   ['Mateo Aragon', '07-customer-comfort-mateo-aragon.mp3'],
   ['Antonio', '08-useful-not-translated-antonio.mp3'],
