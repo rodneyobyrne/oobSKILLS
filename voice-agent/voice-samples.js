@@ -37,6 +37,7 @@
 
       try {
         await audio.play();
+        setPlaying(control);
       } catch {
         setIdle(control);
       }
