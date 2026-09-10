@@ -270,6 +270,7 @@ function renderPage(industry) {
   <title>${escapeHtml(industry.title)}</title>
   <link rel="icon" href="/branding/Mark-black.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/voice-agent/industry.css?v=20260908">
+  <link rel="stylesheet" href="/voice-agent/voice-samples.css?v=20260910">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -441,6 +442,7 @@ function renderPage(industry) {
             <a class="button button--blue" href="tel:${phoneHref}">Call ${phoneDisplay}</a>
             <span>También habla español bastante bien.</span>
           </div>
+          <a class="voice-samples-compact" href="/voice-agent/#voice-samples">Hear all 11 English and Spanish voice samples</a>
         </div>
       </div>
     </section>
