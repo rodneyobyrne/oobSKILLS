@@ -16,7 +16,7 @@ const buildSource = readFileSync(join(sourceRoot, 'scripts', 'build-site.mjs'), 
 
 function templateConstant(name) {
   const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const match = buildSource.match(new RegExp(`const ${escapedName} = \\`([\\s\\S]*?)\\`;`));
+  const match = buildSource.match(new RegExp('const ' + escapedName + ' = `([\\s\\S]*?)`;'));
   if (!match) throw new Error(`Could not read ${name} from scripts/build-site.mjs`);
   return match[1];
 }
