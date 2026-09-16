@@ -34,8 +34,22 @@ const { startStaticServer } = require('./static-server.cjs');
     const menu = await page.evaluate(() => {
       const nav = document.querySelector('.mobile-nav > nav');
       const rect = nav.getBoundingClientRect();
+      const rows = [...nav.querySelectorAll(':scope > a:not(.nav-cta), :scope > .nav-group > summary')].map((row) => {
+        const style = getComputedStyle(row);
+        return {
+          background: style.backgroundColor,
+          color: style.color,
+          borderWidth: style.borderTopWidth,
+          borderStyle: style.borderTopStyle,
+          minHeight: parseFloat(style.minHeight),
+        };
+      });
+      const cta = nav.querySelector(':scope > .nav-cta');
+      const ctaStyle = getComputedStyle(cta);
       return {
         position: getComputedStyle(nav).position,
+        background: getComputedStyle(nav).backgroundColor,
+        color: getComputedStyle(nav).color,
         left: rect.left,
         right: rect.right,
         top: rect.top,
@@ -43,6 +57,9 @@ const { startStaticServer } = require('./static-server.cjs');
         viewportWidth: innerWidth,
         viewportHeight: innerHeight,
         bodyOverflow: getComputedStyle(document.body).overflow,
+        rows,
+        ctaBackground: ctaStyle.backgroundColor,
+        ctaColor: ctaStyle.color,
       };
     });
 
@@ -52,6 +69,15 @@ const { startStaticServer } = require('./static-server.cjs');
     assert.ok(menu.top >= 70 && menu.top <= 74, `Mobile navigation begins below the header; measured ${menu.top}px.`);
     assert.ok(Math.abs(menu.bottom - menu.viewportHeight) <= 2, 'Mobile navigation covers the remaining viewport height.');
     assert.equal(menu.bodyOverflow, 'hidden', 'Opening mobile navigation prevents the page beneath it from scrolling.');
+    assert.equal(menu.background, 'rgb(255, 255, 255)', 'Mobile navigation uses a welcoming white canvas.');
+    assert.equal(menu.color, 'rgb(17, 17, 17)', 'Mobile navigation uses dark text on the light canvas.');
+    assert.ok(menu.rows.length >= 6, 'Mobile navigation exposes the expected top-level choices.');
+    assert.ok(menu.rows.every((row) => row.background === 'rgb(255, 255, 255)'), 'Top-level menu choices rest on white.');
+    assert.ok(menu.rows.every((row) => row.color === 'rgb(17, 17, 17)'), 'Top-level menu choices use dark readable text.');
+    assert.ok(menu.rows.every((row) => row.borderWidth === '1px' && row.borderStyle === 'solid'), 'Top-level menu choices use restrained outlined cells.');
+    assert.ok(menu.rows.every((row) => row.minHeight >= 54), 'Outlined menu choices retain comfortable touch targets.');
+    assert.equal(menu.ctaBackground, 'rgb(36, 74, 165)', 'Conversation CTA remains the single filled blue action.');
+    assert.equal(menu.ctaColor, 'rgb(255, 255, 255)', 'Conversation CTA retains readable white text.');
 
     console.log('Mobile navigation and compact trust footer browser checks passed.');
   } finally {
