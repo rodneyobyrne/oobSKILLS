@@ -27,7 +27,7 @@ const mobileNavigation = templateConstant('mobileNavigation');
 const siteFooter = `<footer>
   <div class="site-shell footer-main">
     <div class="footer-brand">
-      <img class="footer-logo" src="/branding/logo_horiz-hex111111_background.png" alt="oobCREATIVE" width="270" height="68">
+      <img class="footer-logo" src="/branding/logo_horiz-hex111111_background.png" alt="" width="270" height="68">
       <p>Go deeper, not louder.</p>
       <p class="footer-description">Practical diagnostics and implementation for the places where communication, workflow, systems and AI meet.</p>
     </div>
