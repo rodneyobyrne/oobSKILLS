@@ -41,20 +41,17 @@ const siteFooter = `<footer>
         <a href="/free-tools/">Resources</a>
       </div>
       <div>
-        <p class="footer-label">Company</p>
+        <p class="footer-label">Company + policies</p>
         <a href="/about/">About</a>
         <a href="/contact/">Contact</a>
-        <a href="mailto:hello@oobcreative.com">hello@oobcreative.com</a>
-      </div>
-      <div>
-        <p class="footer-label">Policies</p>
         <a href="/privacy-policy/">Privacy Policy</a>
         <a href="/terms/">Terms of Use</a>
         <a href="/accessibility/">Accessibility</a>
+        <a href="mailto:hello@oobcreative.com">hello@oobcreative.com</a>
       </div>
     </div>
   </div>
-  <div class="footer-bar"><div class="site-shell"><span>© 2018-2026 oobCREATIVE. All rights reserved.</span><span>Roaring Fork Valley, Colorado</span><a href="/privacy-policy/">Privacy</a><a href="/terms/">Terms</a><a href="/accessibility/">Accessibility</a></div></div>
+  <div class="footer-bar"><div class="site-shell"><span>© 2018-2026 oobCREATIVE. All rights reserved.</span><span>Roaring Fork Valley, Colorado</span><a href="/privacy-policy/">Privacy Policy</a><a href="/terms/">Terms of Use</a></div></div>
 </footer>`;
 
 const organizationSchema = {
