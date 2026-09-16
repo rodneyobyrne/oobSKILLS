@@ -12,6 +12,7 @@ const releaseVersion = String(process.env.SITE_RELEASE_VERSION || process.env.GI
   .replace(/[^a-zA-Z0-9._-]/g, '-') || 'local';
 
 const trustDirectories = ['accessibility', 'contact', 'terms'];
+const mobilePolishFile = 'site-polish-v5.css';
 const buildSource = readFileSync(join(sourceRoot, 'scripts', 'build-site.mjs'), 'utf8');
 
 function templateConstant(name) {
@@ -51,7 +52,7 @@ const siteFooter = `<footer>
       </div>
     </div>
   </div>
-  <div class="footer-bar"><div class="site-shell"><span>© 2018-2026 oobCREATIVE. All rights reserved.</span><span>Roaring Fork Valley, Colorado</span><a href="/privacy-policy/">Privacy Policy</a><a href="/terms/">Terms of Use</a></div></div>
+  <div class="footer-bar"><div class="site-shell"><span>© 2018-2026 oobCREATIVE. All rights reserved.</span><span>Roaring Fork Valley, Colorado</span></div></div>
 </footer>`;
 
 const organizationSchema = {
@@ -89,9 +90,14 @@ function ensureFooter(html) {
   return html;
 }
 
+function injectMobilePolish(html) {
+  if (html.includes(`/${mobilePolishFile}`)) return html;
+  return html.replace('</head>', `  <link rel="stylesheet" href="/${mobilePolishFile}">\n</head>`);
+}
+
 function injectSiteAssets(html) {
   let next = html;
-  const styles = ['/navigation-v2.css', '/site-layout-v2.css', '/site-polish-v3.css', '/site-polish-v4.css'];
+  const styles = ['/navigation-v2.css', '/site-layout-v2.css', '/site-polish-v3.css', '/site-polish-v4.css', `/${mobilePolishFile}`];
   const scripts = ['/site-polish-v3.js', '/site-polish-v4.js'];
 
   for (const href of styles) {
@@ -115,6 +121,8 @@ function addOrganizationSchema(html) {
   const schema = `  <script type="application/ld+json">${JSON.stringify(organizationSchema)}</script>\n`;
   return html.replace('</head>', `${schema}</head>`);
 }
+
+cpSync(join(sourceRoot, mobilePolishFile), join(outputRoot, mobilePolishFile));
 
 for (const directory of trustDirectories) {
   const source = join(sourceRoot, directory);
@@ -141,8 +149,10 @@ for (const absolutePath of walk(outputRoot)) {
   if (outputFile.startsWith('voice-agent/')) continue;
   let html = readFileSync(absolutePath, 'utf8');
   html = ensureFooter(html);
+  html = injectMobilePolish(html);
+  html = versionLocalAssets(html);
   if (outputFile === 'index.html') html = addOrganizationSchema(html);
   writeFileSync(absolutePath, html);
 }
 
-console.log('Applied trust foundation pages, footer coverage and organization identity.');
+console.log('Applied trust foundation pages, compact footer coverage, mobile polish and organization identity.');
