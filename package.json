@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "description": "Build and release checks for the oobCREATIVE Skills static site.",
   "scripts": {
-    "build": "node scripts/generate-voice-agent-industry-pages.mjs && node scripts/generate-industry-tool-pages.mjs && node scripts/build-site.mjs && node scripts/copy-standalone-pages.mjs && node scripts/postbuild-homepage-pathways.mjs",
-    "check:site": "node scripts/check-public-site.mjs _site && node scripts/check-voice-agent-prelaunch.mjs _site",
+    "build": "node scripts/generate-voice-agent-industry-pages.mjs && node scripts/generate-industry-tool-pages.mjs && node scripts/build-site.mjs && node scripts/apply-trust-foundation.mjs && node scripts/copy-standalone-pages.mjs && node scripts/postbuild-homepage-pathways.mjs",
+    "check:site": "node scripts/check-public-site.mjs _site && node scripts/check-trust-foundation.mjs _site && node scripts/check-voice-agent-prelaunch.mjs _site",
     "check:links": "node scripts/check-internal-links.mjs _site",
     "check:secrets": "node scripts/scan-secrets.mjs",
     "test:dom": "node tests/test-human-review.cjs && node tests/test-idea-to-test.cjs && node tests/test-idea-to-test-dom.cjs && node tests/test-customer-flow.cjs && node tests/test-audience-review.cjs && node tests/test-local-fit-request.cjs && node tests/test-ai-receptionist-page.cjs && node tests/test-voice-agent-industry-pages.cjs && node tests/test-voice-agent-purchase-path.cjs && node tests/test-voice-samples.cjs && node tests/test-industry-acquisition-pages.cjs && node tests/test-industry-context.cjs && node tests/test-branding-working-index.cjs && node tests/test-ai-fit-check.cjs && node tests/test-new-review-tools.cjs && node tests/test-homepage-search-copy.cjs && node tests/test-results-experience.cjs",
