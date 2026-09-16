@@ -19,7 +19,91 @@
     padding: 1.25rem var(--gutter) 1.75rem;
     border-right: 0;
     border-left: 0;
-    background: #000;
+    background: #fff;
+    color: var(--ink, #111);
+  }
+
+  .mobile-nav nav > a:not(.nav-cta),
+  .mobile-nav nav > .nav-group > summary {
+    display: flex;
+    min-height: 54px;
+    align-items: center;
+    width: 100%;
+    margin: 0 0 .6rem;
+    padding: .9rem 1rem;
+    border: 1px solid var(--line, #d8d8d4);
+    background: #fff;
+    color: var(--ink, #111);
+    line-height: 1.25;
+    text-decoration: none;
+  }
+
+  .mobile-nav nav > a:not(.nav-cta):hover,
+  .mobile-nav nav > a:not(.nav-cta):focus-visible,
+  .mobile-nav nav > .nav-group > summary:hover,
+  .mobile-nav nav > .nav-group > summary:focus-visible,
+  .mobile-nav nav > .nav-group[open] > summary {
+    border-color: var(--ballpoint, #244aa5);
+    background: var(--paper-blue, #f3f6fd);
+    outline: none;
+  }
+
+  .mobile-nav .nav-group {
+    border-top: 0;
+  }
+
+  .mobile-nav .nav-group > summary::after {
+    color: var(--ballpoint, #244aa5);
+  }
+
+  .mobile-nav .nav-group__menu {
+    margin: -.2rem 0 .65rem;
+    padding: .35rem .55rem .55rem;
+    border: 1px solid var(--line, #d8d8d4);
+    border-top: 0;
+    background: var(--paper-soft, #f7f7f5);
+  }
+
+  .mobile-nav .nav-group__menu a {
+    margin: 0;
+    padding: .72rem .75rem;
+    border-bottom: 1px solid var(--line, #d8d8d4);
+    color: var(--ink, #111);
+  }
+
+  .mobile-nav .nav-group__menu a:last-child {
+    border-bottom: 0;
+  }
+
+  .mobile-nav .nav-group__menu a:hover,
+  .mobile-nav .nav-group__menu a:focus-visible {
+    background: #fff;
+    color: var(--ballpoint, #244aa5);
+    outline: none;
+  }
+
+  .mobile-nav .nav-group__menu .nav-menu-all {
+    color: var(--ballpoint, #244aa5);
+  }
+
+  .mobile-nav nav > .nav-cta {
+    display: flex;
+    min-height: 54px;
+    align-items: center;
+    justify-content: center;
+    margin-top: .75rem;
+    padding: 1rem;
+    border: 1px solid var(--ballpoint, #244aa5);
+    background: var(--ballpoint, #244aa5);
+    color: #fff;
+    text-align: center;
+  }
+
+  .mobile-nav nav > .nav-cta:hover,
+  .mobile-nav nav > .nav-cta:focus-visible {
+    background: #fff;
+    color: var(--ballpoint, #244aa5);
+    outline: none;
   }
 }
 
