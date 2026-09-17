@@ -10,7 +10,7 @@ const repositoryRoot = resolve(scriptDirectory, '..');
 const siteRoot = process.argv[2] ? resolve(process.cwd(), process.argv[2]) : join(repositoryRoot, '_site');
 const problems = [];
 
-const lockedPrivacyBlobSha = 'f7be16e04d0cef4b904051554b677eee30685606';
+const lockedPrivacyBlobSha = '4c9bfef885eb76d552a49f2c2b55c117b5fea8af';
 const requiredPages = ['accessibility/index.html', 'contact/index.html', 'terms/index.html'];
 const requiredFooterLinks = ['/contact/', '/privacy-policy/', '/terms/', '/accessibility/'];
 
