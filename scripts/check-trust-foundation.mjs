@@ -10,7 +10,7 @@ const repositoryRoot = resolve(scriptDirectory, '..');
 const siteRoot = process.argv[2] ? resolve(process.cwd(), process.argv[2]) : join(repositoryRoot, '_site');
 const problems = [];
 
-const lockedPrivacyBlobSha = '3f49e3696e0507c502a2675efe5197ca389b3c4b';
+const lockedPrivacyBlobSha = 'f7be16e04d0cef4b904051554b677eee30685606';
 const requiredPages = ['accessibility/index.html', 'contact/index.html', 'terms/index.html'];
 const requiredFooterLinks = ['/contact/', '/privacy-policy/', '/terms/', '/accessibility/'];
 
@@ -92,19 +92,24 @@ if (existsSync(homepagePath)) {
 }
 
 requireContent('privacy-policy/index.html', [
+  ['SMS program description', /VOX voice receptionist may offer to send a consultation scheduling link or an appointment confirmation by SMS/i],
+  ['same-number restriction', /same phone number used to place the call/i],
+  ['explicit verbal consent requirement', /must say [“"]yes[”"] or otherwise explicitly agree before the message is sent/i],
   ['SMS message-frequency disclosure', /typically 1–2 messages per interaction/i],
   ['SMS message-and-data-rates disclosure', /Message and data rates may apply/i],
-  ['SMS HELP instruction', /HELP[^<]*for help/i],
-  ['SMS STOP instruction', /STOP[^<]*to opt out/i],
+  ['SMS HELP instruction', /HELP<\/strong>[^.]*help/i],
+  ['SMS STOP instruction', /STOP<\/strong>[^.]*opt out/i],
   ['mobile-number and messaging-consent non-sharing disclosure', /does not sell, rent, or provide mobile phone numbers or text-messaging opt-in and consent data to third parties or affiliates for marketing or promotional purposes/i],
 ]);
 
 requireContent('terms/index.html', [
   ['oobCREATIVE VOX SMS program description', /VOX voice receptionist may offer to send a consultation scheduling link or an appointment confirmation by SMS/i],
+  ['same-number restriction', /same phone number used to place the call/i],
+  ['explicit verbal consent requirement', /must say [“"]yes[”"] or otherwise explicitly agree before the message is sent/i],
   ['SMS message-frequency disclosure', /typically 1–2 messages per interaction/i],
   ['SMS message-and-data-rates disclosure', /Message and data rates may apply/i],
-  ['SMS HELP instruction', /HELP<\/strong> for help/i],
-  ['SMS STOP instruction', /STOP<\/strong> to opt out/i],
+  ['SMS HELP instruction', /HELP<\/strong>[^.]*help/i],
+  ['SMS STOP instruction', /STOP<\/strong>[^.]*opt out/i],
   ['carrier-delivery disclaimer', /Carriers are not liable for delayed or undelivered messages/i],
 ]);
 
