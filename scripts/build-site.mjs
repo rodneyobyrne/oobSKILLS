@@ -77,7 +77,7 @@ const desktopNavigation = `<nav class="desktop-nav" aria-label="Primary navigati
   <a href="/services/">Services</a>
   <a href="/free-tools/">Resources</a>
   <a href="/about/">About</a>
-  <a class="nav-cta" href="mailto:hello@oobcreative.com?subject=oobSKILLS%20conversation">Talk to oobCREATIVE</a>
+  <a class="nav-cta" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3xFuWW4Hc02uVylPRSR0Yy2VRTdB0KiHxafLVqOWQs5zrRdHDtEE0ZWqF6b9m4niDk0QLlI9gJ?gv=true">Free Consultation</a>
 </nav>`;
 
 const mobileNavigation = `<details class="mobile-nav">
@@ -104,7 +104,7 @@ const mobileNavigation = `<details class="mobile-nav">
     <a href="/services/">Services</a>
     <a href="/free-tools/">Resources</a>
     <a href="/about/">About</a>
-    <a class="nav-cta" href="mailto:hello@oobcreative.com?subject=oobSKILLS%20conversation">Talk to oobCREATIVE</a>
+    <a class="nav-cta" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3xFuWW4Hc02uVylPRSR0Yy2VRTdB0KiHxafLVqOWQs5zrRdHDtEE0ZWqF6b9m4niDk0QLlI9gJ?gv=true">Free Consultation</a>
   </nav>
 </details>`;
 
